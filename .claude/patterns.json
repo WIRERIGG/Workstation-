@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "description": "Manual log of recurring task patterns. Review when count >= threshold to decide if a new skill is needed.",
+  "threshold": 3,
+  "how_to_use": {
+    "when_to_add": "After completing a task that felt repetitive or follows a pattern you've done before",
+    "when_to_review": "Periodically, or when a pattern hits the threshold count",
+    "action_at_threshold": "Create a new skill in .claude/skills/[pattern-name]/SKILL.md, add to CLAUDE.md skills table",
+    "format": "Each pattern has a name, description, count, and first_seen date"
+  },
+  "patterns": []
+}
