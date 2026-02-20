@@ -1,9 +1,9 @@
 /*
 This file is part of the Workstation project.
 
-Terminal view with xterm.js + Tauri PTY backend.
+Terminal view with xterm.js + Electron PTY backend (via tRPC).
 Enhanced: tab bar with multi-session, split view.
-Falls back to the mock command-line when not running in Tauri.
+Falls back to the mock command-line when not running in the desktop app.
 */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -11,7 +11,7 @@ import { Box, Flex, Text, Button, Input } from "@theme-ui/components";
 import { useStore as useOpenClawStore } from "../stores/openclaw-store";
 import { useStore as useChatStore } from "../stores/chat-store";
 
-declare const IS_TAURI: boolean | undefined;
+declare const IS_DESKTOP_APP: boolean;
 
 const MONO_FONT = "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace";
 
@@ -70,8 +70,7 @@ function PtyTerminal() {
     const { Terminal } = await import("@xterm/xterm");
     const { FitAddon } = await import("@xterm/addon-fit");
     const { WebLinksAddon } = await import("@xterm/addon-web-links");
-    const { invoke } = await import("@tauri-apps/api/core");
-    const { listen } = await import("@tauri-apps/api/event");
+    const { desktop } = await import("../common/desktop-bridge");
 
     await import("@xterm/xterm/css/xterm.css");
 
@@ -100,32 +99,38 @@ function PtyTerminal() {
     term.open(container);
     fitAddon.fit();
 
-    const ptyId = tab.ptyId;
-    await invoke("pty_spawn", {
-      id: ptyId,
-      options: { rows: term.rows, cols: term.cols, cwd: null, env: null, shell: null }
+    const { id: ptyId } = await desktop.pty.spawn.mutate({
+      rows: term.rows,
+      cols: term.cols
     });
 
-    const unlistenOutput = await listen<{ id: string; data: string }>("pty-output", (event) => {
-      if (event.payload.id === ptyId) {
-        const bytes = Uint8Array.from(atob(event.payload.data), (c) => c.charCodeAt(0));
-        term.write(bytes);
-      }
-    });
+    // Update the tab's ptyId with the server-assigned UUID
+    setTabs((prev) => prev.map((t) => t.id === tabId ? { ...t, ptyId } : t));
 
-    const unlistenExit = await listen<{ id: string; code: number | null }>("pty-exit", (event) => {
-      if (event.payload.id === ptyId) {
-        term.write(`\r\n\x1b[33m[Process exited with code ${event.payload.code ?? "unknown"}]\x1b[0m\r\n`);
+    const dataSubscription = desktop.pty.onData.subscribe(
+      { id: ptyId },
+      {
+        onData(data: string) {
+          term.write(data);
+        }
       }
-    });
+    );
+
+    const exitSubscription = desktop.pty.onExit.subscribe(
+      { id: ptyId },
+      {
+        onData(event: { exitCode: number; signal?: number }) {
+          term.write(`\r\n\x1b[33m[Process exited with code ${event.exitCode ?? "unknown"}]\x1b[0m\r\n`);
+        }
+      }
+    );
 
     term.onData((data) => {
-      const encoded = btoa(data);
-      invoke("pty_write", { id: ptyId, data: encoded }).catch(console.error);
+      desktop.pty.write.mutate({ id: ptyId, data }).catch(console.error);
     });
 
     term.onResize(({ rows, cols }) => {
-      invoke("pty_resize", { id: ptyId, rows, cols }).catch(console.error);
+      desktop.pty.resize.mutate({ id: ptyId, cols, rows }).catch(console.error);
     });
 
     const resizeObserver = new ResizeObserver(() => fitAddon.fit());
@@ -135,10 +140,10 @@ function PtyTerminal() {
       terminal: term,
       fitAddon,
       cleanup: () => {
-        unlistenOutput();
-        unlistenExit();
+        dataSubscription.unsubscribe();
+        exitSubscription.unsubscribe();
         resizeObserver.disconnect();
-        invoke("pty_kill", { id: ptyId }).catch(() => {});
+        desktop.pty.kill.mutate({ id: ptyId }).catch(() => {});
         term.dispose();
       }
     });
@@ -543,7 +548,6 @@ function MockTerminal() {
 // ── Main Export ──
 
 export default function TerminalView() {
-  const isTauriRuntime = typeof IS_TAURI !== "undefined" && IS_TAURI;
-  if (isTauriRuntime) return <PtyTerminal />;
+  if (IS_DESKTOP_APP) return <PtyTerminal />;
   return <MockTerminal />;
 }

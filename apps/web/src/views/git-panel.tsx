@@ -3,13 +3,13 @@ This file is part of the Workstation project.
 
 Git Panel — split-pane view with three tabs: Changes, History, Stashes.
 Branch management, remote ops, diff viewer, auto-refresh via fs-watch.
-Uses Tauri git.rs backend commands. Falls back to a placeholder in web mode.
+Uses Electron tRPC git/filesystem routers. Falls back to a placeholder in web mode.
 */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Box, Flex, Text, Button, Textarea, Input } from "@theme-ui/components";
 
-declare const IS_TAURI: boolean | undefined;
+declare const IS_DESKTOP_APP: boolean;
 
 const MONO_FONT = "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace";
 
@@ -36,6 +36,37 @@ const STATUS_BADGES: Record<string, string> = {
   conflicted: "C",
   unknown: "?"
 };
+
+// ── Diff text parser (converts unified diff string to GitDiffFile[]) ──
+
+function parseDiffText(diffText: string, targetPath?: string): GitDiffFile[] {
+  if (!diffText) return [];
+  const files: GitDiffFile[] = [];
+  const chunks = diffText.split(/^diff --git /m).filter(Boolean);
+
+  for (const chunk of chunks) {
+    const pathMatch = chunk.match(/a\/(.+?) b\/(.+)/);
+    const filePath = pathMatch ? pathMatch[2] : "unknown";
+    if (targetPath && filePath !== targetPath) continue;
+
+    let additions = 0;
+    let deletions = 0;
+    const lines = chunk.split("\n");
+    for (const line of lines) {
+      if (line.startsWith("+") && !line.startsWith("+++")) additions++;
+      else if (line.startsWith("-") && !line.startsWith("---")) deletions++;
+    }
+
+    files.push({
+      path: filePath,
+      status: "modified",
+      additions,
+      deletions,
+      patch: "diff --git " + chunk
+    });
+  }
+  return files;
+}
 
 // ── Diff Renderer ──
 
@@ -191,8 +222,8 @@ function GitPanelReal() {
   // Auto-detect repo
   useEffect(() => {
     (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const home = await invoke<string>("fs_get_home_dir");
+      const { desktop } = await import("../common/desktop-bridge");
+      const home = await desktop.filesystem.homeDir.query();
       setRepoPath(home);
     })().catch(console.error);
   }, []);
@@ -201,17 +232,67 @@ function GitPanelReal() {
     if (!repoPath) return;
     setLoading(true);
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const [status, log, br, st] = await Promise.all([
-        invoke<GitStatusEntry[]>("git_status", { path: repoPath }),
-        invoke<GitLogEntry[]>("git_log", { path: repoPath, limit: historyLimit }),
-        invoke<GitBranch[]>("git_branches", { path: repoPath }),
-        invoke<GitStashEntry[]>("git_stash_list", { path: repoPath }).catch(() => [] as GitStashEntry[])
+      const { desktop } = await import("../common/desktop-bridge");
+      const [statusResult, logResult, brResult] = await Promise.all([
+        desktop.git.status.query({ cwd: repoPath }),
+        desktop.git.log.query({ cwd: repoPath, maxCount: historyLimit }),
+        desktop.git.branches.query({ cwd: repoPath })
       ]);
-      setStatusEntries(status);
-      setLogEntries(log);
-      setBranches(br);
-      setStashes(st);
+
+      // Map simple-git StatusResult to our GitStatusEntry[]
+      const entries: GitStatusEntry[] = [];
+      for (const f of (statusResult as any).staged || []) {
+        entries.push({ path: f, status: "modified", staged: true });
+      }
+      for (const f of (statusResult as any).created || []) {
+        entries.push({ path: f, status: "new", staged: true });
+      }
+      for (const f of (statusResult as any).deleted || []) {
+        entries.push({ path: f, status: "deleted", staged: true });
+      }
+      for (const f of (statusResult as any).renamed || []) {
+        entries.push({ path: typeof f === "object" ? f.to : f, status: "renamed", staged: true });
+      }
+      for (const f of (statusResult as any).modified || []) {
+        if (!entries.some((e) => e.path === f && e.staged)) {
+          entries.push({ path: f, status: "modified", staged: false });
+        }
+      }
+      for (const f of (statusResult as any).not_added || []) {
+        entries.push({ path: f, status: "new", staged: false });
+      }
+      for (const f of (statusResult as any).conflicted || []) {
+        entries.push({ path: f, status: "conflicted", staged: false });
+      }
+      setStatusEntries(entries);
+
+      // Map simple-git LogResult to our GitLogEntry[]
+      const logAll = (logResult as any).all || [];
+      const logEntries: GitLogEntry[] = logAll.map((entry: any) => ({
+        id: entry.hash,
+        short_id: entry.hash?.slice(0, 7) || "",
+        message: entry.message || "",
+        author: entry.author_name || "",
+        email: entry.author_email || "",
+        time: entry.date ? Math.floor(new Date(entry.date).getTime() / 1000) : 0,
+        time_formatted: entry.date || ""
+      }));
+      setLogEntries(logEntries);
+
+      // Map simple-git BranchSummary to our GitBranch[]
+      const branchAll = (brResult as any).all || [];
+      const currentBrName = (brResult as any).current || "";
+      const branchEntries: GitBranch[] = branchAll.map((name: string) => ({
+        name,
+        is_head: name === currentBrName,
+        upstream: null,
+        ahead: null,
+        behind: null
+      }));
+      setBranches(branchEntries);
+
+      // Stash not available in simple-git tRPC router, set empty
+      setStashes([]);
     } catch (e) {
       console.error("Git refresh error:", e);
     }
@@ -220,31 +301,30 @@ function GitPanelReal() {
 
   useEffect(() => { refresh(); }, [refresh]);
 
-  // Auto-refresh via fs-watch on .git dir
+  // Auto-refresh via filesystem watch on .git dir
   useEffect(() => {
     if (!repoPath || !autoRefresh) return;
-    let cleanup: (() => void) | undefined;
+    let subscription: { unsubscribe: () => void } | undefined;
 
     (async () => {
       try {
-        const { invoke } = await import("@tauri-apps/api/core");
-        const { listen } = await import("@tauri-apps/api/event");
+        const { desktop } = await import("../common/desktop-bridge");
         const gitDir = repoPath.replace(/\\/g, "/") + "/.git";
-        await invoke("fs_watch_start", { path: gitDir });
-        const unlisten = await listen("fs-watch", () => {
-          if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
-          refreshTimerRef.current = setTimeout(refresh, 500);
-        });
-        cleanup = () => {
-          unlisten();
-          invoke("fs_watch_stop", { path: gitDir }).catch(() => {});
-        };
+        subscription = desktop.filesystem.watch.subscribe(
+          { path: gitDir },
+          {
+            onData() {
+              if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
+              refreshTimerRef.current = setTimeout(refresh, 500);
+            }
+          }
+        );
       } catch {
         // fs-watch not available
       }
     })();
 
-    return () => { cleanup?.(); };
+    return () => { subscription?.unsubscribe(); };
   }, [repoPath, autoRefresh, refresh]);
 
   // ── Handlers ──
@@ -253,8 +333,10 @@ function GitPanelReal() {
     if (!repoPath) return;
     setSelectedCommit(null);
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const diffs = await invoke<GitDiffFile[]>("git_diff", { path: repoPath, staged: entry.staged });
+      const { desktop } = await import("../common/desktop-bridge");
+      const diffText = await desktop.git.diff.query({ cwd: repoPath, staged: entry.staged });
+      // Parse the unified diff text into GitDiffFile entries
+      const diffs = parseDiffText(diffText as string, entry.path);
       const match = diffs.find((d) => d.path === entry.path);
       setSelectedFile(match || null);
     } catch (e) {
@@ -264,30 +346,33 @@ function GitPanelReal() {
 
   const handleStage = useCallback(async (files: string[]) => {
     if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_stage", { path: repoPath, files });
+    const { desktop } = await import("../common/desktop-bridge");
+    await desktop.git.add.mutate({ cwd: repoPath, files });
     refresh();
   }, [repoPath, refresh]);
 
   const handleUnstage = useCallback(async (files: string[]) => {
     if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_unstage", { path: repoPath, files });
+    // simple-git reset to unstage: use checkout to restore index
+    // The git router doesn't have a dedicated unstage, so we refresh after add
+    // TODO: Add an unstage endpoint to the git tRPC router
+    console.warn("Unstage not yet available via tRPC — refresh to see current state");
     refresh();
   }, [repoPath, refresh]);
 
   const handleCommit = useCallback(async () => {
     if (!repoPath || !commitMsg.trim()) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_commit", { path: repoPath, message: commitMsg });
+    const { desktop } = await import("../common/desktop-bridge");
+    await desktop.git.commit.mutate({ cwd: repoPath, message: commitMsg });
     setCommitMsg("");
     refresh();
   }, [repoPath, commitMsg, refresh]);
 
   const handleDiscard = useCallback(async (filePath: string) => {
     if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_discard_file", { path: repoPath, filePath });
+    // Discard via checkout: use checkout to restore the file
+    const { desktop } = await import("../common/desktop-bridge");
+    await desktop.git.checkout.mutate({ cwd: repoPath, branch: filePath });
     setConfirmDiscard(null);
     setSelectedFile(null);
     refresh();
@@ -295,16 +380,16 @@ function GitPanelReal() {
 
   const handleCheckoutBranch = useCallback(async (branch: string) => {
     if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_checkout_branch", { path: repoPath, branch });
+    const { desktop } = await import("../common/desktop-bridge");
+    await desktop.git.checkout.mutate({ cwd: repoPath, branch });
     setShowBranchPicker(false);
     refresh();
   }, [repoPath, refresh]);
 
   const handleCreateBranch = useCallback(async () => {
     if (!repoPath || !newBranchName.trim()) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_checkout_branch", { path: repoPath, branch: newBranchName.trim(), create: true });
+    const { desktop } = await import("../common/desktop-bridge");
+    await desktop.git.checkout.mutate({ cwd: repoPath, branch: newBranchName.trim() });
     setNewBranchName("");
     setShowBranchPicker(false);
     refresh();
@@ -312,44 +397,46 @@ function GitPanelReal() {
 
   const handleDeleteBranch = useCallback(async (branch: string) => {
     if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_delete_branch", { path: repoPath, branch });
+    // Delete branch not available in current tRPC router
+    console.warn("Branch deletion not yet available via tRPC");
     refresh();
   }, [repoPath, refresh]);
 
   const handlePull = useCallback(async () => {
     if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    try {
-      await invoke("git_pull", { path: repoPath });
-      refresh();
-    } catch (e) {
-      console.error("Pull error:", e);
-    }
+    // Pull not available in current tRPC router
+    console.warn("Git pull not yet available via tRPC");
+    refresh();
   }, [repoPath, refresh]);
 
   const handlePush = useCallback(async (forceWithLease = false) => {
     if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    try {
-      await invoke("git_push", { path: repoPath, forceWithLease });
-      refresh();
-    } catch (e) {
-      console.error("Push error:", e);
-    }
+    // Push not available in current tRPC router
+    console.warn("Git push not yet available via tRPC");
+    refresh();
   }, [repoPath, refresh]);
 
   const handleShowCommit = useCallback(async (commitId: string) => {
     if (!repoPath) return;
     setSelectedFile(null);
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const detail = await invoke<GitCommitDetail>("git_show_commit", { path: repoPath, commitId });
-      setSelectedCommit(detail);
+      // Show commit detail: get the diff for this commit
+      // TODO: Add a showCommit endpoint to the git tRPC router
+      const entry = logEntries.find((e) => e.id === commitId);
+      if (entry) {
+        setSelectedCommit({
+          id: entry.id,
+          message: entry.message,
+          author: entry.author,
+          email: entry.email,
+          time: entry.time,
+          files: []
+        });
+      }
     } catch (e) {
       console.error("Show commit error:", e);
     }
-  }, [repoPath]);
+  }, [repoPath, logEntries]);
 
   const handleCopyCommitMarkdown = useCallback((detail: GitCommitDetail) => {
     const totalAdds = detail.files.reduce((s, f) => s + f.additions, 0);
@@ -369,34 +456,26 @@ function GitPanelReal() {
   }, []);
 
   const handleStashSave = useCallback(async () => {
-    if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_stash_save", { path: repoPath, message: stashMessage || null });
+    // Stash not available in current tRPC router
+    console.warn("Git stash not yet available via tRPC");
     setStashMessage("");
     refresh();
-  }, [repoPath, stashMessage, refresh]);
+  }, [stashMessage, refresh]);
 
   const handleStashApply = useCallback(async (index: number) => {
-    if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_stash_apply", { path: repoPath, index });
+    console.warn("Git stash apply not yet available via tRPC");
     refresh();
-  }, [repoPath, refresh]);
+  }, [refresh]);
 
   const handleStashPop = useCallback(async (index: number) => {
-    if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_stash_apply", { path: repoPath, index });
-    await invoke("git_stash_drop", { path: repoPath, index });
+    console.warn("Git stash pop not yet available via tRPC");
     refresh();
-  }, [repoPath, refresh]);
+  }, [refresh]);
 
   const handleStashDrop = useCallback(async (index: number) => {
-    if (!repoPath) return;
-    const { invoke } = await import("@tauri-apps/api/core");
-    await invoke("git_stash_drop", { path: repoPath, index });
+    console.warn("Git stash drop not yet available via tRPC");
     refresh();
-  }, [repoPath, refresh]);
+  }, [refresh]);
 
   // ── Computed values ──
 
@@ -698,15 +777,14 @@ function GitPanelPlaceholder() {
     <Flex sx={{ height: "100%", alignItems: "center", justifyContent: "center", bg: "background" }}>
       <Box sx={{ textAlign: "center" }}>
         <Text sx={{ fontSize: 48, display: "block", mb: 3 }}>Git</Text>
-        <Text sx={{ fontSize: 14, color: "paragraph-secondary" }}>Git panel requires the Tauri desktop app.</Text>
-        <Text sx={{ fontSize: 12, color: "paragraph-secondary", mt: 1 }}>Run with PLATFORM=tauri to enable real git operations.</Text>
+        <Text sx={{ fontSize: 14, color: "paragraph-secondary" }}>Git panel requires the desktop app.</Text>
+        <Text sx={{ fontSize: 12, color: "paragraph-secondary", mt: 1 }}>Run the Electron desktop build to enable real git operations.</Text>
       </Box>
     </Flex>
   );
 }
 
 export default function GitPanel() {
-  const isTauriRuntime = typeof IS_TAURI !== "undefined" && IS_TAURI;
-  if (isTauriRuntime) return <GitPanelReal />;
+  if (IS_DESKTOP_APP) return <GitPanelReal />;
   return <GitPanelPlaceholder />;
 }

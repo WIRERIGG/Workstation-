@@ -3,6 +3,7 @@ This file is part of the Workstation project.
 
 Workspaces view — git worktrees with agent assignment, list/kanban views,
 create modal, 3-tab preview (output, diff, task), agent controls, merge workflow.
+Uses Electron tRPC backend when running in the desktop app.
 */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -10,7 +11,7 @@ import { Box, Flex, Text, Input, Button, Textarea } from "@theme-ui/components";
 import { useStore as useAgentStore } from "../stores/agent-store";
 import { useStore as useTaskStore } from "../stores/task-store";
 
-declare const IS_TAURI: boolean | undefined;
+declare const IS_DESKTOP_APP: boolean;
 
 const MONO_FONT = "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace";
 
@@ -84,8 +85,8 @@ function WorkspacesReal() {
 
   useEffect(() => {
     (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const home = await invoke<string>("fs_get_home_dir");
+      const { desktop } = await import("../common/desktop-bridge");
+      const home = await desktop.filesystem.homeDir.query();
       setRepoPath(home);
     })().catch(console.error);
   }, []);
@@ -94,25 +95,24 @@ function WorkspacesReal() {
     if (!repoPath) return;
     setLoading(true);
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const [list, br] = await Promise.all([
-        invoke<Workspace[]>("workspace_list", { repoPath }),
-        invoke<GitBranch[]>("git_branches", { path: repoPath })
-      ]);
-      setWorkspaces(list);
-      setBranches(br);
+      const { desktop } = await import("../common/desktop-bridge");
+      // Workspace router not yet implemented; use git.branches for branch list
+      const brResult = await desktop.git.branches.query({ cwd: repoPath });
+      const branchAll = (brResult as any).all || [];
+      const currentBrName = (brResult as any).current || "";
+      const branchEntries: GitBranch[] = branchAll.map((name: string) => ({
+        name,
+        is_head: name === currentBrName,
+        upstream: null,
+        ahead: null,
+        behind: null
+      }));
+      setBranches(branchEntries);
 
-      // Fetch status for each workspace
-      const statuses: Record<string, WorkspaceStatus> = {};
-      for (const ws of list) {
-        try {
-          const status = await invoke<WorkspaceStatus>("workspace_status", { repoPath, name: ws.name });
-          statuses[ws.name] = status;
-        } catch {
-          // status not available
-        }
-      }
-      setWsStatuses(statuses);
+      // TODO: Replace with desktop.workspaces.list.query({ repoPath })
+      // when a workspaces tRPC router is implemented
+      setWorkspaces([]);
+      setWsStatuses({});
     } catch (e) {
       console.error("Workspace list error:", e);
       setWorkspaces([]);
@@ -125,15 +125,8 @@ function WorkspacesReal() {
   const handleCreate = useCallback(async () => {
     if (!repoPath || !newName.trim()) return;
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      await invoke("workspace_create", {
-        repoPath,
-        name: newName.trim(),
-        branch: newBranch.trim() || null
-      });
-      if (newAgent) {
-        await invoke("workspace_assign_agent", { repoPath, name: newName.trim(), agent: newAgent });
-      }
+      // TODO: Replace with desktop.workspaces.create.mutate when workspaces tRPC router is implemented
+      console.warn("Workspace creation not yet available via tRPC");
       if (newTaskId) {
         useTaskStore.getState().linkBranch(newTaskId, `workspace/${newName.trim()}`);
       }
@@ -152,8 +145,8 @@ function WorkspacesReal() {
   const handleDelete = useCallback(async (name: string) => {
     if (!repoPath) return;
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      await invoke("workspace_delete", { repoPath, name });
+      // TODO: Replace with desktop.workspaces.delete.mutate when workspaces tRPC router is implemented
+      console.warn("Workspace deletion not yet available via tRPC");
       if (selectedWs?.name === name) setSelectedWs(null);
       refresh();
     } catch (e) {
@@ -164,8 +157,7 @@ function WorkspacesReal() {
   const handleAssignAgent = useCallback(async (wsName: string, agentId: string) => {
     if (!repoPath) return;
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      await invoke("workspace_assign_agent", { repoPath, name: wsName, agent: agentId });
+      // TODO: Replace with desktop.workspaces.assignAgent.mutate when workspaces tRPC router is implemented
       setWorkspaces((prev) => prev.map((ws) => ws.name === wsName ? { ...ws, agent: agentId } : ws));
     } catch (e) {
       console.error("Agent assign error:", e);
@@ -177,9 +169,24 @@ function WorkspacesReal() {
     setPreviewTab("output");
     // Load diff for workspace
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const diff = await invoke<GitDiffFile[]>("git_diff", { path: ws.path });
-      setWsDiff(diff);
+      const { desktop } = await import("../common/desktop-bridge");
+      const diffText = await desktop.git.diff.query({ cwd: ws.path });
+      // Parse unified diff text into GitDiffFile entries
+      const files: GitDiffFile[] = [];
+      if (diffText) {
+        const chunks = (diffText as string).split(/^diff --git /m).filter(Boolean);
+        for (const chunk of chunks) {
+          const pathMatch = chunk.match(/a\/(.+?) b\/(.+)/);
+          const filePath = pathMatch ? pathMatch[2] : "unknown";
+          let additions = 0, deletions = 0;
+          for (const line of chunk.split("\n")) {
+            if (line.startsWith("+") && !line.startsWith("+++")) additions++;
+            else if (line.startsWith("-") && !line.startsWith("---")) deletions++;
+          }
+          files.push({ path: filePath, status: "modified", additions, deletions, patch: "diff --git " + chunk });
+        }
+      }
+      setWsDiff(files);
     } catch {
       setWsDiff([]);
     }
@@ -188,10 +195,8 @@ function WorkspacesReal() {
   const handleMerge = useCallback(async () => {
     if (!repoPath || !selectedWs) return;
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const info = await invoke<MergeInfo>("workspace_merge_info", { repoPath, name: selectedWs.name });
-      setMergeInfo(info);
-      setShowMerge(true);
+      // TODO: Replace with desktop.workspaces.mergeInfo.query when workspaces tRPC router is implemented
+      console.warn("Workspace merge info not yet available via tRPC");
     } catch (e) {
       console.error("Merge info error:", e);
     }
@@ -199,10 +204,9 @@ function WorkspacesReal() {
 
   const executeMerge = useCallback(async () => {
     if (!repoPath || !selectedWs) return;
-    // Delete workspace (which cleans up worktree)
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      await invoke("workspace_delete", { repoPath, name: selectedWs.name });
+      // TODO: Replace with desktop.workspaces.delete.mutate when workspaces tRPC router is implemented
+      console.warn("Workspace merge/delete not yet available via tRPC");
       setSelectedWs(null);
       setShowMerge(false);
       setMergeInfo(null);
@@ -546,14 +550,13 @@ function WorkspacesPlaceholder() {
     <Flex sx={{ height: "100%", alignItems: "center", justifyContent: "center", bg: "background" }}>
       <Box sx={{ textAlign: "center" }}>
         <Text sx={{ fontSize: 48, display: "block", mb: 3 }}>Workspaces</Text>
-        <Text sx={{ fontSize: 14, color: "paragraph-secondary" }}>Git worktree management requires the Tauri desktop app.</Text>
+        <Text sx={{ fontSize: 14, color: "paragraph-secondary" }}>Git worktree management requires the desktop app.</Text>
       </Box>
     </Flex>
   );
 }
 
 export default function WorkspacesView() {
-  const isTauriRuntime = typeof IS_TAURI !== "undefined" && IS_TAURI;
-  if (isTauriRuntime) return <WorkspacesReal />;
+  if (IS_DESKTOP_APP) return <WorkspacesReal />;
   return <WorkspacesPlaceholder />;
 }

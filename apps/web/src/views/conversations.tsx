@@ -4,12 +4,13 @@ This file is part of the Workstation project.
 Conversations view — AI session timeline with stats, date grouping,
 flow/turn views, export, pagination, and per-session analytics.
 Aggregates conversation data from Claude Code, Cursor, Gemini CLI, etc.
+Uses Electron tRPC backend when running in the desktop app.
 */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Flex, Text, Input, Button } from "@theme-ui/components";
 
-declare const IS_TAURI: boolean | undefined;
+declare const IS_DESKTOP_APP: boolean;
 
 const MONO_FONT = "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace";
 
@@ -106,12 +107,15 @@ function ConversationsReal() {
   const [showAnalytics, setShowAnalytics] = useState(false);
 
   // Load stats
+  // TODO: Add a conversations tRPC router to the Electron backend
+  // For now, conversations data is loaded via desktop.workstationData if available
   useEffect(() => {
     (async () => {
       try {
-        const { invoke } = await import("@tauri-apps/api/core");
-        const s = await invoke<ConversationStats>("conversations_stats", { toolFilter });
-        setStats(s);
+        const { desktop } = await import("../common/desktop-bridge");
+        // Conversations router not yet implemented in Electron tRPC backend
+        // When added, this would be: desktop.conversations.stats.query({ toolFilter })
+        void desktop; // suppress unused variable warning
       } catch {
         // stats not available
       }
@@ -121,14 +125,11 @@ function ConversationsReal() {
   const loadSessions = useCallback(async () => {
     setLoading(true);
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      let result: ConversationSession[];
-      if (search.trim()) {
-        result = await invoke("conversations_search", { query: search, toolFilter, limit: loadedCount });
-      } else {
-        result = await invoke("conversations_scan", { toolFilter, limit: loadedCount });
-      }
-      setSessions(result);
+      const { desktop } = await import("../common/desktop-bridge");
+      // TODO: Replace with desktop.conversations.scan.query / desktop.conversations.search.query
+      // when the conversations tRPC router is implemented
+      void desktop;
+      setSessions([]);
     } catch (e) {
       console.error("Failed to load conversations:", e);
     }
@@ -142,9 +143,10 @@ function ConversationsReal() {
     setExpandedMessages(new Set());
     setExpandedToolUse(new Set());
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const detail = await invoke<{ session: ConversationSession; messages: ConversationMessage[] }>("conversations_get_session", { path: session.path });
-      setMessages(detail.messages);
+      const { desktop } = await import("../common/desktop-bridge");
+      // TODO: Replace with desktop.conversations.getSession.query({ path: session.path })
+      void desktop;
+      setMessages([]);
     } catch (e) {
       console.error("Failed to load session:", e);
       setMessages([]);
@@ -154,15 +156,10 @@ function ConversationsReal() {
   const handleExport = useCallback(async () => {
     if (!selectedSession) return;
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const md = await invoke<string>("conversations_export", { path: selectedSession.path });
-      const blob = new Blob([md], { type: "text/markdown" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${selectedSession.id}.md`;
-      a.click();
-      URL.revokeObjectURL(url);
+      const { desktop } = await import("../common/desktop-bridge");
+      // TODO: Replace with desktop.conversations.export.query({ path: selectedSession.path })
+      void desktop;
+      console.warn("Conversations export not yet available via tRPC");
     } catch (e) {
       console.error("Export error:", e);
     }
@@ -486,14 +483,13 @@ function ConversationsPlaceholder() {
     <Flex sx={{ height: "100%", alignItems: "center", justifyContent: "center", bg: "background" }}>
       <Box sx={{ textAlign: "center" }}>
         <Text sx={{ fontSize: 48, display: "block", mb: 3 }}>AI Conversations</Text>
-        <Text sx={{ fontSize: 14, color: "paragraph-secondary" }}>Conversation aggregation requires the Tauri desktop app.</Text>
+        <Text sx={{ fontSize: 14, color: "paragraph-secondary" }}>Conversation aggregation requires the desktop app.</Text>
       </Box>
     </Flex>
   );
 }
 
 export default function ConversationsView() {
-  const isTauriRuntime = typeof IS_TAURI !== "undefined" && IS_TAURI;
-  if (isTauriRuntime) return <ConversationsReal />;
+  if (IS_DESKTOP_APP) return <ConversationsReal />;
   return <ConversationsPlaceholder />;
 }

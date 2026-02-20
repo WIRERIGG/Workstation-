@@ -1,16 +1,16 @@
 /*
 This file is part of the Workstation project.
 
-File Explorer with real filesystem browsing via Tauri backend.
+File Explorer with real filesystem browsing via Electron tRPC backend.
 Enhanced: git status badges, fuzzy finder (Ctrl+P), file operations,
 file info modal, markdown rendering toggle, hidden files toggle.
-Falls back to mock tree when not running in Tauri.
+Falls back to mock tree when not running in the desktop app.
 */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Box, Flex, Input, Text, Button } from "@theme-ui/components";
 
-declare const IS_TAURI: boolean | undefined;
+declare const IS_DESKTOP_APP: boolean;
 
 const MONO_FONT = "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace";
 
@@ -115,8 +115,8 @@ function RealFileExplorer() {
   // Initialize with home directory
   useEffect(() => {
     (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const home = await invoke<string>("fs_get_home_dir");
+      const { desktop } = await import("../common/desktop-bridge");
+      const home = await desktop.filesystem.homeDir.query();
       setCurrentPath(home);
     })().catch(console.error);
   }, []);
@@ -126,18 +126,40 @@ function RealFileExplorer() {
     if (!currentPath) return;
     setLoading(true);
     (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const items = await invoke<FileEntry[]>("fs_list_dir", { path: currentPath, showHidden, respectGitignore: true });
-      setEntries(items);
+      const { desktop } = await import("../common/desktop-bridge");
+      const rawItems = await desktop.filesystem.listDir.query({ path: currentPath });
+      // Map tRPC response to our FileEntry type
+      const items: FileEntry[] = rawItems.map((item: any) => ({
+        name: item.name,
+        path: item.path,
+        is_dir: item.isDirectory,
+        is_file: item.isFile,
+        is_symlink: item.isSymlink || false,
+        size: 0,
+        modified: null,
+        extension: item.isFile ? (item.name.includes(".") ? item.name.split(".").pop() || null : null) : null
+      }));
+
+      // Filter hidden files unless showHidden is true
+      const filtered = showHidden ? items : items.filter((e) => !e.name.startsWith("."));
+      setEntries(filtered);
       setSelectedFile(null);
       setPreviewContent(null);
       setPreviewHtml(null);
 
       // Load git statuses
       try {
-        const statuses = await invoke<GitStatusEntry[]>("git_status", { path: currentPath });
+        const statusResult = await desktop.git.status.query({ cwd: currentPath });
         const map = new Map<string, GitStatusEntry>();
-        for (const s of statuses) map.set(s.path, s);
+        for (const f of (statusResult as any).modified || []) {
+          map.set(f, { path: f, status: "modified", staged: false });
+        }
+        for (const f of (statusResult as any).not_added || []) {
+          map.set(f, { path: f, status: "new", staged: false });
+        }
+        for (const f of (statusResult as any).staged || []) {
+          map.set(f, { path: f, status: "modified", staged: true });
+        }
         setGitStatuses(map);
       } catch {
         setGitStatuses(new Map());
@@ -166,13 +188,22 @@ function RealFileExplorer() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [showFuzzy, selectedFile]);
 
-  // Fuzzy search
+  // Fuzzy search — client-side filter over directory listing since tRPC has no fuzzy search endpoint
   useEffect(() => {
     if (!showFuzzy || !fuzzyQuery.trim() || !currentPath) return;
     const timeout = setTimeout(async () => {
       try {
-        const { invoke } = await import("@tauri-apps/api/core");
-        const results = await invoke<FuzzyResult[]>("fs_fuzzy_search", { path: currentPath, query: fuzzyQuery, limit: 50 });
+        const { desktop } = await import("../common/desktop-bridge");
+        const rawItems = await desktop.filesystem.listDir.query({ path: currentPath });
+        const q = fuzzyQuery.toLowerCase();
+        const results: FuzzyResult[] = rawItems
+          .filter((item: any) => item.name.toLowerCase().includes(q))
+          .slice(0, 50)
+          .map((item: any) => ({
+            path: item.path,
+            name: item.name,
+            is_dir: item.isDirectory
+          }));
         setFuzzyResults(results);
         setFuzzyIndex(0);
       } catch {
@@ -200,23 +231,18 @@ function RealFileExplorer() {
     } else {
       setSelectedFile(entry);
       setRenderMarkdown(false);
-      if (entry.size < 1024 * 512) {
-        try {
-          const { invoke } = await import("@tauri-apps/api/core");
-          const content = await invoke<string>("fs_read_file", { path: entry.path });
-          setPreviewContent(content);
-          if (entry.extension) {
-            try {
-              const result = await invoke<{ html: string; language: string }>("highlight_code", { code: content.slice(0, 5000), language: entry.extension, theme: null });
-              setPreviewHtml(result.html);
-            } catch { setPreviewHtml(null); }
-          }
-        } catch {
-          setPreviewContent("[Binary file or read error]");
-          setPreviewHtml(null);
+      try {
+        const { desktop } = await import("../common/desktop-bridge");
+        const content = await desktop.filesystem.readFile.query({ path: entry.path });
+        setPreviewContent(content);
+        if (entry.extension) {
+          try {
+            const html = await desktop.highlighter.highlight.query({ code: content.slice(0, 5000), lang: entry.extension, theme: "github-dark" });
+            setPreviewHtml(html);
+          } catch { setPreviewHtml(null); }
         }
-      } else {
-        setPreviewContent(`[File too large: ${formatSize(entry.size)}]`);
+      } catch {
+        setPreviewContent("[Binary file or read error]");
         setPreviewHtml(null);
       }
     }
@@ -224,8 +250,17 @@ function RealFileExplorer() {
 
   const loadFileInfo = useCallback(async (entry: FileEntry) => {
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const info = await invoke<FileInfoResult>("fs_file_info", { path: entry.path });
+      const { desktop } = await import("../common/desktop-bridge");
+      const rawInfo = await desktop.filesystem.fileInfo.query({ path: entry.path });
+      // Map tRPC response to our FileInfoResult type
+      const info: FileInfoResult = {
+        size: (rawInfo as any).size || 0,
+        modified: (rawInfo as any).modified || null,
+        permissions: "unknown",
+        git_status: null,
+        last_commit_message: null,
+        last_commit_time: null
+      };
       setFileInfo(info);
       setShowFileInfo(true);
     } catch {
@@ -237,14 +272,15 @@ function RealFileExplorer() {
     if (!currentPath || !createName.trim() || !createMode) return;
     const fullPath = `${currentPath}/${createName.trim()}`;
     try {
-      const { invoke } = await import("@tauri-apps/api/core");
+      const { desktop } = await import("../common/desktop-bridge");
       if (createMode === "dir") {
-        // Use shell to create directory
-        await invoke("open_path", { path: "" }); // placeholder — we'll use Bash
+        await desktop.filesystem.mkdir.mutate({ path: fullPath, recursive: true });
+      } else {
+        await desktop.filesystem.writeFile.mutate({ path: fullPath, content: "" });
       }
       setCreateMode(null);
       setCreateName("");
-      // Refresh
+      // Refresh by resetting path
       setCurrentPath(currentPath + ""); // force re-render
     } catch (e) {
       console.error("Create error:", e);
@@ -523,7 +559,6 @@ function MockFileExplorer() {
 }
 
 export default function FileExplorerView() {
-  const isTauriRuntime = typeof IS_TAURI !== "undefined" && IS_TAURI;
-  if (isTauriRuntime) return <RealFileExplorer />;
+  if (IS_DESKTOP_APP) return <RealFileExplorer />;
   return <MockFileExplorer />;
 }
