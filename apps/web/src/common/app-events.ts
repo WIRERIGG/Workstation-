@@ -41,5 +41,11 @@ export const AppEvents = {
   revealItemInList: "list:revealItem",
 
   toggleSideMenu: "app:openSideMenu",
-  toggleEditor: "app:toggleEditor"
+  toggleEditor: "app:toggleEditor",
+
+  // Workstation quick-create events (fired from dashboard quick actions)
+  createNewTask: "ws:createNewTask",
+  createNewEvent: "ws:createNewEvent",
+  createNewSheet: "ws:createNewSheet",
+  composeMessage: "ws:composeMessage"
 };

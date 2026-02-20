@@ -22,3 +22,6 @@ export type { AppRouter } from "./api";
 export { type UpdateInfo } from "builder-util-runtime";
 export { type DesktopIntegration } from "./utils/config";
 export { SQLite } from "./api/sqlite-kysely.js";
+export { LanceDriver } from "./api/lancedb-driver.js";
+export { migrateSqliteToLance, needsMigration } from "./api/lance-migration.js";
+export type { MigrationResult } from "./api/lance-migration.js";

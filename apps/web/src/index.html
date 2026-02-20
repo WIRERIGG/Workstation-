@@ -20,22 +20,21 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <meta name="description" content="Your private note taking space" />
-    <meta property="og:title" content="Notesnook" />
+    <meta name="description" content="AI-powered business workstation" />
+    <meta property="og:title" content="Workstation" />
     <meta
       property="og:description"
-      content="A fully open source & end-to-end encrypted note taking alternative to Evernote."
+      content="AI-powered business workstation for autonomous agent management."
     />
-    <meta property="og:image" content="https://app.notesnook.com/banner.jpg" />
+    <meta property="og:image" content="/favicon.svg" />
     <meta
       property="og:image:alt"
-      content="A fully open source & end-to-end encrypted note taking alternative to Evernote."
+      content="Workstation — AI-powered business workstation"
     />
-    <meta property="og:url" content="https://app.notesnook.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Notesnook by Streetwriters LLC" />
+    <meta property="og:site_name" content="Workstation" />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>Notesnook</title>
+    <title>Workstation</title>
 
     <style id="theme-colors"></style>
     <script>
@@ -43,7 +42,7 @@
         const cookie = document.cookie.match(/release\-track=([^;]+)/);
         const releaseTrack = cookie ? cookie[1] : "stable";
         const expectedPrefix =
-          releaseTrack === "beta" ? "notesnook-beta" : "notesnook";
+          releaseTrack === "beta" ? "workstation-beta" : "workstation";
 
         const cacheKeys = await caches.keys();
         const mismatched = cacheKeys.some(
@@ -168,26 +167,15 @@
       xmlns="http://www.w3.org/2000/svg"
       style="height: 0; width: 0; z-index: -1; position: absolute"
     >
-      <symbol id="full-logo" viewBox="0 0 1000 1000">
-        <rect
-          width="1000"
-          height="1000"
-          rx="30%"
-          ry="30%"
-          style="fill: var(--heading)"
-        />
-        <g transform="translate(275,176.95254)">
-          <path
-            style="fill: var(--background)"
-            d="M437.985 493.919c-17.255 50.411-51.835 93.065-97.588 120.372-45.752 27.307-99.71 37.496-152.269 28.753-52.56-8.743-100.313999-35.85-134.763-76.498C18.916 525.898.006 474.347 0 421.064v-110.25l79.121001 33.053v77.152c-.007 20.779 4.434 41.318 13.024 60.237C100.735 500.176 113.276 517.037 128.925 530.707c2.97 2.587 6.053 5.107 9.236 7.459 23.357 17.388 51.402 27.352 80.494 28.597.99 0 1.946.079 2.925.101.979.023 2.25 0 3.375 0h3.375c1.125 0 1.935 0 2.925-.101 29.081-1.248 57.116-11.203 80.471-28.575 3.173-2.351 6.255-4.86 9.237-7.447 20.556-17.98 35.656-41.366 43.582-67.5zM450 225v196.065c0 2.531 0 5.074-.158 7.605l-78.963-33.019V225c-.013-37.684-14.607-73.901-40.725-101.066-26.119-27.164003-61.735-43.168003-99.389-44.660003-37.655-1.492-74.426 11.644-102.611 36.657003-28.185999 25.013-45.599999 59.962-48.593999 97.526-.281 3.803-.439 7.662-.439 11.543v48.712L0 240.637V0h225c59.674 0 116.903 23.705 159.099 65.901C426.295 108.097 450 165.326 450 225Z"
-          />
-        </g>
+      <symbol id="full-logo" viewBox="-15 -5 230 224">
+        <polygon points="0,0.9 0,35.9 12.8,54.1 81.4,83.2 99.7,107.9 118.3,83.4 186.5,54.7 200,36.1 200,0 186.1,24.2 100.8,49.6 13.9,24.2" fill="#E00000"/>
+        <polygon points="31.7,65.9 31.7,112.4 58.3,129.7 58.3,159.9 85.5,214 85.7,111.5 43.6,86.6 41.2,73.1" fill="#E00000"/>
+        <polygon points="168.5,66.2 158.8,73.4 156.1,86.8 114.5,111.3 114.5,214 141.7,160.2 141.7,129.7 168.5,112.4" fill="#E00000"/>
       </symbol>
-      <symbol id="themed-logo" viewBox="0 0 450 646.09491">
-        <path
-          style="fill: var(--heading)"
-          d="M437.985 493.919c-17.255 50.411-51.835 93.065-97.588 120.372-45.752 27.307-99.71 37.496-152.269 28.753-52.56-8.743-100.313999-35.85-134.763-76.498C18.916 525.898.006 474.347 0 421.064v-110.25l79.121001 33.053v77.152c-.007 20.779 4.434 41.318 13.024 60.237C100.735 500.176 113.276 517.037 128.925 530.707c2.97 2.587 6.053 5.107 9.236 7.459 23.357 17.388 51.402 27.352 80.494 28.597.99 0 1.946.079 2.925.101.979.023 2.25 0 3.375 0h3.375c1.125 0 1.935 0 2.925-.101 29.081-1.248 57.116-11.203 80.471-28.575 3.173-2.351 6.255-4.86 9.237-7.447 20.556-17.98 35.656-41.366 43.582-67.5zM450 225v196.065c0 2.531 0 5.074-.158 7.605l-78.963-33.019V225c-.013-37.684-14.607-73.901-40.725-101.066-26.119-27.164003-61.735-43.168003-99.389-44.660003-37.655-1.492-74.426 11.644-102.611 36.657003-28.185999 25.013-45.599999 59.962-48.593999 97.526-.281 3.803-.439 7.662-.439 11.543v48.712L0 240.637V0h225c59.674 0 116.903 23.705 159.099 65.901C426.295 108.097 450 165.326 450 225Z"
-        />
+      <symbol id="themed-logo" viewBox="-15 -5 230 224">
+        <polygon points="0,0.9 0,35.9 12.8,54.1 81.4,83.2 99.7,107.9 118.3,83.4 186.5,54.7 200,36.1 200,0 186.1,24.2 100.8,49.6 13.9,24.2" style="fill: var(--heading)"/>
+        <polygon points="31.7,65.9 31.7,112.4 58.3,129.7 58.3,159.9 85.5,214 85.7,111.5 43.6,86.6 41.2,73.1" style="fill: var(--heading)"/>
+        <polygon points="168.5,66.2 158.8,73.4 156.1,86.8 114.5,111.3 114.5,214 141.7,160.2 141.7,129.7 168.5,112.4" style="fill: var(--heading)"/>
       </symbol>
     </svg>
     <div id="splash" class="hidden">
@@ -203,7 +191,7 @@
           font-size: 0.8rem;
         "
       >
-        Starting up the engines
+        Initializing Workstation
       </span>
     </div>
     <div id="dialogContainer"></div>

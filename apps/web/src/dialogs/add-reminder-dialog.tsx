@@ -171,8 +171,10 @@ export const AddReminderDialog = DialogManager.register(
               recurringMode !== RecurringModes.YEAR &&
               !selectedDays.length),
           onClick: async () => {
-            if (!("Notification" in window))
+            if (!("Notification" in window)) {
               showToast("warn", strings.remindersNotSupported());
+              return;
+            }
 
             const permissionResult = await Notification.requestPermission();
             if (!IS_TESTING && permissionResult !== "granted") {

@@ -264,15 +264,16 @@ function ListContainer(props: ListContainerProps) {
           sx={{
             position: "absolute",
             bottom: 0,
-            display: ["block", "none", "none"],
+            display: "block",
             alignSelf: "end",
             borderRadius: 100,
             p: 0,
             m: 0,
             mb: 2,
-            mr: 2,
+            mr: "70px",
             width: 45,
-            height: 45
+            height: 45,
+            zIndex: 10
           }}
         >
           <Plus color="accentForeground" />

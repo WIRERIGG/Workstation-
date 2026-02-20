@@ -228,7 +228,16 @@ import {
   mdiNoteEditOutline,
   mdiArrowUp,
   mdiInbox,
-  mdiConsoleLine
+  mdiConsoleLine,
+  mdiViewDashboardOutline,
+  mdiFormatListChecks,
+  mdiRobotOutline,
+  mdiMessageTextOutline,
+  mdiNewspaperVariantOutline,
+  mdiPhoneInTalkOutline,
+  mdiSourceBranch,
+  mdiForumOutline,
+  mdiCardMultipleOutline
 } from "@mdi/js";
 import { useTheme } from "@emotion/react";
 import { Theme } from "@notesnook/theme";
@@ -296,7 +305,7 @@ export type Icon = {
 
 export function createIcon(path: string, rotate = false) {
   const NNIcon: Icon = function Icon(props) {
-    const { sx, rotate: _rotate = rotate, size, ...restProps } = props;
+    const { sx, rotate: _rotate = rotate, size, rotateDirection: _rd, color: _c, ...restProps } = props;
     return (
       <Flex
         {...restProps}
@@ -584,3 +593,12 @@ export const ExpandSidebar = createIcon(mdiArrowCollapseRight);
 export const HamburgerMenu = createIcon(mdiMenu);
 export const ArrowUp = createIcon(mdiArrowUp);
 export const Inbox = createIcon(mdiInbox);
+export const Dashboard = createIcon(mdiViewDashboardOutline);
+export const Tasks = createIcon(mdiFormatListChecks);
+export const Robot = createIcon(mdiRobotOutline);
+export const MessageText = createIcon(mdiMessageTextOutline);
+export const Newspaper = createIcon(mdiNewspaperVariantOutline);
+export const PhoneInTalk = createIcon(mdiPhoneInTalkOutline);
+export const GitBranch = createIcon(mdiSourceBranch);
+export const Forum = createIcon(mdiForumOutline);
+export const CardMultiple = createIcon(mdiCardMultipleOutline);

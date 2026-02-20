@@ -31,7 +31,7 @@ import "./service-worker.dev.js";
 declare var self: ServiceWorkerGlobalScope & typeof globalThis;
 
 setCacheNameDetails({
-  prefix: IS_BETA ? "notesnook-beta" : "notesnook",
+  prefix: IS_BETA ? "workstation-beta" : "workstation",
   suffix: `${self.registration.scope}-${APP_VERSION}-${GIT_HASH}`,
   precache: "precache",
   runtime: "runtime"

@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SQLite } from "@notesnook/desktop";
+import { LanceDriver } from "@notesnook/desktop";
 import { expose } from "comlink";
 
-export type SQLiteWorker = typeof SQLite.prototype;
-const db = new SQLite();
+export type DesktopDbWorker = typeof LanceDriver.prototype;
+const db = new LanceDriver();
 expose(db);

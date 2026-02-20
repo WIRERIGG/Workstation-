@@ -42,21 +42,39 @@ const isBeta = version.includes("-beta");
 const isTesting =
   process.env.TEST === "true" || process.env.NODE_ENV === "development";
 const isDesktop = process.env.PLATFORM === "desktop";
+const isTauri = process.env.PLATFORM === "tauri";
+const isDesktopLike = isDesktop || isTauri;
 const isThemeBuilder = process.env.THEME_BUILDER === "true";
 const isAnalyzing = process.env.ANALYZING === "true";
+
+// Native NAPI-RS modules that must never be bundled by Vite/esbuild.
+// They are loaded at runtime via require() in Electron's Node.js context.
+const NATIVE_MODULES = [
+  "@lancedb/lancedb",
+  "apache-arrow",
+  "better-sqlite3-multiple-ciphers"
+];
+const NATIVE_MODULE_PATTERN = /^(@lancedb\/lancedb|apache-arrow|better-sqlite3-multiple-ciphers)/;
+
+// Tauri-only packages — only available at runtime inside the Tauri webview.
+// When building for web or Electron, these must be externalized so Vite's
+// import analysis doesn't fail on dynamic import() calls in guarded code paths.
+const TAURI_MODULE_PATTERN = /^(@tauri-apps\/|@xterm\/)/;
 
 export default defineConfig({
   envPrefix: "NN_",
   root: "src/",
   publicDir: isThemeBuilder ? path.join(__dirname, "public") : "../public",
   build: {
-    target: isDesktop ? "esnext" : "modules",
+    target: isDesktopLike ? "esnext" : "modules",
     outDir: "../build",
     minify: "esbuild",
     cssMinify: true,
     emptyOutDir: true,
-    sourcemap: !isDesktop,
+    sourcemap: !isDesktopLike,
     rollupOptions: {
+      // Mark native modules as external so rollup doesn't bundle them
+      external: isDesktopLike ? NATIVE_MODULE_PATTERN : undefined,
       output: {
         plugins: [emitEditorStyles()],
         assetFileNames: "assets/[name]-[hash:12][extname]",
@@ -79,7 +97,8 @@ export default defineConfig({
     GIT_HASH: `"${gitHash}"`,
     APP_VERSION: `"${version}"`,
     PUBLIC_URL: `"${process.env.PUBLIC_URL || ""}"`,
-    IS_DESKTOP_APP: isDesktop,
+    IS_DESKTOP_APP: isDesktopLike,
+    IS_TAURI: isTauri,
     PLATFORM: `"${process.env.PLATFORM}"`,
     IS_TESTING: process.env.TEST === "true",
     IS_BETA: isBeta,
@@ -102,22 +121,99 @@ export default defineConfig({
     alias: [
       {
         find: /\/desktop-bridge$/gm,
-        replacement: isDesktop
-          ? "/desktop-bridge/index.desktop"
-          : "/desktop-bridge/index"
+        replacement: isTauri
+          ? "/desktop-bridge/index.tauri"
+          : isDesktop
+            ? "/desktop-bridge/index.desktop"
+            : "/desktop-bridge/index"
       },
       {
         find: /\/sqlite$/gm,
-        replacement: isDesktop ? "/sqlite/index.desktop" : "/sqlite/index"
+        replacement: isTauri
+          ? "/sqlite/index.tauri"
+          : isDesktop
+            ? "/sqlite/index.desktop"
+            : "/sqlite/index"
       }
     ]
   },
+  optimizeDeps: {
+    // Force pre-bundle heavy deps upfront instead of discovering on first request.
+    // This eliminates the waterfall delay when Vite processes these on-demand.
+    include: [
+      "react",
+      "react-dom",
+      "@emotion/react",
+      "@theme-ui/components",
+      "@theme-ui/core",
+      "@mdi/js",
+      "@mdi/react",
+      "zustand",
+      "dayjs",
+      "react-hot-toast",
+      "react-modal",
+      "@tanstack/react-virtual",
+      "wouter",
+      "hotkeys-js",
+      "react-freeze",
+      "mutative",
+      "zustand-mutative"
+    ],
+    // Native NAPI-RS modules must not be pre-bundled by Vite's esbuild.
+    // Always exclude — even in web mode, Vite scans @notesnook/desktop's
+    // dependency tree and hits LanceDB's .node binary files.
+    exclude: [...NATIVE_MODULES, ...(!isTauri ? ["@tauri-apps/api", "@tauri-apps/plugin-fs", "@xterm/xterm", "@xterm/addon-fit", "@xterm/addon-web-links"] : [])],
+    esbuildOptions: {
+      plugins: [
+        {
+          name: "externalize-native-modules",
+          setup(build) {
+            build.onResolve(
+              { filter: NATIVE_MODULE_PATTERN },
+              (args) => ({ path: args.path, external: true })
+            );
+            // Also catch platform-specific LanceDB packages
+            build.onResolve(
+              { filter: /^@lancedb\/lancedb-/ },
+              (args) => ({ path: args.path, external: true })
+            );
+            // Externalize @tauri-apps/* when not in Tauri mode
+            if (!isTauri) {
+              build.onResolve(
+                { filter: TAURI_MODULE_PATTERN },
+                (args) => ({ path: args.path, external: true })
+              );
+            }
+          }
+        }
+      ]
+    }
+  },
   server: {
-    port: 3000
+    port: 3000,
+    fs: {
+      // Allow serving files from the entire monorepo root so that
+      // fonts in packages/editor/styles/fonts/ don't get 403'd.
+      allow: [path.resolve(__dirname, "../..")]
+    },
+    // Pre-transform critical paths on startup for faster first load
+    warmup: {
+      clientFiles: [
+        "./src/app.tsx",
+        "./src/bootstrap.tsx",
+        "./src/views/dashboard.tsx",
+        "./src/components/navigation-menu/index.tsx",
+        "./src/stores/*.ts"
+      ]
+    }
   },
   worker: {
     format: "es",
     rollupOptions: {
+      // Native NAPI-RS modules — loaded at runtime by Node.js/Electron
+      external: isDesktop && !isTauri
+        ? [NATIVE_MODULE_PATTERN, /^@lancedb\/lancedb-/]
+        : [],
       output: {
         assetFileNames: "assets/[name]-[hash:12][extname]",
         chunkFileNames: "assets/[name]-[hash:12].js",
@@ -127,10 +223,15 @@ export default defineConfig({
   },
   css: {
     postcss: {
-      plugins: [autoprefixer()]
+      // Skip autoprefixer in dev for desktop — Tauri/Electron use Chromium only
+      plugins: isDesktopLike && process.env.NODE_ENV !== "production"
+        ? []
+        : [autoprefixer()]
     }
   },
   plugins: [
+    ...(isDesktop && !isTauri ? [externalizeNativeModulesPlugin()] : []),
+    ...(!isTauri ? [externalizeTauriModulesPlugin()] : []),
     ...(isAnalyzing
       ? [
           visualizer({
@@ -140,7 +241,7 @@ export default defineConfig({
           }) as PluginOption
         ]
       : []),
-    ...((isThemeBuilder || isDesktop) && process.env.NODE_ENV === "production"
+    ...(isThemeBuilder || isDesktopLike
       ? []
       : [
           VitePWA({
@@ -185,7 +286,7 @@ export default defineConfig({
         // ...svgr options (https://react-svgr.com/docs/options/)
       }
     }),
-    ...(isDesktop
+    ...(isDesktopLike
       ? []
       : [
           prefetchPlugin({
@@ -273,6 +374,45 @@ function prefetchPlugin(options?: {
       );
 
       return html;
+    }
+  };
+}
+
+/**
+ * Vite plugin that externalizes native NAPI-RS modules during dev serving.
+ * Works with the esbuild plugin in optimizeDeps to prevent all bundler
+ * stages from following require() chains into .node binary files.
+ */
+function externalizeNativeModulesPlugin(): Plugin {
+  return {
+    name: "vite-plugin-externalize-native-modules",
+    enforce: "pre",
+    resolveId(source) {
+      if (
+        NATIVE_MODULE_PATTERN.test(source) ||
+        /^@lancedb\/lancedb-/.test(source)
+      ) {
+        return { id: source, external: true };
+      }
+      return null;
+    }
+  };
+}
+
+/**
+ * Vite plugin that externalizes @tauri-apps/* packages when not building
+ * for Tauri. Views use guarded dynamic import() calls that never execute
+ * in web/Electron mode, but Vite's import analysis still tries to resolve them.
+ */
+function externalizeTauriModulesPlugin(): Plugin {
+  return {
+    name: "vite-plugin-externalize-tauri-modules",
+    enforce: "pre",
+    resolveId(source) {
+      if (TAURI_MODULE_PATTERN.test(source)) {
+        return { id: source, external: true };
+      }
+      return null;
     }
   };
 }

@@ -29,15 +29,15 @@ import {
 } from "@streetwriters/kysely";
 import { desktop } from "../desktop-bridge";
 import Worker from "./sqlite.worker.desktop.ts?worker";
-import type { SQLiteWorker } from "./sqlite.worker.desktop";
+import type { DesktopDbWorker } from "./sqlite.worker.desktop";
 import { wrap, Remote } from "comlink";
 import { Mutex } from "async-mutex";
 import { DialectOptions } from ".";
 
-class SqliteDriver implements Driver {
+class DesktopDriver implements Driver {
   connection?: DatabaseConnection;
   private connectionMutex = new Mutex();
-  worker: Remote<SQLiteWorker> = wrap<SQLiteWorker>(new Worker());
+  worker: Remote<DesktopDbWorker> = wrap<DesktopDbWorker>(new Worker());
   constructor(private readonly config: { name: string }) {}
 
   async init(): Promise<void> {
@@ -45,20 +45,20 @@ class SqliteDriver implements Driver {
       filePath: `userData/${this.config.name}.sql`
     });
     await this.worker.open(path);
-    this.connection = new SqliteWorkerConnection(this.worker);
+    this.connection = new DesktopWorkerConnection(this.worker);
   }
 
   async acquireConnection(): Promise<DatabaseConnection> {
     if (!this.connection) throw new Error("Driver not initialized.");
 
-    // SQLite only has one single connection. We use a mutex here to wait
-    // until the single connection has been released.
+    // Single connection with mutex — applies to both SQLite and LanceDB.
     await this.connectionMutex.waitForUnlock();
     await this.connectionMutex.acquire();
     return this.connection;
   }
 
   async beginTransaction(connection: DatabaseConnection): Promise<void> {
+    // LanceDB: no-op (transactions not supported, but the driver handles it)
     await connection.executeQuery(CompiledQuery.raw("begin"));
   }
 
@@ -86,11 +86,11 @@ class SqliteDriver implements Driver {
   }
 }
 
-class SqliteWorkerConnection implements DatabaseConnection {
-  constructor(private readonly worker: Remote<SQLiteWorker>) {}
+class DesktopWorkerConnection implements DatabaseConnection {
+  constructor(private readonly worker: Remote<DesktopDbWorker>) {}
 
   streamQuery<R>(): AsyncIterableIterator<QueryResult<R>> {
-    throw new Error("wasqlite driver doesn't support streaming");
+    throw new Error("desktop driver doesn't support streaming");
   }
 
   async executeQuery<R>(
@@ -104,11 +104,12 @@ class SqliteWorkerConnection implements DatabaseConnection {
 export const createDialect = (options: DialectOptions): Dialect => {
   return {
     createDriver: () =>
-      new SqliteDriver({
+      new DesktopDriver({
         name: options.name
       }),
     createAdapter: () => new SqliteAdapter(),
     createIntrospector: (db) => new SqliteIntrospector(db),
+    // Keep SqliteQueryCompiler — LanceDB driver parses the SQLite SQL it produces
     createQueryCompiler: () => new SqliteQueryCompiler()
   };
 };

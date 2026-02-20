@@ -39,6 +39,13 @@ import { desktop } from "./common/desktop-bridge";
 import { FeatureDialog } from "./dialogs/feature-dialog";
 import { AnnouncementDialog } from "./dialogs/announcement-dialog";
 import { logger } from "./utils/logger";
+import { initWorkstationEvents } from "./utils/workstation-events";
+import { store as brandingStore } from "./stores/branding-store";
+import { OnboardingWizardDialog } from "./dialogs/onboarding-wizard-dialog";
+import { hydrateFromBackend } from "./utils/workstation-hydrate";
+
+// Initialize workstation cross-module events (OpenClaw, agent notifications, chat commands)
+initWorkstationEvents();
 
 export default function AppEffects() {
   const refreshNavItems = useStore((store) => store.refreshNavItems);
@@ -59,12 +66,22 @@ export default function AppEffects() {
       initEditorStore();
 
       (async function () {
+        // Hydrate workstation stores from Electron backend (desktop only)
+        if (IS_DESKTOP_APP) {
+          await hydrateFromBackend();
+        }
+
         await resetFeatures();
         await refreshNavItems();
         await updateLastSynced();
         await initUser();
         // await resetNotices();
         setIsVaultCreated(await db.vault.exists());
+
+        // Show onboarding wizard on first launch
+        if (!brandingStore.branding.isOnboarded) {
+          await OnboardingWizardDialog.show({});
+        }
 
         await FeatureDialog.show({ featureName: "highlights" });
         await scheduleBackups();

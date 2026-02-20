@@ -99,8 +99,12 @@ export function EmbedPopup(props: EmbedPopupProps) {
             if (heightValue && !isNaN(parseInt(heightValue)))
               _height = parseInt(heightValue);
           }
-          const convertedUrl = convertUrlToEmbedUrl(_src);
-          if (convertedUrl) _src = convertedUrl;
+          try {
+            const convertedUrl = convertUrlToEmbedUrl(_src);
+            if (convertedUrl) _src = convertedUrl;
+          } catch {
+            // URL conversion not supported, use as-is
+          }
           if (_src.startsWith("javascript:")) {
             return setError("Embedding javascript code is not supported.");
           }

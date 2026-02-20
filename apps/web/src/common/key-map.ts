@@ -26,6 +26,7 @@ import { hashNavigate } from "../navigation";
 import { getKeybinding, keybindings } from "@notesnook/common";
 import { KeyboardShortcutsDialog } from "../dialogs/keyboard-shortcuts-dialog";
 import { isMac } from "../utils/platform";
+import { registerWorkstationKeyMap } from "./workstation-keymap";
 
 function isInEditor(e: KeyboardEvent) {
   return (
@@ -100,4 +101,6 @@ export function registerKeyMap() {
       action(e);
     });
   });
+
+  registerWorkstationKeyMap();
 }

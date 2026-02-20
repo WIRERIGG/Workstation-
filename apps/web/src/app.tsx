@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Box, Flex } from "@theme-ui/components";
 import { ScopedThemeProvider } from "./components/theme-provider";
 import useMobile from "./hooks/use-mobile";
@@ -38,6 +38,8 @@ import {
 import GlobalMenuWrapper from "./components/global-menu-wrapper";
 import AppEffects from "./app-effects";
 import HashRouter from "./components/hash-router";
+import useHashRoutes from "./hooks/use-hash-routes";
+import hashroutes from "./navigation/hash-routes";
 import { useWindowFocus } from "./hooks/use-window-focus";
 import { Global } from "@emotion/react";
 import { isMac } from "./utils/platform";
@@ -47,7 +49,10 @@ import { TITLE_BAR_HEIGHT } from "./components/title-bar";
 import { getFontSizes } from "@notesnook/theme/theme/font/fontsize.js";
 import { useWindowControls } from "./hooks/use-window-controls";
 import { STATUS_BAR_HEIGHT } from "./common/constants";
-import { NavigationEvents } from "./navigation";
+import { getCurrentPath, NavigationEvents } from "./navigation";
+// Agent Chat is now a sidebar route, no floating FAB
+import { CommandBar } from "./components/command-bar";
+import { useStore as useBrandingStore } from "./stores/branding-store";
 
 new WebExtensionRelay();
 
@@ -58,7 +63,12 @@ function App() {
   const { isFullscreen } = useWindowControls();
   const hasNativeTitlebar =
     useSettingStore.getState().desktopIntegrationSettings?.nativeTitlebar;
-  console.timeEnd("loading app");
+  const brandColor = useBrandingStore((s) => s.branding.primaryColor);
+
+  // Apply brand color as CSS custom property
+  useEffect(() => {
+    document.documentElement.style.setProperty("--brand-color", brandColor);
+  }, [brandColor]);
 
   useEffect(() => {
     if (isMobile) {
@@ -131,17 +141,48 @@ function App() {
           containerStyle={{ bottom: STATUS_BAR_HEIGHT + 10 }}
         />
       </Flex>
+      <CommandBar />
     </>
   );
 }
 
 export default App;
 
+// Workstation (placeholder) routes where the editor pane should be hidden
+const WORKSTATION_ROUTES = new Set([
+  "/dashboard", "/tasks", "/calendar", "/agents", "/spreadsheets",
+  "/communications", "/agent-chat", "/terminal", "/files", "/newsletters",
+  "/call-queue", "/control", "/git", "/conversations", "/workspaces"
+]);
+
+function useIsWorkstationRoute() {
+  const [isWorkstation, setIsWorkstation] = useState(
+    WORKSTATION_ROUTES.has(getCurrentPath())
+  );
+  useEffect(() => {
+    const check = () => setIsWorkstation(WORKSTATION_ROUTES.has(getCurrentPath()));
+    const navEvent = NavigationEvents.subscribe("onNavigate", check);
+    window.addEventListener("popstate", check);
+    return () => {
+      navEvent.unsubscribe();
+      window.removeEventListener("popstate", check);
+    };
+  }, []);
+  return isWorkstation;
+}
+
+// Listens for hash route changes (e.g. #/settings) without rendering the editor
+function HashRouteListener() {
+  useHashRoutes(hashroutes);
+  return null;
+}
+
 function DesktopAppContents() {
   const isFocusMode = useStore((store) => store.isFocusMode);
   const isListPaneVisible = useStore((store) => store.isListPaneVisible);
   const isTablet = useTablet();
   const navPane = useRef<SplitPaneImperativeHandle>(null);
+  const isWorkstationRoute = useIsWorkstationRoute();
 
   useEffect(() => {
     if (isTablet) navPane.current?.collapse(0);
@@ -190,72 +231,106 @@ function DesktopAppContents() {
           overflow: "hidden"
         }}
       >
-        <SplitPane
-          className="global-split-pane"
-          ref={navPane}
-          autoSaveId="global-panel-group"
-          direction="vertical"
-          onChange={(sizes) => {
-            useStore.setState({
-              isNavPaneCollapsed: sizes[0] <= 70,
-              isListPaneVisible: sizes[1] > 5 // we keep a 5px margin just to be safe
-            });
-          }}
-        >
-          {isFocusMode ? null : (
-            <Pane
-              id="nav-pane"
-              initialSize={isTablet ? 0 : 250}
-              className={`nav-pane`}
-              snapSize={150}
-              minSize={50}
-              maxSize={isTablet ? 0 : 500}
-              style={{
-                overflow: "initial",
-                zIndex: 3
-              }}
-            >
-              <NavigationMenu onExpand={() => navPane.current?.reset(0)} />
-            </Pane>
-          )}
-          {isFocusMode ? null : (
-            <Pane
-              id="list-pane"
-              initialSize={380}
-              style={{ flex: 1, display: "flex" }}
-              snapSize={120}
-              maxSize={1000}
-              className="list-pane"
-            >
-              <ScopedThemeProvider
-                className="listMenu"
-                scope="list"
+        {isWorkstationRoute ? (
+          /* Workstation layout: sidebar + full-width content, no editor pane */
+          <Flex sx={{ flex: 1, overflow: "hidden" }}>
+            <HashRouteListener />
+            {isFocusMode ? null : (
+              <Box
+                className="nav-pane"
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flex: 1,
-                  bg: "background",
-                  borderRight: "1px solid var(--separator)"
+                  width: isTablet ? 0 : 250,
+                  minWidth: isTablet ? 0 : 50,
+                  maxWidth: isTablet ? 0 : 500,
+                  overflow: "initial",
+                  zIndex: 3,
+                  flexShrink: 0
                 }}
               >
-                <CachedRouter />
-              </ScopedThemeProvider>
-            </Pane>
-          )}
-          <Pane
-            id="editor-pane"
-            className="editor-pane"
-            style={{
-              flex: 1,
-              display: "flex",
-              backgroundColor: "var(--background)",
-              overflow: "hidden",
-              flexDirection: "column"
+                <NavigationMenu />
+              </Box>
+            )}
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
+                bg: "background"
+              }}
+            >
+              <CachedRouter />
+            </Box>
+          </Flex>
+        ) : (
+          /* Notesnook layout: sidebar + list + editor (original SplitPane) */
+          <SplitPane
+            className="global-split-pane"
+            ref={navPane}
+            autoSaveId="global-panel-group"
+            direction="vertical"
+            onChange={(sizes) => {
+              useStore.setState({
+                isNavPaneCollapsed: sizes[0] <= 70,
+                isListPaneVisible: sizes[1] > 5
+              });
             }}
           >
-            {<HashRouter />}
-          </Pane>
-        </SplitPane>
+            {isFocusMode ? null : (
+              <Pane
+                id="nav-pane"
+                initialSize={isTablet ? 0 : 250}
+                className={`nav-pane`}
+                snapSize={150}
+                minSize={50}
+                maxSize={isTablet ? 0 : 500}
+                style={{
+                  overflow: "initial",
+                  zIndex: 3
+                }}
+              >
+                <NavigationMenu onExpand={() => navPane.current?.reset(0)} />
+              </Pane>
+            )}
+            {isFocusMode ? null : (
+              <Pane
+                id="list-pane"
+                initialSize={380}
+                style={{ flex: 1, display: "flex" }}
+                snapSize={120}
+                maxSize={1000}
+                className="list-pane"
+              >
+                <ScopedThemeProvider
+                  className="listMenu"
+                  scope="list"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: 1,
+                    bg: "background",
+                    borderRight: "1px solid var(--separator)"
+                  }}
+                >
+                  <CachedRouter />
+                </ScopedThemeProvider>
+              </Pane>
+            )}
+            <Pane
+              id="editor-pane"
+              className="editor-pane"
+              style={{
+                flex: 1,
+                display: "flex",
+                backgroundColor: "var(--background)",
+                overflow: "hidden",
+                flexDirection: "column"
+              }}
+            >
+              {<HashRouter />}
+            </Pane>
+          </SplitPane>
+        )}
       </Flex>
       <StatusBar />
     </>

@@ -96,7 +96,7 @@ export const NavigationEvents = new EventManager();
 
 export function getHomeRoute() {
   const homepage = Config.get<HomePage>("homepage-v2");
-  if (!homepage) return "/notes";
+  if (!homepage) return "/dashboard";
 
   switch (homepage.type) {
     case "route":
@@ -108,7 +108,7 @@ export function getHomeRoute() {
     case "color":
       return `/colors/${homepage.id}`;
     default:
-      return "/notes";
+      return "/dashboard";
   }
 }
 

@@ -39,7 +39,7 @@ async function initializeLogger() {
           encrypted: false
         }),
       ...(IS_DESKTOP_APP || isFeatureSupported("opfs")
-        ? { journalMode: "WAL", lockingMode: "exclusive" }
+        ? { journalMode: typeof IS_TAURI !== "undefined" && IS_TAURI ? "DELETE" : "WAL", lockingMode: "exclusive" }
         : {
             journalMode: "MEMORY",
             lockingMode: "exclusive"

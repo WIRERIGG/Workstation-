@@ -46,7 +46,7 @@ export function getWindowControls(
       icon: WindowMinimize,
       hidden: hasNativeWindowControls || isFullscreen,
       enabled: true,
-      onClick: () => desktop?.window.minimze.mutate()
+      onClick: () => desktop?.window?.minimze?.mutate()
     },
     {
       title: isMaximized ? strings.restore() : strings.maximize(),
@@ -55,15 +55,15 @@ export function getWindowControls(
       hidden: hasNativeWindowControls || isFullscreen,
       onClick: () =>
         isMaximized
-          ? desktop?.window.restore.mutate()
-          : desktop?.window.maximize.mutate()
+          ? desktop?.window?.restore?.mutate()
+          : desktop?.window?.maximize?.mutate()
     },
     {
       title: strings.close(),
       icon: WindowClose,
       hidden: hasNativeWindowControls || isFullscreen,
       enabled: true,
-      onClick: () => window.close()
+      onClick: () => desktop?.window?.close?.mutate() ?? window.close()
     }
   ];
 }

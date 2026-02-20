@@ -25,6 +25,21 @@ import Trash from "../views/trash";
 import { useStore as useNoteStore } from "../stores/note-store";
 import { useStore as useAppStore } from "../stores/app-store";
 import Reminders from "../views/reminders";
+import DashboardView from "../views/dashboard";
+import AgentsView from "../views/agents";
+import TasksView from "../views/tasks";
+import CommunicationsView from "../views/communications";
+import CalendarView from "../views/calendar";
+import SpreadsheetsView from "../views/spreadsheets";
+import AgentChatView from "../views/agent-chat";
+import TerminalView from "../views/terminal";
+import FileExplorerView from "../views/file-explorer";
+import GitPanel from "../views/git-panel";
+import ConversationsView from "../views/conversations";
+import WorkspacesView from "../views/workspaces";
+import NewslettersView from "../views/newsletters";
+import CallQueueView from "../views/call-queue";
+import ControlView from "../views/control";
 import { RouteResult, defineRoutes } from "./types";
 import { CREATE_BUTTON_MAP } from "../common";
 import { strings } from "@notesnook/intl";
@@ -143,6 +158,126 @@ const routes = defineRoutes({
       title: strings.routes.Monographs(),
       type: "notes",
       component: Notes
+    });
+  },
+  "/dashboard": () => {
+    return defineRoute({
+      key: "dashboard",
+      title: "Dashboard",
+      type: "placeholder",
+      component: DashboardView
+    });
+  },
+  "/tasks": () => {
+    return defineRoute({
+      key: "tasks",
+      title: "Tasks",
+      type: "placeholder",
+      component: TasksView
+    });
+  },
+  "/calendar": () => {
+    return defineRoute({
+      key: "calendar",
+      title: "Calendar",
+      type: "placeholder",
+      component: CalendarView
+    });
+  },
+  "/agents": () => {
+    return defineRoute({
+      key: "agents",
+      title: "Agents",
+      type: "placeholder",
+      component: AgentsView
+    });
+  },
+  "/spreadsheets": () => {
+    return defineRoute({
+      key: "spreadsheets",
+      title: "Spreadsheets",
+      type: "placeholder",
+      component: SpreadsheetsView
+    });
+  },
+  "/communications": () => {
+    return defineRoute({
+      key: "communications",
+      title: "Communications",
+      type: "placeholder",
+      component: CommunicationsView
+    });
+  },
+  "/agent-chat": () => {
+    return defineRoute({
+      key: "agent-chat",
+      title: "Agent Chat",
+      type: "placeholder",
+      component: AgentChatView
+    });
+  },
+  "/terminal": () => {
+    return defineRoute({
+      key: "terminal",
+      title: "Terminal",
+      type: "placeholder",
+      component: TerminalView
+    });
+  },
+  "/files": () => {
+    return defineRoute({
+      key: "files",
+      title: "Files",
+      type: "placeholder",
+      component: FileExplorerView
+    });
+  },
+  "/newsletters": () => {
+    return defineRoute({
+      key: "newsletters",
+      title: "Newsletters",
+      type: "placeholder",
+      component: NewslettersView
+    });
+  },
+  "/call-queue": () => {
+    return defineRoute({
+      key: "call-queue",
+      title: "Call Queue",
+      type: "placeholder",
+      component: CallQueueView
+    });
+  },
+  "/control": () => {
+    return defineRoute({
+      key: "control",
+      title: "Control Panel",
+      type: "placeholder",
+      component: ControlView
+    });
+  },
+  "/git": () => {
+    return defineRoute({
+      key: "git",
+      title: "Git",
+      type: "placeholder",
+      component: GitPanel
+    });
+  },
+  "/conversations": () => {
+    return defineRoute({
+      key: "conversations",
+      title: "Conversations",
+      type: "placeholder",
+      component: ConversationsView
+    });
+  },
+  "/workspaces": () => {
+    return defineRoute({
+      key: "workspaces",
+      title: "Workspaces",
+      type: "placeholder",
+      component: WorkspacesView
     });
   }
 });

@@ -81,10 +81,31 @@ docs/
 
 ## Agents
 
+### Reference Guides (Markdown)
+
 | Agent | Path | Purpose |
 |-------|------|---------|
 | orchestrator | `.claude/agents/orchestrator.md` | Multi-step task coordination |
 | build-resolver | `.claude/agents/build-resolver.md` | Build failure diagnosis and resolution |
+
+### Pydantic AI Agents (Python)
+
+| Agent | Path | Purpose |
+|-------|------|---------|
+| awareness_orchestrator | `.claude/agents/awareness_orchestrator/` | Coordinates all specialized agents |
+| typescript_code_agent | `.claude/agents/typescript_code_agent/` | Deep TS/React code analysis |
+| eslint_ai_agent | `.claude/agents/eslint_ai_agent/` | ESLint compliance with AI fixes |
+| core_reliability_agent | `.claude/agents/core_reliability_agent/` | Encryption correctness, data integrity |
+| build_resolver | `.claude/agents/build_resolver/` | Build error resolution with escalation |
+| bundle_optimizer | `.claude/agents/bundle_optimizer/` | Bundle size and code splitting |
+| debug_system | `.claude/agents/debug_system/` | Node.js/React debugging |
+| performance_profiler | `.claude/agents/performance_profiler/` | Runtime and memory profiling |
+
+Shared infrastructure:
+- `agent_factory_template.py` — Factory pattern with validation for all agents
+- `shared_integration.py` — ESLint + Bundle Optimizer pipeline integration
+
+Reference use-cases: `use-cases/` (Pydantic AI examples, agent factory patterns)
 
 ## Commit Convention
 
