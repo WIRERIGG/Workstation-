@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,6 +26,10 @@ import { bridgeRouter } from "./bridge";
 import { safeStorageRouter } from "./safe-storage";
 import { windowRouter } from "./window";
 import { workstationDataRouter } from "./workstation-data";
+import { ptyRouter } from "./pty";
+import { gitRouter } from "./git";
+import { filesystemRouter } from "./filesystem";
+import { highlighterRouter } from "./highlighter";
 
 const t = initTRPC.create();
 
@@ -37,7 +41,11 @@ export const router = t.router({
   bridge: bridgeRouter,
   safeStorage: safeStorageRouter,
   window: windowRouter,
-  workstationData: workstationDataRouter
+  workstationData: workstationDataRouter,
+  pty: ptyRouter,
+  git: gitRouter,
+  filesystem: filesystemRouter,
+  highlighter: highlighterRouter
 });
 
 export const api = router.createCaller({});
