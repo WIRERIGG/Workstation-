@@ -1296,24 +1296,7 @@ declare const IS_TAURI: boolean | undefined;
 
 function DashboardView() {
   const agents = useAgentStore((s) => s.agents);
-  const tasks = useTaskStore((s) => s.tasks);
-  const messages = useCommsStore((s) => s.messages);
-
   const activeAgents = agents.filter((a) => a.status === "running").length;
-  const taskStats = {
-    inProgress: tasks.filter((t) => t.status === "in_progress").length,
-    todo: tasks.filter((t) => t.status === "todo").length,
-    done: tasks.filter((t) => t.status === "done").length,
-    overdue: tasks.filter(
-      (t) =>
-        t.dueDate &&
-        t.dueDate < Date.now() &&
-        t.status !== "done" &&
-        t.status !== "cancelled"
-    ).length
-  };
-  const unreadMessages = messages.filter((m) => !m.isRead).length;
-  const draftReplies = messages.filter((m) => m.agentDraftReply !== null).length;
 
   return (
     <Flex
@@ -1326,100 +1309,37 @@ function DashboardView() {
         gap: 3
       }}
     >
-      {/* Header Row: Greeting + Quick Actions */}
-      <Flex sx={{ alignItems: "flex-start", justifyContent: "space-between", gap: 3 }}>
-        <Flex sx={{ flexDirection: "column" }}>
-          <Text variant="heading" sx={{ fontSize: 22 }}>
-            {getGreeting()}
-          </Text>
-          <Text sx={{ fontSize: 13, color: "paragraph-secondary" }}>
-            {agents.length} agents deployed · {activeAgents} active ·{" "}
-            {new Date().toLocaleDateString([], {
-              weekday: "long",
-              month: "long",
-              day: "numeric"
-            })}
-          </Text>
-        </Flex>
-        <QuickActions />
+      {/* Header */}
+      <Flex sx={{ alignItems: "baseline", justifyContent: "space-between" }}>
+        <Text variant="heading" sx={{ fontSize: 22 }}>
+          {getGreeting()}
+        </Text>
+        <Text sx={{ fontSize: 12, color: "paragraph-secondary" }}>
+          {agents.length} agents · {activeAgents} active ·{" "}
+          {new Date().toLocaleDateString([], {
+            weekday: "long",
+            month: "long",
+            day: "numeric"
+          })}
+        </Text>
       </Flex>
 
-      {/* Stat Cards */}
-      <Flex sx={{ gap: 2, flexWrap: "wrap" }}>
-        <StatCard
-          label="In Progress"
-          value={taskStats.inProgress}
-          color="#3b82f6"
-          onClick={() => navigate("/tasks" as never)}
-        />
-        <StatCard
-          label="To Do"
-          value={taskStats.todo}
-          onClick={() => navigate("/tasks" as never)}
-        />
-        <StatCard
-          label="Done"
-          value={taskStats.done}
-          color="#22c55e"
-          onClick={() => navigate("/tasks" as never)}
-        />
-        <StatCard
-          label="Unread"
-          value={unreadMessages}
-          color={unreadMessages > 0 ? "#ef4444" : undefined}
-          onClick={() => navigate("/communications" as never)}
-        />
-        <StatCard
-          label="Drafts"
-          value={draftReplies}
-          color={draftReplies > 0 ? "#f59e0b" : undefined}
-          onClick={() => navigate("/communications" as never)}
-        />
-        {taskStats.overdue > 0 && (
-          <StatCard
-            label="Overdue"
-            value={taskStats.overdue}
-            color="#ef4444"
-            onClick={() => navigate("/tasks" as never)}
-          />
-        )}
-      </Flex>
-
-      {/* System Vitals */}
-      <SystemVitalsWidget />
-
-      {/* OpenClaw Status */}
-      <OpenClawStatusBanner />
-
-      {/* Risk & Opportunity Alerts */}
-      <DashboardCard>
-        <SectionHeader title="Alerts & Opportunities" />
-        <RiskAlertsWidget />
-      </DashboardCard>
-
-      {/* Three-column layout: Schedule | Tasks | Agents */}
+      {/* Row 1: Alerts | Schedule | Agents */}
       <Flex sx={{ gap: 3, flex: 1, minHeight: 0 }}>
-        {/* Column 1: Today's Schedule */}
+        <DashboardCard sx={{ flex: 1, minWidth: 0, overflow: "auto" }}>
+          <SectionHeader title="Alerts & Opportunities" />
+          <RiskAlertsWidget />
+        </DashboardCard>
+
         <DashboardCard sx={{ flex: 1, minWidth: 0, overflow: "auto" }}>
           <SectionHeader
             title="Today's Schedule"
-            actionLabel="View Calendar"
+            actionLabel="Calendar"
             onAction={() => navigate("/calendar" as never)}
           />
           <TodaySchedule />
         </DashboardCard>
 
-        {/* Column 2: Priority Tasks */}
-        <DashboardCard sx={{ flex: 1, minWidth: 0, overflow: "auto" }}>
-          <SectionHeader
-            title="Priority Tasks"
-            actionLabel="View All"
-            onAction={() => navigate("/tasks" as never)}
-          />
-          <PriorityTasks />
-        </DashboardCard>
-
-        {/* Column 3: Agents */}
         <DashboardCard sx={{ flex: 1, minWidth: 0, overflow: "auto" }}>
           <SectionHeader
             title="Agent Status"
@@ -1430,59 +1350,20 @@ function DashboardView() {
         </DashboardCard>
       </Flex>
 
-      {/* Developer Row: Git | Workspaces | Conversations | Terminal */}
+      {/* Row 2: Tasks | Cost & Usage */}
       <Flex sx={{ gap: 3 }}>
-        <DashboardCard sx={{ flex: 1, minWidth: 0, maxHeight: 220, overflow: "auto" }}>
+        <DashboardCard sx={{ flex: 2, minWidth: 0, maxHeight: 280, overflow: "auto" }}>
           <SectionHeader
-            title="Git Status"
-            actionLabel="Open Git"
-            onAction={() => navigate("/git" as never)}
-          />
-          <GitStatusCard />
-        </DashboardCard>
-        <DashboardCard sx={{ flex: 1, minWidth: 0, maxHeight: 220, overflow: "auto" }}>
-          <SectionHeader
-            title="Workspaces"
-            actionLabel="Manage"
-            onAction={() => navigate("/workspaces" as never)}
-          />
-          <WorkspacesCard />
-        </DashboardCard>
-        <DashboardCard sx={{ flex: 1, minWidth: 0, maxHeight: 220, overflow: "auto" }}>
-          <SectionHeader
-            title="Recent Conversations"
+            title="Priority Tasks"
             actionLabel="View All"
-            onAction={() => navigate("/conversations" as never)}
+            onAction={() => navigate("/tasks" as never)}
           />
-          <ConversationsCard />
+          <PriorityTasks />
         </DashboardCard>
-        <DashboardCard sx={{ flex: 1, minWidth: 0, maxHeight: 220, overflow: "auto" }}>
-          <SectionHeader
-            title="Terminal"
-            actionLabel="Open"
-            onAction={() => navigate("/terminal" as never)}
-          />
-          <TerminalMiniCard />
-        </DashboardCard>
-      </Flex>
 
-      {/* Three-column bottom: Activity Feed | Cost/Usage | Spreadsheets */}
-      <Flex sx={{ gap: 3 }}>
-        <DashboardCard sx={{ flex: 2, minWidth: 0, maxHeight: 300, overflow: "auto" }}>
-          <SectionHeader title="Activity Feed" />
-          <ActivityFeed />
-        </DashboardCard>
-        <DashboardCard sx={{ flex: 1, minWidth: 0, maxHeight: 300, overflow: "auto" }}>
+        <DashboardCard sx={{ flex: 1, minWidth: 0, maxHeight: 280, overflow: "auto" }}>
           <SectionHeader title="Cost & Usage" />
           <CostUsageWidget />
-        </DashboardCard>
-        <DashboardCard sx={{ flex: 1, minWidth: 0, maxHeight: 300, overflow: "auto" }}>
-          <SectionHeader
-            title="Recent Spreadsheets"
-            actionLabel="View All"
-            onAction={() => navigate("/spreadsheets" as never)}
-          />
-          <RecentSpreadsheets />
         </DashboardCard>
       </Flex>
     </Flex>
