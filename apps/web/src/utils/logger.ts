@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { initialize, logger as _logger, logManager } from "@notesnook/core";
-import { LogMessage, NoopLogger, format } from "@notesnook/logger";
+import { initialize, logger as _logger, logManager } from "@workstation/core";
+import { LogMessage, NoopLogger, format } from "@workstation/logger";
 import { ZipFile } from "./streams/zip-stream";
 import { createWriteStream } from "./stream-saver";
-import { sanitizeFilename } from "@notesnook/common";
+import { sanitizeFilename } from "@workstation/common";
 import { createDialect } from "../common/sqlite";
 import { isFeatureSupported } from "./feature-check";
 
@@ -39,7 +39,7 @@ async function initializeLogger() {
           encrypted: false
         }),
       ...(IS_DESKTOP_APP || isFeatureSupported("opfs")
-        ? { journalMode: typeof IS_TAURI !== "undefined" && IS_TAURI ? "DELETE" : "WAL", lockingMode: "exclusive" }
+        ? { journalMode: "WAL", lockingMode: "exclusive" }
         : {
             journalMode: "MEMORY",
             lockingMode: "exclusive"
@@ -52,7 +52,7 @@ async function initializeLogger() {
     },
     false
   );
-  logger = _logger.scope("notesnook-web");
+  logger = _logger.scope("workstation-web");
 }
 
 async function downloadLogs() {
@@ -77,7 +77,7 @@ async function downloadLogs() {
     }
   })
     .pipeThrough(createZipStream())
-    .pipeTo(await createWriteStream("notesnook-logs.zip"));
+    .pipeTo(await createWriteStream("workstation-logs.zip"));
 }
 
 async function clearLogs() {

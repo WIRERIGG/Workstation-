@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -42,8 +42,6 @@ const isBeta = version.includes("-beta");
 const isTesting =
   process.env.TEST === "true" || process.env.NODE_ENV === "development";
 const isDesktop = process.env.PLATFORM === "desktop";
-const isTauri = process.env.PLATFORM === "tauri";
-const isDesktopLike = isDesktop || isTauri;
 const isThemeBuilder = process.env.THEME_BUILDER === "true";
 const isAnalyzing = process.env.ANALYZING === "true";
 
@@ -56,25 +54,20 @@ const NATIVE_MODULES = [
 ];
 const NATIVE_MODULE_PATTERN = /^(@lancedb\/lancedb|apache-arrow|better-sqlite3-multiple-ciphers)/;
 
-// Tauri-only packages — only available at runtime inside the Tauri webview.
-// When building for web or Electron, these must be externalized so Vite's
-// import analysis doesn't fail on dynamic import() calls in guarded code paths.
-const TAURI_MODULE_PATTERN = /^(@tauri-apps\/|@xterm\/)/;
-
 export default defineConfig({
   envPrefix: "NN_",
   root: "src/",
   publicDir: isThemeBuilder ? path.join(__dirname, "public") : "../public",
   build: {
-    target: isDesktopLike ? "esnext" : "modules",
+    target: isDesktop ? "esnext" : "modules",
     outDir: "../build",
     minify: "esbuild",
     cssMinify: true,
     emptyOutDir: true,
-    sourcemap: !isDesktopLike,
+    sourcemap: !isDesktop,
     rollupOptions: {
       // Mark native modules as external so rollup doesn't bundle them
-      external: isDesktopLike ? NATIVE_MODULE_PATTERN : undefined,
+      external: isDesktop ? NATIVE_MODULE_PATTERN : undefined,
       output: {
         plugins: [emitEditorStyles()],
         assetFileNames: "assets/[name]-[hash:12][extname]",
@@ -93,12 +86,11 @@ export default defineConfig({
     }
   },
   define: {
-    APP_TITLE: `"${isThemeBuilder ? "Notesnook Theme Builder" : "Notesnook"}"`,
+    APP_TITLE: `"${isThemeBuilder ? "Workstation Theme Builder" : "Workstation"}"`,
     GIT_HASH: `"${gitHash}"`,
     APP_VERSION: `"${version}"`,
     PUBLIC_URL: `"${process.env.PUBLIC_URL || ""}"`,
-    IS_DESKTOP_APP: isDesktopLike,
-    IS_TAURI: isTauri,
+    IS_DESKTOP_APP: isDesktop,
     PLATFORM: `"${process.env.PLATFORM}"`,
     IS_TESTING: process.env.TEST === "true",
     IS_BETA: isBeta,
@@ -121,19 +113,15 @@ export default defineConfig({
     alias: [
       {
         find: /\/desktop-bridge$/gm,
-        replacement: isTauri
-          ? "/desktop-bridge/index.tauri"
-          : isDesktop
-            ? "/desktop-bridge/index.desktop"
-            : "/desktop-bridge/index"
+        replacement: isDesktop
+          ? "/desktop-bridge/index.desktop"
+          : "/desktop-bridge/index"
       },
       {
         find: /\/sqlite$/gm,
-        replacement: isTauri
-          ? "/sqlite/index.tauri"
-          : isDesktop
-            ? "/sqlite/index.desktop"
-            : "/sqlite/index"
+        replacement: isDesktop
+          ? "/sqlite/index.desktop"
+          : "/sqlite/index"
       }
     ]
   },
@@ -160,9 +148,9 @@ export default defineConfig({
       "zustand-mutative"
     ],
     // Native NAPI-RS modules must not be pre-bundled by Vite's esbuild.
-    // Always exclude — even in web mode, Vite scans @notesnook/desktop's
+    // Always exclude — even in web mode, Vite scans @workstation/desktop's
     // dependency tree and hits LanceDB's .node binary files.
-    exclude: [...NATIVE_MODULES, ...(!isTauri ? ["@tauri-apps/api", "@tauri-apps/plugin-fs", "@xterm/xterm", "@xterm/addon-fit", "@xterm/addon-web-links"] : [])],
+    exclude: [...NATIVE_MODULES],
     esbuildOptions: {
       plugins: [
         {
@@ -177,13 +165,6 @@ export default defineConfig({
               { filter: /^@lancedb\/lancedb-/ },
               (args) => ({ path: args.path, external: true })
             );
-            // Externalize @tauri-apps/* when not in Tauri mode
-            if (!isTauri) {
-              build.onResolve(
-                { filter: TAURI_MODULE_PATTERN },
-                (args) => ({ path: args.path, external: true })
-              );
-            }
           }
         }
       ]
@@ -211,7 +192,7 @@ export default defineConfig({
     format: "es",
     rollupOptions: {
       // Native NAPI-RS modules — loaded at runtime by Node.js/Electron
-      external: isDesktop && !isTauri
+      external: isDesktop
         ? [NATIVE_MODULE_PATTERN, /^@lancedb\/lancedb-/]
         : [],
       output: {
@@ -223,15 +204,14 @@ export default defineConfig({
   },
   css: {
     postcss: {
-      // Skip autoprefixer in dev for desktop — Tauri/Electron use Chromium only
-      plugins: isDesktopLike && process.env.NODE_ENV !== "production"
+      // Skip autoprefixer in dev for desktop — Electron uses Chromium only
+      plugins: isDesktop && process.env.NODE_ENV !== "production"
         ? []
         : [autoprefixer()]
     }
   },
   plugins: [
-    ...(isDesktop && !isTauri ? [externalizeNativeModulesPlugin()] : []),
-    ...(!isTauri ? [externalizeTauriModulesPlugin()] : []),
+    ...(isDesktop ? [externalizeNativeModulesPlugin()] : []),
     ...(isAnalyzing
       ? [
           visualizer({
@@ -241,7 +221,7 @@ export default defineConfig({
           }) as PluginOption
         ]
       : []),
-    ...(isThemeBuilder || isDesktopLike
+    ...(isThemeBuilder || isDesktop
       ? []
       : [
           VitePWA({
@@ -286,7 +266,7 @@ export default defineConfig({
         // ...svgr options (https://react-svgr.com/docs/options/)
       }
     }),
-    ...(isDesktopLike
+    ...(isDesktop
       ? []
       : [
           prefetchPlugin({
@@ -399,20 +379,3 @@ function externalizeNativeModulesPlugin(): Plugin {
   };
 }
 
-/**
- * Vite plugin that externalizes @tauri-apps/* packages when not building
- * for Tauri. Views use guarded dynamic import() calls that never execute
- * in web/Electron mode, but Vite's import analysis still tries to resolve them.
- */
-function externalizeTauriModulesPlugin(): Plugin {
-  return {
-    name: "vite-plugin-externalize-tauri-modules",
-    enforce: "pre",
-    resolveId(source) {
-      if (TAURI_MODULE_PATTERN.test(source)) {
-        return { id: source, external: true };
-      }
-      return null;
-    }
-  };
-}

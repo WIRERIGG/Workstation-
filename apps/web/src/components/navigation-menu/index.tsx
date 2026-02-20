@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -107,12 +107,12 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { usePersistentState } from "../../hooks/use-persistent-state";
-import { MenuItem } from "@notesnook/ui";
-import { Color, Notebook, Tag } from "@notesnook/core";
+import { MenuItem } from "@workstation/ui";
+import { Color, Notebook, Tag } from "@workstation/core";
 import { handleDrop } from "../../common/drop-handler";
 import { Menu } from "../../hooks/use-menu";
 import { RenameColorDialog } from "../../dialogs/item-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import Tags from "../../views/tags";
 import { Notebooks } from "../../views/notebooks";
 import { UserProfile } from "../../dialogs/settings/components/user-profile";
@@ -133,7 +133,7 @@ import {
   FeatureResult,
   isFeatureAvailable,
   useIsFeatureAvailable
-} from "@notesnook/common";
+} from "@workstation/common";
 import { isUserSubscribed } from "../../hooks/use-is-user-premium";
 import { shouldShowWrapped } from "../../utils/should-show-wrapped";
 
@@ -154,6 +154,13 @@ const routes: Route[] = [
     title: "Dashboard",
     path: "/dashboard",
     icon: Dashboard,
+    section: "workspace"
+  },
+  {
+    id: "control",
+    title: "Control",
+    path: "/control",
+    icon: Radar,
     section: "workspace"
   },
   {
@@ -233,13 +240,6 @@ const routes: Route[] = [
     title: "Call Queue",
     path: "/call-queue",
     icon: PhoneInTalk,
-    section: "tools"
-  },
-  {
-    id: "control",
-    title: "Control",
-    path: "/control",
-    icon: Radar,
     section: "tools"
   },
 
@@ -652,7 +652,8 @@ function Routes({
         ? (r) => !hiddenRoutes.includes(r.id)
         : () => true
     )
-    .filter((r) => (r.loginRequired ? isLoggedIn : true));
+    .filter((r) => (r.loginRequired ? isLoggedIn : true))
+    .filter((r) => (r.section === "developer" ? IS_DESKTOP_APP : true));
 
   return (
     <>
@@ -1069,7 +1070,7 @@ function NavigationDropdown() {
               icon: Documentation.path,
               key: "help-and-support",
               onClick: () => {
-                window.open("https://help.notesnook.com/", "_blank");
+                window.open("https://help.workstation.com/", "_blank");
               }
             },
             {

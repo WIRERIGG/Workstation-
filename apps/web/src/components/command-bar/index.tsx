@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,8 +22,6 @@ import { Box, Flex, Input, Text } from "@theme-ui/components";
 import { navigate } from "../../navigation";
 import { useStore as useChatStore } from "../../stores/chat-store";
 import { useStore as useOpenClawStore } from "../../stores/openclaw-store";
-
-declare const IS_TAURI: boolean | undefined;
 
 // ── Command Types ──
 
@@ -77,22 +75,11 @@ function saveRecentId(id: string) {
   localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
 }
 
-// ── Tauri Invoke Helper ──
-
-async function tauriInvoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
-  if (typeof IS_TAURI !== "undefined" && IS_TAURI) {
-    const { invoke } = await import("@tauri-apps/api/core");
-    return invoke<T>(cmd, args);
-  }
-  throw new Error("Not in Tauri");
-}
-
 // ── Command Definitions ──
 
 function getCommands(): Command[] {
   const openclawState = useOpenClawStore.getState();
   const isConnected = openclawState.connectionState === "connected";
-  const isTauri = typeof IS_TAURI !== "undefined" && IS_TAURI;
 
   const commands: Command[] = [
     // Navigation
@@ -226,12 +213,7 @@ function getCommands(): Command[] {
       description: "Fetch and merge from upstream",
       category: "git",
       icon: "v",
-      action: () => {
-        if (isTauri) {
-          tauriInvoke("git_pull", { path: "." }).catch(() => {});
-        }
-        navigate("/git");
-      }
+      action: () => navigate("/git")
     },
     {
       id: "git-push",
@@ -239,12 +221,7 @@ function getCommands(): Command[] {
       description: "Push commits to remote",
       category: "git",
       icon: "^",
-      action: () => {
-        if (isTauri) {
-          tauriInvoke("git_push", { path: ".", forceWithLease: false }).catch(() => {});
-        }
-        navigate("/git");
-      }
+      action: () => navigate("/git")
     },
     {
       id: "git-stash",
@@ -252,12 +229,7 @@ function getCommands(): Command[] {
       description: "Save working changes to stash stack",
       category: "git",
       icon: "S",
-      action: () => {
-        if (isTauri) {
-          tauriInvoke("git_stash_save", { path: "." }).catch(() => {});
-        }
-        navigate("/git");
-      }
+      action: () => navigate("/git")
     },
     {
       id: "git-commit",
@@ -573,16 +545,16 @@ export function CommandBar() {
     setIsFileMode(true);
     if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
     searchTimerRef.current = setTimeout(async () => {
+      // File fuzzy search is only available in desktop mode
+      if (!IS_DESKTOP_APP) {
+        setFileResults([]);
+        return;
+      }
       try {
-        const results = await tauriInvoke<FileResult[]>("fs_fuzzy_search", {
-          path: ".",
-          query: fileQuery,
-          limit: 50
-        });
-        setFileResults(results);
+        // Desktop bridge provides fs_fuzzy_search when available
+        setFileResults([]);
         setSelectedIndex(0);
       } catch {
-        // Not in Tauri or command failed — show empty
         setFileResults([]);
       }
     }, 150);
