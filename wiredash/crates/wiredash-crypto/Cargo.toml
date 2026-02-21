@@ -1,0 +1,11 @@
+[package]
+name = "wiredash-crypto"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+sodiumoxide = "0.2"
+base64 = "0.22"
