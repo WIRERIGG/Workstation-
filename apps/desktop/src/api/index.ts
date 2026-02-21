@@ -30,6 +30,8 @@ import { ptyRouter } from "./pty";
 import { gitRouter } from "./git";
 import { filesystemRouter } from "./filesystem";
 import { highlighterRouter } from "./highlighter";
+import { codeSearchRouter } from "./code-search";
+import { diagnosticsRouter } from "./diagnostics";
 
 const t = initTRPC.create();
 
@@ -45,7 +47,9 @@ export const router = t.router({
   pty: ptyRouter,
   git: gitRouter,
   filesystem: filesystemRouter,
-  highlighter: highlighterRouter
+  highlighter: highlighterRouter,
+  codeSearch: codeSearchRouter,
+  diagnostics: diagnosticsRouter
 });
 
 export const api = router.createCaller({});

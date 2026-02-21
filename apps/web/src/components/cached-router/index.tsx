@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -55,7 +55,7 @@ function CachedRouter() {
   const isPlaceholder = RouteResult.type === "placeholder";
 
   // Workstation "placeholder" routes (dashboard, tasks, etc.) should not be
-  // cached alongside Notesnook list routes (notes, notebooks, etc.).
+  // cached alongside Workstation list routes (notes, notebooks, etc.).
   // When switching between the two worlds, evict the other world's cache
   // so frozen components don't take DOM space and block pane collapsing.
   // BUT: keep other workstation routes alive (e.g. terminal PTY survives
@@ -63,16 +63,17 @@ function CachedRouter() {
   const WORKSTATION_KEYS = new Set([
     "dashboard", "tasks", "calendar", "agents", "spreadsheets",
     "communications", "agent-chat", "terminal", "files", "newsletters",
-    "call-queue", "control", "git", "conversations", "workspaces"
+    "call-queue", "control", "git", "conversations", "workspaces",
+    "code-search", "diagnostics"
   ]);
 
   if (isPlaceholder) {
-    // Entering workstation view — evict only Notesnook (non-workstation) routes
+    // Entering workstation view — evict only Workstation (non-workstation) routes
     for (const key of Object.keys(cachedRoutes.current)) {
       if (!WORKSTATION_KEYS.has(key)) delete cachedRoutes.current[key];
     }
   } else {
-    // Entering Notesnook view — evict all workstation cached routes
+    // Entering Workstation view — evict all workstation cached routes
     for (const key of WORKSTATION_KEYS) {
       delete cachedRoutes.current[key];
     }
@@ -88,12 +89,13 @@ function CachedRouter() {
 
   const { key: routeKey, ...routeProps } = RouteResult;
   return (
-    <RouteContainer key={routeKey} {...routeProps}>
+    <RouteContainer {...routeProps}>
       {Object.entries(cachedRoutes.current).map(([key, Component]) => (
         <Freeze key={key} freeze={key !== RouteResult.key}>
           <Flex
             id={key}
             key={key}
+            className="ws-view"
             sx={{
               flexDirection: "column",
               flex: 1,

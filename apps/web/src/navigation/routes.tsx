@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -37,12 +37,14 @@ import FileExplorerView from "../views/file-explorer";
 import GitPanel from "../views/git-panel";
 import ConversationsView from "../views/conversations";
 import WorkspacesView from "../views/workspaces";
+import CodeSearchView from "../views/code-search";
+import DiagnosticsView from "../views/diagnostics";
 import NewslettersView from "../views/newsletters";
 import CallQueueView from "../views/call-queue";
 import ControlView from "../views/control";
 import { RouteResult, defineRoutes } from "./types";
 import { CREATE_BUTTON_MAP } from "../common";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 function defineRoute(route: RouteResult): RouteResult {
   return route;
@@ -278,6 +280,22 @@ const routes = defineRoutes({
       title: "Workspaces",
       type: "placeholder",
       component: WorkspacesView
+    });
+  },
+  "/code-search": () => {
+    return defineRoute({
+      key: "code-search",
+      title: "Code Search",
+      type: "placeholder",
+      component: CodeSearchView
+    });
+  },
+  "/diagnostics": () => {
+    return defineRoute({
+      key: "diagnostics",
+      title: "Diagnostics",
+      type: "placeholder",
+      component: DiagnosticsView
     });
   }
 });

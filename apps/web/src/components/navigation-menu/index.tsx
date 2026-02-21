@@ -62,7 +62,9 @@ import {
   Radar,
   GitBranch,
   Forum,
-  CardMultiple
+  CardMultiple,
+  Search,
+  Issue
 } from "../icons";
 import { SortableNavigationItem } from "./navigation-item";
 import {
@@ -74,6 +76,7 @@ import {
 } from "../../navigation";
 import { db } from "../../common/db";
 import { isMobile } from "../../hooks/use-mobile";
+import { isDesktopRuntime } from "../../utils/platform";
 import { useStore as useAppStore } from "../../stores/app-store";
 import { useStore as useUserStore } from "../../stores/user-store";
 import { useStore as useThemeStore } from "../../stores/theme-store";
@@ -263,6 +266,20 @@ const routes: Route[] = [
     title: "Workspaces",
     path: "/workspaces",
     icon: CardMultiple,
+    section: "developer"
+  },
+  {
+    id: "code-search",
+    title: "Code Search",
+    path: "/code-search",
+    icon: Search,
+    section: "developer"
+  },
+  {
+    id: "diagnostics",
+    title: "Diagnostics",
+    path: "/diagnostics",
+    icon: Issue,
     section: "developer"
   },
 
@@ -653,7 +670,7 @@ function Routes({
         : () => true
     )
     .filter((r) => (r.loginRequired ? isLoggedIn : true))
-    .filter((r) => (r.section === "developer" ? IS_DESKTOP_APP : true));
+    .filter((r) => (r.section === "developer" ? isDesktopRuntime() : true));
 
   return (
     <>
@@ -1070,7 +1087,7 @@ function NavigationDropdown() {
               icon: Documentation.path,
               key: "help-and-support",
               onClick: () => {
-                window.open("https://help.workstation.com/", "_blank");
+                window.open("https://help.notesnook.com/", "_blank");
               }
             },
             {

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -46,7 +46,7 @@ import { isMac } from "./utils/platform";
 import useSlider from "./hooks/use-slider";
 import { AppEventManager, AppEvents } from "./common/app-events";
 import { TITLE_BAR_HEIGHT } from "./components/title-bar";
-import { getFontSizes } from "@notesnook/theme/theme/font/fontsize.js";
+import { getFontSizes } from "@workstation/theme/theme/font/fontsize.js";
 import { useWindowControls } from "./hooks/use-window-controls";
 import { STATUS_BAR_HEIGHT } from "./common/constants";
 import { getCurrentPath, NavigationEvents } from "./navigation";
@@ -89,6 +89,27 @@ function App() {
         `}
         />
       )}
+      {IS_DESKTOP_APP && !isMac() && !isFullscreen && !hasNativeTitlebar ? (
+        <Global
+          // On Windows/Linux with custom titlebar, the native window controls
+          // (minimize/maximize/close) overlay the top-right corner (~138px wide,
+          // 37px tall). Add padding-right to view headers so buttons don't overlap.
+          styles={`
+            :root {
+              --titlebar-overlay-width: 138px;
+            }
+            .ws-view > div > div:first-child {
+              padding-right: var(--titlebar-overlay-width, 0) !important;
+            }
+            .route-container-header {
+              padding-right: var(--titlebar-overlay-width, 0) !important;
+            }
+            .editor-action-bar {
+              padding-right: var(--titlebar-overlay-width, 0) !important;
+            }
+          `}
+        />
+      ) : null}
       {IS_DESKTOP_APP && isMac() && !isFullscreen && !hasNativeTitlebar ? (
         <Global
           // These styles to make sure the app content doesn't overlap with the traffic lights.
@@ -152,7 +173,8 @@ export default App;
 const WORKSTATION_ROUTES = new Set([
   "/dashboard", "/tasks", "/calendar", "/agents", "/spreadsheets",
   "/communications", "/agent-chat", "/terminal", "/files", "/newsletters",
-  "/call-queue", "/control", "/git", "/conversations", "/workspaces"
+  "/call-queue", "/control", "/git", "/conversations", "/workspaces",
+  "/code-search", "/diagnostics"
 ]);
 
 function useIsWorkstationRoute() {
@@ -263,7 +285,7 @@ function DesktopAppContents() {
             </Box>
           </Flex>
         ) : (
-          /* Notesnook layout: sidebar + list + editor (original SplitPane) */
+          /* Workstation layout: sidebar + list + editor (original SplitPane) */
           <SplitPane
             className="global-split-pane"
             ref={navPane}
