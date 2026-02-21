@@ -27,3 +27,5 @@ rusqlite = { version = "0.32", features = ["bundled-sqlcipher"] }
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full", "test-util"] }
+wiredash-db = { path = "../wiredash-db" }
+chrono = { workspace = true }
