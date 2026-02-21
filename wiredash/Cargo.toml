@@ -4,6 +4,7 @@ members = [
     "crates/wiredash-crypto",
     "crates/wiredash-db",
     "crates/wiredash-core",
+    "crates/wiredash-sync",
 ]
 
 [workspace.package]

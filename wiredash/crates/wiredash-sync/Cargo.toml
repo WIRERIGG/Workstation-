@@ -1,0 +1,29 @@
+[package]
+name = "wiredash-sync"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+wiredash-crypto = { path = "../wiredash-crypto" }
+wiredash-db = { path = "../wiredash-db" }
+wiredash-core = { path = "../wiredash-core" }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+chrono = { workspace = true }
+
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+tokio-tungstenite = { version = "0.26", features = ["native-tls"] }
+url = "2"
+base64 = "0.22"
+futures-util = "0.3"
+tracing = { workspace = true }
+uuid = { workspace = true }
+rusqlite = { version = "0.32", features = ["bundled-sqlcipher"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full", "test-util"] }
