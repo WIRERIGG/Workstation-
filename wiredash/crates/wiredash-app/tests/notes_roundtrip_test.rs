@@ -9,9 +9,9 @@ use wiredash_db::Database;
 // 1. Create note + content, list, find by note_id, update, verify
 // ---------------------------------------------------------------------------
 
-#[test]
-fn test_create_and_load_note_with_content() {
-    let db = Database::open_memory().expect("Failed to open in-memory database");
+#[tokio::test(flavor = "multi_thread")]
+async fn test_create_and_load_note_with_content() {
+    let db = Database::open_memory().await.expect("Failed to open in-memory database");
 
     // --- Create a note ---
     let note = Note::new("Test Note");
@@ -64,9 +64,9 @@ fn test_create_and_load_note_with_content() {
 // 2. Update note title and verify
 // ---------------------------------------------------------------------------
 
-#[test]
-fn test_update_title_from_content() {
-    let db = Database::open_memory().expect("Failed to open in-memory database");
+#[tokio::test(flavor = "multi_thread")]
+async fn test_update_title_from_content() {
+    let db = Database::open_memory().await.expect("Failed to open in-memory database");
 
     // --- Create a note ---
     let note = Note::new("Original Title");

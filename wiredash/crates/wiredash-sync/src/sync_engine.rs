@@ -1,10 +1,16 @@
+use std::collections::HashMap;
+
+use arrow_array::RecordBatchIterator;
+use futures::TryStreamExt;
+use lancedb::query::{ExecutableQuery, QueryBase};
+
 use crate::merger::{MergeResult, Merger};
 use crate::signalr::*;
 use crate::token::TokenManager;
 use crate::types::*;
 use wiredash_crypto::encryption::Decryption;
 use wiredash_crypto::types::SerializedKey;
-use wiredash_db::Database;
+use wiredash_db::{Database, batches_to_maps, maps_to_batch, escape_str, sync_run};
 
 // ---------------------------------------------------------------------------
 // Server message processing (testable without network)
@@ -227,94 +233,61 @@ impl<'a> SyncEngine<'a> {
 
     fn get_local_item(
         &self,
-        table: &str,
+        table_name: &str,
         id: &str,
     ) -> Result<Option<serde_json::Value>, SyncError> {
-        let conn = self.db.conn();
-        let sql = format!("SELECT * FROM {} WHERE id = ?1", table);
-        let mut stmt = conn
-            .prepare(&sql)
-            .map_err(|e| SyncError::Database(e.into()))?;
+        let table = self.db.table_or_err(table_name)
+            .map_err(SyncError::Database)?;
+        let filter = format!("id = {}", escape_str(id));
 
-        // Get column names
-        let col_count = stmt.column_count();
-        let col_names: Vec<String> = (0..col_count)
-            .map(|i| stmt.column_name(i).unwrap_or("").to_string())
-            .collect();
+        let batches: Vec<arrow_array::RecordBatch> = sync_run(async {
+            let result: Result<Vec<arrow_array::RecordBatch>, lancedb::Error> =
+                table.query().only_if(&filter).execute().await?.try_collect().await;
+            result
+        }).map_err(|e: lancedb::Error| SyncError::Database(e.into()))?;
 
-        let result = stmt.query_row(rusqlite::params![id], |row| {
-            let mut map = serde_json::Map::new();
-            for (i, col) in col_names.iter().enumerate() {
-                let val: rusqlite::types::Value = row.get(i)?;
-                let json_val = match val {
-                    rusqlite::types::Value::Null => serde_json::Value::Null,
-                    rusqlite::types::Value::Integer(n) => serde_json::json!(n),
-                    rusqlite::types::Value::Real(f) => serde_json::json!(f),
-                    rusqlite::types::Value::Text(s) => {
-                        serde_json::from_str(&s).unwrap_or(serde_json::Value::String(s))
-                    }
-                    rusqlite::types::Value::Blob(_) => serde_json::Value::Null,
-                };
-                map.insert(col.clone(), json_val);
+        let rows = batches_to_maps(&batches);
+        match rows.into_iter().next() {
+            Some(map) => {
+                let json_map: serde_json::Map<String, serde_json::Value> =
+                    map.into_iter().collect::<serde_json::Map<String, serde_json::Value>>();
+                Ok(Some(serde_json::Value::Object(json_map)))
             }
-            Ok(serde_json::Value::Object(map))
-        });
-
-        match result {
-            Ok(v) => Ok(Some(v)),
-            Err(rusqlite::Error::QueryReturnedNoRows) => Ok(None),
-            Err(e) => Err(SyncError::Database(e.into())),
+            None => Ok(None),
         }
     }
 
-    fn upsert_item(&self, table: &str, item: &serde_json::Value) -> Result<(), SyncError> {
+    fn upsert_item(&self, table_name: &str, item: &serde_json::Value) -> Result<(), SyncError> {
         let obj = item
             .as_object()
             .ok_or_else(|| SyncError::Database(anyhow::anyhow!("item is not an object")))?;
 
-        // Get table columns
-        let conn = self.db.conn();
-        let mut cols_stmt = conn
-            .prepare(&format!("PRAGMA table_info({})", table))
-            .map_err(|e| SyncError::Database(e.into()))?;
-        let col_names: Vec<String> = cols_stmt
-            .query_map([], |row| row.get::<_, String>(1))
-            .map_err(|e| SyncError::Database(e.into()))?
-            .filter_map(|r| r.ok())
-            .collect();
+        let table = self.db.table_or_err(table_name)
+            .map_err(SyncError::Database)?;
+        let schema_arc = sync_run(table.schema())
+            .map_err(|e: lancedb::Error| SyncError::Database(e.into()))?;
 
-        // Build INSERT OR REPLACE
-        let placeholders: Vec<String> = (1..=col_names.len()).map(|i| format!("?{}", i)).collect();
-        let sql = format!(
-            "INSERT OR REPLACE INTO {} ({}) VALUES ({})",
-            table,
-            col_names.join(", "),
-            placeholders.join(", "),
-        );
-
-        let mut params: Vec<Box<dyn rusqlite::types::ToSql>> = Vec::new();
-        for col in &col_names {
-            let val = obj.get(col).cloned().unwrap_or(serde_json::Value::Null);
-            match val {
-                serde_json::Value::Null => params.push(Box::new(rusqlite::types::Null)),
-                serde_json::Value::Bool(b) => params.push(Box::new(b as i32)),
-                serde_json::Value::Number(n) => {
-                    if let Some(i) = n.as_i64() {
-                        params.push(Box::new(i));
-                    } else if let Some(f) = n.as_f64() {
-                        params.push(Box::new(f));
-                    } else {
-                        params.push(Box::new(n.to_string()));
-                    }
-                }
-                serde_json::Value::String(s) => params.push(Box::new(s)),
-                other => params.push(Box::new(other.to_string())),
+        // Build a map with only columns that exist in the schema
+        let mut row: HashMap<String, serde_json::Value> = HashMap::new();
+        for field in schema_arc.fields().iter() {
+            let name: &String = field.name();
+            if let Some(val) = obj.get(name.as_str()) {
+                row.insert(name.clone(), val.clone());
+            } else {
+                row.insert(name.clone(), serde_json::Value::Null);
             }
         }
 
-        let refs: Vec<&dyn rusqlite::types::ToSql> = params.iter().map(|p| p.as_ref()).collect();
-        conn.execute(&sql, refs.as_slice())
-            .map_err(|e| SyncError::Database(e.into()))?;
+        let batch = maps_to_batch(&schema_arc, &[row])
+            .map_err(SyncError::Database)?;
+        let reader = RecordBatchIterator::new(vec![Ok(batch)], schema_arc);
+
+        sync_run(async {
+            let mut op = table.merge_insert(&["id"]);
+            op.when_matched_update_all(None)
+                .when_not_matched_insert_all();
+            op.execute(Box::new(reader)).await
+        }).map_err(|e: lancedb::Error| SyncError::Database(e.into()))?;
 
         Ok(())
     }

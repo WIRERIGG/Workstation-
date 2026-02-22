@@ -1,9 +1,9 @@
 use wiredash_sync::token::TokenManager;
 use wiredash_sync::types::Token;
 
-#[test]
-fn test_token_manager_store_and_retrieve() {
-    let db = wiredash_db::Database::open_memory().unwrap();
+#[tokio::test(flavor = "multi_thread")]
+async fn test_token_manager_store_and_retrieve() {
+    let db = wiredash_db::Database::open_memory().await.unwrap();
     let tm = TokenManager::new(&db);
 
     assert!(tm.get_token().unwrap().is_none());
@@ -21,9 +21,9 @@ fn test_token_manager_store_and_retrieve() {
     assert_eq!(retrieved.access_token, "test-access");
 }
 
-#[test]
-fn test_token_manager_delete() {
-    let db = wiredash_db::Database::open_memory().unwrap();
+#[tokio::test(flavor = "multi_thread")]
+async fn test_token_manager_delete() {
+    let db = wiredash_db::Database::open_memory().await.unwrap();
     let tm = TokenManager::new(&db);
 
     let token = Token {
@@ -38,9 +38,9 @@ fn test_token_manager_delete() {
     assert!(tm.get_token().unwrap().is_none());
 }
 
-#[test]
-fn test_token_manager_access_token_from_fresh_token() {
-    let db = wiredash_db::Database::open_memory().unwrap();
+#[tokio::test(flavor = "multi_thread")]
+async fn test_token_manager_access_token_from_fresh_token() {
+    let db = wiredash_db::Database::open_memory().await.unwrap();
     let tm = TokenManager::new(&db);
 
     let token = Token {

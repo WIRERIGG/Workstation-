@@ -54,7 +54,7 @@ impl RemindersViewState {
         let reminders = Reminders::new(db);
         match reminders.list() {
             Ok(list) => {
-                self.reminder_list = list.into_iter().map(|r| ReminderSummary {
+                self.reminder_list = list.into_iter().map(|r: Reminder| ReminderSummary {
                     id: r.base.id,
                     title: r.title,
                     date: r.date,

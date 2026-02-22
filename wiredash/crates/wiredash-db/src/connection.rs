@@ -83,6 +83,40 @@ impl Database {
         &self.path
     }
 
+    /// Query all unsynced rows from a table. Returns (id, json_string) pairs.
+    ///
+    /// Rows where `synced = 0` (or null) and `deleted = 0` are collected.
+    /// Each row is serialized to a JSON object string.
+    pub fn query_unsynced(&self, table_name: &str) -> Result<Vec<(String, String)>, anyhow::Error> {
+        crate::arrow_utils::sync_run(self.query_unsynced_async(table_name))
+    }
+
+    async fn query_unsynced_async(&self, table_name: &str) -> Result<Vec<(String, String)>, anyhow::Error> {
+        let table = self.table_or_err(table_name)?;
+        let filter = "synced = 0 OR synced IS NULL";
+        let batches: Vec<arrow_array::RecordBatch> = table
+            .query()
+            .only_if(filter)
+            .execute()
+            .await?
+            .try_collect()
+            .await?;
+
+        let rows = crate::arrow_utils::batches_to_maps(&batches);
+        let mut results = Vec::new();
+        for row in rows {
+            let id = row.get("id")
+                .and_then(|v| v.as_str())
+                .unwrap_or_default()
+                .to_string();
+            let json_str = serde_json::to_string(&serde_json::Value::Object(
+                row.into_iter().collect()
+            ))?;
+            results.push((id, json_str));
+        }
+        Ok(results)
+    }
+
     /// Count rows in a table, optionally filtered by a predicate.
     pub async fn count_rows(
         &self,

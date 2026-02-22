@@ -135,8 +135,8 @@ impl SearchViewState {
         // Extract title from first non-empty line
         let title = editor_text
             .lines()
-            .find(|line| !line.trim().is_empty())
-            .map(|line| line.trim_start_matches('#').trim())
+            .find(|line: &&str| !line.trim().is_empty())
+            .map(|line: &str| line.trim_start_matches('#').trim())
             .unwrap_or("Untitled")
             .to_string();
 

@@ -1,3 +1,5 @@
+use wiredash_core::collections::notes::Notes;
+use wiredash_core::types::Note;
 use wiredash_sync::collector::Collector;
 use wiredash_sync::merger::{Merger, MergeResult};
 use wiredash_sync::sync_engine::{SyncEngine, SyncProcessor, ServerAction, generate_device_id};
@@ -7,11 +9,11 @@ use wiredash_sync::types::*;
 use wiredash_crypto::types::SerializedKey;
 use wiredash_db::Database;
 
-#[test]
-fn test_full_offline_sync_roundtrip() {
+#[tokio::test(flavor = "multi_thread")]
+async fn test_full_offline_sync_roundtrip() {
     // 1. Set up two "devices" (two in-memory databases + shared encryption key)
-    let db_a = Database::open_memory().unwrap();
-    let db_b = Database::open_memory().unwrap();
+    let db_a = Database::open_memory().await.unwrap();
+    let db_b = Database::open_memory().await.unwrap();
 
     let key = SerializedKey {
         password: Some("shared-password".into()),
@@ -20,12 +22,10 @@ fn test_full_offline_sync_roundtrip() {
     };
 
     // 2. Device A creates a note
-    let now = chrono::Utc::now().timestamp_millis();
-    db_a.execute(
-        "INSERT INTO notes (id, type, dateModified, dateCreated, synced, deleted, title, pinned, favorite, localOnly, conflicted, readonly, dateEdited)
-         VALUES (?1, 'note', ?2, ?2, 0, 0, 'Device A Note', 0, 0, 0, 0, 0, ?2)",
-        rusqlite::params!["note-shared", now],
-    ).unwrap();
+    let notes_a = Notes::new(&db_a);
+    let mut note = Note::new("Device A Note");
+    note.base.id = "note-shared".to_string();
+    notes_a.add(&note).unwrap();
 
     // 3. Device A collects unsynced items (simulates push)
     let collector_a = Collector::new(&db_a);
@@ -42,17 +42,12 @@ fn test_full_offline_sync_roundtrip() {
     assert_eq!(conflicts, 0);
 
     // Verify the note landed in Device B's database
-    let row: String = db_b.conn()
-        .query_row("SELECT title FROM notes WHERE id = 'note-shared'", [], |r| r.get(0))
-        .unwrap();
-    assert_eq!(row, "Device A Note");
+    let notes_b = Notes::new(&db_b);
+    let received = notes_b.get("note-shared").unwrap().expect("note should exist in device B");
+    assert_eq!(received.title, "Device A Note");
 
     // 5. Device B edits the note
-    let later = now + 5000;
-    db_b.execute(
-        "UPDATE notes SET title = 'Device B Edit', dateModified = ?1, synced = 0 WHERE id = 'note-shared'",
-        rusqlite::params![later],
-    ).unwrap();
+    notes_b.update_title("note-shared", "Device B Edit").unwrap();
 
     // 6. Device B collects and sends back
     let collector_b = Collector::new(&db_b);
@@ -68,10 +63,8 @@ fn test_full_offline_sync_roundtrip() {
     assert_eq!(conflicts_a, 0);
 
     // Verify Device A now has the updated title
-    let updated: String = db_a.conn()
-        .query_row("SELECT title FROM notes WHERE id = 'note-shared'", [], |r| r.get(0))
-        .unwrap();
-    assert_eq!(updated, "Device B Edit");
+    let updated = notes_a.get("note-shared").unwrap().expect("note should exist in device A");
+    assert_eq!(updated.title, "Device B Edit");
 }
 
 #[test]
@@ -95,9 +88,9 @@ fn test_signalr_message_routing() {
     assert_eq!(action, ServerAction::SendPing);
 }
 
-#[test]
-fn test_token_kv_roundtrip() {
-    let db = Database::open_memory().unwrap();
+#[tokio::test(flavor = "multi_thread")]
+async fn test_token_kv_roundtrip() {
+    let db = Database::open_memory().await.unwrap();
     let tm = TokenManager::new(&db);
 
     // No token initially

@@ -29,9 +29,9 @@ pub fn verify_password(password: &str, stored_hash: &str, stored_salt: &str) -> 
 pub fn set_app_lock_password(db: &Database, password: &str) -> Result<(), String> {
     let (hash, salt) = hash_password(password)?;
     let settings = Settings::new(db);
-    settings.set("app_lock_hash", &serde_json::json!(hash)).map_err(|e| e.to_string())?;
-    settings.set("app_lock_salt", &serde_json::json!(salt)).map_err(|e| e.to_string())?;
-    settings.set("app_lock_enabled", &serde_json::json!(true)).map_err(|e| e.to_string())?;
+    settings.set("app_lock_hash", &serde_json::json!(hash)).map_err(|e: anyhow::Error| e.to_string())?;
+    settings.set("app_lock_salt", &serde_json::json!(salt)).map_err(|e: anyhow::Error| e.to_string())?;
+    settings.set("app_lock_enabled", &serde_json::json!(true)).map_err(|e: anyhow::Error| e.to_string())?;
     Ok(())
 }
 

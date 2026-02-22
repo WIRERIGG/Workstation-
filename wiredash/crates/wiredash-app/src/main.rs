@@ -85,15 +85,14 @@ impl Wiredash {
             theme_engine.set_scheme(cfg.color_scheme);
         }
 
-        // Open database
+        // Open database (LanceDB — directory-based)
         let db_dir = config::AppConfig::data_dir()
             .unwrap_or_else(|| std::path::PathBuf::from("."));
         let _ = std::fs::create_dir_all(&db_dir);
-        let db_path = db_dir.join("wiredash.db");
+        let db_path = db_dir.join("wiredash.lance");
         let db_path_str = db_path.to_string_lossy();
-        let db = wiredash_db::Database::open(
-            &db_path_str,
-            None,
+        let db = wiredash_db::sync_run(
+            wiredash_db::Database::open(&db_path_str)
         ).expect("Failed to open database — check disk permissions and free space");
 
         let mut notes_state = notes_view::NotesViewState::new();
@@ -115,7 +114,7 @@ impl Wiredash {
         let app_lock_enabled = {
             let settings = wiredash_core::collections::settings::Settings::new(&db);
             settings.get_setting("app_lock_enabled").ok().flatten()
-                .and_then(|v| v.as_bool())
+                .and_then(|v: serde_json::Value| v.as_bool())
                 .unwrap_or(false)
         };
         let app_lock_state = app_lock::AppLockState::new(app_lock_enabled);
@@ -312,7 +311,7 @@ impl Wiredash {
                                     self.theme_engine.toggle_scheme();
                                     state_changed = true;
                                 } else if c.len() == 1 {
-                                    if let Some(digit) = c.chars().next().and_then(|ch| ch.to_digit(10)) {
+                                    if let Some(digit) = c.chars().next().and_then(|ch: char| ch.to_digit(10)) {
                                         if (1..=9).contains(&digit) {
                                             let idx = (digit - 1) as usize;
                                             if let Some(view) = View::ALL.get(idx) {

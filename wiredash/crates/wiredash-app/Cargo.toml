@@ -18,6 +18,7 @@ wiredash-editor = { path = "../wiredash-editor" }
 
 iced = { version = "0.14", features = ["svg", "tokio", "markdown", "highlighter"] }
 tokio = { version = "1", features = ["full"] }
+anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 directories = "6"

@@ -23,7 +23,10 @@ base64 = "0.22"
 futures-util = "0.3"
 tracing = { workspace = true }
 uuid = { workspace = true }
-rusqlite = { version = "0.32", features = ["bundled-sqlcipher"] }
+arrow-array = "57"
+arrow-schema = "57"
+lancedb = "0.26"
+futures = "0.3"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full", "test-util"] }

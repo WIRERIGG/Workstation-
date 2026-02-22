@@ -31,7 +31,7 @@ pub fn create_vault(db: &Database, password: &str) -> Result<String, String> {
     let mut vault = Vault::new("Default");
     vault.key = Some(cipher_json);
     let vault_id = vault.base.id.clone();
-    Vaults::new(db).add(&vault).map_err(|e| e.to_string())?;
+    Vaults::new(db).add(&vault).map_err(|e: anyhow::Error| e.to_string())?;
 
     // Mark vault as created in settings
     let settings = wiredash_core::collections::settings::Settings::new(db);
@@ -45,7 +45,7 @@ pub fn lock_note(db: &Database, content_id: &str, password: &str) -> Result<(), 
     let content_col = Content::new(db);
     let ci = content_col
         .get(content_id)
-        .map_err(|e| e.to_string())?
+        .map_err(|e: anyhow::Error| e.to_string())?
         .ok_or("Content not found")?;
     if ci.locked {
         return Err("Content is already locked".into());
@@ -62,10 +62,10 @@ pub fn lock_note(db: &Database, content_id: &str, password: &str) -> Result<(), 
         serde_json::to_string(&cipher).map_err(|e| format!("Serialization failed: {e}"))?;
     content_col
         .update_data(content_id, &cipher_json)
-        .map_err(|e| e.to_string())?;
+        .map_err(|e: anyhow::Error| e.to_string())?;
     content_col
         .set_locked(content_id, true)
-        .map_err(|e| e.to_string())?;
+        .map_err(|e: anyhow::Error| e.to_string())?;
     Ok(())
 }
 
@@ -75,7 +75,7 @@ pub fn unlock_note(db: &Database, content_id: &str, password: &str) -> Result<St
     let content_col = Content::new(db);
     let ci = content_col
         .get(content_id)
-        .map_err(|e| e.to_string())?
+        .map_err(|e: anyhow::Error| e.to_string())?
         .ok_or("Content not found")?;
     if !ci.locked {
         return Err("Content is not locked".into());
@@ -101,17 +101,17 @@ pub fn permanently_unlock_note(
     let content_col = Content::new(db);
     content_col
         .update_data(content_id, &plaintext)
-        .map_err(|e| e.to_string())?;
+        .map_err(|e: anyhow::Error| e.to_string())?;
     content_col
         .set_locked(content_id, false)
-        .map_err(|e| e.to_string())?;
+        .map_err(|e: anyhow::Error| e.to_string())?;
     Ok(())
 }
 
 /// Clear vault: permanently unlock all locked notes, then remove the vault.
 pub fn clear_vault(db: &Database, password: &str) -> Result<(), String> {
     let content_col = Content::new(db);
-    let locked_items = content_col.list_locked().map_err(|e| e.to_string())?;
+    let locked_items = content_col.list_locked().map_err(|e: anyhow::Error| e.to_string())?;
     for ci in &locked_items {
         permanently_unlock_note(db, &ci.base.id, password)?;
     }
@@ -132,7 +132,7 @@ pub fn change_vault_password(
     new_password: &str,
 ) -> Result<(), String> {
     let content_col = Content::new(db);
-    let locked_items = content_col.list_locked().map_err(|e| e.to_string())?;
+    let locked_items = content_col.list_locked().map_err(|e: anyhow::Error| e.to_string())?;
     // Decrypt with old, re-encrypt with new
     for ci in &locked_items {
         let plaintext = unlock_note(db, &ci.base.id, old_password)?;
@@ -147,7 +147,7 @@ pub fn change_vault_password(
             .map_err(|e| format!("Serialization failed: {e}"))?;
         content_col
             .update_data(&ci.base.id, &cipher_json)
-            .map_err(|e| e.to_string())?;
+            .map_err(|e: anyhow::Error| e.to_string())?;
     }
     Ok(())
 }

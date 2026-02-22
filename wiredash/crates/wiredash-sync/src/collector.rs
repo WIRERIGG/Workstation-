@@ -24,7 +24,7 @@ impl<'a> Collector<'a> {
         let unsynced = self
             .db
             .query_unsynced(table)
-            .map_err(|e| SyncError::Database(e.into()))?;
+            .map_err(|e: anyhow::Error| SyncError::Database(e))?;
 
         if unsynced.is_empty() {
             return Ok(vec![]);
@@ -62,13 +62,13 @@ impl<'a> Collector<'a> {
                         obj.to_string()
                     }
                 } else {
-                    json_str.clone()
+                    json_str.to_string()
                 };
 
             let cipher = Encryption::encrypt(key, &plaintext).map_err(SyncError::Crypto)?;
 
             all_items.push(SyncItem {
-                id: id.clone(),
+                id: id.to_string(),
                 v: CURRENT_DATABASE_VERSION,
                 cipher,
             });

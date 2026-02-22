@@ -17,7 +17,7 @@ impl<'a> HttpClient<'a> {
 
     pub async fn get_access_token(&self) -> Result<String, SyncError> {
         let token = self.token_manager.get_token()
-            .map_err(|e| SyncError::Database(e.into()))?
+            .map_err(|e: anyhow::Error| SyncError::Database(e))?
             .ok_or(SyncError::TokenExpired)?;
 
         if !token.is_expired() {
@@ -58,7 +58,7 @@ impl<'a> HttpClient<'a> {
         };
 
         self.token_manager.save_token(&new_token)
-            .map_err(|e| SyncError::Database(e.into()))?;
+            .map_err(|e: anyhow::Error| SyncError::Database(e))?;
 
         Ok(new_token.access_token)
     }
