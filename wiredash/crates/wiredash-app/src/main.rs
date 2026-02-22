@@ -1,6 +1,7 @@
 mod navigation;
 mod icons;
 mod config;
+mod notes_view;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -24,6 +25,8 @@ struct Wiredash {
     current_view: View,
     sidebar_collapsed: bool,
     theme_engine: ThemeEngine,
+    db: wiredash_db::Database,
+    notes_state: notes_view::NotesViewState,
 }
 
 #[derive(Debug, Clone)]
@@ -32,6 +35,7 @@ enum Message {
     ToggleSidebar,
     ToggleTheme,
     KeyboardEvent(keyboard::Event),
+    Notes(notes_view::NotesMessage),
 }
 
 impl Wiredash {
@@ -50,11 +54,26 @@ impl Wiredash {
             theme_engine.set_scheme(cfg.color_scheme);
         }
 
+        // Open database
+        let db_dir = config::AppConfig::data_dir()
+            .unwrap_or_else(|| std::path::PathBuf::from("."));
+        let _ = std::fs::create_dir_all(&db_dir);
+        let db_path = db_dir.join("wiredash.db");
+        let db = wiredash_db::Database::open(
+            db_path.to_str().unwrap_or("wiredash.db"),
+            None,
+        ).expect("Failed to open database");
+
+        let mut notes_state = notes_view::NotesViewState::new();
+        notes_state.refresh_list(&db);
+
         (
             Self {
                 current_view: cfg.resolve_view(),
                 sidebar_collapsed: cfg.sidebar_collapsed,
                 theme_engine,
+                db,
+                notes_state,
             },
             Task::none(),
         )
@@ -75,6 +94,9 @@ impl Wiredash {
             }
             Message::ToggleTheme => {
                 self.theme_engine.toggle_scheme();
+            }
+            Message::Notes(msg) => {
+                self.notes_state.update(msg, &self.db);
             }
             Message::KeyboardEvent(event) => {
                 state_changed = false;
@@ -264,21 +286,28 @@ impl Wiredash {
     }
 
     fn content_view(&self) -> Element<'_, Message> {
-        let view = self.current_view;
-        container(
-            column![
-                text(format!("{} {}", view.icon(), view.title())).size(28),
-                rule::horizontal(1),
-                text(view.description()).size(14),
-                text("").size(8),
-                text("This view will be implemented in a future phase.").size(12),
-            ]
-            .spacing(8)
-        )
-        .padding(24)
-        .width(Fill)
-        .height(Fill)
-        .into()
+        match self.current_view {
+            View::Notes => {
+                notes_view::notes_view(&self.notes_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::Notes)
+            }
+            view => {
+                container(
+                    column![
+                        text(format!("{} {}", view.icon(), view.title())).size(28),
+                        rule::horizontal(1),
+                        text(view.description()).size(14),
+                        text("").size(8),
+                        text("This view will be implemented in a future phase.").size(12),
+                    ]
+                    .spacing(8)
+                )
+                .padding(24)
+                .width(Fill)
+                .height(Fill)
+                .into()
+            }
+        }
     }
 
     fn status_bar_view(&self) -> Element<'_, Message> {
