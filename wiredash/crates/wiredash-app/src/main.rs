@@ -11,6 +11,7 @@ mod toast;
 mod settings_view;
 mod app_lock;
 mod vault;
+mod reminders_view;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -44,6 +45,7 @@ struct Wiredash {
     trash_state: organize_views::FilteredNotesState,
     settings_state: settings_view::SettingsViewState,
     app_lock_state: app_lock::AppLockState,
+    reminders_state: reminders_view::RemindersViewState,
     save_pending: bool,
 }
 
@@ -64,6 +66,7 @@ enum Message {
     AutoSaveTick,
     AppLock(app_lock::AppLockMessage),
     InactivityCheck,
+    RemindersView(reminders_view::RemindersMessage),
 }
 
 impl Wiredash {
@@ -117,6 +120,9 @@ impl Wiredash {
         };
         let app_lock_state = app_lock::AppLockState::new(app_lock_enabled);
 
+        let mut reminders_state = reminders_view::RemindersViewState::new();
+        reminders_state.refresh(&db);
+
         (
             Self {
                 current_view: cfg.resolve_view(),
@@ -132,6 +138,7 @@ impl Wiredash {
                 trash_state,
                 settings_state,
                 app_lock_state,
+                reminders_state,
                 save_pending: false,
             },
             Task::none(),
@@ -163,6 +170,7 @@ impl Wiredash {
                     View::Archive => self.archive_state.refresh(&self.db, organize_views::NoteFilter::Archived),
                     View::Trash => self.trash_state.refresh(&self.db, organize_views::NoteFilter::Trashed),
                     View::Settings => self.settings_state.load_all(&self.db),
+                    View::Reminders => self.reminders_state.refresh(&self.db),
                     _ => {} // Search, Dashboard etc. don't need refresh
                 }
 
@@ -274,6 +282,9 @@ impl Wiredash {
                         self.app_lock_state.locked = true;
                     }
                 }
+            }
+            Message::RemindersView(msg) => {
+                self.reminders_state.update(msg, &self.db);
             }
             Message::AutoSaveTick => {
                 if self.save_pending {
@@ -551,6 +562,10 @@ impl Wiredash {
             View::Settings => {
                 settings_view::settings_view(&self.settings_state, &self.theme_engine.active_iced_theme())
                     .map(Message::SettingsView)
+            }
+            View::Reminders => {
+                reminders_view::reminders_view(&self.reminders_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::RemindersView)
             }
             view => {
                 container(
