@@ -12,7 +12,6 @@ anyhow.workspace = true
 uuid.workspace = true
 tracing.workspace = true
 lancedb = "0.26"
-lance-index = "0.26"
 arrow = "57"
 arrow-array = "57"
 arrow-schema = "57"
