@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,10 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { LegendList } from "@legendapp/list";
-import { formatBytes, getFormattedDate } from "@notesnook/common";
-import { LegacyBackupFile } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { formatBytes, getFormattedDate } from "@workstation/common";
+import { LegacyBackupFile } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import { keepLocalCopy, pick } from "@react-native-documents/picker";
 import React, { useEffect, useState } from "react";
 import {
@@ -415,10 +415,10 @@ export const RestoreBackup = () => {
               modifer: async () => {
                 const folder = await ScopedStorage.openDocumentTree(true);
                 let subfolder;
-                if (folder.name !== "Notesnook backups") {
+                if (folder.name !== "Workstation backups") {
                   subfolder = await ScopedStorage.createDirectory(
                     folder.uri,
-                    "Notesnook backups"
+                    "Workstation backups"
                   );
                 } else {
                   subfolder = folder;

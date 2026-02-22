@@ -14,3 +14,6 @@ pub mod note_history;
 pub mod session_content;
 pub mod trash;
 pub mod search;
+pub mod tasks;
+pub mod calendar_events;
+pub mod agents;

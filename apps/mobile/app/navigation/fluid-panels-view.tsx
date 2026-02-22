@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { ScopedThemeProvider, useThemeColors } from "@notesnook/theme";
+import { ScopedThemeProvider, useThemeColors } from "@workstation/theme";
 import {
   activateKeepAwake,
   deactivateKeepAwake
@@ -39,7 +39,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
-import { notesnook } from "../../e2e/test.ids";
+import { workstation } from "../../e2e/test.ids";
 import { db } from "../common/database";
 import { FluidPanels } from "../components/fluid-panels";
 import { useSideBarDraggingStore } from "../components/side-menu/dragging-store";
@@ -123,7 +123,7 @@ export const FluidPanelsView = React.memo(
           fluidTabsRef.current?.goToPage("editor", false);
           return;
         }
-        if (item?.type === "notesnook.action.newnote") {
+        if (item?.type === "workstation.action.newnote") {
           clearAppState();
           if (!fluidTabsRef.current) {
             setTimeout(() => {
@@ -367,7 +367,7 @@ export const FluidPanelsView = React.memo(
     return (
       <View
         onLayout={_onLayout}
-        testID={notesnook.ids.default.root}
+        testID={workstation.ids.default.root}
         style={{
           height: "100%",
           width: "100%",

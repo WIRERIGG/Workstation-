@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,10 +21,10 @@ import React, { RefObject, useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 
 import { LegendList } from "@legendapp/list";
-import { getFormattedDate, getTimeAgo } from "@notesnook/common";
-import { HistorySession, Note, VirtualizedGrouping } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { getFormattedDate, getTimeAgo } from "@workstation/common";
+import { HistorySession, Note, VirtualizedGrouping } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import { ActionSheetRef, ScrollView } from "react-native-actions-sheet";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { db } from "../../common/database";

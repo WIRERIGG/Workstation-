@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { RefObject, useEffect, useRef } from "react";
 import { Platform } from "react-native";
 //@ts-ignore
 import RNTooltips from "react-native-tooltips";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import {
   eSendEvent,
   eSubscribeEvent,

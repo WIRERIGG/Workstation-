@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { DATE_FORMATS, WeekFormat } from "@notesnook/core";
+import { DATE_FORMATS, WeekFormat } from "@workstation/core";
 import { SettingsGroup } from "./types";
 import {
   ImageCompressionOptions,
   useStore as useSettingStore
 } from "../../stores/setting-store";
 import dayjs from "dayjs";
-import { TimeFormat, DayFormat } from "@notesnook/core";
-import { TrashCleanupInterval } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { TimeFormat, DayFormat } from "@workstation/core";
+import { TrashCleanupInterval } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { checkFeature } from "../../common";
 
 export const BehaviourSettings: SettingsGroup[] = [

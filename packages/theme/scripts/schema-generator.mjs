@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -40,7 +40,7 @@ addProperty(
   {
     type: "string",
     const:
-      "https://raw.githubusercontent.com/streetwriters/notesnook-themes/main/schemas/v1.schema.json"
+      "https://raw.githubusercontent.com/streetwriters/workstation-themes/main/schemas/v1.schema.json"
   },
   true
 );

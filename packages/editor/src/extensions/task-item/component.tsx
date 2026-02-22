@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Box, Flex } from "@theme-ui/components";
 import { ReactNodeViewProps } from "../react/index.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { Icons } from "../../toolbar/icons.js";
 import { findChildrenInRange } from "@tiptap/core";
 import { useCallback } from "react";
@@ -28,7 +28,7 @@ import { useIsMobile } from "../../toolbar/stores/toolbar-store.js";
 import { isiOS } from "../../utils/platform.js";
 import { DesktopOnly } from "../../components/responsive/index.js";
 import TaskItem from "@tiptap/extension-task-item";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export function TaskItemComponent(
   props: ReactNodeViewProps<TaskItemAttributes>

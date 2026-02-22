@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,9 +23,9 @@ import BaseStore from "./index";
 import { store as appStore } from "./app-store";
 import { store as noteStore } from "./note-store";
 import { store as notebookStore } from "./notebook-store";
-import { TrashItem, VirtualizedGrouping } from "@notesnook/core";
+import { TrashItem, VirtualizedGrouping } from "@workstation/core";
 import { showToast } from "../utils/toast";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 class TrashStore extends BaseStore<TrashStore> {
   trash: VirtualizedGrouping<TrashItem> | undefined = undefined;

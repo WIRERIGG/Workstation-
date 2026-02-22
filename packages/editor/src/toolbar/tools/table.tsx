@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import { Editor } from "../../types.js";
 import { ToolButton } from "../components/tool-button.js";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ResponsivePresenter } from "../../components/responsive/index.js";
-import { MenuButtonItem, MenuItem } from "@notesnook/ui";
+import { MenuButtonItem, MenuItem } from "@workstation/ui";
 import {
   moveColumnLeft as moveColumnLeftAction,
   moveColumnRight as moveColumnRightAction,
@@ -41,7 +41,7 @@ import { Counter } from "../components/counter.js";
 import { useToolbarLocation } from "../stores/toolbar-store.js";
 import { showPopup } from "../../components/popup-presenter/index.js";
 import { useRefValue } from "../../hooks/use-ref-value.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export function TableSettings(props: ToolProps) {
   const { editor } = props;

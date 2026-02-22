@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { Flex, Button, Text, Link } from "@theme-ui/components";
 import { StepContainer } from "./step-container";
 import { SyncRequestBody } from "./step-4";
-import { NNCrypto } from "@notesnook/crypto";
+import { NNCrypto } from "@workstation/crypto";
 import { useEffect, useState } from "react";
 import { FcDataEncryption } from "react-icons/fc";
 import { Code } from "./code";
@@ -139,12 +139,12 @@ export function DecryptedResult(props: DecryptedResultProps) {
         }}
       >
         <Text as="p" variant="body" sx={{ mx: 2 }}>
-          Congratulations! You successfully verified Notesnook&apos;s data
+          Congratulations! You successfully verified Workstation&apos;s data
           encryption claims.
         </Text>
         <Text as="p" variant="body" sx={{ mx: 2, mt: 2 }}>
           Of course, this is just one part (a very crucial one) of proving that
-          you can trust Notesnook with your data. If you have any other
+          you can trust Workstation with your data. If you have any other
           preservations, let us know by reaching out to us at{" "}
           <Link href="mailto:support@streetwriters.co">
             support@streetwriters.co
@@ -154,11 +154,11 @@ export function DecryptedResult(props: DecryptedResultProps) {
           We&apos;ll do our best to alleviate all your worries.
         </Text>
         <Text as="p" variant="body" sx={{ mx: 2, mt: 2, fontWeight: "bold" }}>
-          What about open sourcing Notesnook?
+          What about open sourcing Workstation?
         </Text>
         <Text as="p" variant="body" sx={{ mx: 2, my: 2 }}>
           Open sourcing is another part of garnering our users&apos; trust. We
-          have <Link href="https://notesnook.com/roadmap">plans</Link> to begin
+          have <Link href="https://workstation.com/roadmap">plans</Link> to begin
           open sourcing in May but open sourcing will not make this tool
           obsolete. Verifying the integrity of encrypted data at any point in
           time is very important even if the software is open source.

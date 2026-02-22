@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import * as React from "react";
 import { View } from "react-native";
 import { DraxDragWithReceiverEventData, DraxView } from "react-native-drax";
@@ -33,9 +33,9 @@ import { DraggableItem, useDragState } from "./state";
 import ToolSheet from "./tool-sheet";
 import { findToolById, getToolIcon } from "./toolbar-definition";
 
-import { useIsFeatureAvailable } from "@notesnook/common";
-import type { ToolId } from "@notesnook/editor";
-import { strings } from "@notesnook/intl";
+import { useIsFeatureAvailable } from "@workstation/common";
+import type { ToolId } from "@workstation/editor";
+import { strings } from "@workstation/intl";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ToastManager } from "../../../services/event-manager";
 import { DefaultAppStyles } from "../../../utils/styles";

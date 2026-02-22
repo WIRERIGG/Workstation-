@@ -1,14 +1,14 @@
 {
-  "name": "@notesnook/editor-mobile",
+  "name": "@workstation/editor-mobile",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.0",
-    "@notesnook/editor": "file:../editor",
-    "@notesnook/theme": "file:../theme",
-    "@notesnook/intl": "file:../intl",
+    "@workstation/editor": "file:../editor",
+    "@workstation/theme": "file:../theme",
+    "@workstation/intl": "file:../intl",
     "@szhsin/react-menu": "^4.1.0",
     "buffer": "^6.0.3",
     "localforage": "^1.10.0",
@@ -20,7 +20,7 @@
     "@lingui/core": "5.1.2",
     "@lingui/react": "5.1.2",
     "tinycolor2": "1.6.0",
-    "@notesnook/common": "file:../common"
+    "@workstation/common": "file:../common"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1",

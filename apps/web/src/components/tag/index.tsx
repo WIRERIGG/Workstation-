@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,19 +23,19 @@ import { Flex, Text } from "@theme-ui/components";
 import { store as appStore } from "../../stores/app-store";
 import { db } from "../../common/db";
 import { Edit, Shortcut, DeleteForver, Tag as TagIcon } from "../icons";
-import { MenuItem } from "@notesnook/ui";
-import { Tag as TagType } from "@notesnook/core";
+import { MenuItem } from "@workstation/ui";
+import { Tag as TagType } from "@workstation/core";
 import { handleDrop } from "../../common/drop-handler";
 import { EditTagDialog } from "../../dialogs/item-dialog";
 import { useStore as useSelectionStore } from "../../stores/selection-store";
 import { useStore as useNoteStore } from "../../stores/note-store";
 import { Multiselect } from "../../common/multi-select";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import {
   createSetDefaultHomepageMenuItem,
   withFeatureCheck
 } from "../../common";
-import { areFeaturesAvailable } from "@notesnook/common";
+import { areFeaturesAvailable } from "@workstation/common";
 
 type TagProps = { item: TagType; totalNotes: number };
 function Tag(props: TagProps) {

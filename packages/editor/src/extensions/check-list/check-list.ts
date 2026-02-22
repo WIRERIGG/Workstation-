@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,7 +20,7 @@ import { mergeAttributes, Node, wrappingInputRule } from "@tiptap/core";
 import { inputRegex } from "@tiptap/extension-task-item";
 import { getParentAttributes } from "../../utils/prosemirror.js";
 import { ListItem } from "../list-item/index.js";
-import { tiptapKeys } from "@notesnook/common";
+import { tiptapKeys } from "@workstation/common";
 
 export interface CheckListOptions {
   itemTypeName: string;

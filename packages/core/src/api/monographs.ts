@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import http from "../utils/http.js";
 import Constants from "../utils/constants.js";
 import Database from "./index.js";
 import { Monograph, Note, isDeleted } from "../types.js";
-import { Cipher } from "@notesnook/crypto";
+import { Cipher } from "@workstation/crypto";
 import { isFalse } from "../database/index.js";
 
 type MonographApiRequestBase = Omit<

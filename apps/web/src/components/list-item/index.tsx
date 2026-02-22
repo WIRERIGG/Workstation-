@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,10 +25,10 @@ import {
 } from "../../stores/selection-store";
 import { useMenuTrigger } from "../../hooks/use-menu";
 import React, { useRef } from "react";
-import { SchemeColors } from "@notesnook/theme";
-import { MenuItem } from "@notesnook/ui";
+import { SchemeColors } from "@workstation/theme";
+import { MenuItem } from "@workstation/ui";
 import { alpha } from "@theme-ui/color";
-import { Item } from "@notesnook/core";
+import { Item } from "@workstation/core";
 import { setDragData } from "../../utils/data-transfer";
 
 type ListItemProps<TItem extends Item, TContext> = {

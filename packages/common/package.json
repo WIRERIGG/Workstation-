@@ -1,7 +1,7 @@
 {
-  "name": "@notesnook/common",
+  "name": "@workstation/common",
   "version": "2.1.3",
-  "description": "A set of common utilities shared across multiple Notesnook clients and services.",
+  "description": "A set of common utilities shared across multiple Workstation clients and services.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
@@ -23,15 +23,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/streetwriters/notesnook.git"
+    "url": "git+https://github.com/streetwriters/workstation.git"
   },
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/streetwriters/notesnook/issues"
+    "url": "https://github.com/streetwriters/workstation/issues"
   },
-  "homepage": "https://github.com/streetwriters/notesnook#readme",
+  "homepage": "https://github.com/streetwriters/workstation#readme",
   "devDependencies": {
-    "@notesnook/core": "file:../core",
+    "@workstation/core": "file:../core",
     "@types/react": "18.3.5",
     "react": "18.3.1",
     "vitest": "2.1.8"
@@ -41,7 +41,7 @@
     "timeago.js": "4.0.2"
   },
   "dependencies": {
-    "@notesnook/core": "file:../core",
+    "@workstation/core": "file:../core",
     "@readme/data-urls": "^3.0.0",
     "dayjs": "1.11.13",
     "pathe": "^1.1.2",

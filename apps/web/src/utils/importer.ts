@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,8 +22,8 @@ import {
   Note,
   Notebook
 } from "@notesnook-importer/core/dist/src/models";
-import { Notebook as NotebookType } from "@notesnook/core";
-import { SerializedKey } from "@notesnook/crypto";
+import { Notebook as NotebookType } from "@workstation/core";
+import { SerializedKey } from "@workstation/crypto";
 import { db } from "../common/db";
 import { writeEncryptedFile } from "../interfaces/fs";
 

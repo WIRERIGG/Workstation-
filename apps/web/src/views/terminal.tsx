@@ -60,6 +60,8 @@ function PtyTerminal() {
     return tabId;
   }, [tabs.length]);
 
+  const [initError, setInitError] = useState<string | null>(null);
+
   // Initialize a terminal for a given tab when its container is ready
   const initTerminal = useCallback(async (tabId: string, container: HTMLDivElement) => {
     if (termInstances.current.has(tabId)) return;
@@ -67,86 +69,97 @@ function PtyTerminal() {
     const tab = tabs.find((t) => t.id === tabId);
     if (!tab) return;
 
-    const { Terminal } = await import("@xterm/xterm");
-    const { FitAddon } = await import("@xterm/addon-fit");
-    const { WebLinksAddon } = await import("@xterm/addon-web-links");
-    const { desktop } = await import("../common/desktop-bridge");
+    try {
+      const { Terminal } = await import("@xterm/xterm");
+      const { FitAddon } = await import("@xterm/addon-fit");
+      const { WebLinksAddon } = await import("@xterm/addon-web-links");
+      const { desktop } = await import("../common/desktop-bridge");
 
-    await import("@xterm/xterm/css/xterm.css");
+      await import("@xterm/xterm/css/xterm.css");
 
-    const term = new Terminal({
-      theme: {
-        background: "#0d1117",
-        foreground: "#e2e8f0",
-        cursor: "#22c55e",
-        selectionBackground: "#264f78",
-        black: "#0d1117", red: "#f85149", green: "#3fb950",
-        yellow: "#d29922", blue: "#58a6ff", magenta: "#bc8cff",
-        cyan: "#39d353", white: "#e2e8f0"
-      },
-      fontFamily: MONO_FONT,
-      fontSize: 13,
-      lineHeight: 1.3,
-      cursorBlink: true,
-      cursorStyle: "bar",
-      allowTransparency: true,
-      scrollback: 10000
-    });
+      if (!desktop) {
+        throw new Error("Desktop bridge not available — PTY requires Electron");
+      }
 
-    const fitAddon = new FitAddon();
-    term.loadAddon(fitAddon);
-    term.loadAddon(new WebLinksAddon());
-    term.open(container);
-    fitAddon.fit();
+      const term = new Terminal({
+        theme: {
+          background: "#0d1117",
+          foreground: "#e2e8f0",
+          cursor: "#22c55e",
+          selectionBackground: "#264f78",
+          black: "#0d1117", red: "#f85149", green: "#3fb950",
+          yellow: "#d29922", blue: "#58a6ff", magenta: "#bc8cff",
+          cyan: "#39d353", white: "#e2e8f0"
+        },
+        fontFamily: MONO_FONT,
+        fontSize: 13,
+        lineHeight: 1.3,
+        cursorBlink: true,
+        cursorStyle: "bar",
+        allowTransparency: true,
+        scrollback: 10000
+      });
 
-    const { id: ptyId } = await desktop.pty.spawn.mutate({
-      rows: term.rows,
-      cols: term.cols
-    });
+      const fitAddon = new FitAddon();
+      term.loadAddon(fitAddon);
+      term.loadAddon(new WebLinksAddon());
+      term.open(container);
+      fitAddon.fit();
 
-    // Update the tab's ptyId with the server-assigned UUID
-    setTabs((prev) => prev.map((t) => t.id === tabId ? { ...t, ptyId } : t));
+      const { id: ptyId } = await desktop.pty.spawn.mutate({
+        rows: term.rows,
+        cols: term.cols
+      });
 
-    const dataSubscription = desktop.pty.onData.subscribe(
-      { id: ptyId },
-      {
-        onData(data: string) {
-          term.write(data);
+      // Update the tab's ptyId with the server-assigned UUID
+      setTabs((prev) => prev.map((t) => t.id === tabId ? { ...t, ptyId } : t));
+
+      const dataSubscription = desktop.pty.onData.subscribe(
+        { id: ptyId },
+        {
+          onData(data: string) {
+            term.write(data);
+          }
         }
-      }
-    );
+      );
 
-    const exitSubscription = desktop.pty.onExit.subscribe(
-      { id: ptyId },
-      {
-        onData(event: { exitCode: number; signal?: number }) {
-          term.write(`\r\n\x1b[33m[Process exited with code ${event.exitCode ?? "unknown"}]\x1b[0m\r\n`);
+      const exitSubscription = desktop.pty.onExit.subscribe(
+        { id: ptyId },
+        {
+          onData(event: { exitCode: number; signal?: number }) {
+            term.write(`\r\n\x1b[33m[Process exited with code ${event.exitCode ?? "unknown"}]\x1b[0m\r\n`);
+          }
         }
-      }
-    );
+      );
 
-    term.onData((data) => {
-      desktop.pty.write.mutate({ id: ptyId, data }).catch(console.error);
-    });
+      term.onData((data) => {
+        desktop.pty.write.mutate({ id: ptyId, data }).catch(console.error);
+      });
 
-    term.onResize(({ rows, cols }) => {
-      desktop.pty.resize.mutate({ id: ptyId, cols, rows }).catch(console.error);
-    });
+      term.onResize(({ rows, cols }) => {
+        desktop.pty.resize.mutate({ id: ptyId, cols, rows }).catch(console.error);
+      });
 
-    const resizeObserver = new ResizeObserver(() => fitAddon.fit());
-    resizeObserver.observe(container);
+      const resizeObserver = new ResizeObserver(() => fitAddon.fit());
+      resizeObserver.observe(container);
 
-    termInstances.current.set(tabId, {
-      terminal: term,
-      fitAddon,
-      cleanup: () => {
-        dataSubscription.unsubscribe();
-        exitSubscription.unsubscribe();
-        resizeObserver.disconnect();
-        desktop.pty.kill.mutate({ id: ptyId }).catch(() => {});
-        term.dispose();
-      }
-    });
+      termInstances.current.set(tabId, {
+        terminal: term,
+        fitAddon,
+        cleanup: () => {
+          dataSubscription.unsubscribe();
+          exitSubscription.unsubscribe();
+          resizeObserver.disconnect();
+          desktop.pty.kill.mutate({ id: ptyId }).catch(() => {});
+          term.dispose();
+        }
+      });
+
+      setInitError(null);
+    } catch (err) {
+      console.error("[PtyTerminal] initTerminal failed:", err);
+      setInitError(err instanceof Error ? err.message : String(err));
+    }
   }, [tabs]);
 
   // Create first tab on mount
@@ -247,6 +260,14 @@ function PtyTerminal() {
         ))}
         <Button onClick={createTab} sx={{ bg: "transparent", border: "none", color: "paragraph-secondary", fontSize: 14, cursor: "pointer", px: 2, py: "5px", "&:hover": { color: "#22c55e" } }}>+</Button>
       </Flex>
+
+      {/* Error banner */}
+      {initError && (
+        <Flex sx={{ bg: "#ef444422", border: "1px solid #ef4444", px: 3, py: 2, mx: 2, mt: 1, borderRadius: 6, alignItems: "center", gap: 2, flexShrink: 0 }}>
+          <Text sx={{ color: "#ef4444", fontSize: 12, fontFamily: MONO_FONT, flex: 1 }}>PTY Error: {initError}</Text>
+          <Button onClick={() => { setInitError(null); if (activeTabId) { const c = containerRefs.current.get(activeTabId); if (c) { termInstances.current.delete(activeTabId); initTerminal(activeTabId, c); } } }} sx={{ bg: "#ef4444", color: "#fff", border: "none", fontSize: 11, px: 2, py: 1, borderRadius: 4, cursor: "pointer" }}>Retry</Button>
+        </Flex>
+      )}
 
       {/* Terminal containers */}
       <Flex sx={{ flex: 1, overflow: "hidden" }}>
@@ -547,7 +568,9 @@ function MockTerminal() {
 
 // ── Main Export ──
 
+import { isDesktopRuntime } from "../utils/platform";
+
 export default function TerminalView() {
-  if (IS_DESKTOP_APP) return <PtyTerminal />;
+  if (isDesktopRuntime()) return <PtyTerminal />;
   return <MockTerminal />;
 }

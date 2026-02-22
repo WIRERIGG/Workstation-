@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -45,9 +45,9 @@ const TEST_NOTEBOOK2: Partial<Notebook> = {
 };
 
 function databaseTest(type: "memory" | "persistent" = "memory") {
-  const dir = path.join(tmpdir(), "notesnook-tests-tmp");
+  const dir = path.join(tmpdir(), "workstation-tests-tmp");
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  const dbPath = path.join(dir, `notesnook-${getId()}.sql`);
+  const dbPath = path.join(dir, `workstation-${getId()}.sql`);
   const db = new DB();
   const betterSqliteDb = BetterSQLite3(
     type === "persistent" ? dbPath : ":memory:"

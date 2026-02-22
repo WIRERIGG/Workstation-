@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { ThemeDefinition, validateTheme } from "@notesnook/theme";
-import { tryParse } from "@notesnook/web/src/utils/parse";
+import { ThemeDefinition, validateTheme } from "@workstation/theme";
+import { tryParse } from "@workstation/web/src/utils/parse";
 
 export async function loadThemeFromPullRequest(id: string) {
   try {
-    //streetwriters/notesnook-themes/3
+    //streetwriters/workstation-themes/3
     const [owner, repo, pullRequestNumber] = id.split("/");
     console.log(owner, repo, pullRequestNumber);
     if (
@@ -30,7 +30,7 @@ export async function loadThemeFromPullRequest(id: string) {
       !repo ||
       !pullRequestNumber ||
       owner !== "streetwriters" ||
-      repo !== "notesnook-themes" ||
+      repo !== "workstation-themes" ||
       isNaN(parseInt(pullRequestNumber))
     )
       return null;

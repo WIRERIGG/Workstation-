@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { db } from "../../common/database";
@@ -47,7 +47,7 @@ import Input from "../ui/input";
 import Heading from "../ui/typography/heading";
 import Paragraph from "../ui/typography/paragraph";
 import { LoginSteps, useLogin } from "./use-login";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { getObfuscatedEmail } from "../../utils/functions";
 import { DefaultAppStyles } from "../../utils/styles";
 

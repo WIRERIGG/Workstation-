@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,8 +23,8 @@ import {
   FileEncryptionMetadataWithOutputType,
   Output,
   RequestOptions
-} from "@notesnook/core";
-import { DataFormat, SerializedKey } from "@notesnook/crypto";
+} from "@workstation/core";
+import { DataFormat, SerializedKey } from "@workstation/crypto";
 import { Platform } from "react-native";
 import RNFetchBlob from "react-native-blob-util";
 import { eSendEvent } from "../../services/event-manager";

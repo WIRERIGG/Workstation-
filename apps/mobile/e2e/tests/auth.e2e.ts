@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -73,7 +73,7 @@ describe("AUTH", () => {
       .prepare()
       .addStep(login)
       .wait(3000)
-      .isNotVisibleByText("Notesnook Plans")
+      .isNotVisibleByText("Workstation Plans")
       .run();
   });
 });

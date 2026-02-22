@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -37,7 +37,7 @@ import {
 import { isCipher } from "./utils/crypto.js";
 import { IndexedCollection } from "./database/indexed-collection.js";
 import { DefaultColors } from "./collections/colors.js";
-import { Cipher } from "@notesnook/crypto";
+import { Cipher } from "@workstation/crypto";
 import { KEYS } from "./database/kv.js";
 
 type MigrationType = "local" | "sync" | "backup";

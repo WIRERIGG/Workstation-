@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -29,12 +29,12 @@ const buildFiles = [
   `!${buildRoot}/build/*.png`
 ];
 
-const productName = process.env.NN_PRODUCT_NAME || "Notesnook";
-const appId = process.env.NN_APP_ID || "org.streetwriters.notesnook";
+const productName = process.env.NN_PRODUCT_NAME || "Workstation";
+const appId = process.env.NN_APP_ID || "org.streetwriters.workstation";
 const outputDir = process.env.NN_OUTPUT_DIR || "output";
 const linuxExecutableName = process.env.NN_PRODUCT_NAME
   ? process.env.NN_PRODUCT_NAME.toLowerCase().replace(/\s+/g, "-")
-  : "notesnook";
+  : "workstation";
 const year = new Date().getFullYear();
 const isBeta = pkg.version.includes("-beta");
 
@@ -45,7 +45,7 @@ module.exports = {
   appId: appId,
   productName: productName,
   copyright: `Copyright © ${year} Streetwriters (Private) Limited`,
-  artifactName: "notesnook_${os}_${arch}.${ext}",
+  artifactName: "workstation_${os}_${arch}.${ext}",
   generateUpdatesFilesForAllChannels: true,
   asar: true,
   asarUnpack: [
@@ -133,7 +133,7 @@ module.exports = {
       }
     ],
     icon: "assets/icons/app.icns",
-    title: "Install Notesnook"
+    title: "Install Workstation"
   },
   mas: {
     entitlements: "assets/entitlements.mas.plist",
@@ -159,7 +159,7 @@ module.exports = {
     icon: "assets/icons/app.ico"
   },
   portable: {
-    artifactName: "notesnook_${os}_${arch}_portable.${ext}"
+    artifactName: "workstation_${os}_${arch}_portable.${ext}"
   },
   nsis: {
     oneClick: true,
@@ -215,7 +215,7 @@ module.exports = {
   publish: [
     {
       provider: "github",
-      repo: "notesnook",
+      repo: "workstation",
       owner: "streetwriters",
       channel: isBeta ? "beta" : "latest"
     }

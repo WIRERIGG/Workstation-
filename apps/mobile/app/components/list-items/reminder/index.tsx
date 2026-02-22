@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,13 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Reminder } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { Reminder } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { notesnook } from "../../../../e2e/test.ids";
+import { workstation } from "../../../../e2e/test.ids";
 import useIsSelected from "../../../hooks/use-selected";
 import AddReminder from "../../../screens/add-reminder";
 import { eSendEvent } from "../../../services/event-manager";
@@ -186,7 +186,7 @@ const ReminderItem = React.memo(
           </>
         ) : (
           <IconButton
-            testID={notesnook.listitem.menu}
+            testID={workstation.listitem.menu}
             color={colors.primary.paragraph}
             name="dots-horizontal"
             size={AppFontSize.xl}

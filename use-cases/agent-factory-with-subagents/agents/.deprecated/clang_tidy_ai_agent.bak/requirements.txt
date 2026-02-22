@@ -1,0 +1,30 @@
+# Core Pydantic AI
+pydantic-ai>=0.0.14
+pydantic>=2.7.0
+pydantic-settings>=2.2.1
+
+# Environment Management
+python-dotenv>=1.0.1
+
+# Async Support
+asyncio
+aiofiles>=23.2.1
+
+# LLM Providers (choose based on your needs)
+openai>=1.12.0
+anthropic>=0.18.0
+google-generativeai>=0.4.0
+
+# CLI Interface
+rich>=13.0.0
+typer>=0.9.0
+
+# Development Tools
+pytest>=7.4.4
+pytest-asyncio>=0.21.1
+black>=23.12.1
+ruff>=0.1.9
+
+# Optional: For advanced features
+# sqlalchemy>=2.0.25  # If you want ORM instead of raw SQL
+# structlog>=24.1.0   # For structured logging

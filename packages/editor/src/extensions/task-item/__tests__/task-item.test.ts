@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -32,7 +32,7 @@ import { ImageNode } from "../../image/image.js";
 
 describe("task list item", () => {
   /**
-   * see https://github.com/streetwriters/notesnook/pull/8877 for more context
+   * see https://github.com/streetwriters/workstation/pull/8877 for more context
    */
   test("inline image as first child in task list item", async () => {
     const el = taskList(

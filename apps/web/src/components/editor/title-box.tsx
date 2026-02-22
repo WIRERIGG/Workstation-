@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,14 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Textarea } from "@theme-ui/components";
 import { SaveState, useEditorStore } from "../../stores/editor-store";
-import { debounceWithId } from "@notesnook/common";
+import { debounceWithId } from "@workstation/common";
 import { useEditorConfig, useEditorManager } from "./manager";
-import { getFontById } from "@notesnook/editor";
-import { replaceDateTime } from "@notesnook/editor";
+import { getFontById } from "@workstation/editor";
+import { replaceDateTime } from "@workstation/editor";
 import { useStore as useSettingsStore } from "../../stores/setting-store";
 import { AppEventManager, AppEvents } from "../../common/app-events";
-import { strings } from "@notesnook/intl";
-import { NEWLINE_STRIP_REGEX } from "@notesnook/core";
+import { strings } from "@workstation/intl";
+import { NEWLINE_STRIP_REGEX } from "@workstation/core";
 
 type TitleBoxProps = {
   id: string;

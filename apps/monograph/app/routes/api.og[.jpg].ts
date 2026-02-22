@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { makeImage } from "../utils/generate-og-image.server";
-import { formatDate } from "@notesnook/core";
+import { formatDate } from "@workstation/core";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);

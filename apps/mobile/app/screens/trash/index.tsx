@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -31,7 +31,7 @@ import useNavigationStore from "../../stores/use-navigation-store";
 import { useSelectionStore } from "../../stores/use-selection-store";
 import { useTrash, useTrashStore } from "../../stores/use-trash-store";
 import SelectionHeader from "../../components/selection-header";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const onPressFloatingButton = () => {
   presentDialog({

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,16 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useState, useMemo, useEffect } from "react";
-import { Box, Button, Flex, Text } from "@theme-ui/components";
+import { useState, useMemo } from "react";
+import { Box, Flex, Text } from "@theme-ui/components";
 import { useStore as useAgentStore, Agent, AgentStatus } from "../stores/agent-store";
 import { useStore as useTaskStore, WorkstationTask } from "../stores/task-store";
 import { useStore as useCommsStore, CommMessage } from "../stores/comms-store";
 import { useStore as useCalendarStore, CalendarEvent } from "../stores/calendar-store";
-import { useStore as useSpreadsheetStore } from "../stores/spreadsheet-store";
-import { useStore as useOpenClawStore } from "../stores/openclaw-store";
 import { navigate } from "../navigation";
-import { AppEventManager, AppEvents } from "../common/app-events";
 
 // ── Helpers ──
 
@@ -42,17 +39,6 @@ function formatTime(timestamp: number): string {
     hour: "2-digit",
     minute: "2-digit"
   });
-}
-
-function formatTimeAgo(timestamp: number): string {
-  const diff = Date.now() - timestamp;
-  const minutes = Math.floor(diff / 60000);
-  if (minutes < 1) return "just now";
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  return `${days}d ago`;
 }
 
 function formatRelativeDate(timestamp: number): string {
@@ -83,13 +69,6 @@ const PRIORITY_COLORS: Record<string, string> = {
   low: "#94a3b8"
 };
 
-const EVENT_TYPE_ICONS: Record<string, string> = {
-  meeting: "M",
-  deadline: "!",
-  reminder: "R",
-  block: "B"
-};
-
 // ── Components ──
 
 function StatusDot({ status }: { status: AgentStatus }) {
@@ -104,45 +83,6 @@ function StatusDot({ status }: { status: AgentStatus }) {
         boxShadow: status === "running" ? `0 0 6px ${STATUS_COLORS[status]}` : "none"
       }}
     />
-  );
-}
-
-function StatCard({
-  label,
-  value,
-  color,
-  onClick
-}: {
-  label: string;
-  value: number | string;
-  color?: string;
-  onClick?: () => void;
-}) {
-  return (
-    <Flex
-      onClick={onClick}
-      sx={{
-        flexDirection: "column",
-        bg: "background-secondary",
-        borderRadius: 8,
-        p: "12px",
-        flex: "1 1 0",
-        minWidth: 100,
-        cursor: onClick ? "pointer" : "default",
-        border: "1px solid var(--border)",
-        transition: "all 0.15s ease",
-        "&:hover": onClick
-          ? { borderColor: "var(--accent)", bg: "hover", transform: "translateY(-1px)" }
-          : {}
-      }}
-    >
-      <Text sx={{ fontSize: 22, fontWeight: "bold", color: color || "heading", lineHeight: 1 }}>
-        {value}
-      </Text>
-      <Text sx={{ fontSize: 11, color: "paragraph-secondary", mt: 1 }}>
-        {label}
-      </Text>
-    </Flex>
   );
 }
 
@@ -185,48 +125,6 @@ function SectionHeader({
   );
 }
 
-function QuickActions() {
-  const quickActions = [
-    { label: "New Task", icon: "+", route: "/tasks", event: AppEvents.createNewTask },
-    { label: "Compose", icon: "@", route: "/communications", event: AppEvents.composeMessage },
-    { label: "New Event", icon: "#", route: "/calendar", event: AppEvents.createNewEvent },
-    { label: "New Sheet", icon: "$", route: "/spreadsheets", event: AppEvents.createNewSheet }
-  ];
-
-  return (
-    <Flex sx={{ gap: 2, flexWrap: "wrap" }}>
-      {quickActions.map((action) => (
-        <Button
-          key={action.label}
-          variant="secondary"
-          onClick={() => {
-            navigate(action.route as never);
-            // Delay event so the target view has time to mount and subscribe
-            setTimeout(() => AppEventManager.publish(action.event), 300);
-          }}
-          sx={{
-            fontSize: 12,
-            px: 3,
-            py: "6px",
-            borderRadius: 6,
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            border: "1px solid var(--border)",
-            bg: "background-secondary",
-            color: "heading",
-            cursor: "pointer",
-            "&:hover": { borderColor: "var(--accent)", bg: "hover" }
-          }}
-        >
-          <Text sx={{ fontWeight: "bold", color: "accent" }}>{action.icon}</Text>
-          {action.label}
-        </Button>
-      ))}
-    </Flex>
-  );
-}
-
 function TodaySchedule() {
   const events = useCalendarStore((s) => s.events);
 
@@ -235,7 +133,6 @@ function TodaySchedule() {
   const todayEnd = todayStart + 86400000;
   const tomorrowEnd = todayEnd + 86400000;
 
-  // Get today's and tomorrow's events, sorted by time
   const upcomingEvents = events
     .filter((e) => e.startTime >= todayStart && e.startTime < tomorrowEnd)
     .sort((a, b) => a.startTime - b.startTime);
@@ -487,307 +384,6 @@ function AgentRow({ agent }: { agent: Agent }) {
   );
 }
 
-function RecentSpreadsheets() {
-  const sheets = useSpreadsheetStore((s) => s.spreadsheets);
-
-  const recent = [...sheets]
-    .sort((a, b) => b.updatedAt - a.updatedAt)
-    .slice(0, 3);
-
-  if (recent.length === 0) {
-    return (
-      <Text sx={{ fontSize: 12, color: "paragraph-secondary", fontStyle: "italic", py: 2 }}>
-        No spreadsheets yet.
-      </Text>
-    );
-  }
-
-  return (
-    <Flex sx={{ flexDirection: "column", gap: 1 }}>
-      {recent.map((sheet) => (
-        <Flex
-          key={sheet.id}
-          onClick={() => navigate("/spreadsheets" as never)}
-          sx={{
-            alignItems: "center",
-            gap: 2,
-            py: "6px",
-            px: 2,
-            borderRadius: 6,
-            cursor: "pointer",
-            "&:hover": { bg: "hover" }
-          }}
-        >
-          <Text sx={{ fontSize: 14, color: "#22c55e", fontWeight: "bold", flexShrink: 0 }}>
-            #
-          </Text>
-          <Flex sx={{ flexDirection: "column", flex: 1, minWidth: 0 }}>
-            <Text
-              sx={{
-                fontSize: 12,
-                color: "heading",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap"
-              }}
-            >
-              {sheet.name}
-            </Text>
-            <Text sx={{ fontSize: 10, color: "paragraph-secondary" }}>
-              {sheet.rows.length} rows · {sheet.columns.length} cols · Updated{" "}
-              {formatTimeAgo(sheet.updatedAt)}
-            </Text>
-          </Flex>
-        </Flex>
-      ))}
-    </Flex>
-  );
-}
-
-type ActivityType = "all" | "info" | "action" | "error" | "result";
-
-const ACTIVITY_TYPE_COLORS: Record<string, string> = {
-  info: "#94a3b8",
-  action: "#3b82f6",
-  error: "#ef4444",
-  result: "#22c55e"
-};
-
-function ActivityFeed() {
-  const agents = useAgentStore((s) => s.agents);
-  const [filterAgent, setFilterAgent] = useState<string>("all");
-  const [filterType, setFilterType] = useState<ActivityType>("all");
-
-  const allActivity = agents
-    .flatMap((agent) =>
-      agent.activity.map((entry) => ({
-        ...entry,
-        agentId: agent.id,
-        agentName: agent.name,
-        agentAvatar: agent.avatar
-      }))
-    )
-    .sort((a, b) => b.timestamp - a.timestamp);
-
-  const filteredActivity = allActivity
-    .filter((entry) => filterAgent === "all" || entry.agentId === filterAgent)
-    .filter((entry) => filterType === "all" || entry.type === filterType)
-    .slice(0, 15);
-
-  const typeCounts = allActivity.reduce(
-    (acc, entry) => {
-      acc[entry.type] = (acc[entry.type] || 0) + 1;
-      return acc;
-    },
-    {} as Record<string, number>
-  );
-
-  return (
-    <Flex sx={{ flexDirection: "column", gap: 1 }}>
-      {/* Agent filter pills */}
-      <Flex sx={{ gap: 1, flexWrap: "wrap", mb: 1 }}>
-        <FilterPill
-          label="All"
-          isActive={filterAgent === "all"}
-          onClick={() => setFilterAgent("all")}
-        />
-        {agents.map((agent) => (
-          <FilterPill
-            key={agent.id}
-            label={`${agent.avatar} ${agent.name}`}
-            isActive={filterAgent === agent.id}
-            onClick={() => setFilterAgent(filterAgent === agent.id ? "all" : agent.id)}
-          />
-        ))}
-      </Flex>
-
-      {/* Type filter pills */}
-      <Flex sx={{ gap: 1, mb: 1 }}>
-        <FilterPill
-          label={`All (${allActivity.length})`}
-          isActive={filterType === "all"}
-          onClick={() => setFilterType("all")}
-        />
-        {(["info", "action", "error", "result"] as const).map((type) => (
-          <FilterPill
-            key={type}
-            label={`${type} (${typeCounts[type] || 0})`}
-            isActive={filterType === type}
-            onClick={() => setFilterType(filterType === type ? "all" : type)}
-            color={ACTIVITY_TYPE_COLORS[type]}
-          />
-        ))}
-      </Flex>
-
-      {filteredActivity.length === 0 ? (
-        <Text sx={{ fontSize: 12, color: "paragraph-secondary", fontStyle: "italic", py: 2 }}>
-          No matching activity.
-        </Text>
-      ) : (
-        filteredActivity.map((entry) => (
-          <Flex
-            key={entry.id}
-            sx={{
-              alignItems: "flex-start",
-              gap: 2,
-              py: "4px",
-              px: 2,
-              borderRadius: 4,
-              "&:hover": { bg: "hover" }
-            }}
-          >
-            <Text sx={{ fontSize: 12, flexShrink: 0 }}>{entry.agentAvatar}</Text>
-            <Flex sx={{ flexDirection: "column", flex: 1, minWidth: 0 }}>
-              <Flex sx={{ alignItems: "center", gap: 1 }}>
-                <Text sx={{ fontSize: 11, fontWeight: "bold", color: "heading" }}>
-                  {entry.agentName}
-                </Text>
-                <Text sx={{ fontSize: 9, color: "paragraph-secondary" }}>
-                  {formatTimeAgo(entry.timestamp)}
-                </Text>
-              </Flex>
-              <Text
-                sx={{
-                  fontSize: 11,
-                  color:
-                    entry.type === "error"
-                      ? "error"
-                      : entry.type === "action"
-                      ? "accent"
-                      : entry.type === "result"
-                      ? "#22c55e"
-                      : "paragraph",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap"
-                }}
-              >
-                {entry.message}
-              </Text>
-            </Flex>
-          </Flex>
-        ))
-      )}
-    </Flex>
-  );
-}
-
-function FilterPill({
-  label,
-  isActive,
-  onClick,
-  color
-}: {
-  label: string;
-  isActive: boolean;
-  onClick: () => void;
-  color?: string;
-}) {
-  return (
-    <Text
-      onClick={onClick}
-      sx={{
-        fontSize: 10,
-        px: "6px",
-        py: "2px",
-        borderRadius: 10,
-        cursor: "pointer",
-        fontWeight: isActive ? "bold" : "normal",
-        bg: isActive ? (color ? `${color}20` : "accent") : "background",
-        color: isActive ? (color || "white") : "paragraph-secondary",
-        border: isActive
-          ? `1px solid ${color || "var(--accent)"}`
-          : "1px solid var(--border)",
-        "&:hover": { borderColor: color || "var(--accent)" }
-      }}
-    >
-      {label}
-    </Text>
-  );
-}
-
-function VitalPill({
-  label,
-  value,
-  color
-}: {
-  label: string;
-  value: string;
-  color: string;
-}) {
-  return (
-    <Flex
-      sx={{
-        alignItems: "center",
-        gap: "6px",
-        bg: `${color}10`,
-        border: `1px solid ${color}30`,
-        borderRadius: 20,
-        px: "10px",
-        py: "4px"
-      }}
-    >
-      <Box
-        sx={{
-          width: 6,
-          height: 6,
-          borderRadius: "50%",
-          bg: color,
-          boxShadow: `0 0 6px ${color}`
-        }}
-      />
-      <Text sx={{ fontSize: 11, color, fontWeight: "bold" }}>{value}</Text>
-      <Text sx={{ fontSize: 10, color: "paragraph-secondary" }}>{label}</Text>
-    </Flex>
-  );
-}
-
-function SystemVitalsWidget() {
-  const agents = useAgentStore((s) => s.agents);
-  const connectionState = useOpenClawStore((s) => s.connectionState);
-  const sessions = useOpenClawStore((s) => s.sessions);
-  const lastConnectedAt = useOpenClawStore((s) => s.lastConnectedAt);
-
-  const onlineCount = agents.filter(
-    (a) => a.status === "running" || a.status === "idle"
-  ).length;
-  const activeSessions = sessions.filter((s) => s.status === "active").length;
-
-  const uptimeStr = lastConnectedAt
-    ? formatTimeAgo(lastConnectedAt).replace(" ago", "")
-    : "N/A";
-
-  const gatewayColor =
-    connectionState === "connected"
-      ? "#22c55e"
-      : connectionState === "error"
-      ? "#ef4444"
-      : "#6b7280";
-  const gatewayLabel =
-    connectionState === "connected"
-      ? "Connected"
-      : connectionState === "error"
-      ? "Error"
-      : "Offline";
-
-  return (
-    <Flex sx={{ gap: 2, flexWrap: "wrap" }}>
-      <VitalPill
-        label="Agents Online"
-        value={`${onlineCount}/${agents.length}`}
-        color={onlineCount > 0 ? "#22c55e" : "#6b7280"}
-      />
-      <VitalPill label="Gateway" value={gatewayLabel} color={gatewayColor} />
-      <VitalPill
-        label="Active Sessions"
-        value={String(activeSessions)}
-        color={activeSessions > 0 ? "#3b82f6" : "#6b7280"}
-      />
-      <VitalPill label="Uptime" value={uptimeStr} color="#8b5cf6" />
-    </Flex>
-  );
-}
-
 function CostUsageWidget() {
   const agents = useAgentStore((s) => s.agents);
   const totalTokens = agents.reduce((sum, a) => sum + a.tokenUsage.total, 0);
@@ -801,7 +397,6 @@ function CostUsageWidget() {
 
   return (
     <Flex sx={{ flexDirection: "column", gap: 2 }}>
-      {/* Summary */}
       <Flex sx={{ gap: 3 }}>
         <Flex sx={{ flexDirection: "column" }}>
           <Text sx={{ fontSize: 16, fontWeight: "bold", color: "heading" }}>
@@ -823,7 +418,6 @@ function CostUsageWidget() {
         </Flex>
       </Flex>
 
-      {/* Per-agent bars */}
       {sortedAgents.length === 0 ? (
         <Text sx={{ fontSize: 11, color: "paragraph-secondary", fontStyle: "italic" }}>
           No usage data yet
@@ -863,71 +457,6 @@ function CostUsageWidget() {
           </Flex>
         ))
       )}
-    </Flex>
-  );
-}
-
-function OpenClawStatusBanner() {
-  const connectionState = useOpenClawStore((s) => s.connectionState);
-  const sessions = useOpenClawStore((s) => s.sessions);
-  const connectionError = useOpenClawStore((s) => s.connectionError);
-
-  const isConnected = connectionState === "connected";
-  const activeSessions = sessions.filter((s) => s.status === "active").length;
-
-  return (
-    <Flex
-      onClick={() => navigate("/agents" as never)}
-      sx={{
-        alignItems: "center",
-        gap: 2,
-        bg: isConnected ? "#22c55e10" : "background-secondary",
-        borderRadius: 8,
-        p: 2,
-        px: 3,
-        border: isConnected
-          ? "1px solid #22c55e40"
-          : "1px solid var(--border)",
-        cursor: "pointer",
-        "&:hover": { borderColor: isConnected ? "#22c55e" : "var(--accent)" }
-      }}
-    >
-      <svg width="18" height="18" viewBox="-15 -5 230 224" style={{ flexShrink: 0 }}>
-        <polygon
-          points="0,0.9 0,35.9 12.8,54.1 81.4,83.2 99.7,107.9 118.3,83.4 186.5,54.7 200,36.1 200,0 186.1,24.2 100.8,49.6 13.9,24.2"
-          fill={isConnected ? "#22c55e" : "#6b7280"}
-        />
-        <polygon
-          points="31.7,65.9 31.7,112.4 58.3,129.7 58.3,159.9 85.5,214 85.7,111.5 43.6,86.6 41.2,73.1"
-          fill={isConnected ? "#22c55e" : "#6b7280"}
-        />
-        <polygon
-          points="168.5,66.2 158.8,73.4 156.1,86.8 114.5,111.3 114.5,214 141.7,160.2 141.7,129.7 168.5,112.4"
-          fill={isConnected ? "#22c55e" : "#6b7280"}
-        />
-      </svg>
-      <Flex sx={{ flexDirection: "column", flex: 1 }}>
-        <Text sx={{ fontSize: 12, fontWeight: "bold", color: "heading" }}>
-          OpenClaw Gateway
-        </Text>
-        <Text sx={{ fontSize: 10, color: isConnected ? "#22c55e" : "paragraph-secondary" }}>
-          {isConnected
-            ? `Connected${activeSessions > 0 ? ` — ${activeSessions} active session${activeSessions > 1 ? "s" : ""}` : ""}`
-            : connectionState === "error"
-              ? `Error: ${connectionError || "Connection failed"}`
-              : "Not connected — click to configure"}
-        </Text>
-      </Flex>
-      <Box
-        sx={{
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          bg: isConnected ? "#22c55e" : connectionState === "error" ? "#ef4444" : "#6b7280",
-          boxShadow: isConnected ? "0 0 8px #22c55e" : "none",
-          flexShrink: 0
-        }}
-      />
     </Flex>
   );
 }
@@ -983,7 +512,6 @@ function generateAlerts(
   const now = Date.now();
   const day = 86400000;
 
-  // Risk: overdue tasks
   const overdueTasks = tasks.filter(
     (t) => t.dueDate && t.dueDate < now && t.status !== "done" && t.status !== "cancelled"
   );
@@ -999,7 +527,6 @@ function generateAlerts(
     });
   }
 
-  // Risk: unread messages older than 24h
   const staleUnread = messages.filter(
     (m) => !m.isRead && m.timestamp < now - day
   );
@@ -1015,7 +542,6 @@ function generateAlerts(
     });
   }
 
-  // Risk: critical tasks with no assignee
   const unassignedCritical = tasks.filter(
     (t) => t.priority === "critical" && !t.assignee && t.status !== "done" && t.status !== "cancelled"
   );
@@ -1031,7 +557,6 @@ function generateAlerts(
     });
   }
 
-  // Opportunity: messages with AI draft replies ready
   const readyDrafts = messages.filter((m) => m.agentDraftReply && !m.isRead);
   if (readyDrafts.length > 0) {
     alerts.push({
@@ -1045,7 +570,6 @@ function generateAlerts(
     });
   }
 
-  // Opportunity: tasks completing soon (due within 24h, in progress)
   const nearCompletion = tasks.filter(
     (t) =>
       t.status === "in_progress" &&
@@ -1065,7 +589,6 @@ function generateAlerts(
     });
   }
 
-  // Opportunity: upcoming meetings (next 2 hours)
   const upcomingMeetings = events.filter(
     (e) => e.type === "meeting" && e.startTime > now && e.startTime < now + 2 * 3600000
   );
@@ -1187,110 +710,6 @@ function RiskAlertsWidget() {
     </Flex>
   );
 }
-
-// ── Developer Dashboard Cards ──
-
-function GitStatusCard() {
-  const [info, setInfo] = useState<{ branch?: string; changes: number } | null>(null);
-
-  useEffect(() => {
-    if (typeof IS_TAURI === "undefined" || !IS_TAURI) return;
-    (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const home = await invoke<string>("fs_get_home_dir");
-      try {
-        const repoInfo = await invoke<{ is_repo: boolean; branch: string | null }>("git_repo_info", { path: home });
-        if (repoInfo.is_repo) {
-          const status = await invoke<{ path: string }[]>("git_status", { path: home });
-          setInfo({ branch: repoInfo.branch || undefined, changes: status.length });
-        }
-      } catch { /* not a repo */ }
-    })().catch(console.error);
-  }, []);
-
-  if (!info) {
-    return (
-      <Text sx={{ fontSize: 12, color: "paragraph-secondary", fontStyle: "italic" }}>
-        {typeof IS_TAURI !== "undefined" && IS_TAURI ? "Detecting repository..." : "Requires Tauri desktop"}
-      </Text>
-    );
-  }
-
-  return (
-    <Flex sx={{ flexDirection: "column", gap: 2 }}>
-      <Flex sx={{ alignItems: "center", gap: 2 }}>
-        <Text sx={{ fontSize: 12, color: "#60a5fa", bg: "#60a5fa22", px: "6px", py: "2px", borderRadius: 8 }}>{info.branch}</Text>
-      </Flex>
-      <Text sx={{ fontSize: 12, color: info.changes > 0 ? "#eab308" : "#22c55e" }}>
-        {info.changes > 0 ? `${info.changes} uncommitted change${info.changes > 1 ? "s" : ""}` : "Working tree clean"}
-      </Text>
-    </Flex>
-  );
-}
-
-function WorkspacesCard() {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (typeof IS_TAURI === "undefined" || !IS_TAURI) return;
-    (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const home = await invoke<string>("fs_get_home_dir");
-      try {
-        const list = await invoke<{ name: string }[]>("workspace_list", { repoPath: home });
-        setCount(list.length);
-      } catch { /* not a repo */ }
-    })().catch(console.error);
-  }, []);
-
-  return (
-    <Text sx={{ fontSize: 12, color: "paragraph-secondary" }}>
-      {count > 0 ? `${count} active worktree${count > 1 ? "s" : ""}` : "No active worktrees"}
-    </Text>
-  );
-}
-
-function ConversationsCard() {
-  const [sessions, setSessions] = useState<{ tool: string; title: string | null; messages: number }[]>([]);
-
-  useEffect(() => {
-    if (typeof IS_TAURI === "undefined" || !IS_TAURI) return;
-    (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const result = await invoke<{ tool: string; title: string | null; messages: number }[]>("conversations_scan", { toolFilter: null, limit: 5 });
-      setSessions(result);
-    })().catch(console.error);
-  }, []);
-
-  const toolColors: Record<string, string> = { "claude-code": "#f97316", cursor: "#60a5fa", gemini: "#22c55e", copilot: "#a78bfa" };
-
-  if (sessions.length === 0) {
-    return <Text sx={{ fontSize: 12, color: "paragraph-secondary", fontStyle: "italic" }}>No recent conversations</Text>;
-  }
-
-  return (
-    <Flex sx={{ flexDirection: "column", gap: 1 }}>
-      {sessions.slice(0, 3).map((s, i) => (
-        <Flex key={i} sx={{ alignItems: "center", gap: 2, fontSize: 11 }}>
-          <Text sx={{ color: toolColors[s.tool] || "paragraph-secondary", fontWeight: "bold", width: 50, flexShrink: 0 }}>{s.tool.split("-").pop()}</Text>
-          <Text sx={{ color: "heading", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.title || "Untitled"}</Text>
-          <Text sx={{ color: "paragraph-secondary", flexShrink: 0 }}>{s.messages}m</Text>
-        </Flex>
-      ))}
-    </Flex>
-  );
-}
-
-function TerminalMiniCard() {
-  return (
-    <Box sx={{ bg: "background", borderRadius: 4, p: 2, fontFamily: "'Cascadia Code', monospace" }}>
-      <Text sx={{ fontSize: 11, color: "#22c55e", display: "block" }}>$ workstation ready</Text>
-      <Text sx={{ fontSize: 11, color: "paragraph-secondary", display: "block" }}>Terminal available — click Open to launch</Text>
-    </Box>
-  );
-}
-
-declare const IS_TAURI: boolean | undefined;
 
 // ── Main Dashboard ──
 

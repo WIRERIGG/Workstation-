@@ -160,7 +160,7 @@
       "contentId": "b8daae0b425606fdb7c4431a",
       "type": "note",
       "title": "Hello",
-      "headline": "streetwriters/notesnookPublic",
+      "headline": "streetwriters/workstationPublic",
       "pinned": false,
       "locked": false,
       "tags": [],
@@ -359,7 +359,7 @@
       "noteId": "5cf86e67c511be0e63fe8d11",
       "id": "b8daae0b425606fdb7c4431a",
       "type": "tiny",
-      "data": "<p>streetwriters<br>/<br>notesnook<br>Public</p>",
+      "data": "<p>streetwriters<br>/<br>workstation<br>Public</p>",
       "dateEdited": 1637817281400,
       "dateCreated": 1637816484695,
       "localOnly": false,
@@ -477,7 +477,7 @@
       "expires_in": 3600,
       "token_type": "Bearer",
       "refresh_token": "C1960767C8C9B7E86029D78D353A432EC27F57E05988F75C3DDDB1D740999180",
-      "scope": "IdentityServerApi notesnook.sync offline_access openid",
+      "scope": "IdentityServerApi workstation.sync offline_access openid",
       "t": 1638365647917
     }
   },

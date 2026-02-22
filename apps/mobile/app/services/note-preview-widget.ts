@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,9 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Note } from "@notesnook/core";
+import { Note } from "@workstation/core";
 import { db } from "../common/database";
-import { NotesnookModule } from "../utils/notesnook-module";
+import { WorkstationModule } from "../utils/workstation-module";
 import { Platform } from "react-native";
 
 let timer: NodeJS.Timeout;
@@ -27,19 +27,19 @@ export const NotePreviewWidget = {
     if (Platform.OS !== "android") return;
     clearTimeout(timer);
     timer = setTimeout(async () => {
-      const noteIds = await NotesnookModule.getWidgetNotes();
+      const noteIds = await WorkstationModule.getWidgetNotes();
       for (const id of noteIds) {
         const newNote = await db.notes.note(id);
         if (!newNote) continue;
 
-        NotesnookModule.updateWidgetNote(id, JSON.stringify(newNote));
+        WorkstationModule.updateWidgetNote(id, JSON.stringify(newNote));
       }
     }, 500);
   },
   updateNote: async (id: string, note: Note) => {
     if (Platform.OS !== "android") return;
-    if (id && (await NotesnookModule.hasWidgetNote(id))) {
-      NotesnookModule.updateWidgetNote(id, JSON.stringify(note));
+    if (id && (await WorkstationModule.hasWidgetNote(id))) {
+      WorkstationModule.updateWidgetNote(id, JSON.stringify(note));
     }
   }
 };

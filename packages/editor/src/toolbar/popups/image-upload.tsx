@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import { ImageAttributes } from "../../extensions/image/index.js";
 import { Popup } from "../components/popup.js";
 import { downloadImage, toDataURL } from "../../utils/downloader.js";
 import { useToolbarStore } from "../stores/toolbar-store.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { hasPermission } from "../../types.js";
 
 export type ImageUploadPopupProps = {

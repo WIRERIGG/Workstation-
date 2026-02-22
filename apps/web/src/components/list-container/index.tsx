@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -35,7 +35,7 @@ import Announcements from "../announcements";
 import { ListLoader } from "../loaders/list-loader";
 import ScrollContainer, { ScrollContainerProps } from "../scroll-container";
 import { useKeyboardListNavigation } from "../../hooks/use-keyboard-list-navigation";
-import { VirtualizedGrouping, GroupingKey, Item } from "@notesnook/core";
+import { VirtualizedGrouping, GroupingKey, Item } from "@workstation/core";
 import {
   Components,
   FlatScrollIntoViewLocation,
@@ -44,7 +44,7 @@ import {
   Virtuoso,
   VirtuosoHandle
 } from "react-virtuoso";
-import { getRandom, useResolvedItem } from "@notesnook/common";
+import { getRandom, useResolvedItem } from "@workstation/common";
 import { Context } from "./types";
 import { AppEventManager, AppEvents } from "../../common/app-events";
 

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -30,13 +30,13 @@ import { showToast } from "../utils/toast";
 import { Calendar, Pro } from "../components/icons";
 import { usePersistentState } from "../hooks/use-persistent-state";
 import { DayPicker } from "../components/day-picker";
-import { PopupPresenter } from "@notesnook/ui";
+import { PopupPresenter } from "@workstation/ui";
 import { useStore as useThemeStore } from "../stores/theme-store";
-import { getFormattedDate, useIsFeatureAvailable } from "@notesnook/common";
-import { MONTHS_FULL, getTimeFormat } from "@notesnook/core";
-import { Note, Reminder } from "@notesnook/core";
+import { getFormattedDate, useIsFeatureAvailable } from "@workstation/common";
+import { MONTHS_FULL, getTimeFormat } from "@workstation/core";
+import { Note, Reminder } from "@workstation/core";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { checkFeature } from "../common";
 import { setTimeOnly, setDateOnly } from "../utils/date-time";
 

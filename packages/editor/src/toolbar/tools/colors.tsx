@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -29,8 +29,8 @@ import {
 } from "../stores/toolbar-store.js";
 import { ToolProps } from "../types.js";
 import { getEditorToolbarPopup } from "../utils/dom.js";
-import { PositionOptions } from "@notesnook/ui";
-import { strings } from "@notesnook/intl";
+import { PositionOptions } from "@workstation/ui";
+import { strings } from "@workstation/intl";
 
 type ColorType = "background" | "text" | "border";
 type ColorToolProps = ToolProps & {

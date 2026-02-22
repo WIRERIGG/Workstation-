@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import { existsSync } from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const IS_DEBUG = process.env.NN_DEBUG === "true" || process.env.CI === "true";
-const productName = `NotesnookTestHarness`;
+const productName = `WorkstationTestHarness`;
 const SOURCE_DIR = resolve("output", productName);
 
 export interface AppContext {
@@ -51,7 +51,7 @@ export interface Fixtures {
 export async function buildAndLaunchApp(
   options?: TestOptions
 ): Promise<AppContext> {
-  const productName = `notesnooktest${makeid(10)}`;
+  const productName = `workstationtest${makeid(10)}`;
   const outputDir = path.join("test-artifacts", `${productName}-output`);
   const executablePath = await copyBuild({
     ...options,
@@ -145,7 +145,7 @@ export async function buildApp(version?: string) {
           ...process.env,
           NOTESNOOK_STAGING: "true",
           NN_PRODUCT_NAME: productName,
-          NN_APP_ID: `com.notesnook.test.${productName}`,
+          NN_APP_ID: `com.workstation.test.${productName}`,
           NN_OUTPUT_DIR: SOURCE_DIR
         }
       });

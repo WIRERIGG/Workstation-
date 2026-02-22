@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { notesnook } from "../test.ids";
+import { workstation } from "../test.ids";
 import { TestBuilder } from "./utils";
 
 describe("NOTEBOOKS", () => {
@@ -79,7 +79,7 @@ describe("NOTEBOOKS", () => {
       .longPressByText("Notebook 1")
       .wait(500)
       .waitAndTapByText("Edit notebook")
-      .typeTextById(notesnook.ids.dialogs.notebook.inputs.title, " (edited)")
+      .typeTextById(workstation.ids.dialogs.notebook.inputs.title, " (edited)")
       .waitAndTapByText("Save")
       .isVisibleByText("Notebook 1 (edited)")
       .run();
@@ -102,7 +102,7 @@ describe("NOTEBOOKS", () => {
       .longPressByText("Sub notebook")
       .wait(500)
       .waitAndTapByText("Edit notebook")
-      .typeTextById(notesnook.ids.dialogs.notebook.inputs.title, " (edited)")
+      .typeTextById(workstation.ids.dialogs.notebook.inputs.title, " (edited)")
       .waitAndTapByText("Save")
       .isVisibleByText("Sub notebook (edited)")
       .run();
@@ -156,7 +156,7 @@ describe("NOTEBOOKS", () => {
       .waitAndTapById("tab-home")
       .waitAndTapByText("Notes")
       .createNote()
-      .waitAndTapById(notesnook.listitem.menu)
+      .waitAndTapById(workstation.listitem.menu)
       .wait(500)
       .waitAndTapById("icon-notebooks")
       .waitAndTapByText("Notebook 1")
@@ -177,10 +177,10 @@ describe("NOTEBOOKS", () => {
       .longPressByText("Notebook 1")
       .wait(500)
       .waitAndTapByText("Edit notebook")
-      .typeTextById(notesnook.ids.dialogs.notebook.inputs.title, " (Edited)")
-      .clearTextById(notesnook.ids.dialogs.notebook.inputs.description)
+      .typeTextById(workstation.ids.dialogs.notebook.inputs.title, " (Edited)")
+      .clearTextById(workstation.ids.dialogs.notebook.inputs.description)
       .typeTextById(
-        notesnook.ids.dialogs.notebook.inputs.description,
+        workstation.ids.dialogs.notebook.inputs.description,
         "Description of Notebook 1 (Edited)"
       )
       .waitAndTapByText("Save")

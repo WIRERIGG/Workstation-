@@ -8,15 +8,15 @@
     "noEmit": true,
     "types": ["node", "jest", "detox"],
     "paths": {
-      "@notesnook/*": ["../../packages"],
+      "@workstation/*": ["../../packages"],
       "@notifee/react-native": [
         "./node_modules/@ammarahmed/notifee-react-native"
       ],
-      "@notesnook/theme": ["../../packages/theme"],
-      "@notesnook/editor/dist/cjs/toolbar/tool-definitions": [
+      "@workstation/theme": ["../../packages/theme"],
+      "@workstation/editor/dist/cjs/toolbar/tool-definitions": [
         "../../packages/editor/dist/cjs/toolbar/tool-definitions.js"
       ],
-      "@notesnook/editor/dist/cjs/toolbar/icons": [
+      "@workstation/editor/dist/cjs/toolbar/icons": [
         "../../packages/editor/dist/cjs/toolbar/icons.js"
       ]
     }

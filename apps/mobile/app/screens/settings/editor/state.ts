@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { CURRENT_TOOLBAR_VERSION, migrateToolbar } from "@notesnook/common";
-import type { ToolbarGroupDefinition } from "@notesnook/editor";
+import { CURRENT_TOOLBAR_VERSION, migrateToolbar } from "@workstation/common";
+import type { ToolbarGroupDefinition } from "@workstation/editor";
 import { create } from "zustand";
 import { StateStorage, persist } from "zustand/middleware";
 import { db } from "../../../common/database";

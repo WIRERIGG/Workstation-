@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,12 +24,12 @@ import React, {
   useState,
   useEffect
 } from "react";
-import { MenuItem, Icon, MenuButton, MenuSeparator } from "@notesnook/ui";
+import { MenuItem, Icon, MenuButton, MenuSeparator } from "@workstation/ui";
 import { Box, Button, Flex, Text } from "@theme-ui/components";
 import { Icons } from "../../toolbar/icons.js";
 import Modal from "react-modal";
 import { useTheme } from "@emotion/react";
-import { EmotionThemeProvider, Theme } from "@notesnook/theme";
+import { EmotionThemeProvider, Theme } from "@workstation/theme";
 
 type ActionSheetHistoryItem = {
   title?: string;

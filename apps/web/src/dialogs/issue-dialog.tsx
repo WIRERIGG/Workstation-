@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,10 +25,10 @@ import { writeText } from "clipboard-polyfill";
 import { store as userstore } from "../stores/user-store";
 
 import { ErrorText } from "../components/error-text";
-import { Debug } from "@notesnook/core";
+import { Debug } from "@workstation/core";
 import { ConfirmDialog } from "./confirm";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { getDeviceInfo } from "../utils/platform";
 import { getSubscriptionInfo } from "./settings/components/user-profile";
 
@@ -125,11 +125,11 @@ export const IssueDialog = DialogManager.register(function IssueDialog(
         >
           {strings.issueNotice[0]()}{" "}
           <Link
-            href="https://github.com/streetwriters/notesnook/issues"
-            title="github.com/streetwriters/notesnook/issues"
+            href="https://github.com/streetwriters/workstation/issues"
+            title="github.com/streetwriters/workstation/issues"
             target="_blank"
           >
-            github.com/streetwriters/notesnook/issues
+            github.com/streetwriters/workstation/issues
           </Link>
           {strings.issueNotice[1]()}{" "}
           <Link

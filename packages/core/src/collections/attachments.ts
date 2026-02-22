@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import {
   DocumentMimeTypes,
   getFileNameWithExtension
 } from "../utils/filename.js";
-import { Cipher, DataFormat, SerializedKey } from "@notesnook/crypto";
+import { Cipher, DataFormat, SerializedKey } from "@workstation/crypto";
 import { Output } from "../interfaces.js";
 import { Attachment } from "../types.js";
 import Database from "../api/index.js";
@@ -283,12 +283,12 @@ export class Attachments implements ICollection {
 
             if (types.includes("webclips"))
               filters.push(
-                eb("mimeType", "==", `application/vnd.notesnook.web-clip`)
+                eb("mimeType", "==", `application/vnd.workstation.web-clip`)
               );
             if (types.includes("files")) {
               filters.push(
                 eb.and([
-                  eb("mimeType", "!=", `application/vnd.notesnook.web-clip`),
+                  eb("mimeType", "!=", `application/vnd.workstation.web-clip`),
                   eb("mimeType", "not like", `image/%`)
                 ])
               );
@@ -493,7 +493,7 @@ export class Attachments implements ICollection {
       (qb) =>
         qb
           .where(isFalse("deleted"))
-          .where("mimeType", "==", `application/vnd.notesnook.web-clip`),
+          .where("mimeType", "==", `application/vnd.workstation.web-clip`),
       this.db.options?.batchSize
     );
   }
@@ -577,14 +577,14 @@ export class Attachments implements ICollection {
 }
 
 export function getOutputType(attachment: Attachment): DataFormat {
-  if (attachment.mimeType === "application/vnd.notesnook.web-clip")
+  if (attachment.mimeType === "application/vnd.workstation.web-clip")
     return "text";
   else if (attachment.mimeType.startsWith("image/")) return "base64";
   return "uint8array";
 }
 
 function getAttachmentType(attachment: Attachment) {
-  if (attachment.mimeType === "application/vnd.notesnook.web-clip")
+  if (attachment.mimeType === "application/vnd.workstation.web-clip")
     return "webclip";
   else if (attachment.mimeType.startsWith("image/")) return "image";
   else return "generic";

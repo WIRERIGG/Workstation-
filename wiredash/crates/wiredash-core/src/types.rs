@@ -508,6 +508,113 @@ impl SessionContentItem {
 }
 
 // ---------------------------------------------------------------------------
+// 15. TaskItem
+// ---------------------------------------------------------------------------
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct TaskItem {
+    #[serde(flatten)]
+    pub base: BaseItem,
+    pub title: String,
+    pub description: Option<String>,
+    pub status: String,
+    pub priority: String,
+    pub assignee: Option<String>,
+    #[serde(rename = "dueDate")]
+    pub due_date: Option<Timestamp>,
+    pub labels: Option<Vec<String>>,
+    #[serde(rename = "parentId")]
+    pub parent_id: Option<String>,
+}
+
+impl TaskItem {
+    pub fn new(title: &str) -> Self {
+        Self {
+            base: BaseItem::new("task"),
+            title: title.to_string(),
+            description: None,
+            status: "open".to_string(),
+            priority: "medium".to_string(),
+            assignee: None,
+            due_date: None,
+            labels: None,
+            parent_id: None,
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 16. CalendarEvent
+// ---------------------------------------------------------------------------
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct CalendarEvent {
+    #[serde(flatten)]
+    pub base: BaseItem,
+    pub title: String,
+    pub description: Option<String>,
+    #[serde(rename = "startDate")]
+    pub start_date: Timestamp,
+    #[serde(rename = "endDate")]
+    pub end_date: Timestamp,
+    #[serde(rename = "allDay")]
+    pub all_day: bool,
+    pub color: Option<String>,
+    pub recurrence: Option<serde_json::Value>,
+    pub source: Option<String>,
+}
+
+impl CalendarEvent {
+    pub fn new(title: &str, start_date: Timestamp, end_date: Timestamp) -> Self {
+        Self {
+            base: BaseItem::new("calendar_event"),
+            title: title.to_string(),
+            description: None,
+            start_date,
+            end_date,
+            all_day: false,
+            color: None,
+            recurrence: None,
+            source: None,
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 17. Agent
+// ---------------------------------------------------------------------------
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct Agent {
+    #[serde(flatten)]
+    pub base: BaseItem,
+    pub name: String,
+    pub role: String,
+    pub status: String,
+    pub model: Option<String>,
+    #[serde(rename = "systemPrompt")]
+    pub system_prompt: Option<String>,
+    pub capabilities: Option<Vec<String>>,
+    #[serde(rename = "lastActive")]
+    pub last_active: Option<Timestamp>,
+}
+
+impl Agent {
+    pub fn new(name: &str, role: &str) -> Self {
+        Self {
+            base: BaseItem::new("agent"),
+            name: name.to_string(),
+            role: role.to_string(),
+            status: "idle".to_string(),
+            model: None,
+            system_prompt: None,
+            capabilities: None,
+            last_active: None,
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
 // SortBy / SortDirection — for filtered queries
 // ---------------------------------------------------------------------------
 

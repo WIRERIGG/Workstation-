@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useEffect, useState } from "react";
 import { useAttachmentStore } from "../stores/use-attachment-store";
-import { Attachment } from "@notesnook/core";
+import { Attachment } from "@workstation/core";
 
 type AttachmentProgress = {
   type: string;

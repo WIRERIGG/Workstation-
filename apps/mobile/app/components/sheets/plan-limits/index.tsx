@@ -3,9 +3,9 @@ import {
   formatBytes,
   getFeature,
   getFeaturesUsage
-} from "@notesnook/common";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+} from "@workstation/common";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import { useEffect, useState } from "react";
 import { Platform, View } from "react-native";
 import { ScrollView } from "react-native-actions-sheet";
@@ -17,7 +17,7 @@ import { DefaultAppStyles } from "../../../utils/styles";
 import { Button } from "../../ui/button";
 import Heading from "../../ui/typography/heading";
 import Paragraph from "../../ui/typography/paragraph";
-import { SubscriptionPlan, SubscriptionProvider } from "@notesnook/core";
+import { SubscriptionPlan, SubscriptionProvider } from "@workstation/core";
 import { useUserStore } from "../../../stores/use-user-store";
 import PremiumService from "../../../services/premium";
 import SettingsService from "../../../services/settings";

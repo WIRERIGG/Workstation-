@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ export class Debug {
     userId?: string;
   }): Promise<string | undefined> {
     const { title, body, userId } = reportData;
-    const response = await fetch(`${hosts.ISSUES_HOST}/create/notesnook`, {
+    const response = await fetch(`${hosts.ISSUES_HOST}/create/workstation`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, body, userId })

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { debounce } from "@notesnook/common";
+import { debounce } from "@workstation/common";
 import {
   COLORS,
   ThemeAuthor,
@@ -25,24 +25,24 @@ import {
   Variants,
   validateTheme,
   ALPHA_COLORS
-} from "@notesnook/theme";
+} from "@workstation/theme";
 import { Button, Flex, Input, Text } from "@theme-ui/components";
 import FileSaver from "file-saver";
 import { FormEventHandler, useCallback, useRef, useState } from "react";
-import { useStore } from "@notesnook/web/src/stores/theme-store";
-import { showToast } from "@notesnook/web/src/utils/toast";
-import Accordion from "@notesnook/web/src/components/accordion";
-import { showFilePicker, readFile } from "@notesnook/web/src/utils/file-picker";
-import Field from "@notesnook/web/src/components/field";
-import { Close } from "@notesnook/web/src/components/icons";
+import { useStore } from "@workstation/web/src/stores/theme-store";
+import { showToast } from "@workstation/web/src/utils/toast";
+import Accordion from "@workstation/web/src/components/accordion";
+import { showFilePicker, readFile } from "@workstation/web/src/utils/file-picker";
+import Field from "@workstation/web/src/components/field";
+import { Close } from "@workstation/web/src/components/icons";
 import { flatten, unflatten } from "../../utils/object";
 import { version } from "../../../package.json";
 import { writeText } from "clipboard-polyfill";
-import { tryParse } from "@notesnook/web/src/utils/parse";
+import { tryParse } from "@workstation/web/src/utils/parse";
 import { loadThemeFromJSON } from "../../utils/theme-loader";
 
 const JSON_SCHEMA_URL =
-  "https://raw.githubusercontent.com/streetwriters/notesnook-themes/main/schemas/v1.schema.json";
+  "https://raw.githubusercontent.com/streetwriters/workstation-themes/main/schemas/v1.schema.json";
 const ThemeInfoTemplate: Omit<
   ThemeDefinition,
   "authors" | "compatibilityVersion" | "colorScheme" | "scopes"

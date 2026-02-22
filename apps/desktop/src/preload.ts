@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* eslint-disable no-var */
 
 import { ELECTRON_TRPC_CHANNEL } from "electron-trpc/main";
-// import type { NNCrypto } from "@notesnook/crypto";
+// import type { NNCrypto } from "@workstation/crypto";
 import { ipcRenderer } from "electron";
 import { platform } from "os";
 
@@ -39,5 +39,5 @@ process.once("loaded", async () => {
   globalThis.electronTRPC = electronTRPC;
 });
 
-// globalThis.NativeNNCrypto = require("@notesnook/crypto").NNCrypto;
+// globalThis.NativeNNCrypto = require("@workstation/crypto").NNCrypto;
 globalThis.os = () => (MAC_APP_STORE ? "mas" : platform());

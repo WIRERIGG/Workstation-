@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,8 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Note, VirtualizedGrouping } from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+import { Note, VirtualizedGrouping } from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 import React, { useEffect, useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { db } from "../../common/database";
@@ -27,7 +27,7 @@ import Paragraph from "../../components/ui/typography/paragraph";
 import { useDBItem } from "../../hooks/use-db-item";
 import useGlobalSafeAreaInsets from "../../hooks/use-global-safe-area-insets";
 import { useSettingStore } from "../../stores/use-setting-store";
-import { NotesnookModule } from "../../utils/notesnook-module";
+import { WorkstationModule } from "../../utils/workstation-module";
 import { DefaultAppStyles } from "../../utils/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -42,14 +42,14 @@ const NoteItem = (props: {
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={() => {
-        const widgetId = NotesnookModule.getWidgetId();
-        NotesnookModule.setString(
+        const widgetId = WorkstationModule.getWidgetId();
+        WorkstationModule.setString(
           "appPreview",
           String(widgetId),
           JSON.stringify(item)
         );
         setTimeout(() => {
-          NotesnookModule.saveAndFinish();
+          WorkstationModule.saveAndFinish();
         });
       }}
       style={{
@@ -122,7 +122,7 @@ export const NotePreviewConfigure = () => {
         canGoBack
         title="Select a note"
         onLeftMenuButtonPress={() => {
-          NotesnookModule.cancelAndFinish();
+          WorkstationModule.cancelAndFinish();
         }}
       />
 

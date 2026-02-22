@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { describe, it, expect } from "vitest";
 import { initialize, logManager, logger } from "../src/logger.js";
 import { SqliteDialect } from "@streetwriters/kysely";
 import BetterSQLite3 from "better-sqlite3-multiple-ciphers";
-import { NoopLogger } from "@notesnook/logger";
+import { NoopLogger } from "@workstation/logger";
 import { delay } from "./utils/index.js";
 
 async function initializeLogger() {

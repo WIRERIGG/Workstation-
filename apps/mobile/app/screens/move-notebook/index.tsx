@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,9 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Notebook } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { Notebook } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-actions-sheet";
@@ -52,7 +52,7 @@ import { DefaultAppStyles } from "../../utils/styles";
 import { useNavigationFocus } from "../../hooks/use-navigation-focus";
 import { eSendEvent, ToastManager } from "../../services/event-manager";
 import { eUpdateNotebookRoute } from "../../utils/events";
-import { isFeatureAvailable } from "@notesnook/common";
+import { isFeatureAvailable } from "@workstation/common";
 import PaywallSheet from "../../components/sheets/paywall";
 
 const {

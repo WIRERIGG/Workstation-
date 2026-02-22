@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { HighlightedResult } from "@notesnook/core";
+import { HighlightedResult } from "@workstation/core";
 import { Button, Flex, Text } from "@theme-ui/components";
 import React, { Fragment, useState } from "react";
 import { useEditorStore } from "../../stores/editor-store";
@@ -26,7 +26,7 @@ import ListItem from "../list-item";
 import { ChevronDown, ChevronRight } from "../icons";
 import { noteMenuItems } from "../note";
 import { db } from "../../common/db";
-import { MenuItem } from "@notesnook/ui";
+import { MenuItem } from "@workstation/ui";
 
 type SearchResultProps = {
   item: HighlightedResult;

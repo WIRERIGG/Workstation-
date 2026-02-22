@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useRef } from "react";
 import { Text } from "@theme-ui/components";
-import { Icon, MenuItem, MenuPresenter } from "@notesnook/ui";
+import { Icon, MenuItem, MenuPresenter } from "@workstation/ui";
 import { Icons } from "../icons.js";
 import {
   useIsMobile,

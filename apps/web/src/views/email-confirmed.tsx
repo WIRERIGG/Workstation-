@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import { useEffect } from "react";
 import { Flex, Text } from "@theme-ui/components";
 import { useQueryParams } from "../navigation";
 import { MailCheck, Discord, Twitter, Reddit } from "../components/icons";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 function EmailConfirmed() {
   const [{ userId }] = useQueryParams();
@@ -112,13 +112,13 @@ const social = [
     title: "Twitter",
     hoverColor: "#1da1f2",
     icon: Twitter,
-    link: "https://twitter.com/notesnook"
+    link: "https://twitter.com/workstation"
   },
   {
     title: "Reddit",
     hoverColor: "#ff4500",
     icon: Reddit,
-    link: "https://reddit.com/r/Notesnook"
+    link: "https://reddit.com/r/Workstation"
   }
 ];
 function BlogPromoBanner() {
@@ -174,7 +174,7 @@ function BlogPromoBanner() {
         {strings.tagPromoWinText()[2]}
       </Text>
       {/* <p>
-        Listen. We want you to buy Notesnook Pro. It's as simple as that. Since
+        Listen. We want you to buy Workstation Pro. It's as simple as that. Since
         2019, we have been analyzing the ever increasing trend towards privacy
         invasive apps.
       </p>
@@ -189,9 +189,9 @@ function BlogPromoBanner() {
         encryption are just buzzwords.
       </p>
       <p>
-        We want you to buy Notesnook Pro. Not to line our own pockets but to
+        We want you to buy Workstation Pro. Not to line our own pockets but to
         bring a change. Instead of. We want to hear that phrase. "I bought
-        Notesnook instead of Evernote". For us, that is success.
+        Workstation instead of Evernote". For us, that is success.
       </p>
       <p>
         There are no two ways about it. The world is moving towards a time when
@@ -235,7 +235,7 @@ function BlogPromoBanner() {
 //         lineHeight="22px"
 //
 //        sx={{fontSize: "title", textAlign: "center"}}>
-//         We started out building Notesnook in November 2019. Our mission was to
+//         We started out building Workstation in November 2019. Our mission was to
 //         make privacy simple. It is one thing to say,{" "}
 //         <Text as="span"  sx={{color: "primary"}}>
 //           "Privacy is our basic right"

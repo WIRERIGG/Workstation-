@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { DesktopIntegration, PATHS } from "@notesnook/desktop";
+import { DesktopIntegration, PATHS } from "@workstation/desktop";
 import { db } from "../common/db";
 import { desktop } from "../common/desktop-bridge";
 import createStore from "../common/store";
 import Config from "../utils/config";
 import BaseStore from "./index";
-import { TimeFormat, DayFormat, WeekFormat } from "@notesnook/core";
-import { Profile, TrashCleanupInterval } from "@notesnook/core";
+import { TimeFormat, DayFormat, WeekFormat } from "@workstation/core";
+import { Profile, TrashCleanupInterval } from "@workstation/core";
 import { showToast } from "../utils/toast";
 import { ConfirmDialog } from "../dialogs/confirm";
 

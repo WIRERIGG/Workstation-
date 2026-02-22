@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,7 +28,7 @@ let api: Remote<Server> | undefined;
 export async function connectApi(openNew = false, onDisconnect?: () => void) {
   if (api) return api;
 
-  const tabs = await findNotesnookTabs(openNew);
+  const tabs = await findWorkstationTabs(openNew);
   for (const tab of tabs) {
     try {
       const api = await Promise.race([
@@ -87,7 +87,7 @@ async function connectToTab(tab: Tabs.Tab, onDisconnect?: () => void) {
   });
 }
 
-export async function findNotesnookTabs(openNew = false) {
+export async function findWorkstationTabs(openNew = false) {
   const tabs = await browser.tabs.query({
     url: APP_URL_FILTER,
     discarded: false,

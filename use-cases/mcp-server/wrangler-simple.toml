@@ -1,0 +1,16 @@
+name = "simple-mcp-server"
+main = "src/simple.ts"
+compatibility_date = "2025-03-10"
+compatibility_flags = ["nodejs_compat"]
+
+[durable_objects]
+bindings = [
+  { name = "MCP_OBJECT", class_name = "SimpleMCP" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SimpleMCP"]
+
+[dev]
+port = 3737

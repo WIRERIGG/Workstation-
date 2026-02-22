@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -30,9 +30,9 @@ import {
   ExportableAttachment,
   ExportableNote,
   exportNotes
-} from "@notesnook/common";
-import { FilteredSelector, Note } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+} from "@workstation/common";
+import { FilteredSelector, Note } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { basename, dirname, extname, join } from "pathe";
 import filesystem from "../common/filesystem";
 import downloadAttachment from "../common/filesystem/download-attachment";

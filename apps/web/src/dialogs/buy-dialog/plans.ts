@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,10 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { Plan, PlanMetadata } from "./types";
-import { Period, set, SubscriptionPlan } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { Period, set, SubscriptionPlan } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { db } from "../../common/db";
-import { usePromise } from "@notesnook/common";
+import { usePromise } from "@workstation/common";
 
 export const PLAN_METADATA: PlanMetadata = {
   [SubscriptionPlan.FREE]: {

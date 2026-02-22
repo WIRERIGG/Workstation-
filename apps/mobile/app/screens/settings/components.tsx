@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -45,7 +45,7 @@ import { ServersConfiguration } from "./server-config";
 import SoundPicker from "./sound-picker";
 import ThemeSelector from "./theme-selector";
 import { TitleFormat } from "./title-format";
-import { NotesnookCircle } from "./notesnook-circle";
+import { WorkstationCircle } from "./workstation-circle";
 
 export const components: { [name: string]: ReactElement } = {
   homeselector: <HomePicker />,
@@ -75,5 +75,5 @@ export const components: { [name: string]: ReactElement } = {
   "sidebar-tab-selector": <SidebarTabPicker />,
   "change-password": <ChangePassword />,
   "change-email": <ChangeEmail />,
-  "notesnook-circle": <NotesnookCircle />
+  "workstation-circle": <WorkstationCircle />
 };

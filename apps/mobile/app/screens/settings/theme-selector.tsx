@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import { LegendList } from "@legendapp/list";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import {
   THEME_COMPATIBILITY_VERSION,
   ThemeDefinition,
   getPreviewColors,
   useThemeColors,
   validateTheme
-} from "@notesnook/theme";
+} from "@workstation/theme";
 import type {
   CompiledThemeDefinition,
   ThemeMetadata,
   ThemesRouter
-} from "@notesnook/themes-server";
+} from "@workstation/themes-server";
 import { keepLocalCopy, pick } from "@react-native-documents/picker";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";

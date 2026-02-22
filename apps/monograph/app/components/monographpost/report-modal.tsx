@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { Monograph } from "./types";
 import Turnstile from "react-turnstile";
 import { BaseThemeProvider } from "../theme-provider";
 
-const BASE_URL = "https://notesnook.com/api/v1/reports";
+const BASE_URL = "https://workstation.com/api/v1/reports";
 
 const REPORT_TYPES = [
   {

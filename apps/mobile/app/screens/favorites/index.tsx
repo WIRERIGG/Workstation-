@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,7 +28,7 @@ import SettingsService from "../../services/settings";
 import { useFavorites } from "../../stores/use-favorite-store";
 import useNavigationStore from "../../stores/use-navigation-store";
 import { db } from "../../common/database";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export const Favorites = ({
   navigation,

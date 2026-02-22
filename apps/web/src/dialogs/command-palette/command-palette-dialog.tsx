@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,8 +22,8 @@ import {
   formatKey,
   keybindings,
   usePromise
-} from "@notesnook/common";
-import { EVENTS, fuzzy, Note, Notebook, Reminder, Tag } from "@notesnook/core";
+} from "@workstation/common";
+import { EVENTS, fuzzy, Note, Notebook, Reminder, Tag } from "@workstation/core";
 import { Box, Button, Flex, Input, Text } from "@theme-ui/components";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -37,7 +37,7 @@ import Dialog from "../../components/dialog";
 import { Cross } from "../../components/icons";
 import { CustomScrollbarsVirtualList } from "../../components/list-container";
 import { useEditorStore } from "../../stores/editor-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { isMac } from "../../utils/platform";
 import {
   getDefaultCommands,

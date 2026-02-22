@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,9 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { database, getFeature, getFeatureLimit } from "@notesnook/common";
-import { logger as dbLogger, ICompressor } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { database, getFeature, getFeatureLimit } from "@workstation/common";
+import { logger as dbLogger, ICompressor } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import {
   SqliteAdapter,
   SqliteIntrospector,
@@ -58,7 +58,7 @@ export async function setupDatabase(password?: string) {
     SUBSCRIPTIONS_HOST: "https://subscriptions.streetwriters.co",
     ISSUES_HOST: "https://issues.streetwriters.co",
     MONOGRAPH_HOST: "https://monogr.ph",
-    NOTESNOOK_HOST: "https://notesnook.com",
+    NOTESNOOK_HOST: "https://workstation.com",
     ...(SettingsService.getProperty("serverUrls") || {})
   });
 

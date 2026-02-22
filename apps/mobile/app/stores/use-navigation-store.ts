@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import {
   Notebook,
   Reminder,
   Tag
-} from "@notesnook/core";
+} from "@workstation/core";
 import { ParamListBase } from "@react-navigation/core";
 import { create } from "zustand";
 

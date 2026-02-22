@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -35,7 +35,7 @@ import { logger } from "../../logger.js";
 import { Mutex } from "async-mutex";
 import Database from "../index.js";
 import { migrateItem, migrateVaultKey } from "../../migrations.js";
-import { SerializedKey } from "@notesnook/crypto";
+import { SerializedKey } from "@workstation/crypto";
 import {
   Attachment,
   isDeleted,

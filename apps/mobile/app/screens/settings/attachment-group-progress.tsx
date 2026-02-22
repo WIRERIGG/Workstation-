@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,8 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { formatBytes } from "@notesnook/common";
-import { useThemeColors } from "@notesnook/theme";
+import { formatBytes } from "@workstation/common";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -29,7 +29,7 @@ import { useAttachmentProgress } from "../../hooks/use-attachment-progress";
 import { useDBItem } from "../../hooks/use-db-item";
 import { useAttachmentStore } from "../../stores/use-attachment-store";
 import { AppFontSize } from "../../utils/size";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../utils/styles";
 
 export const AttachmentGroupProgress = (props: { groupId?: string }) => {

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -65,7 +65,7 @@ const SAMPLE_CURL = `Paste raw base64 encoded data here.`;
 
 const steps = {
   chromium: [
-    "Focus the Notesnook tab in your browser.",
+    "Focus the Workstation tab in your browser.",
     <>
       Press <KeyCombo combo={getCombo("chromium", "developerTools")} /> to open
       Developer Tools.
@@ -128,7 +128,7 @@ const steps = {
     <>Paste it below to see the decrypted data.</>
   ],
   firefox: [
-    "Focus the Notesnook tab in your browser.",
+    "Focus the Workstation tab in your browser.",
     <>
       Press <KeyCombo combo={getCombo("firefox", "developerTools")} /> to open
       Developer Tools.
@@ -245,7 +245,7 @@ export function PasteEncryptedData(props: PasteEncryptedDataProps) {
       >
         <Text variant="body" sx={{ mx: 2 }}>
           To make this whole process verifiable &amp; trustworthy, we need to
-          extract the raw data that Notesnook sends to its servers during sync.
+          extract the raw data that Workstation sends to its servers during sync.
           That way you can be sure that the data leaving your device is actually
           encrypted or not.
         </Text>

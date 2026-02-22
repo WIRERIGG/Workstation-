@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -57,11 +57,11 @@ import {
   OnNextFunction
 } from "./types";
 import { ErrorText } from "../../components/error-text";
-import { AuthenticatorType } from "@notesnook/core";
+import { AuthenticatorType } from "@workstation/core";
 import { MultifactorDialog } from "./multi-factor-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { withFeatureCheck } from "../../common";
-import { useIsFeatureAvailable } from "@notesnook/common";
+import { useIsFeatureAvailable } from "@workstation/common";
 
 const QRCode = React.lazy(() => import("../../re-exports/react-qrcode-logo"));
 
@@ -588,7 +588,7 @@ function BackupRecoveryCodes(props: TwoFactorEnabledProps) {
         action: async () => {
           if (!recoveryCodesRef.current) return;
           await exportToPDF(
-            "Notesnook 2FA Recovery Codes",
+            "Workstation 2FA Recovery Codes",
             recoveryCodesRef.current.outerHTML
           );
         }
@@ -616,7 +616,7 @@ function BackupRecoveryCodes(props: TwoFactorEnabledProps) {
         action: () => {
           FileSaver.saveAs(
             new Blob([Buffer.from(codes.join("\n"))]),
-            `notesnook-recovery-codes.txt`
+            `workstation-recovery-codes.txt`
           );
         }
       },

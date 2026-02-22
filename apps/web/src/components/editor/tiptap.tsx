@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import "@notesnook/editor/styles/styles.css";
-import "@notesnook/editor/styles/katex.min.css";
-import "@notesnook/editor/styles/katex-fonts.css";
-import "@notesnook/editor/styles/fonts.css";
+import "@workstation/editor/styles/styles.css";
+import "@workstation/editor/styles/katex.min.css";
+import "@workstation/editor/styles/katex-fonts.css";
+import "@workstation/editor/styles/fonts.css";
 import {
   Toolbar,
   useTiptap,
@@ -39,7 +39,7 @@ import {
   getChangedNodes,
   LinkAttributes,
   type Selection
-} from "@notesnook/editor";
+} from "@workstation/editor";
 import { Box, Flex } from "@theme-ui/components";
 import {
   PropsWithChildren,
@@ -52,22 +52,22 @@ import { IEditor, MAX_AUTO_SAVEABLE_WORDS } from "./types";
 import { useEditorConfig, useToolbarConfig, useEditorManager } from "./manager";
 import { useStore as useSettingsStore } from "../../stores/setting-store";
 import { useStore as useUserStore } from "../../stores/user-store";
-import { debounce, useAreFeaturesAvailable } from "@notesnook/common";
+import { debounce, useAreFeaturesAvailable } from "@workstation/common";
 import { ScopedThemeProvider } from "../theme-provider";
 import { useStore as useThemeStore } from "../../stores/theme-store";
 import { writeToClipboard } from "../../utils/clipboard";
 import { useEditorStore } from "../../stores/editor-store";
-import { DayFormat, parseInternalLink } from "@notesnook/core";
+import { DayFormat, parseInternalLink } from "@workstation/core";
 import Skeleton from "react-loading-skeleton";
 import useMobile from "../../hooks/use-mobile";
 import useTablet from "../../hooks/use-tablet";
-import { TimeFormat } from "@notesnook/core";
+import { TimeFormat } from "@workstation/core";
 import { EDITOR_ZOOM } from "./common";
-import { ScrollContainer } from "@notesnook/ui";
+import { ScrollContainer } from "@workstation/ui";
 import { showFeatureNotAllowedToast } from "../../common/toasts";
 import { UpgradeDialog } from "../../dialogs/buy-dialog/upgrade-dialog";
 import { ConfirmDialog } from "../../dialogs/confirm";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { AppEventManager, AppEvents } from "../../common/app-events";
 
 export type OnChangeHandler = (

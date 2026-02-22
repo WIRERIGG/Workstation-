@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { useRef } from "react";
 import { Platform } from "react-native";
 import { Linking } from "react-native";
 import deviceInfoModule from "react-native-device-info";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 const ShortcutsEmitter = new NativeEventEmitter(
   Shortcuts as unknown as NativeModule
 );
@@ -33,7 +33,7 @@ function isSupported() {
 }
 const defaultShortcuts: ShortcutItem[] = [
   {
-    type: "notesnook.action.newnote",
+    type: "workstation.action.newnote",
     title: strings.createNewNote(),
     shortTitle: strings.newNote(),
     iconName: Platform.OS === "android" ? "ic_newnote" : "plus"

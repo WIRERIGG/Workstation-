@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,8 +28,8 @@ import { showToast } from "../utils/toast";
 import { useStore as useTagStore } from "../stores/tag-store";
 import { useStore as useNoteStore } from "../stores/note-store";
 import { useStore as useAppStore } from "../stores/app-store";
-import { Color, Tag } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { Color, Tag } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { checkFeature } from "../common";
 
 type ItemDialogProps = BaseDialogProps<false | string> & {

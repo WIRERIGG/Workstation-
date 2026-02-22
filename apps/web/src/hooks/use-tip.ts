@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { useEffect, useRef, useState } from "react";
 import { CREATE_BUTTON_MAP } from "../common";
 import { ArrowTopRight, Icon, Plus } from "../components/icons";
 import Config from "../utils/config";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 declare global {
   interface Array<T> {
@@ -160,7 +160,7 @@ const tips: Tip[] = [
       title: strings.joinCommunity(),
       icon: ArrowTopRight,
       onClick: () =>
-        window.open("https://discord.gg/notesnook-796015620436787241", "_blank")
+        window.open("https://discord.gg/workstation-796015620436787241", "_blank")
     }
   },
   {

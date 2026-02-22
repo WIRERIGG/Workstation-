@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { getFormattedDate } from "@notesnook/common";
+import { getFormattedDate } from "@workstation/common";
 import {
   ContentItem,
   ContentType,
@@ -31,11 +31,11 @@ import {
   isDeleted,
   isEncryptedContent,
   isTrashItem
-} from "@notesnook/core";
-import { EditorEvents } from "@notesnook/editor-mobile/src/utils/editor-events";
-import { NativeEvents } from "@notesnook/editor-mobile/src/utils/native-events";
-import { strings } from "@notesnook/intl";
-import { useThemeEngineStore } from "@notesnook/theme";
+} from "@workstation/core";
+import { EditorEvents } from "@workstation/editor-mobile/src/utils/editor-events";
+import { NativeEvents } from "@workstation/editor-mobile/src/utils/native-events";
+import { strings } from "@workstation/intl";
+import { useThemeEngineStore } from "@workstation/theme";
 import { Mutex } from "async-mutex";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import WebView from "react-native-webview";
@@ -141,7 +141,7 @@ export const useEditor = (
 ) => {
   const theme = useThemeEngineStore((state) => state.theme);
   const [loading, setLoading] = useState(false);
-  const sessionIdRef = useRef("notesnook-editor");
+  const sessionIdRef = useRef("workstation-editor");
   const editorRef = useRef<WebView>(null);
 
   const currentNotes = useRef<

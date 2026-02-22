@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { desktop } from "../common/desktop-bridge";
-import { ICompressor } from "@notesnook/core";
+import { ICompressor } from "@workstation/core";
 import { Foras, gzip, gunzip, Memory } from "@hazae41/foras";
 
 export class Compressor implements ICompressor {

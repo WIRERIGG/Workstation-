@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -37,7 +37,7 @@ import { useAppStore } from "../stores/app-store";
 import { connectApi } from "../api";
 import { FlexScrollContainer } from "../components/scroll-container";
 import { DEFAULT_SETTINGS, SETTINGS_KEY } from "./settings";
-import type { Config } from "@notesnook/clipper/dist/types";
+import type { Config } from "@workstation/clipper/dist/types";
 
 const ERROR_MAP: Record<string, string> = {
   "Could not establish connection. Receiving end does not exist.":
@@ -485,12 +485,12 @@ export function Main() {
 
             if (!data) return;
 
-            const notesnook = await connectApi(false);
-            if (!notesnook) {
-              setError("You are not connected to Notesnook.");
+            const workstation = await connectApi(false);
+            if (!workstation) {
+              setError("You are not connected to Workstation.");
               return;
             }
-            await notesnook.saveClip({
+            await workstation.saveClip({
               url,
               title,
               area: clipArea,
@@ -505,7 +505,7 @@ export function Main() {
 
             await browser.notifications?.create({
               title: "Clip saved!",
-              message: "Open the Notesnook app to view the result.",
+              message: "Open the Workstation app to view the result.",
               type: "basic",
               iconUrl: browser.runtime.getURL("256x256.png"),
               isClickable: false

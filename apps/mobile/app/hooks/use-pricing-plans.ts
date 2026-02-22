@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Plan, SubscriptionPlan, SubscriptionPlanId } from "@notesnook/core";
+import { Plan, SubscriptionPlan, SubscriptionPlanId } from "@workstation/core";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import Config from "react-native-config";
@@ -94,8 +94,8 @@ const pricingPlans: PricingPlan[] = [
     name: "Essential",
     description: "Unlocks essential features for personal use",
     subscriptionSkuList: [
-      "notesnook.essential.monthly",
-      "notesnook.essential.yearly"
+      "workstation.essential.monthly",
+      "workstation.essential.yearly"
     ],
     trialSupported: true,
     productSkuList: []
@@ -105,12 +105,12 @@ const pricingPlans: PricingPlan[] = [
     name: "Pro",
     description: "Unlocks all features for professional use",
     subscriptionSkuList: [
-      "notesnook.pro.monthly",
-      "notesnook.pro.yearly",
-      "notesnook.pro.yearly.tier2",
-      "notesnook.pro.yearly.tier3"
+      "workstation.pro.monthly",
+      "workstation.pro.yearly",
+      "workstation.pro.yearly.tier2",
+      "workstation.pro.yearly.tier3"
     ],
-    productSkuList: ["notesnook.pro.5year"],
+    productSkuList: ["workstation.pro.5year"],
     trialSupported: true,
     recommended: true
   },
@@ -119,10 +119,10 @@ const pricingPlans: PricingPlan[] = [
     name: "Believer",
     description: "Become a believer and support the project",
     subscriptionSkuList: [
-      "notesnook.believer.monthly",
-      "notesnook.believer.yearly"
+      "workstation.believer.monthly",
+      "workstation.believer.yearly"
     ],
-    productSkuList: ["notesnook.believer.5year"],
+    productSkuList: ["workstation.believer.5year"],
     trialSupported: true
   }
 ];
@@ -165,7 +165,7 @@ const usePricingPlans = (options?: PricingPlansOptions) => {
   const [loading, setLoading] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(true);
   const [selectedProductSku, setSelectedProductSku] = useState<string>(
-    options?.productId || "notesnook.pro.yearly"
+    options?.productId || "workstation.pro.yearly"
   );
   const [isPromoOffer, setIsPromoOffer] = useState(false);
   const [cancelPromo, setCancelPromo] = useState(false);
@@ -646,7 +646,7 @@ const usePricingPlans = (options?: PricingPlansOptions) => {
   };
 
   async function getRegionalDiscount(plan: string, productId: string) {
-    if (productId !== "notesnook.pro.yearly") {
+    if (productId !== "workstation.pro.yearly") {
       return;
     }
     try {
@@ -721,7 +721,7 @@ const usePricingPlans = (options?: PricingPlansOptions) => {
     get5YearPlanProduct: () => {
       if (currentPlan === "free" || currentPlan === "essential") return;
       return plans.find((p) => p.id === "pro")?.products?.[
-        `notesnook.${currentPlan}.5year`
+        `workstation.${currentPlan}.5year`
       ];
     },
     getWebPlan(plan: string, period: "monthly" | "yearly") {

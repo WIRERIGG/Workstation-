@@ -22,7 +22,7 @@ mergedConfig.resolver = {
   sourceExts: ["jsx", "js", "ts", "tsx", "cjs", "json"],
   nodeModulesPaths,
   extraNodeModules: {
-    "@notesnook": path.join(__dirname, "../../packages"),
+    "@workstation": path.join(__dirname, "../../packages"),
     "@notifee/react-native": path.join(
       __dirname,
       "node_modules/@ammarahmed/notifee-react-native"
@@ -45,22 +45,22 @@ mergedConfig.resolver = {
       return context.resolveRequest(context, result, platform);
     }
 
-    if (moduleName === "@notesnook/core") {
+    if (moduleName === "@workstation/core") {
       const result = require.resolve(moduleName); // gets CommonJS version
       return context.resolveRequest(context, result, platform);
     }
 
-    if (moduleName === "@notesnook/common") {
+    if (moduleName === "@workstation/common") {
       const result = require.resolve(moduleName); // gets CommonJS version
       return context.resolveRequest(context, result, platform);
     }
 
-    if (moduleName === "@notesnook/logger") {
+    if (moduleName === "@workstation/logger") {
       const result = require.resolve(moduleName); // gets CommonJS version
       return context.resolveRequest(context, result, platform);
     }
 
-    if (moduleName === "@notesnook/theme") {
+    if (moduleName === "@workstation/theme") {
       const result = require.resolve(moduleName); // gets CommonJS version
       return context.resolveRequest(context, result, platform);
     }

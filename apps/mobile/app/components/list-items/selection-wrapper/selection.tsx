@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -25,7 +25,7 @@ import { useIsCompactModeEnabled } from "../../../hooks/use-is-compact-mode-enab
 import useIsSelected from "../../../hooks/use-selected";
 import { useSelectionStore } from "../../../stores/use-selection-store";
 import { AppFontSize } from "../../../utils/size";
-import { Item, TrashItem } from "@notesnook/core";
+import { Item, TrashItem } from "@workstation/core";
 
 export const SelectionIcon = ({ item }: { item: Item }) => {
   const { colors } = useThemeColors();

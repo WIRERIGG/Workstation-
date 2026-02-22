@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useQueryParams } from "@notesnook/web/src/navigation";
+import { useQueryParams } from "@workstation/web/src/navigation";
 import ThemeBuilder from "./components/theme-builder";
 import { useEffect, useState } from "react";
-import { Loader } from "@notesnook/web/src/components/loader";
+import { Loader } from "@workstation/web/src/components/loader";
 import { Flex } from "@theme-ui/components";
-import { useStore } from "@notesnook/web/src/stores/theme-store";
+import { useStore } from "@workstation/web/src/stores/theme-store";
 import {
   loadThemeFromBase64,
   loadThemeFromPullRequest,

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Editor, scrollIntoViewById } from "@notesnook/editor";
-import { keepLastLineInView } from "@notesnook/editor/extensions/keep-in-view/keep-in-view.js";
-import { strings } from "@notesnook/intl";
+import { Editor, scrollIntoViewById } from "@workstation/editor";
+import { keepLastLineInView } from "@workstation/editor/extensions/keep-in-view/keep-in-view.js";
+import { strings } from "@workstation/intl";
 import {
   ThemeDefinition,
   useThemeColors,
   useThemeEngineStore
-} from "@notesnook/theme";
+} from "@workstation/theme";
 import {
   MutableRefObject,
   useCallback,

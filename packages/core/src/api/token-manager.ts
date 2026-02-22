@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -35,7 +35,7 @@ export type Token = {
 type Scope = (typeof SCOPES)[number];
 
 const SCOPES = [
-  "notesnook.sync",
+  "workstation.sync",
   "offline_access",
   "IdentityServerApi",
   "auth:grant_types:mfa",
@@ -89,7 +89,7 @@ class TokenManager {
   }
 
   async getAccessToken(
-    scopes: Scope[] = ["notesnook.sync", "IdentityServerApi"],
+    scopes: Scope[] = ["workstation.sync", "IdentityServerApi"],
     forceRenew = false
   ) {
     return await getSafeToken(async () => {
@@ -123,7 +123,7 @@ class TokenManager {
           refresh_token,
           grant_type: "refresh_token",
           scope: scope,
-          client_id: "notesnook"
+          client_id: "workstation"
         }
       );
       await this.saveToken(refreshTokenResponse);
@@ -156,7 +156,7 @@ class TokenManager {
       await http.post(`${constants.AUTH_HOST}${ENDPOINTS.temporaryToken}`, {
         authorization_code: authCode,
         user_id: userId,
-        client_id: "notesnook"
+        client_id: "workstation"
       })
     );
   }

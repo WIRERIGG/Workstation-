@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import {
   defaultSettings,
   useSettingStore
 } from "../stores/use-setting-store";
-import { NotesnookModule } from "../utils/notesnook-module";
+import { WorkstationModule } from "../utils/workstation-module";
 import { scale, updateSize } from "../utils/size";
 import { DatabaseLogger } from "../common/database";
 import { useUserStore } from "../stores/use-user-store";
@@ -132,7 +132,7 @@ function init() {
 function setPrivacyScreen(settings: SettingStore["settings"]) {
   if (settings.privacyScreen) {
     if (Platform.OS === "android") {
-      NotesnookModule.setSecureMode(true);
+      WorkstationModule.setSecureMode(true);
     } else {
       enabled(true);
       if (NativeModules.ScreenGuard) {
@@ -141,7 +141,7 @@ function setPrivacyScreen(settings: SettingStore["settings"]) {
     }
   } else {
     if (Platform.OS === "android") {
-      NotesnookModule.setSecureMode(false);
+      WorkstationModule.setSecureMode(false);
     } else {
       enabled(false);
       if (NativeModules.ScreenGuard) {

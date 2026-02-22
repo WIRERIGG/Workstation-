@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Theme } from "@notesnook/theme";
-import { SchemeColors } from "@notesnook/theme";
+import { Theme } from "@workstation/theme";
+import { SchemeColors } from "@workstation/theme";
 import React from "react";
 import { ButtonProps } from "@theme-ui/components";
 import { IconNames, Icons } from "../icons.js";
 import { ToolButtonVariant } from "../types.js";
 import { Button } from "../../components/button.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { useIsMobile } from "../stores/toolbar-store.js";
 
 export type ToolButtonProps = ButtonProps & {

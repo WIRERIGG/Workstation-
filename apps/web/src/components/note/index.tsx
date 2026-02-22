@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import {
   exportContent,
   getFormattedDate,
   getFormattedReminderTime
-} from "@notesnook/common";
+} from "@workstation/common";
 import {
   Color,
   Note as NoteType,
@@ -33,10 +33,10 @@ import {
   hosts,
   isReminderActive,
   isReminderToday
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { SchemeColors } from "@notesnook/theme";
-import { MenuItem } from "@notesnook/ui";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { SchemeColors } from "@workstation/theme";
+import { MenuItem } from "@workstation/ui";
 import { Flex, Text } from "@theme-ui/components";
 import React from "react";
 import { db } from "../../common/db";

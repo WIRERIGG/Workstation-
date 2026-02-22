@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import createStore from "../common/store";
 import { db } from "../common/db";
 import BaseStore from "./index";
-import { Tag } from "@notesnook/core";
-import { VirtualizedGrouping } from "@notesnook/core";
+import { Tag } from "@workstation/core";
+import { VirtualizedGrouping } from "@workstation/core";
 
 class TagStore extends BaseStore<TagStore> {
   tags?: VirtualizedGrouping<Tag>;

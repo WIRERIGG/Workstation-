@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,9 +24,9 @@ import {
   TiptapOptions,
   toBlobURL,
   usePermissionHandler
-} from "@notesnook/editor";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+} from "@workstation/editor";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import FingerprintIcon from "mdi-react/FingerprintIcon";
 import {
   useCallback,

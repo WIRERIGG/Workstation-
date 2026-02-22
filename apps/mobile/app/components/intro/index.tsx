@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { Linking, useWindowDimensions, View } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
@@ -124,7 +124,7 @@ const Intro = () => {
       }}
     >
       <View
-        testID="notesnook.splashscreen"
+        testID="workstation.splashscreen"
         style={{
           flex: 1
         }}

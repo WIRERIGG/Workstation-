@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { logger } from "../utils/logger";
 import { showToast } from "../utils/toast";
 import { db } from "./db";
@@ -25,7 +25,7 @@ import { checkUpload, decryptFile, saveFile } from "../interfaces/fs";
 import { ScopedThemeProvider } from "../components/theme-provider";
 import { Lightbox } from "../components/lightbox";
 import ReactDOM from "react-dom";
-import { Attachment } from "@notesnook/core";
+import { Attachment } from "@workstation/core";
 
 async function download(hash: string, groupId?: string) {
   const attachment = await db.attachments.attachment(hash);

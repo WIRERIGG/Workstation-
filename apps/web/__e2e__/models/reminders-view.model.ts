@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { Locator, Page } from "@playwright/test";
 import { getTestId } from "../utils";
 import { BaseViewModel } from "./base-view.model";
 import { ReminderItemModel } from "./reminder-item.model";
-import { Reminder } from "@notesnook/core";
+import { Reminder } from "@workstation/core";
 import { fillReminderDialog } from "./utils";
 
 export class RemindersViewModel extends BaseViewModel {

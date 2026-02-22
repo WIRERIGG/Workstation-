@@ -1,11 +1,11 @@
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { useRef } from "react";
 import { View } from "react-native";
 import { defaultBorderRadius } from "../../utils/size";
 import { DefaultAppStyles } from "../../utils/styles";
 import DatePicker from "react-native-date-picker";
 import dayjs from "dayjs";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { Button } from "../ui/button";
 
 export default function DatePickerComponent(props: {

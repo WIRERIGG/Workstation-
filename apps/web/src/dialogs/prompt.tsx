@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { useRef } from "react";
 import Field from "../components/field";
 import Dialog from "../components/dialog";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export type PromptDialogProps = BaseDialogProps<undefined | string> & {
   title: string;

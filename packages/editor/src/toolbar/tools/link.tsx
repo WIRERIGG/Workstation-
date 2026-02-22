@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -31,7 +31,7 @@ import { ImageNode } from "../../extensions/image/index.js";
 import { Link as LinkNode } from "../../extensions/link/index.js";
 import { getMarkAttributes } from "@tiptap/core";
 import { useHoverPopupContext } from "../floating-menus/hover-popup/context.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { find } from "linkifyjs";
 
 export function LinkSettings(props: ToolProps) {

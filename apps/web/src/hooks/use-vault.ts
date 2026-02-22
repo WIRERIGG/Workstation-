@@ -1,4 +1,4 @@
-import { EV, EVENTS } from "@notesnook/core";
+import { EV, EVENTS } from "@workstation/core";
 import { useEffect, useState } from "react";
 import Vault from "../common/vault";
 import { db } from "../common/db";

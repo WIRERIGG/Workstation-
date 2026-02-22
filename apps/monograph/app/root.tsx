@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import {
 } from "@remix-run/react";
 import { BaseThemeProvider } from "./components/theme-provider";
 import { Buffer } from "buffer";
-import { ThemeDark, themeToCSS } from "@notesnook/theme";
+import { ThemeDark, themeToCSS } from "@workstation/theme";
 import { LoaderFunction } from "@remix-run/node";
 
 globalThis.Buffer = Buffer;

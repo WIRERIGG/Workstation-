@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { mdiMastodon, mdiReddit, mdiTwitter } from "@mdi/js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import {
   Box,
   Flex,
@@ -35,12 +35,12 @@ const ButtonLink = Button as ForwardRef<
   ButtonProps & LinkProps
 >;
 const SOCIAL_LINKS = [
-  { id: "X/Twitter", icon: mdiTwitter, href: "https://twitter.com/notesnook" },
-  { id: "Reddit", icon: mdiReddit, href: "https://www.reddit.com/r/notesnook" },
+  { id: "X/Twitter", icon: mdiTwitter, href: "https://twitter.com/workstation" },
+  { id: "Reddit", icon: mdiReddit, href: "https://www.reddit.com/r/workstation" },
   {
     id: "Telegram",
     icon: "M9.78 18.65l.28-4.23l7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3L3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z",
-    href: "https://t.me/notesnook"
+    href: "https://t.me/workstation"
   },
   {
     id: "Discord",
@@ -50,15 +50,15 @@ const SOCIAL_LINKS = [
   {
     id: "Mastodon",
     icon: mdiMastodon,
-    href: "https://fosstodon.org/@notesnook"
+    href: "https://fosstodon.org/@workstation"
   }
 ];
 
 const footerLinks = [
   {
-    title: "Notesnook",
+    title: "Workstation",
     type: "link",
-    href: "https://notesnook.com"
+    href: "https://workstation.com"
   },
   {
     title: "Try for free",
@@ -73,7 +73,7 @@ const footerLinks = [
   {
     title: "About",
     type: "link",
-    href: "https://notesnook.com/about"
+    href: "https://workstation.com/about"
   }
 ];
 
@@ -125,7 +125,7 @@ export function Footer({ subtitle }: { subtitle?: string }) {
                 <span style={{ color: "var(--accent)" }}>Mono</span>graph
               </Text>
               <Text variant="subBody">
-                {subtitle || "A product of Notesnook"}
+                {subtitle || "A product of Workstation"}
               </Text>
             </Flex>
           </Flex>
@@ -197,10 +197,10 @@ export function Footer({ subtitle }: { subtitle?: string }) {
           {new Date(Date.now()).getFullYear()} Streetwriters (Private) Ltd.
         </Text>
         <Flex sx={{ gap: 2 }}>
-          <Link variant="text.subBody" href="https://notesnook.com/privacy">
+          <Link variant="text.subBody" href="https://workstation.com/privacy">
             Privacy Policy
           </Link>
-          <Link variant="text.subBody" href="https://notesnook.com/terms">
+          <Link variant="text.subBody" href="https://workstation.com/terms">
             Terms of Service
           </Link>
         </Flex>

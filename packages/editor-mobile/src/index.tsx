@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,11 +20,11 @@ import "./utils/index";
 import "./utils/commands";
 global.Buffer = require("buffer").Buffer;
 import { i18n } from "@lingui/core";
-import "@notesnook/editor/styles/fonts.mobile.css";
-import "@notesnook/editor/styles/katex-fonts.mobile.css";
-import "@notesnook/editor/styles/katex.min.css";
-import "@notesnook/editor/styles/styles.css";
-import { setI18nGlobal } from "@notesnook/intl";
+import "@workstation/editor/styles/fonts.mobile.css";
+import "@workstation/editor/styles/katex-fonts.mobile.css";
+import "@workstation/editor/styles/katex.min.css";
+import "@workstation/editor/styles/styles.css";
+import { setI18nGlobal } from "@workstation/intl";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
@@ -48,10 +48,10 @@ function loadApp() {
   const locale = globalThis.LINGUI_LOCALE_DATA
     ? Promise.resolve(globalThis.LINGUI_LOCALE_DATA)
     : globalThis.__DEV__ || process.env.NODE_ENV === "development"
-    ? import("@notesnook/intl/locales/$pseudo-LOCALE.json").then(
+    ? import("@workstation/intl/locales/$pseudo-LOCALE.json").then(
         ({ default: locale }) => ({ en: locale.messages })
       )
-    : import("@notesnook/intl/locales/$en.json").then(
+    : import("@workstation/intl/locales/$en.json").then(
         ({ default: locale }) => ({
           en: locale.messages
         })

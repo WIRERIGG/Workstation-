@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import { expect } from "detox";
-import { notesnook } from "../test.ids";
+import { workstation } from "../test.ids";
 import { TestBuilder, Tests } from "./utils";
 
 async function lockNote() {
   await TestBuilder.create()
-    .waitAndTapById(notesnook.listitem.menu)
+    .waitAndTapById(workstation.listitem.menu)
     .wait()
     .waitAndTapById("icon-lock-unlock")
     .wait()
     .isVisibleByText("Lock")
-    .typeTextById(notesnook.ids.dialogs.vault.pwd, "1234")
-    .typeTextById(notesnook.ids.dialogs.vault.pwdAlt, "1234")
+    .typeTextById(workstation.ids.dialogs.vault.pwd, "1234")
+    .typeTextById(workstation.ids.dialogs.vault.pwdAlt, "1234")
     .waitAndTapByText("Lock")
     .isVisibleById("note-locked-icon")
     .run();
@@ -36,11 +36,11 @@ async function lockNote() {
 
 async function removeFromVault() {
   await TestBuilder.create()
-    .waitAndTapById(notesnook.listitem.menu)
+    .waitAndTapById(workstation.listitem.menu)
     .wait()
     .waitAndTapById("icon-lock-unlock")
     .wait()
-    .typeTextById(notesnook.ids.dialogs.vault.pwd, "1234")
+    .typeTextById(workstation.ids.dialogs.vault.pwd, "1234")
     .waitAndTapByText("Unlock")
     .isNotVisibleById("note-locked-icon")
     .run();
@@ -48,7 +48,7 @@ async function removeFromVault() {
 
 async function openLockedNote(pwd = "1234") {
   await TestBuilder.create()
-    .waitAndTapById(notesnook.ids.note.get(0))
+    .waitAndTapById(workstation.ids.note.get(0))
     .wait()
     .addStep(async () => {
       await web().element(by.web.name("password")).typeText(pwd, false);
@@ -77,8 +77,8 @@ describe("VAULT", () => {
       .prepare()
       .addStep(goToPrivacySecuritySettings)
       .waitAndTapByText("Create vault")
-      .typeTextById(notesnook.ids.dialogs.vault.pwd, "1234")
-      .typeTextById(notesnook.ids.dialogs.vault.pwdAlt, "1234")
+      .typeTextById(workstation.ids.dialogs.vault.pwd, "1234")
+      .typeTextById(workstation.ids.dialogs.vault.pwdAlt, "1234")
       .waitAndTapByText("Create")
       .isVisibleByText("Clear vault")
       .run();
@@ -91,8 +91,8 @@ describe("VAULT", () => {
       .addStep(lockNote)
       .addStep(goToPrivacySecuritySettings)
       .waitAndTapByText("Change vault password")
-      .typeTextById(notesnook.ids.dialogs.vault.pwd, "1234")
-      .typeTextById(notesnook.ids.dialogs.vault.changePwd, "2362")
+      .typeTextById(workstation.ids.dialogs.vault.pwd, "1234")
+      .typeTextById(workstation.ids.dialogs.vault.changePwd, "2362")
       .waitAndTapByText("Change")
       .pressBack(3)
       .addStep(async () => await openLockedNote("2362"))
@@ -106,11 +106,11 @@ describe("VAULT", () => {
       .addStep(lockNote)
       .addStep(goToPrivacySecuritySettings)
       .waitAndTapByText("Delete vault")
-      .typeTextById(notesnook.ids.dialogs.vault.pwd, "1234")
+      .typeTextById(workstation.ids.dialogs.vault.pwd, "1234")
       .waitAndTapByText("Delete")
       .isVisibleByText("Create vault")
       .pressBack(3)
-      .isVisibleById(notesnook.listitem.menu)
+      .isVisibleById(workstation.listitem.menu)
       .run();
   });
 
@@ -121,12 +121,12 @@ describe("VAULT", () => {
       .addStep(lockNote)
       .addStep(goToPrivacySecuritySettings)
       .waitAndTapByText("Delete vault")
-      .typeTextById(notesnook.ids.dialogs.vault.pwd, "1234")
+      .typeTextById(workstation.ids.dialogs.vault.pwd, "1234")
       .waitAndTapByText("Delete notes in this vault")
       .waitAndTapByText("Delete")
       .isVisibleByText("Create vault")
       .pressBack(3)
-      .isNotVisibleById(notesnook.listitem.menu)
+      .isNotVisibleById(workstation.listitem.menu)
       .run();
   });
 

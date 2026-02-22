@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import { useNetInfo } from "@react-native-community/netinfo";
 import React from "react";
 import { ActivityIndicator, Image, Linking, View } from "react-native";

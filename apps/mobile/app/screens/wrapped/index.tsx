@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { formatBytes } from "@notesnook/common";
-import { WrappedStats } from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+import { formatBytes } from "@workstation/common";
+import { WrappedStats } from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -134,7 +134,7 @@ function WelcomeSlide({ width }: { width: number }) {
             color: colors.secondary.paragraph
           }}
         >
-          Let's look back at your year in Notesnook
+          Let's look back at your year in Workstation
         </Paragraph>
       </View>
     </Slide>
@@ -644,7 +644,7 @@ function SummarySlide({
                 marginTop: 30
               }}
             >
-              Notesnook Wrapped {dayjs().year()}
+              Workstation Wrapped {dayjs().year()}
             </Heading>
             <View
               style={{

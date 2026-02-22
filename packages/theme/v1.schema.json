@@ -70,7 +70,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://raw.githubusercontent.com/streetwriters/notesnook-themes/main/schemas/v1.schema.json"
+          "const": "https://raw.githubusercontent.com/streetwriters/workstation-themes/main/schemas/v1.schema.json"
         }
       },
       "required": [
@@ -86,8 +86,8 @@
         "$schema"
       ],
       "additionalProperties": false,
-      "title": "Notesnook Theme schema",
-      "description": "This is a schema for validation of Notesnook themes."
+      "title": "Workstation Theme schema",
+      "description": "This is a schema for validation of Workstation themes."
     },
     "ThemeCompatibilityVersion": {
       "type": "number",

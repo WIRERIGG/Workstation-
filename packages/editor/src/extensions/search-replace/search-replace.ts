@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import {
   TextSelection
 } from "prosemirror-state";
 import { SearchSettings } from "../../toolbar/stores/search-store.js";
-import { tiptapKeys } from "@notesnook/common";
+import { tiptapKeys } from "@workstation/common";
 
 type DispatchFn = (tr: Transaction) => void;
 declare module "@tiptap/core" {

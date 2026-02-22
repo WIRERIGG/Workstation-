@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,9 +23,9 @@ import {
   clipPage,
   clipScreenshot,
   enterNodeSelectionMode
-} from "@notesnook/clipper";
+} from "@workstation/clipper";
 import { ClipArea, ClipMode } from "../common/bridge";
-import type { Config } from "@notesnook/clipper/dist/types";
+import type { Config } from "@workstation/clipper/dist/types";
 
 declare global {
   // eslint-disable-next-line no-var

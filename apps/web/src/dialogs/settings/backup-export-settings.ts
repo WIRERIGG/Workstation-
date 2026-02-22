@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,12 +21,12 @@ import { createBackup, verifyAccount, importBackup } from "../../common";
 import { db } from "../../common/db";
 import { exportNotes } from "../../common/export";
 import { SettingsGroup } from "./types";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { useStore as useSettingStore } from "../../stores/setting-store";
 import { useStore as useAppStore } from "../../stores/app-store";
 import { useStore as useUserStore } from "../../stores/user-store";
 import { desktop } from "../../common/desktop-bridge";
-import { PATHS } from "@notesnook/desktop";
+import { PATHS } from "@workstation/desktop";
 
 const getDesktopBackupsDirectoryPath = () =>
   useSettingStore.getState().backupStorageLocation || PATHS.backupsDirectory;

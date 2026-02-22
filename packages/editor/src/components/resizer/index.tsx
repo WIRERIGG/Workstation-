@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SchemeColors } from "@notesnook/theme";
+import { SchemeColors } from "@workstation/theme";
 import { Resizable } from "re-resizable";
 import { PropsWithChildren } from "react";
 import { Icons } from "../../toolbar/index.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { Flex } from "@theme-ui/components";
 import { getEditorDOM } from "../../toolbar/utils/dom.js";
 

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { Lock } from "../icons";
 import Field from "../field";
 import { showToast } from "../../utils/toast";
 import { ErrorText } from "../error-text";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type UnlockViewProps = {
   title: string;

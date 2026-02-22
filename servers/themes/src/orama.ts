@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -33,7 +33,7 @@ export async function initializeDatabase(): Promise<Orama> {
       tags: "string[]",
       totalInstalls: "number"
     },
-    id: "notesnook-themes"
+    id: "workstation-themes"
   });
   return ThemesDatabase;
 }

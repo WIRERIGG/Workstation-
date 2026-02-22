@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -57,24 +57,24 @@ import {
   downloadAttachment,
   previewImageAttachment
 } from "../../common/attachments";
-import { EV, EVENTS } from "@notesnook/core";
+import { EV, EVENTS } from "@workstation/core";
 import { db } from "../../common/db";
 import Titlebox, { resizeTextarea } from "./title-box";
 import Config from "../../utils/config";
 import { ScopedThemeProvider } from "../theme-provider";
 import { showToast } from "../../utils/toast";
-import { Item, MaybeDeletedItem, isDeleted } from "@notesnook/core";
-import { debounce, debounceWithId } from "@notesnook/common";
+import { Item, MaybeDeletedItem, isDeleted } from "@workstation/core";
+import { debounce, debounceWithId } from "@workstation/common";
 import { Freeze } from "react-freeze";
 import { UnlockView } from "../unlock";
 import DiffViewer from "../diff-viewer";
 import TableOfContents from "./table-of-contents";
-import { scrollIntoViewById } from "@notesnook/editor";
+import { scrollIntoViewById } from "@workstation/editor";
 import { IEditor } from "./types";
 import { EditorActionBar } from "./action-bar";
 import { logger } from "../../utils/logger";
 import { NoteLinkingDialog } from "../../dialogs/note-linking-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { onPageVisibilityChanged } from "../../utils/page-visibility";
 import { Pane, SplitPane } from "../split-pane";
 import { TITLE_BAR_HEIGHT } from "../title-bar";

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { useCallback, useEffect } from "react";
 import { IEditor, NoteStatistics } from "./types";
 import createStore from "../../common/store";
 import BaseStore from "../../stores";
-import type { TOCItem, ToolbarDefinition } from "@notesnook/editor";
+import type { TOCItem, ToolbarDefinition } from "@workstation/editor";
 import Config from "../../utils/config";
 import { getCurrentPreset } from "../../common/toolbar-config";
 import { EDITOR_LINE_HEIGHT, EDITOR_ZOOM } from "./common";

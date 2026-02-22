@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { useState } from "react";
 import { IconType } from "react-icons";
 import { MdClose } from "react-icons/md";
 import { ThemeProvider } from "@emotion/react";
-import { getDefaultAccentColor, useTheme } from "@notesnook/theme";
+import { getDefaultAccentColor, useTheme } from "@workstation/theme";
 
 type StepSeperatorProps = {
   icon?: IconType;

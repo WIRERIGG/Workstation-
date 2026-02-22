@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { sanitizeFilename } from "@notesnook/common";
-import { formatDate } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { sanitizeFilename } from "@workstation/common";
+import { formatDate } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { Platform } from "react-native";
 import RNFetchBlob from "react-native-blob-util";
 import FileViewer from "react-native-file-viewer";
@@ -49,17 +49,17 @@ async function getDirectoryAndroid() {
   const folder = await ScopedStorage.openDocumentTree(true);
   if (!folder) return null;
   let subfolder;
-  if (!folder.name.includes("Notesnook backups")) {
+  if (!folder.name.includes("Workstation backups")) {
     const files = await ScopedStorage.listFiles(folder.uri);
     for (const file of files) {
-      if (file.type === "directory" && file.name === "Notesnook backups") {
+      if (file.type === "directory" && file.name === "Workstation backups") {
         subfolder = file;
       }
     }
     if (!subfolder) {
       subfolder = await ScopedStorage.createDirectory(
         folder.uri,
-        "Notesnook backups"
+        "Workstation backups"
       );
     }
   } else {

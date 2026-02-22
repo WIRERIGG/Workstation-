@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Flex } from "@theme-ui/components";
 import { Loader } from "../../components/loader";
 import { PaddleEvent, Plan, PricingInfo } from "./types";
-import { ScrollContainer } from "@notesnook/ui";
+import { ScrollContainer } from "@workstation/ui";
 import useMobile from "../../hooks/use-mobile";
 import {
   AvailablePaymentMethod,
@@ -34,7 +34,7 @@ import { isFeatureSupported } from "../../utils/feature-check";
 import { formatPrice, IS_DEV } from "./helpers";
 import { CheckoutCustomerUserInfo } from "@paddle/paddle-js/types/checkout/customer";
 import { logger } from "../../utils/logger";
-import { Period } from "@notesnook/core";
+import { Period } from "@workstation/core";
 
 export const SELLER_ID = IS_DEV ? 1506 : 128190;
 export const CLIENT_PADDLE_TOKEN = IS_DEV

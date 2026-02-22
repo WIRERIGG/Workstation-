@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import { InstallsCounter } from "./constants";
 import { findTheme, getThemes, updateTotalInstalls } from "./orama";
 import { syncThemes } from "./sync";
 import { publicProcedure, router } from "./trpc";
-import { THEME_COMPATIBILITY_VERSION } from "@notesnook/theme";
+import { THEME_COMPATIBILITY_VERSION } from "@workstation/theme";
 import { ThemeQuerySchema } from "./schemas";
 
 export const ThemesAPI = router({

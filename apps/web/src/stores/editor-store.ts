@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { store as appStore } from "./app-store";
 import { useStore as useSettingStore } from "./setting-store";
 import { db } from "../common/db";
 import BaseStore from ".";
-import { EV, EVENTS } from "@notesnook/core";
+import { EV, EVENTS } from "@workstation/core";
 import { logger } from "../utils/logger";
 import Config from "../utils/config";
 import { setDocumentTitle } from "../utils/dom";
@@ -38,17 +38,17 @@ import {
   isDeleted,
   isTrashItem,
   NoteContent
-} from "@notesnook/core";
+} from "@workstation/core";
 import { showToast } from "../utils/toast";
-import { getId } from "@notesnook/core";
+import { getId } from "@workstation/core";
 import { PersistStorage } from "zustand/middleware";
 import {
   getFormattedHistorySessionDate,
   isFeatureAvailable,
   TabHistory,
   TabSessionHistory
-} from "@notesnook/common";
-import { isCipher } from "@notesnook/core";
+} from "@workstation/common";
+import { isCipher } from "@workstation/core";
 import { AppEventManager, AppEvents } from "../common/app-events";
 import Vault from "../common/vault";
 import { Mutex } from "async-mutex";

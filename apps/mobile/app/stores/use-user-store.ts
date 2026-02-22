@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { isFeatureAvailable } from "@notesnook/common";
-import { Profile, User } from "@notesnook/core";
+import { isFeatureAvailable } from "@workstation/common";
+import { Profile, User } from "@workstation/core";
 import { create } from "zustand";
 import SettingsService from "../services/settings";
 import { presentDialog } from "../components/dialog/functions";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { eSendEvent } from "../services/event-manager";
 import { eCloseSimpleDialog } from "../utils/events";
 import Navigation from "../services/navigation";

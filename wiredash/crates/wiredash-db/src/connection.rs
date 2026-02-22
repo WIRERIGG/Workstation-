@@ -8,6 +8,9 @@ pub struct Database {
     conn: lancedb::Connection,
     tables: HashMap<String, lancedb::Table>,
     path: String,
+    /// Holds the temp directory handle for in-memory databases.
+    /// When dropped, the directory is automatically cleaned up.
+    _temp_dir: Option<tempfile::TempDir>,
 }
 
 impl Database {
@@ -21,6 +24,7 @@ impl Database {
             conn,
             tables: HashMap::new(),
             path: path.to_string(),
+            _temp_dir: None,
         };
 
         // Load existing tables
@@ -38,12 +42,18 @@ impl Database {
 
     /// Create an in-memory database backed by a temporary directory.
     ///
+    /// The temp directory is automatically cleaned up when the `Database` is dropped.
     /// Useful for tests.
     pub async fn open_memory() -> Result<Self, anyhow::Error> {
-        let id = uuid::Uuid::new_v4().to_string();
-        let dir = std::env::temp_dir().join(format!("wiredash-lance-{}", id));
-        std::fs::create_dir_all(&dir)?;
-        Self::open(dir.to_str().unwrap()).await
+        let temp_dir = tempfile::TempDir::with_prefix("wiredash-lance-")?;
+        let path = temp_dir
+            .path()
+            .to_str()
+            .ok_or_else(|| anyhow::anyhow!("temp path contains non-UTF-8 characters"))?
+            .to_string();
+        let mut db = Self::open(&path).await?;
+        db._temp_dir = Some(temp_dir);
+        Ok(db)
     }
 
     /// Ensure all 16 canonical tables exist, creating empty ones as needed.
@@ -132,6 +142,15 @@ impl Database {
             query.execute().await?.try_collect().await?;
         Ok(batches.iter().map(|b| b.num_rows()).sum())
     }
+
+    /// Synchronous version of `count_rows`.
+    pub fn count_rows_sync(
+        &self,
+        table_name: &str,
+        filter: Option<&str>,
+    ) -> Result<usize, anyhow::Error> {
+        crate::arrow_utils::sync_run(self.count_rows(table_name, filter))
+    }
 }
 
 #[cfg(test)]
@@ -141,10 +160,13 @@ mod tests {
     #[tokio::test]
     async fn open_memory_creates_all_tables() {
         let db = Database::open_memory().await.unwrap();
-        assert_eq!(db.tables.len(), 16);
+        assert_eq!(db.tables.len(), 19);
         assert!(db.table("notes").is_some());
         assert!(db.table("kv").is_some());
         assert!(db.table("config").is_some());
+        assert!(db.table("tasks").is_some());
+        assert!(db.table("calendar_events").is_some());
+        assert!(db.table("agents").is_some());
     }
 
     #[tokio::test]

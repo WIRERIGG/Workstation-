@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import Sodium, { Cipher, Password } from "@ammarahmed/react-native-sodium";
-import { SerializedKey } from "@notesnook/crypto";
+import { SerializedKey } from "@workstation/crypto";
 import { Platform } from "react-native";
 import "react-native-get-random-values";
 import * as Keychain from "react-native-keychain";
@@ -41,9 +41,9 @@ export const CipherStorage = new MMKVLoader()
   .disableIndexing()
   .initialize();
 
-const IOS_KEYCHAIN_ACCESS_GROUP = "group.org.streetwriters.notesnook";
-const IOS_KEYCHAIN_SERVICE_NAME = "org.streetwriters.notesnook";
-const KEYCHAIN_SERVER_DBKEY = "notesnook:db";
+const IOS_KEYCHAIN_ACCESS_GROUP = "group.org.streetwriters.workstation";
+const IOS_KEYCHAIN_SERVICE_NAME = "org.streetwriters.workstation";
+const KEYCHAIN_SERVER_DBKEY = "workstation:db";
 
 const NOTESNOOK_APPLOCK_KEY_SALT = "kBwr1Kre86ebOZ8ThLu2OA";
 const NOTESNOOK_DB_KEY_SALT = "SNuzOcEK3amoqL0WvPeKqw";
@@ -104,7 +104,7 @@ export async function restoreDatabaseKeyToKeyChain(appLockPassword: string) {
 
   await Keychain.setInternetCredentials(
     KEYCHAIN_SERVER_DBKEY,
-    "notesnook",
+    "workstation",
     databaseKey,
     KEYSTORE_CONFIG
   );
@@ -198,15 +198,15 @@ export async function getDatabaseKey(appLockPassword?: string) {
 
     await Keychain.setInternetCredentials(
       KEYCHAIN_SERVER_DBKEY,
-      "notesnook",
+      "workstation",
       DB_KEY,
       KEYSTORE_CONFIG
     );
   }
 
-  if (await Keychain.hasInternetCredentials("notesnook")) {
+  if (await Keychain.hasInternetCredentials("workstation")) {
     const userKeyCredentials =
-      await Keychain.getInternetCredentials("notesnook");
+      await Keychain.getInternetCredentials("workstation");
 
     if (userKeyCredentials) {
       const userKeyCipher: Cipher = (await encrypt(
@@ -218,7 +218,7 @@ export async function getDatabaseKey(appLockPassword?: string) {
       )) as Cipher;
       // Store encrypted user key in MMKV
       MMKV.setMap(USER_KEY_CIPHER, userKeyCipher);
-      await Keychain.resetInternetCredentials("notesnook");
+      await Keychain.resetInternetCredentials("workstation");
     }
     DatabaseLogger.info("Migrated user credentials to cipher storage");
   }
@@ -319,7 +319,7 @@ export async function getCryptoKey() {
 export async function removeCryptoKey() {
   try {
     MMKV.removeItem(USER_KEY_CIPHER);
-    await Keychain.resetInternetCredentials("notesnook");
+    await Keychain.resetInternetCredentials("workstation");
     return true;
   } catch (e) {
     DatabaseLogger.error(e);

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import {
   ThemeDefinition,
   ThemeLight,
   useThemeEngineStore
-} from "@notesnook/theme";
+} from "@workstation/theme";
 import { Appearance } from "react-native";
 import { create } from "zustand";
 import { db, setupDatabase } from "../common/database";

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,8 +22,8 @@ import {
   Item,
   Note,
   VirtualizedGrouping
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
 import React, { useEffect, useRef, useState } from "react";
 import { DatabaseLogger, db } from "../../common/database";
 import List from "../../components/list";

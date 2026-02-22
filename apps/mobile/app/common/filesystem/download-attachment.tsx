@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import Sodium from "@ammarahmed/react-native-sodium";
-import { getFileNameWithExtension } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { getFileNameWithExtension } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import React from "react";
 import { Platform } from "react-native";
 import RNFetchBlob from "react-native-blob-util";
@@ -70,11 +70,11 @@ export async function downloadAttachments(attachmentIds: string[]) {
   }
 
   // Create the folder to zip;
-  const zipSourceFolder = `${cacheDir}/notesnook-attachments`;
+  const zipSourceFolder = `${cacheDir}/workstation-attachments`;
   const zipOutputFile =
     Platform.OS === "ios"
-      ? `${outputFolder}/notesnook-attachments-${Date.now()}.zip`
-      : `${cacheDir}/notesnook-attachments.zip`;
+      ? `${outputFolder}/workstation-attachments-${Date.now()}.zip`
+      : `${cacheDir}/workstation-attachments.zip`;
   if (await RNFetchBlob.fs.exists(zipSourceFolder)) {
     await RNFetchBlob.fs.unlink(zipSourceFolder);
   }
@@ -146,7 +146,7 @@ export async function downloadAttachments(attachmentIds: string[]) {
       message: strings.savingZipFile(),
       groupId
     });
-    // If all goes well, zip the notesnook-attachments folder in cache.
+    // If all goes well, zip the workstation-attachments folder in cache.
 
     sub = subscribe(({ progress }) => {
       useAttachmentStore.getState().setDownloading({
@@ -163,7 +163,7 @@ export async function downloadAttachments(attachmentIds: string[]) {
       // Move the zip to user selected directory.
       const file = await ScopedStorage.createFile(
         outputFolder,
-        `notesnook-attachments-${Date.now()}.zip`,
+        `workstation-attachments-${Date.now()}.zip`,
         "application/zip"
       );
       await copyFileAsync(`file://${zipOutputFile}`, file.uri);

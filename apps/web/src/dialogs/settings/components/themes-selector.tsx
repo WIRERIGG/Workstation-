@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,8 +25,8 @@ import {
   THEME_COMPATIBILITY_VERSION,
   getPreviewColors,
   validateTheme
-} from "@notesnook/theme";
-import { debounce } from "@notesnook/common";
+} from "@workstation/theme";
+import { debounce } from "@workstation/common";
 import { useStore as useThemeStore } from "../../../stores/theme-store";
 import { useStore as useUserStore } from "../../../stores/user-store";
 import {
@@ -34,14 +34,14 @@ import {
   THEME_SERVER_URL,
   ThemesTRPC
 } from "../../../common/themes-router";
-import { ThemeMetadata } from "@notesnook/themes-server";
+import { ThemeMetadata } from "@workstation/themes-server";
 import { ThemePreview } from "../../../components/theme-preview";
 import { Loader } from "../../../components/loader";
 import { showToast } from "../../../utils/toast";
 import { showFilePicker, readFile } from "../../../utils/file-picker";
 import { VirtualizedGrid } from "../../../components/virtualized-grid";
 import { ThemeDetailsDialog } from "../../theme-details-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const ThemesClient = ThemesTRPC.createClient({
   links: [

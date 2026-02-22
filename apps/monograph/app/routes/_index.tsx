@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -33,7 +33,7 @@ import {
   mdiShareOutline
 } from "@mdi/js";
 import { MonographChat } from "../components/monograph-chat";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { ForwardRef } from "@theme-ui/components/dist/declarations/src/types";
@@ -64,7 +64,7 @@ const ButtonLink = Button as ForwardRef<
 const features = [
   {
     name: "Share notes",
-    body: `Share a note with anyone on the internet even if they do not use Notesnook using a private sharable url.`,
+    body: `Share a note with anyone on the internet even if they do not use Workstation using a private sharable url.`,
     Icon: mdiShareOutline
   },
   {

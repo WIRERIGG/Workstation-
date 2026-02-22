@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,13 +24,13 @@ module.exports = async function (configuration) {
   if (process.env.NOTESNOOK_STAGING) return;
 
   const Endpoint = "https://weu.codesigning.azure.net";
-  const CodeSigningAccountName = "Notesnook";
-  const CertificateProfileName = "Notesnook";
+  const CodeSigningAccountName = "Workstation";
+  const CertificateProfileName = "Workstation";
   const FileDigest = configuration.hash.toUpperCase();
   const TimestampRfc3161 = "http://timestamp.acs.microsoft.com";
   const TimestampDigest = configuration.hash.toUpperCase();
-  const Description = "The Notesnook app";
-  const DescriptionUrl = "https://notesnook.com/";
+  const Description = "The Workstation app";
+  const DescriptionUrl = "https://workstation.com/";
   const FilesCatalog = createCatalog(configuration.path);
 
   const command = `Invoke-TrustedSigning -Endpoint "${Endpoint}" -CodeSigningAccountName "${CodeSigningAccountName}" -CertificateProfileName "${CertificateProfileName}" -FileDigest "${FileDigest}" -TimestampRfc3161 "${TimestampRfc3161}" -TimestampDigest "${TimestampDigest}" -Description "${Description}" -DescriptionUrl "${DescriptionUrl}" -FilesCatalog "${FilesCatalog}"`;

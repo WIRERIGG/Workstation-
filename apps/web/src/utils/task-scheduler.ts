@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import { wrap, Remote } from "comlink";
 import { showToast } from "./toast";
 import { logger } from "./logger";
 import { validate } from "cronosjs";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 let worker: globalThis.Worker | undefined;
 let scheduler: Remote<TaskSchedulerType> | undefined;

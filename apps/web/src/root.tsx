@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,12 +28,12 @@ import {
 import { desktop } from "./common/desktop-bridge";
 import { useKeyStore } from "./interfaces/key-store";
 import Config from "./utils/config";
-import { usePromise } from "@notesnook/common";
+import { usePromise } from "@workstation/common";
 import { AuthProps } from "./views/auth";
 import { loadDatabase } from "./hooks/use-database";
 import AppLock from "./views/app-lock";
 import { Text } from "@theme-ui/components";
-import { EV, EVENTS } from "@notesnook/core";
+import { EV, EVENTS } from "@workstation/core";
 import { useEffect, useState } from "react";
 
 export async function startApp(children?: React.ReactNode) {
@@ -102,7 +102,7 @@ function RouteWrapper(props: {
 
   useEffect(() => {
     EV.subscribe(EVENTS.migrationStarted, (name) =>
-      setIsMigrating(name === "notesnook")
+      setIsMigrating(name === "workstation")
     );
     EV.subscribe(EVENTS.migrationFinished, () => setIsMigrating(false));
     return () => {

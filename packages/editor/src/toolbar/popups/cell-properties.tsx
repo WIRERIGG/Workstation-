@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,12 +20,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { Editor } from "../../types.js";
 import { Box } from "@theme-ui/components";
 import { Tab, Tabs } from "../../components/tabs/index.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 // import { MenuPresenter } from "../../components/menu/menu";
 import { Popup } from "../components/popup.js";
 import { Icons } from "../icons.js";
 import { ColorPicker } from "./color-picker.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type CellPropertiesProps = { editor: Editor; onClose: () => void };
 export function CellProperties(props: CellPropertiesProps) {

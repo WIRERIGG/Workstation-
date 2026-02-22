@@ -36,6 +36,42 @@ type FileInfoResult = {
   last_commit_time: number | null;
 };
 
+// ── Path utilities (Windows + POSIX) ──
+
+/** Normalise a path to forward slashes, collapse doubles, strip trailing slash (but keep lone "/"). */
+function normalisePath(p: string): string {
+  return p.replace(/\\/g, "/").replace(/\/{2,}/g, "/").replace(/(.)\/$/, "$1");
+}
+
+/** Check if a segment looks like a Windows drive letter (e.g. "C:") */
+function isWindowsDrive(segment: string): boolean {
+  return /^[A-Za-z]:$/.test(segment);
+}
+
+/** Rebuild an absolute path from breadcrumb segments up to index i (inclusive). */
+function rebuildPath(segments: string[], i: number): string {
+  const slice = segments.slice(0, i + 1);
+  // If first segment is a drive letter (C:), join without leading slash
+  if (slice.length > 0 && isWindowsDrive(slice[0])) {
+    return slice.join("/");
+  }
+  return "/" + slice.join("/");
+}
+
+/** Get the parent of a path. Stops at drive root (C:/) or POSIX root (/). */
+function parentPath(p: string): string {
+  const norm = normalisePath(p);
+  const parts = norm.split("/").filter(Boolean);
+  if (parts.length <= 1) {
+    // Already at root — either "/" or "C:/"
+    if (parts.length === 1 && isWindowsDrive(parts[0])) return parts[0] + "/";
+    return "/";
+  }
+  parts.pop();
+  if (parts.length === 1 && isWindowsDrive(parts[0])) return parts[0] + "/";
+  return isWindowsDrive(parts[0]) ? parts.join("/") : "/" + parts.join("/");
+}
+
 const EXT_ICONS: Record<string, { icon: string; color: string }> = {
   ts: { icon: "TS", color: "#3178c6" },
   tsx: { icon: "TX", color: "#3178c6" },
@@ -82,6 +118,9 @@ function formatSize(bytes: number): string {
 
 function RealFileExplorer() {
   const [currentPath, setCurrentPath] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [refreshToken, setRefreshToken] = useState(0);
   const [entries, setEntries] = useState<FileEntry[]>([]);
   const [selectedFile, setSelectedFile] = useState<FileEntry | null>(null);
   const [previewContent, setPreviewContent] = useState<string | null>(null);
@@ -90,6 +129,54 @@ function RealFileExplorer() {
   const [loading, setLoading] = useState(false);
   const [showHidden, setShowHidden] = useState(false);
   const [gitStatuses, setGitStatuses] = useState<Map<string, GitStatusEntry>>(new Map());
+
+  // Sorting
+  type SortKey = "name" | "size" | "modified" | "type";
+  const [sortKey, setSortKey] = useState<SortKey>("name");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+
+  const toggleSort = useCallback((key: SortKey) => {
+    setSortKey((prev) => {
+      if (prev === key) {
+        setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+        return prev;
+      }
+      setSortDir("asc");
+      return key;
+    });
+  }, []);
+
+  // Address bar editing
+  const [editingAddress, setEditingAddress] = useState(false);
+  const [addressValue, setAddressValue] = useState("");
+  const addressRef = useRef<HTMLInputElement>(null);
+
+  /** Navigate to a path, pushing onto history stack. */
+  const navigate = useCallback((to: string) => {
+    setCurrentPath(to);
+    setHistory((prev) => {
+      const trimmed = prev.slice(0, historyIndex + 1);
+      return [...trimmed, to];
+    });
+    setHistoryIndex((prev) => prev + 1);
+  }, [historyIndex]);
+
+  const canGoBack = historyIndex > 0;
+  const canGoForward = historyIndex < history.length - 1;
+
+  const goBack = useCallback(() => {
+    if (!canGoBack) return;
+    const newIndex = historyIndex - 1;
+    setHistoryIndex(newIndex);
+    setCurrentPath(history[newIndex]);
+  }, [canGoBack, historyIndex, history]);
+
+  const goForward = useCallback(() => {
+    if (!canGoForward) return;
+    const newIndex = historyIndex + 1;
+    setHistoryIndex(newIndex);
+    setCurrentPath(history[newIndex]);
+  }, [canGoForward, historyIndex, history]);
 
   // Fuzzy finder
   const [showFuzzy, setShowFuzzy] = useState(false);
@@ -118,6 +205,8 @@ function RealFileExplorer() {
       const { desktop } = await import("../common/desktop-bridge");
       const home = await desktop.filesystem.homeDir.query();
       setCurrentPath(home);
+      setHistory([home]);
+      setHistoryIndex(0);
     })().catch(console.error);
   }, []);
 
@@ -135,8 +224,8 @@ function RealFileExplorer() {
         is_dir: item.isDirectory,
         is_file: item.isFile,
         is_symlink: item.isSymlink || false,
-        size: 0,
-        modified: null,
+        size: item.size ?? 0,
+        modified: item.modified ?? null,
         extension: item.isFile ? (item.name.includes(".") ? item.name.split(".").pop() || null : null) : null
       }));
 
@@ -167,7 +256,34 @@ function RealFileExplorer() {
     })()
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [currentPath, showHidden]);
+  }, [currentPath, showHidden, refreshToken]);
+
+  // Live refresh: watch current directory for changes
+  const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (!currentPath) return;
+    let subscription: { unsubscribe: () => void } | undefined;
+    (async () => {
+      try {
+        const { desktop } = await import("../common/desktop-bridge");
+        subscription = desktop.filesystem.watch.subscribe(
+          { path: currentPath },
+          {
+            onData() {
+              if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
+              refreshTimerRef.current = setTimeout(() => setRefreshToken((t) => t + 1), 300);
+            }
+          }
+        );
+      } catch {
+        // watch not available — ignore
+      }
+    })();
+    return () => {
+      subscription?.unsubscribe();
+      if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
+    };
+  }, [currentPath]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -182,6 +298,11 @@ function RealFileExplorer() {
       }
       if (e.key === "i" && !showFuzzy && selectedFile) {
         loadFileInfo(selectedFile);
+      }
+      if (e.key === "F2" && selectedFile && !showFuzzy && !renameTarget) {
+        e.preventDefault();
+        setRenameTarget(selectedFile);
+        setRenameName(selectedFile.name);
       }
     }
     window.addEventListener("keydown", handleKey);
@@ -214,20 +335,40 @@ function RealFileExplorer() {
   }, [fuzzyQuery, showFuzzy, currentPath]);
 
   const filteredEntries = useMemo(() => {
-    if (!filter) return entries;
-    return entries.filter((e) => e.name.toLowerCase().includes(filter.toLowerCase()));
-  }, [entries, filter]);
+    let list = entries;
+    if (filter) list = list.filter((e) => e.name.toLowerCase().includes(filter.toLowerCase()));
+    return [...list].sort((a, b) => {
+      // Directories always before files
+      if (a.is_dir !== b.is_dir) return a.is_dir ? -1 : 1;
+      const dir = sortDir === "asc" ? 1 : -1;
+      switch (sortKey) {
+        case "name":
+          return dir * a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
+        case "size":
+          return dir * (a.size - b.size);
+        case "modified": {
+          const ta = a.modified ? new Date(a.modified).getTime() : 0;
+          const tb = b.modified ? new Date(b.modified).getTime() : 0;
+          return dir * (ta - tb);
+        }
+        case "type": {
+          const ea = a.extension || "";
+          const eb = b.extension || "";
+          return dir * ea.localeCompare(eb);
+        }
+        default:
+          return 0;
+      }
+    });
+  }, [entries, filter, sortKey, sortDir]);
 
   const navigateUp = useCallback(() => {
-    const parts = currentPath.replace(/\\/g, "/").split("/");
-    parts.pop();
-    const parent = parts.join("/") || "/";
-    setCurrentPath(parent);
-  }, [currentPath]);
+    navigate(parentPath(currentPath));
+  }, [currentPath, navigate]);
 
   const handleClick = useCallback(async (entry: FileEntry) => {
     if (entry.is_dir) {
-      setCurrentPath(entry.path);
+      navigate(entry.path);
     } else {
       setSelectedFile(entry);
       setRenderMarkdown(false);
@@ -246,7 +387,7 @@ function RealFileExplorer() {
         setPreviewHtml(null);
       }
     }
-  }, []);
+  }, [navigate]);
 
   const loadFileInfo = useCallback(async (entry: FileEntry) => {
     try {
@@ -280,12 +421,29 @@ function RealFileExplorer() {
       }
       setCreateMode(null);
       setCreateName("");
-      // Refresh by resetting path
-      setCurrentPath(currentPath + ""); // force re-render
+      // Refresh by bumping token (handled in Task 9)
+      setRefreshToken((t) => t + 1);
     } catch (e) {
       console.error("Create error:", e);
     }
   }, [currentPath, createName, createMode]);
+
+  const handleRename = useCallback(async () => {
+    if (!renameTarget || !renameName.trim() || renameName === renameTarget.name) {
+      setRenameTarget(null);
+      return;
+    }
+    const dir = normalisePath(renameTarget.path).split("/").slice(0, -1).join("/");
+    const newPath = dir + "/" + renameName.trim();
+    try {
+      const { desktop } = await import("../common/desktop-bridge");
+      await desktop.filesystem.rename.mutate({ oldPath: renameTarget.path, newPath });
+      setRenameTarget(null);
+      setRefreshToken((t) => t + 1);
+    } catch (e) {
+      console.error("Rename error:", e);
+    }
+  }, [renameTarget, renameName]);
 
   const handleCopyPath = useCallback((path: string) => {
     navigator.clipboard.writeText(path).catch(console.error);
@@ -294,14 +452,12 @@ function RealFileExplorer() {
   const handleFuzzySelect = useCallback((result: FuzzyResult) => {
     setShowFuzzy(false);
     if (result.is_dir) {
-      setCurrentPath(result.path);
+      navigate(result.path);
     } else {
       // Navigate to parent dir and select file
-      const parts = result.path.replace(/\\/g, "/").split("/");
-      parts.pop();
-      setCurrentPath(parts.join("/"));
+      navigate(parentPath(result.path));
     }
-  }, []);
+  }, [navigate]);
 
   // Get git status for a file entry
   const getGitStatus = (entry: FileEntry): { color: string; badge: string } | null => {
@@ -314,7 +470,10 @@ function RealFileExplorer() {
     return null;
   };
 
-  const breadcrumbs = currentPath.replace(/\\/g, "/").split("/").filter(Boolean);
+  const breadcrumbs = useMemo(
+    () => normalisePath(currentPath).split("/").filter(Boolean),
+    [currentPath]
+  );
 
   return (
     <Flex sx={{ flexDirection: "column", height: "100%", bg: "background", overflow: "hidden", fontFamily: MONO_FONT }}>
@@ -333,16 +492,29 @@ function RealFileExplorer() {
 
       {/* Breadcrumb + filter + file ops */}
       <Flex sx={{ px: 2, py: 2, borderBottom: "1px solid var(--border)", gap: 2, alignItems: "center", flexShrink: 0, flexWrap: "wrap" }}>
+        <Button onClick={goBack} disabled={!canGoBack} sx={{ bg: "transparent", border: "1px solid var(--border)", color: canGoBack ? "paragraph-secondary" : "var(--border)", fontSize: 12, px: 2, py: "3px", borderRadius: 4, cursor: canGoBack ? "pointer" : "default", flexShrink: 0, opacity: canGoBack ? 1 : 0.4, "&:hover": { color: canGoBack ? "heading" : undefined } }}>
+          ←
+        </Button>
+        <Button onClick={goForward} disabled={!canGoForward} sx={{ bg: "transparent", border: "1px solid var(--border)", color: canGoForward ? "paragraph-secondary" : "var(--border)", fontSize: 12, px: 2, py: "3px", borderRadius: 4, cursor: canGoForward ? "pointer" : "default", flexShrink: 0, opacity: canGoForward ? 1 : 0.4, "&:hover": { color: canGoForward ? "heading" : undefined } }}>
+          →
+        </Button>
         <Button onClick={navigateUp} sx={{ bg: "transparent", border: "1px solid var(--border)", color: "paragraph-secondary", fontSize: 12, px: 2, py: "3px", borderRadius: 4, cursor: "pointer", flexShrink: 0, "&:hover": { color: "heading" } }}>
           ..
         </Button>
-        <Flex sx={{ flex: 1, alignItems: "center", gap: "2px", overflow: "hidden", minWidth: 0 }}>
-          {breadcrumbs.map((part, i) => (
-            <Flex key={i} sx={{ alignItems: "center", gap: "2px", flexShrink: 0 }}>
-              {i > 0 && <Text sx={{ fontSize: 11, color: "paragraph-secondary" }}>/</Text>}
-              <Text sx={{ fontSize: 11, color: i === breadcrumbs.length - 1 ? "heading" : "#60a5fa", cursor: "pointer", "&:hover": { textDecoration: "underline" } }} onClick={() => setCurrentPath("/" + breadcrumbs.slice(0, i + 1).join("/"))}>{part}</Text>
-            </Flex>
-          ))}
+        <Flex onClick={() => { if (!editingAddress) { setAddressValue(currentPath); setEditingAddress(true); setTimeout(() => addressRef.current?.select(), 30); } }} sx={{ flex: 1, alignItems: "center", gap: "2px", overflow: "hidden", minWidth: 0, cursor: editingAddress ? "text" : "pointer", bg: editingAddress ? "background" : "transparent", border: editingAddress ? "1px solid #22c55e" : "1px solid transparent", borderRadius: 4, px: editingAddress ? 1 : 0, py: editingAddress ? "2px" : 0 }}>
+          {editingAddress ? (
+            <Input ref={addressRef} value={addressValue} onChange={(e) => setAddressValue(e.target.value)} onKeyDown={(e) => {
+              if (e.key === "Enter") { navigate(normalisePath(addressValue)); setEditingAddress(false); }
+              else if (e.key === "Escape") { setEditingAddress(false); }
+            }} onBlur={() => { setTimeout(() => setEditingAddress(false), 150); }} spellCheck={false} autoFocus sx={{ flex: 1, bg: "transparent", border: "none", outline: "none", color: "heading", fontSize: 11, fontFamily: MONO_FONT, px: 1, py: "2px", "&:focus": { outline: "none" } }} />
+          ) : (
+            breadcrumbs.map((part, i) => (
+              <Flex key={i} sx={{ alignItems: "center", gap: "2px", flexShrink: 0 }}>
+                {i > 0 && <Text sx={{ fontSize: 11, color: "paragraph-secondary" }}>/</Text>}
+                <Text sx={{ fontSize: 11, color: i === breadcrumbs.length - 1 ? "heading" : "#60a5fa", cursor: "pointer", "&:hover": { textDecoration: "underline" } }} onClick={(e) => { e.stopPropagation(); navigate(rebuildPath(breadcrumbs, i)); }}>{part}</Text>
+              </Flex>
+            ))
+          )}
         </Flex>
         <Input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Filter..." spellCheck={false} sx={{ width: 120, bg: "background", border: "1px solid var(--border)", borderRadius: 4, color: "heading", fontSize: 11, fontFamily: MONO_FONT, px: 2, py: "3px", caretColor: "#22c55e", "&:focus": { outline: "none", borderColor: "#22c55e" }, "&::placeholder": { color: "paragraph-secondary" } }} />
       </Flex>
@@ -352,21 +524,45 @@ function RealFileExplorer() {
         {/* File list */}
         <Box sx={{ width: selectedFile ? "50%" : "100%", overflow: "auto", transition: "width 0.2s", "&::-webkit-scrollbar": { width: 6 }, "&::-webkit-scrollbar-thumb": { bg: "var(--border)", borderRadius: 3 } }}>
           {loading && <Text sx={{ p: 3, fontSize: 12, color: "paragraph-secondary" }}>Loading...</Text>}
+          {/* Column headers */}
+          <Flex sx={{ px: 3, py: "4px", borderBottom: "1px solid var(--border)", bg: "background-secondary", alignItems: "center", gap: "8px", flexShrink: 0, userSelect: "none" }}>
+            <Box sx={{ width: 20 }} />
+            <Text onClick={() => toggleSort("name")} sx={{ fontSize: 10, color: sortKey === "name" ? "#22c55e" : "paragraph-secondary", cursor: "pointer", flex: 1, fontWeight: "bold", "&:hover": { color: "heading" } }}>
+              Name {sortKey === "name" && (sortDir === "asc" ? "\u25B4" : "\u25BE")}
+            </Text>
+            <Text onClick={() => toggleSort("modified")} sx={{ fontSize: 10, color: sortKey === "modified" ? "#22c55e" : "paragraph-secondary", cursor: "pointer", width: 110, textAlign: "right", fontWeight: "bold", flexShrink: 0, "&:hover": { color: "heading" } }}>
+              Modified {sortKey === "modified" && (sortDir === "asc" ? "\u25B4" : "\u25BE")}
+            </Text>
+            <Text onClick={() => toggleSort("size")} sx={{ fontSize: 10, color: sortKey === "size" ? "#22c55e" : "paragraph-secondary", cursor: "pointer", width: 60, textAlign: "right", fontWeight: "bold", flexShrink: 0, "&:hover": { color: "heading" } }}>
+              Size {sortKey === "size" && (sortDir === "asc" ? "\u25B4" : "\u25BE")}
+            </Text>
+          </Flex>
           {filteredEntries.map((entry) => {
             const { icon, color } = getFileIcon(entry);
             const isSelected = selectedFile?.path === entry.path;
             const gitStatus = getGitStatus(entry);
+            const isRenaming = renameTarget?.path === entry.path;
             return (
-              <Flex key={entry.path} onClick={() => handleClick(entry)} onContextMenu={(e) => { e.preventDefault(); handleCopyPath(entry.path); }} sx={{ alignItems: "center", gap: "8px", px: 3, py: "5px", cursor: "pointer", bg: isSelected ? "background-selected" : "transparent", "&:hover": { bg: isSelected ? "background-selected" : "hover" } }}>
+              <Flex key={entry.path} onClick={() => { if (!isRenaming) handleClick(entry); }} onContextMenu={(e) => { e.preventDefault(); handleCopyPath(entry.path); }} sx={{ alignItems: "center", gap: "8px", px: 3, py: "5px", cursor: "pointer", bg: isSelected ? "background-selected" : "transparent", "&:hover": { bg: isSelected ? "background-selected" : "hover" } }}>
                 <Text sx={{ fontSize: 12, color, width: 20, textAlign: "center", flexShrink: 0 }}>{icon}</Text>
-                <Text sx={{ fontSize: 12, color: entry.is_dir ? "heading" : "paragraph-secondary", fontWeight: entry.is_dir ? "bold" : "normal", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.name}</Text>
+                {isRenaming ? (
+                  <Input value={renameName} onChange={(e) => setRenameName(e.target.value)} onKeyDown={(e) => {
+                    if (e.key === "Enter") handleRename();
+                    else if (e.key === "Escape") setRenameTarget(null);
+                  }} onBlur={() => handleRename()} autoFocus spellCheck={false} onClick={(e) => e.stopPropagation()} sx={{ flex: 1, bg: "background", border: "1px solid #22c55e", borderRadius: 3, color: "heading", fontSize: 12, fontFamily: MONO_FONT, px: 1, py: 0, "&:focus": { outline: "none" } }} />
+                ) : (
+                  <Text sx={{ fontSize: 12, color: entry.is_dir ? "heading" : "paragraph-secondary", fontWeight: entry.is_dir ? "bold" : "normal", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.name}</Text>
+                )}
                 {/* Git status badge */}
                 {gitStatus && (
                   <Text sx={{ fontSize: 9, fontWeight: "bold", color: gitStatus.color, bg: `${gitStatus.color}22`, px: "4px", py: "1px", borderRadius: 4, flexShrink: 0 }}>{gitStatus.badge}</Text>
                 )}
-                {entry.is_file && (
-                  <Text sx={{ fontSize: 10, color: "paragraph-secondary", flexShrink: 0 }}>{formatSize(entry.size)}</Text>
-                )}
+                <Text sx={{ fontSize: 10, color: "paragraph-secondary", width: 110, textAlign: "right", flexShrink: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {entry.modified ? new Date(entry.modified).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : ""}
+                </Text>
+                <Text sx={{ fontSize: 10, color: "paragraph-secondary", width: 60, textAlign: "right", flexShrink: 0 }}>
+                  {entry.is_file ? formatSize(entry.size) : ""}
+                </Text>
               </Flex>
             );
           })}
@@ -558,7 +754,9 @@ function MockFileExplorer() {
   );
 }
 
+import { isDesktopRuntime } from "../utils/platform";
+
 export default function FileExplorerView() {
-  if (IS_DESKTOP_APP) return <RealFileExplorer />;
+  if (isDesktopRuntime()) return <RealFileExplorer />;
   return <MockFileExplorer />;
 }

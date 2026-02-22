@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,7 +28,7 @@ import {
   ensureLeadingParagraph
 } from "../../utils/prosemirror.js";
 import { OutlineList } from "../outline-list/outline-list.js";
-import { keybindings, tiptapKeys } from "@notesnook/common";
+import { keybindings, tiptapKeys } from "@workstation/common";
 import { Paragraph } from "../paragraph/paragraph.js";
 
 export interface ListItemOptions {

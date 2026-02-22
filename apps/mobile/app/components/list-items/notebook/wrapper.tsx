@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { BaseTrashItem, Notebook } from "@notesnook/core";
+import { BaseTrashItem, Notebook } from "@workstation/core";
 import React from "react";
 import { NotebookItem } from ".";
 import { db } from "../../../common/database";
@@ -28,7 +28,7 @@ import { useSelectionStore } from "../../../stores/use-selection-store";
 import { useTrashStore } from "../../../stores/use-trash-store";
 import { presentDialog } from "../../dialog/functions";
 import SelectionWrapper, { selectItem } from "../selection-wrapper";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export const openNotebook = (item: Notebook | BaseTrashItem<Notebook>) => {
   const isTrash = item.type === "trash";

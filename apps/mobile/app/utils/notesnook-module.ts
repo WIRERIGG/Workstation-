@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ export type ShortcutInfo = {
   type: "note" | "notebook" | "tag" | "color";
 };
 
-interface NotesnookModuleInterface {
+interface WorkstationModuleInterface {
   getActivityName: () => Promise<string>;
   setBackgroundColor: (color: string) => void;
   setSecureMode: (enabled: boolean) => void;
@@ -39,9 +39,9 @@ interface NotesnookModuleInterface {
   cancelAndFinish: () => void;
   getWidgetId: () => void;
   getIntent: () => {
-    "com.streetwriters.notesnook.OpenNoteId"?: string;
-    "com.streetwriters.notesnook.OpenReminderId"?: string;
-    "com.streetwriters.notesnook.NewReminder"?: string;
+    "com.streetwriters.workstation.OpenNoteId"?: string;
+    "com.streetwriters.workstation.OpenReminderId"?: string;
+    "com.streetwriters.workstation.NewReminder"?: string;
   };
   getWidgetNotes: () => Promise<string[]>;
   hasWidgetNote: (noteId: string) => Promise<boolean>;
@@ -67,7 +67,7 @@ interface NotesnookModuleInterface {
   getAllShortcuts: () => Promise<ShortcutInfo[]>;
 }
 
-export const NotesnookModule: NotesnookModuleInterface = Platform.select({
+export const WorkstationModule: WorkstationModuleInterface = Platform.select({
   ios: {
     getActivityName: () => {},
     setBackgroundColor: () => {},

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import MDIIcon from "@mdi/react";
-import { isThemeColor, SchemeColors } from "@notesnook/theme";
+import { isThemeColor, SchemeColors } from "@workstation/theme";
 import { Flex, FlexProps } from "@theme-ui/components";
 import { useTheme } from "@emotion/react";
-import { Theme } from "@notesnook/theme";
+import { Theme } from "@workstation/theme";
 
 type IconProps = {
   title?: string;

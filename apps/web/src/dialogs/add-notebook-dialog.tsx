@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,13 +21,13 @@ import { useRef, useCallback } from "react";
 import Dialog from "../components/dialog";
 import Field from "../components/field";
 import { showToast } from "../utils/toast";
-import { Notebook } from "@notesnook/core";
+import { Notebook } from "@workstation/core";
 import { store as noteStore } from "../stores/note-store";
 import { store as notebookStore } from "../stores/notebook-store";
 import { store as appStore } from "../stores/app-store";
 import { db } from "../common/db";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { checkFeature } from "../common";
 
 type AddNotebookDialogProps = BaseDialogProps<boolean> & {

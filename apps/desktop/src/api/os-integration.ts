@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -42,7 +42,7 @@ import { isFlatpak, isSnap } from "../utils";
 import { setupDesktopIntegration } from "../utils/desktop-integration";
 import { rm } from "fs/promises";
 import { disableCustomDns, enableCustomDns } from "../utils/custom-dns";
-import type { MenuItem as NNMenuItem } from "@notesnook/ui";
+import type { MenuItem as NNMenuItem } from "@workstation/ui";
 
 const t = initTRPC.create();
 

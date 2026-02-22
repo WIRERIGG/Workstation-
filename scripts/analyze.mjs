@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -102,7 +102,7 @@ function filterDependencies(basePath, dependencies) {
   return Object.entries(dependencies)
     .filter(
       ([key, value]) =>
-        key.startsWith("@notesnook/") || value.startsWith("file:")
+        key.startsWith("@workstation/") || value.startsWith("file:")
     )
     .map(([_, value]) =>
       path.resolve(path.join(basePath, value.replace("file:", "")))

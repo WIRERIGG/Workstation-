@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -154,7 +154,7 @@ const onBoot = async () => {
 
 const registerHeadlessTask = () =>
   AppRegistry.registerHeadlessTask(
-    "com.streetwriters.notesnook.BOOT_TASK",
+    "com.streetwriters.workstation.BOOT_TASK",
     () => {
       return onBoot;
     }

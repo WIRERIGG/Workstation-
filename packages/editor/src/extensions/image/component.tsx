@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { ImageAttributes } from "./image.js";
 import { useEffect, useRef, useState } from "react";
 import { ReactNodeViewProps } from "../react/index.js";
 import { DesktopOnly } from "../../components/responsive/index.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { Icons } from "../../toolbar/icons.js";
 import { ToolbarGroup } from "../../toolbar/components/toolbar-group.js";
 import { useToolbarStore } from "../../toolbar/stores/toolbar-store.js";
@@ -37,7 +37,7 @@ import {
 } from "../../utils/downloader.js";
 import { useObserver } from "../../hooks/use-observer.js";
 import { Attachment, ImageAlignmentOptions } from "../attachment/index.js";
-import { DataURL } from "@notesnook/common";
+import { DataURL } from "@workstation/common";
 
 export function ImageComponent(
   props: ReactNodeViewProps<Partial<ImageAttributes>>

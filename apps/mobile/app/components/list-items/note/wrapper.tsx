@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { BaseTrashItem, Color, Note, Reminder } from "@notesnook/core";
+import { BaseTrashItem, Color, Note, Reminder } from "@workstation/core";
 import React from "react";
 import NoteItem from ".";
-import { notesnook } from "../../../../e2e/test.ids";
+import { workstation } from "../../../../e2e/test.ids";
 import { db } from "../../../common/database";
 import { DDS } from "../../../services/device-detection";
 import {
@@ -31,7 +31,7 @@ import {
 import { eOnLoadNote, eShowMergeDialog } from "../../../utils/events";
 import { fluidTabsRef } from "../../../utils/global-refs";
 
-import { NotebooksWithDateEdited, TagsWithDateEdited } from "@notesnook/common";
+import { NotebooksWithDateEdited, TagsWithDateEdited } from "@workstation/common";
 import NotePreview from "../../note-history/preview";
 import SelectionWrapper, { selectItem } from "../selection-wrapper";
 import { RouteParams } from "../../../stores/use-navigation-store";
@@ -99,7 +99,7 @@ export const NoteWrapper = React.memo<
 
     return (
       <SelectionWrapper
-        testID={notesnook.ids.note.get(index)}
+        testID={workstation.ids.note.get(index)}
         onPress={() => openNote(item as Note, isTrash, isRenderedInActionSheet)}
         isSheet={isRenderedInActionSheet}
         item={item}

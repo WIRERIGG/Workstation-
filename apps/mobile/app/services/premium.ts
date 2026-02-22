@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SubscriptionPlan } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { SubscriptionPlan } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { Platform } from "react-native";
 import Config from "react-native-config";
 import * as RNIap from "react-native-iap";
@@ -68,7 +68,7 @@ async function loadProductsAndSubs() {
 
     if (!products || products.length === 0) {
       products = await RNIap.getProducts({
-        skus: ["notesnook.pro.5year", "notesnook.believer.5year"]
+        skus: ["workstation.pro.5year", "workstation.believer.5year"]
       });
     }
 

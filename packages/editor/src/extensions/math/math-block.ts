@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { Node, mergeAttributes, nodePasteRule } from "@tiptap/core";
 import { insertMathNode } from "./plugin/index.js";
 import { NodeSelection } from "prosemirror-state";
-import { tiptapKeys } from "@notesnook/common";
+import { tiptapKeys } from "@workstation/common";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {

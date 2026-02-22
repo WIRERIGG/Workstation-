@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -293,7 +293,7 @@ function injectNodeSelectionControls(
         },
         [
           h("p", { style: { marginBottom: "0px", fontSize: "18px" } }, [
-            text("Notesnook Web Clipper")
+            text("Workstation Web Clipper")
           ]),
           h(
             "p",

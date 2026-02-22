@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import type { ToolbarGroupDefinition } from "@notesnook/editor";
+import type { ToolbarGroupDefinition } from "@workstation/editor";
 import { useEditor } from "./use-editor";
-import { FeatureId, FeatureResult } from "@notesnook/common";
-import { DayFormat } from "@notesnook/core";
+import { FeatureId, FeatureResult } from "@workstation/common";
+import { DayFormat } from "@workstation/core";
 export type useEditorType = ReturnType<typeof useEditor>;
 
 export type EditorState = {

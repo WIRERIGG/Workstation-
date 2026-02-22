@@ -98,7 +98,7 @@ function App() {
             :root {
               --titlebar-overlay-width: 138px;
             }
-            .ws-view > div > div:first-child {
+            .ws-view > div > div:first-of-type {
               padding-right: var(--titlebar-overlay-width, 0) !important;
             }
             .route-container-header {

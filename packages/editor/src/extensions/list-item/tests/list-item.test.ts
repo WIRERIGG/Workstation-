@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -101,7 +101,7 @@ test("hitting backspace at the start of the second (or next) paragraph inside th
 });
 
 /**
- * see https://github.com/streetwriters/notesnook/pull/8877 for more context
+ * see https://github.com/streetwriters/workstation/pull/8877 for more context
  */
 test("inline image as first child in list item", async () => {
   const el = ul([

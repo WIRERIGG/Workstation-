@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -56,7 +56,7 @@ export function isDocument(mime: string) {
   return DocumentMimeTypes.some((a) => a.startsWith(mime));
 }
 
-export const WebClipMimeType = "application/vnd.notesnook.web-clip";
+export const WebClipMimeType = "application/vnd.workstation.web-clip";
 export function isWebClip(mime: string) {
   return mime === WebClipMimeType;
 }

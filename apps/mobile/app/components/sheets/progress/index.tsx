@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,13 +21,13 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import useSyncProgress from "../../../hooks/use-sync-progress";
 import { presentSheet } from "../../../services/event-manager";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { AppFontSize } from "../../../utils/size";
 import Seperator from "../../ui/seperator";
 import { ProgressBarComponent } from "../../ui/svg/lazy";
 import Heading from "../../ui/typography/heading";
 import Paragraph from "../../ui/typography/paragraph";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 export const Progress = () => {
   const { colors } = useThemeColors();
   const { progress } = useSyncProgress();

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import { Attribute } from "@tiptap/core";
 import { createNodeView } from "../react/index.js";
 import { AttachmentComponent } from "./component.js";
 import { Attachment } from "./types.js";
-import { tiptapKeys } from "@notesnook/common";
+import { tiptapKeys } from "@workstation/common";
 import { hasPermission } from "../../types.js";
 
 export type AttachmentType = "image" | "file" | "camera";

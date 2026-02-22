@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,14 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { ToolProps } from "../types.js";
 import { Editor } from "../../types.js";
 import { Dropdown } from "../components/dropdown.js";
-import { MenuItem } from "@notesnook/ui";
+import { MenuItem } from "@workstation/ui";
 import { useCallback, useMemo } from "react";
 import { Counter } from "../components/counter.js";
 import { useRefValue } from "../../hooks/use-ref-value.js";
 import { useToolbarStore } from "../stores/toolbar-store.js";
 import { getFontById, getFontIds, getFonts } from "../../utils/font.js";
 import { CodeBlock } from "../../extensions/code-block/index.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export function FontSize(props: ToolProps) {
   const { editor } = props;

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Icons } from "@notesnook/editor/dist/cjs/toolbar/icons";
-import { ToolbarGroupDefinition } from "@notesnook/editor";
+import { Icons } from "@workstation/editor/dist/cjs/toolbar/icons";
+import { ToolbarGroupDefinition } from "@workstation/editor";
 import {
   getAllTools,
   getDefaultPresets
-} from "@notesnook/editor/dist/cjs/toolbar/tool-definitions";
-import { ToolId } from "@notesnook/editor";
+} from "@workstation/editor/dist/cjs/toolbar/tool-definitions";
+import { ToolId } from "@workstation/editor";
 
 export const tools = getAllTools() as any;
 export const presets: { [name: string]: ToolbarGroupDefinition[] } = {

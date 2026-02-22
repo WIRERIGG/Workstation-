@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,14 +23,14 @@ import { Icons } from "../icons.js";
 import { useMemo, useRef, useState } from "react";
 import { EmbedPopup } from "../popups/embed-popup.js";
 import { TablePopup } from "../popups/table-popup.js";
-import { MenuItem, Icon } from "@notesnook/ui";
+import { MenuItem, Icon } from "@workstation/ui";
 import { useIsMobile, useToolbarLocation } from "../stores/toolbar-store.js";
 import { ResponsivePresenter } from "../../components/responsive/index.js";
 import { showPopup } from "../../components/popup-presenter/index.js";
 import { ImageUploadPopup } from "../popups/image-upload.js";
 import { Button } from "../../components/button.js";
-import { strings } from "@notesnook/intl";
-import { keybindings } from "@notesnook/common";
+import { strings } from "@workstation/intl";
+import { keybindings } from "@workstation/common";
 import { importCsvToTable } from "../../extensions/table/actions.js";
 
 export function InsertBlock(props: ToolProps) {

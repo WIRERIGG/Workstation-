@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,12 +21,12 @@ import ListItem from "../list-item";
 import { Restore, DeleteForver } from "../icons";
 import { Flex, Text } from "@theme-ui/components";
 import TimeAgo from "../time-ago";
-import { toTitleCase } from "@notesnook/common";
-import { MenuItem } from "@notesnook/ui";
-import { TrashItem as TrashItemType } from "@notesnook/core";
+import { toTitleCase } from "@workstation/common";
+import { MenuItem } from "@workstation/ui";
+import { TrashItem as TrashItemType } from "@workstation/core";
 import { useEditorStore } from "../../stores/editor-store";
 import { useStore as useSelectionStore } from "../../stores/selection-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { Multiselect } from "../../common/multi-select";
 
 type TrashItemProps = { item: TrashItemType; date: number };

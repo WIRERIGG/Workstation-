@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,25 +16,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import "@notesnook/editor/styles/katex.min.css";
-import "@notesnook/editor/styles/katex-fonts.css";
-import "@notesnook/editor/styles/fonts.css";
+import "@workstation/editor/styles/katex.min.css";
+import "@workstation/editor/styles/katex-fonts.css";
+import "@workstation/editor/styles/fonts.css";
 import "mac-scrollbar/dist/mac-scrollbar.css";
 import {
   ThemeFactory,
   useThemeColors,
   useThemeEngineStore
-} from "@notesnook/theme";
+} from "@workstation/theme";
 import { useLayoutEffect, useMemo, useRef } from "react";
 import { Flex } from "@theme-ui/components";
 import TipTap, { type TipTapProps } from "./tiptap";
 import { ScopedThemeProvider } from "../theme-provider";
-import { setI18nGlobal, Messages } from "@notesnook/intl";
+import { setI18nGlobal, Messages } from "@workstation/intl";
 import { i18n } from "@lingui/core";
 
 const locale = import.meta.env.DEV
-  ? import("@notesnook/intl/locales/$pseudo-LOCALE.json")
-  : import("@notesnook/intl/locales/$en.json");
+  ? import("@workstation/intl/locales/$pseudo-LOCALE.json")
+  : import("@workstation/intl/locales/$en.json");
 locale.then(({ default: locale }) => {
   i18n.load({
     en: locale.messages as unknown as Messages

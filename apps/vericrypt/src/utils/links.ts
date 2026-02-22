@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,16 +21,16 @@ type Packages = "crypto" | "importer" | "enex";
 type Apps = "vericrypt" | "importer";
 
 export function getSourceUrl(path: string) {
-  const baseUrl = `https://github.com/streetwriters/notesnook/tree/master/apps/vericrypt`;
+  const baseUrl = `https://github.com/streetwriters/workstation/tree/master/apps/vericrypt`;
   return `${baseUrl}/${path}`;
 }
 
 export function getPackageUrl(packageId: Packages) {
-  const baseUrl = `https://github.com/streetwriters/notesnook/tree/master/packages`;
+  const baseUrl = `https://github.com/streetwriters/workstation/tree/master/packages`;
   return `${baseUrl}/${packageId}`;
 }
 
 export function getAppUrl(appId: Apps) {
-  const baseUrl = `https://github.com/streetwriters/notesnook/tree/master/apps`;
+  const baseUrl = `https://github.com/streetwriters/workstation/tree/master/apps`;
   return `${baseUrl}/${appId}`;
 }

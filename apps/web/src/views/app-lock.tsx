@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import {
   useRef,
   useState
 } from "react";
-import { isFeatureAvailable, usePromise } from "@notesnook/common";
+import { isFeatureAvailable, usePromise } from "@workstation/common";
 // import { KeyChain } from "../interfaces/key-store";
 import { Button, Flex, Text } from "@theme-ui/components";
 import { Loading, Lock } from "../components/icons";
@@ -35,7 +35,7 @@ import { onPageVisibilityChanged } from "../utils/page-visibility";
 import { WebAuthn } from "../utils/webauthn";
 import { getDocumentTitle, setDocumentTitle } from "../utils/dom";
 import { CredentialWithoutSecret, useKeyStore } from "../interfaces/key-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DialogManager } from "../common/dialog-manager";
 
 export default function AppLock(props: PropsWithChildren<unknown>) {
@@ -93,7 +93,7 @@ export default function AppLock(props: PropsWithChildren<unknown>) {
     if (isLocked) {
       windowTitle.current = getDocumentTitle();
       // ../common/dialog-controller  closeOpenedDialog();
-      document.title = `Notesnook 🔒`;
+      document.title = `Workstation 🔒`;
     } else {
       setDocumentTitle(windowTitle.current);
     }

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,7 +25,7 @@ async function configureAutoUpdater() {
     config.releaseTrack === "stable" ? "latest" : config.releaseTrack;
   autoUpdater.setFeedURL({
     provider: "generic",
-    url: `https://notesnook.com/api/v1/releases/${process.platform}/${releaseTrack}`,
+    url: `https://workstation.com/api/v1/releases/${process.platform}/${releaseTrack}`,
     useMultipleRangeRequest: false,
     channel: releaseTrack
   });

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { useCallback, useRef, useEffect, PropsWithChildren } from "react";
 import { Box, BoxProps } from "@theme-ui/components";
 import { getPosition, PositionOptions } from "../../utils/position.js";
 import Modal from "react-modal";
-import { EmotionThemeProvider, ThemeScopes } from "@notesnook/theme";
+import { EmotionThemeProvider, ThemeScopes } from "@workstation/theme";
 
 export type PopupPresenterProps = {
   isOpen: boolean;

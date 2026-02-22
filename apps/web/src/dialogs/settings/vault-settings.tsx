@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { useStore as useNotesStore } from "../../stores/note-store";
 import Vault from "../../common/vault";
 import { showToast } from "../../utils/toast";
 import { db } from "../../common/db";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export const VaultSettings: SettingsGroup[] = [
   {

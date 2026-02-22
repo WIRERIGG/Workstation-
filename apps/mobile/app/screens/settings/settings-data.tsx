@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { formatBytes } from "@notesnook/common";
+import { formatBytes } from "@workstation/common";
 import {
   SubscriptionPlan,
   SubscriptionProvider,
   SubscriptionStatus,
   User
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
 import notifee from "@notifee/react-native";
 import Clipboard from "@react-native-clipboard/clipboard";
 import dayjs from "dayjs";
@@ -63,7 +63,7 @@ import Sync from "../../services/sync";
 import { useThemeStore } from "../../stores/use-theme-store";
 import { useUserStore } from "../../stores/use-user-store";
 import { eCloseSheet, eOpenRecoveryKeyDialog } from "../../utils/events";
-import { NotesnookModule } from "../../utils/notesnook-module";
+import { WorkstationModule } from "../../utils/workstation-module";
 import { sleep } from "../../utils/time";
 import { MFARecoveryCodes, MFASheet } from "./2fa";
 import { useDragState } from "./editor/state";
@@ -390,7 +390,7 @@ export const settingsGroups: SettingSection[] = [
               );
               const currentSubscription = subscriptions[0];
               presentSheet({
-                title: strings.notesnookPro(),
+                title: strings.workstationPro(),
                 paragraph: strings.subscribedOnVerify(
                   new Date(currentSubscription.transactionDate).toLocaleString()
                 ),
@@ -640,12 +640,12 @@ export const settingsGroups: SettingSection[] = [
         ]
       },
       {
-        id: "notesnook-circle",
-        name: strings.notesnookCircle(),
+        id: "workstation-circle",
+        name: strings.workstationCircle(),
         icon: "circle-outline",
         type: "screen",
-        description: strings.notesnookCircleDesc(),
-        component: "notesnook-circle"
+        description: strings.workstationCircleDesc(),
+        component: "workstation-circle"
       }
     ]
   },
@@ -1019,7 +1019,7 @@ export const settingsGroups: SettingSection[] = [
               });
             }
           } else {
-            NotesnookModule.setSecureMode(!settings.privacyScreen);
+            WorkstationModule.setSecureMode(!settings.privacyScreen);
           }
 
           SettingsService.set({ privacyScreen: !settings.privacyScreen });
@@ -1502,7 +1502,7 @@ export const settingsGroups: SettingSection[] = [
         name: strings.joinTelegram(),
         description: strings.joinTelegramDesc(),
         modifer: () => {
-          Linking.openURL("https://t.me/notesnook").catch(() => {
+          Linking.openURL("https://t.me/workstation").catch(() => {
             /* empty */
           });
         }
@@ -1513,7 +1513,7 @@ export const settingsGroups: SettingSection[] = [
         description: strings.joinMastodonDesc(),
         icon: "mastodon",
         modifer: () => {
-          Linking.openURL("https://fosstodon.org/@notesnook").catch(
+          Linking.openURL("https://fosstodon.org/@workstation").catch(
             console.log
           );
         }
@@ -1524,7 +1524,7 @@ export const settingsGroups: SettingSection[] = [
         description: strings.followOnXDesc(),
         icon: "twitter",
         modifer: () => {
-          Linking.openURL("https://twitter.com/notesnook").catch(() => {
+          Linking.openURL("https://twitter.com/workstation").catch(() => {
             /* empty */
           });
         }
@@ -1552,7 +1552,7 @@ export const settingsGroups: SettingSection[] = [
         icon: "briefcase-outline",
         modifer: async () => {
           try {
-            await Linking.openURL("https://notesnook.com/tos");
+            await Linking.openURL("https://workstation.com/tos");
           } catch (e) {
             console.error(e);
           }
@@ -1565,7 +1565,7 @@ export const settingsGroups: SettingSection[] = [
         icon: "shield-outline",
         modifer: async () => {
           try {
-            await Linking.openURL("https://notesnook.com/privacy");
+            await Linking.openURL("https://workstation.com/privacy");
           } catch (e) {
             console.error(e);
           }
@@ -1592,7 +1592,7 @@ export const settingsGroups: SettingSection[] = [
         icon: "monitor",
         modifer: async () => {
           try {
-            await Linking.openURL("https://notesnook.com/downloads");
+            await Linking.openURL("https://workstation.com/downloads");
           } catch (e) {
             console.error(e);
           }
@@ -1605,7 +1605,7 @@ export const settingsGroups: SettingSection[] = [
         icon: "chart-timeline",
         modifer: async () => {
           try {
-            await Linking.openURL("https://notesnook.com/roadmap/");
+            await Linking.openURL("https://workstation.com/roadmap/");
           } catch (e) {
             console.error(e);
           }
@@ -1630,7 +1630,7 @@ export const settingsGroups: SettingSection[] = [
         icon: "alpha-v",
         modifer: async () => {
           try {
-            await Linking.openURL("https://notesnook.com");
+            await Linking.openURL("https://workstation.com");
           } catch (e) {
             console.error(e);
           }

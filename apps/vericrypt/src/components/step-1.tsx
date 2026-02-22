@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { StepContainer } from "./step-container";
 import { Code } from "./code";
 import { getPackageUrl } from "../utils/links";
 
-export function LoginToNotesnook() {
+export function LoginToWorkstation() {
   return (
     <StepContainer
       onSubmit={(e) => {
@@ -49,14 +49,14 @@ export function LoginToNotesnook() {
         the underlying encryption actually works. To do this,{" "}
         <Link
           target="_blank"
-          href="https://blog.notesnook.com/notesnook-is-going-open-source"
+          href="https://blog.notesnook.com/workstation-is-going-open-source"
           sx={{ color: "primary", fontWeight: "bold" }}
         >
-          we have completely open sourced Notesnook.
+          we have completely open sourced Workstation.
         </Link>
       </Text>
       <Text as="p" variant="body" sx={{ mt: 1 }}>
-        Yes, that&apos;s right. Notesnook is now 100% open source under the
+        Yes, that&apos;s right. Workstation is now 100% open source under the
         GPLv3 license. That includes the app, the encryption library, the
         backend server, and everything else.
       </Text>
@@ -64,12 +64,12 @@ export function LoginToNotesnook() {
         However, even with an open source app, how can you be sure that the app
         is actually encrypting your data? That is why we have made this tool
         (also open source), which uses{" "}
-        <Code text="@notesnook/crypto" href={getPackageUrl("crypto")} /> — the
-        main library for all cryptographic operations inside Notesnook.
+        <Code text="@workstation/crypto" href={getPackageUrl("crypto")} /> — the
+        main library for all cryptographic operations inside Workstation.
       </Text>
       <Text as="p" variant="body" sx={{ mt: 1 }}>
         Vericrypt will allow you to verify all encryption claims made by
-        Notesnook in a practical &amp; provable way right inside your browser.
+        Workstation in a practical &amp; provable way right inside your browser.
       </Text>
       <Text
         as="p"
@@ -86,7 +86,7 @@ export function LoginToNotesnook() {
         sx={{ alignSelf: "center", mt: 2 }}
         onClick={() => window.open("https://app.notesnook.com/login", "_blank")}
       >
-        Login to Notesnook
+        Login to Workstation
       </Button>
     </StepContainer>
   );

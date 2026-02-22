@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -30,7 +30,7 @@ import { store as settingStore } from "./setting-store";
 import BaseStore from "./index";
 import { showToast } from "../utils/toast";
 import { Notice } from "../common/notices";
-import { EV, EVENTS, SYNC_CHECK_IDS, SyncOptions } from "@notesnook/core";
+import { EV, EVENTS, SYNC_CHECK_IDS, SyncOptions } from "@workstation/core";
 import { logger } from "../utils/logger";
 import Config from "../utils/config";
 import {
@@ -38,8 +38,8 @@ import {
   onPageVisibilityChanged
 } from "../utils/page-visibility";
 import { NetworkCheck } from "../utils/network-check";
-import { Color, Notebook, Tag } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { Color, Notebook, Tag } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { useEditorStore } from "./editor-store";
 import { useEditorManager } from "../components/editor/manager";
 import { exitFullscreen } from "../utils/fullscreen";

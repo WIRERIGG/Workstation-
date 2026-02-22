@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -37,11 +37,11 @@ import { store as notebookStore } from "../stores/notebook-store";
 import { showToast } from "../utils/toast";
 import { isMac } from "../utils/platform";
 import { create } from "zustand";
-import { Notebook } from "@notesnook/core";
+import { Notebook } from "@workstation/core";
 import Field from "../components/field";
 import { AddNotebookDialog } from "./add-notebook-dialog";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import {
   TreeNode,
   VirtualizedTree,

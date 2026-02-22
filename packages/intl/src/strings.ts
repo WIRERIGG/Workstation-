@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -158,7 +158,7 @@ export const strings = {
   create: () => t`Create`,
   lock: () => t`Lock`,
   analyticsPermissionText: {
-    0: () => t`Help improve Notesnook by sending completely anonymized`,
+    0: () => t`Help improve Workstation by sending completely anonymized`,
     1: () => t`private analytics and bug reports.`
   },
   deletedOn: (date: string) => t`Deleted on ${date}`,
@@ -269,10 +269,10 @@ export const strings = {
   monographSelfDestructHeading: () => t`Self destruct`,
   monographSelfDestructDesc: () =>
     t`Published note link will be automatically deleted once it is viewed by someone.`,
-  monographLearnMore: () => t`Learn more about Notesnook Monograph`,
-  rateAppHeading: () => t`Do you enjoy using Notesnook?`,
+  monographLearnMore: () => t`Learn more about Workstation Monograph`,
+  rateAppHeading: () => t`Do you enjoy using Workstation?`,
   rateAppDesc: () =>
-    t`It took us a year to bring Notesnook to life. Share your experience and suggestions to help us improve it.`,
+    t`It took us a year to bring Workstation to life. Share your experience and suggestions to help us improve it.`,
   recoveryKeySavedConfirmation: () =>
     t`Tap twice to confirm you have saved the recovery key.`,
   noBlocksLinked: () => t`No blocks linked`,
@@ -473,10 +473,10 @@ $day$: Current day (eg. Monday)`,
   issueDesc: () =>
     t`We are sorry, it seems that the app crashed due to an error. You can submit a bug report below so we can fix this asap.`,
   issueDesc2: () =>
-    t`Let us know if you have faced any issue/bug while using Notesnook. We will try to fix it as soon as possible.`,
+    t`Let us know if you have faced any issue/bug while using Workstation. We will try to fix it as soon as possible.`,
   migrationSaveBackup: () => t`Save a backup of your notes`,
   migrationSaveBackupDesc: () =>
-    t`Thank you for updating Notesnook! We will be applying some minor changes for a better note taking experience.`,
+    t`Thank you for updating Workstation! We will be applying some minor changes for a better note taking experience.`,
   moveNotebook: (count: number, title: string) =>
     plural(count, {
       one: `Moving ${title}`,
@@ -693,32 +693,32 @@ $day$: Current day (eg. Monday)`,
       type: "Streetwriters",
       title: () => t`Subscription awarded from Streetwriters`,
       desc: () =>
-        t`You were awarded a subscription to Notesnook Pro by Streetwriters.`
+        t`You were awarded a subscription to Workstation Pro by Streetwriters.`
     },
     1: {
       type: "iOS",
       title: () => t`Subscribed on iOS`,
       desc: () =>
-        t`You subscribed to Notesnook Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings.`,
+        t`You subscribed to Workstation Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings.`,
       icon: "ios"
     },
     2: {
       type: "Android",
       title: () => t`Subscribed on Android`,
       desc: () =>
-        t`You subscribed to Notesnook Pro on Android Phone/Tablet using Google In App Purchase.`,
+        t`You subscribed to Workstation Pro on Android Phone/Tablet using Google In App Purchase.`,
       icon: "android"
     },
     3: {
       type: "Web",
       title: () => t`Subscribed on Web`,
-      desc: () => t`You subscribed to Notesnook Pro on the Web/Desktop App.`,
+      desc: () => t`You subscribed to Workstation Pro on the Web/Desktop App.`,
       icon: "web"
     },
     4: {
       type: "Gift card",
       title: () => t`Subscribed using gift card`,
-      desc: () => t`You subscribed to Notesnook Pro using a gift card.`
+      desc: () => t`You subscribed to Workstation Pro using a gift card.`
     }
   },
   dark: () => t`Dark`,
@@ -742,7 +742,7 @@ $day$: Current day (eg. Monday)`,
   fileSaved: (name: string, platform: string) =>
     select(platform, {
       android: `${name} saved to selected path`,
-      other: `${name} saved to File Manager/Notesnook/downloads`
+      other: `${name} saved to File Manager/Workstation/downloads`
     }),
   downloadError: (message: string) => t`Error downloading file: ${message}`,
   invalid: (type: string) => t`Invalid ${type}`,
@@ -829,11 +829,11 @@ $day$: Current day (eg. Monday)`,
         () => t`privileged few`
       ],
       body: () =>
-        t`Your privacy matters to us, no matter who you are. In a world where everyone is trying to spy on you, Notesnook encrypts all your data before it leaves your device. With Notesnook no one can ever sell your data again.`
+        t`Your privacy matters to us, no matter who you are. In a world where everyone is trying to spy on you, Workstation encrypts all your data before it leaves your device. With Workstation no one can ever sell your data again.`
     },
     {
       tesimonial: () =>
-        t`You simply cannot get any better of a note taking app than @notesnook. The UI is clean and slick, it is feature rich, encrypted, reasonably priced (esp. for students & educators) & open source`,
+        t`You simply cannot get any better of a note taking app than @workstation. The UI is clean and slick, it is feature rich, encrypted, reasonably priced (esp. for students & educators) & open source`,
       link: "https://twitter.com/andrewsayer/status/1637817220113002503",
       user: "@andrewsayer on Twitter"
     }
@@ -984,14 +984,14 @@ $day$: Current day (eg. Monday)`,
   mfaAuthAppSelector: () => t`Don't have access to your authenticator app?`,
   mfaEmailTitle: () => t`Setup using email`,
   mfaEmailDesc: () =>
-    t`Notesnook will send you a 2FA code on your email when prompted`,
+    t`Workstation will send you a 2FA code on your email when prompted`,
   mfaEmailSubtitle: () =>
     t`Please confirm your identity by entering the authentication code sent to your email address.`,
   mfaEmailInstructions: () => t`It may take a minute to receive your code.`,
   mfaEmailSelector: () => t`Don't have access to your email address?`,
   mfaSmsTitle: () => t`Setup using SMS`,
   mfaSmsDesc: () =>
-    t`Notesnook will send you an SMS with a 2FA code when prompted`,
+    t`Workstation will send you an SMS with a 2FA code when prompted`,
   mfaSmsSubtitle: (phoneNumber?: string) =>
     t`Please confirm your identity by entering the authentication code sent to ${
       phoneNumber ? phoneNumber : "your registered phone number."
@@ -1063,13 +1063,13 @@ $day$: Current day (eg. Monday)`,
   subscriptionNotActivated: () => t`Subscription not activated?`,
   loadingSubscription: () => t`Loading subscription details`,
   loadingSubscriptionDesc: () => t`Please wait while we load your subscription`,
-  notesnookPro: () => t`Notesnook Pro`,
+  workstationPro: () => t`Workstation Pro`,
   subscribedOnVerify: (date: string) =>
-    t`You subscribed to Notesnook Pro on ${date}. Verify this subscription?`,
+    t`You subscribed to Workstation Pro on ${date}. Verify this subscription?`,
   verifySubscription: () => t`Verify subscription`,
   subscriptionVerifyWait: () =>
     t`Please wait while we verify your subscription`,
-  verifySubDesc: () => t`Verify your subscription to Notesnook Pro`,
+  verifySubDesc: () => t`Verify your subscription to Workstation Pro`,
   logoutWarnin: () =>
     t`Logging out will clear all data stored on THIS DEVICE. Make sure you have synced all your changes before logging out.`,
   logoutError: () => t`Error logging out`,
@@ -1161,7 +1161,7 @@ $day$: Current day (eg. Monday)`,
   privacyAndSecurity: () => t`Privacy & security`,
   telemetry: () => t`Telemetry`,
   telemetryDesc: () =>
-    t`Contribute towards a better Notesnook. All tracking information is anonymous.`,
+    t`Contribute towards a better Workstation. All tracking information is anonymous.`,
   marketingEmails: () => t`Marketing emails`,
   marketingEmailsDesc: () =>
     t`We will send you occasional promotional offers & product updates on your email (sent once every month).`,
@@ -1262,7 +1262,7 @@ $day$: Current day (eg. Monday)`,
     t`Contact us directly via support@streetwriters.co for any help or support`,
   documentation: () => t`Documentation`,
   documentationDesc: () =>
-    t`Read the documentation to learn more about Notesnook`,
+    t`Read the documentation to learn more about Workstation`,
   debugging: () => t`Debugging`,
   debuggingDesc: () =>
     t`Get helpful debug info about the app to help us find bugs.`,
@@ -1274,9 +1274,9 @@ $day$: Current day (eg. Monday)`,
     t`Join our Telegram group to chat with other users and the team`,
   joinMastodon: () => t`Follow us on Mastodon`,
   joinMastodonDesc: () =>
-    t`Follow us on Mastodon for updates and news about Notesnook`,
+    t`Follow us on Mastodon for updates and news about Workstation`,
   followOnX: () => t`Follow us on X`,
-  followOnXDesc: () => t`Follow us on X for updates and news about Notesnook`,
+  followOnXDesc: () => t`Follow us on X for updates and news about Workstation`,
   joinDiscord: () => t`Join our Discord server`,
   joinDiscordDesc: () =>
     t`Join our Discord server to chat with other users and the team`,
@@ -1285,22 +1285,22 @@ $day$: Current day (eg. Monday)`,
   privacyPolicy: () => t`Privacy policy`,
   privacyPolicyDesc: () => t`Read the privacy policy`,
   licenses: () => t`Open source licenses`,
-  ossLibs: () => t`Open source libraries used in Notesnook`,
+  ossLibs: () => t`Open source libraries used in Workstation`,
   about: () => t`About`,
   downloadOnDesktop: () => t`Download on desktop`,
   downloadOnDesktopDesc: () =>
-    t`Get Notesnook app on your desktop and access all notes`,
+    t`Get Workstation app on your desktop and access all notes`,
   roadmap: () => t`Roadmap`,
-  roadmapDesc: () => t`See what the future of Notesnook is going to be like.`,
+  roadmapDesc: () => t`See what the future of Workstation is going to be like.`,
   checkForUpdates: () => t`Check for updates`,
-  checkForUpdatesDesc: () => t`Check for new version of Notesnook`,
+  checkForUpdatesDesc: () => t`Check for new version of Workstation`,
   autoUpdateCheck: () => t`Check for updates automatically`,
   autoUpdateCheckDesc: () =>
     t`Check for new version of the app available on app launch`,
   appVersion: () => t`App version`,
   defaultSound: () => t`Default sound`,
   subNotSupported: () =>
-    t`This version of Notesnook app does not support in-app purchases. Kindly login on the Notesnook web app to make the purchase.`,
+    t`This version of Workstation app does not support in-app purchases. Kindly login on the Workstation web app to make the purchase.`,
   goToWebApp: () => t`Go to web app`,
   subOnWeb: () => t`Subscribed on web`,
   openInBrowserToManageSub: () => t`Open in browser to manage subscription`,
@@ -1335,15 +1335,15 @@ $day$: Current day (eg. Monday)`,
   backupComplete: () => t`Backup complete`,
   backupSaved: (platform: string) =>
     select(platform, {
-      android: 'Backup file saved in "Notesnook backups" folder on your phone.',
-      other: "Backup file is saved in File Manager/Notesnook folder"
+      android: 'Backup file saved in "Workstation backups" folder on your phone.',
+      other: "Backup file is saved in File Manager/Workstation folder"
     }),
   shareBackup: () => t`Share backup`,
   neverAskAgain: () => t`Never ask again`,
   backingUpData: (type?: "full" | "partial") =>
     t`Creating a${type === "full" ? " full" : ""} backup`,
   backupDataDesc: () =>
-    t`All your backups are stored in 'Phone Storage/Notesnook/backups/' folder`,
+    t`All your backups are stored in 'Phone Storage/Workstation/backups/' folder`,
   backupSuccess: () => t`Backup successful`,
   biometricsAuthFailed: () =>
     t`Biometrics authentication failed. Please try again.`,
@@ -1354,8 +1354,8 @@ $day$: Current day (eg. Monday)`,
   rateAppMessage: () => t`We would love to know what you think!`,
   rateAppActionText: (platform: string) =>
     platform === "ios"
-      ? t`Rate Notesnook on App Store`
-      : t`Rate Notesnook on Play Store`,
+      ? t`Rate Workstation on App Store`
+      : t`Rate Workstation on Play Store`,
   recoveryKeyMessage: () => t`Keep your data safe`,
   recoveryKeyMessageActionText: () => t`Save your account recovery key`,
   loginMessage: () => t`You are not logged in`,
@@ -1364,7 +1364,7 @@ $day$: Current day (eg. Monday)`,
   syncDisabledActionText: () => t`Please confirm your email to sync notes`,
   autoBackupsOffMessage: () => t`Automatic backups are off`,
   autoBackupsOffActionText: () =>
-    t`Get Notesnook Pro to enable automatic backups`,
+    t`Get Workstation Pro to enable automatic backups`,
   newUpdateMessage: () => t`New update available`,
   newUpdateActionText: () => t`Tap here to update to the latest version`,
   updateNow: () => t`Update now`,
@@ -1376,16 +1376,16 @@ $day$: Current day (eg. Monday)`,
   disable: () => t`Disable`,
   notificationsDisabled: () => t`Notifications disabled`,
   notificationsDisabledDesc: () =>
-    t`Reminders cannot be set because notifications have been disabled from app settings. If you want to keep receiving reminder notifications, enable notifications for Notesnook from app settings.`,
+    t`Reminders cannot be set because notifications have been disabled from app settings. If you want to keep receiving reminder notifications, enable notifications for Workstation from app settings.`,
   openSettings: () => t`Open settings`,
   close: () => t`Close`,
-  getNotesnookPro: () => t`Get Notesnook Pro`,
-  colorsProMessage: () => t`Unlock more colors with Notesnook Pro`,
+  getWorkstationPro: () => t`Get Workstation Pro`,
+  colorsProMessage: () => t`Unlock more colors with Workstation Pro`,
   exportProMessage: () =>
-    t`Export notes as PDF, Markdown and HTML with Notesnook Pro`,
-  tagsProMessage: () => t`Create unlimited tags with Notesnook Pro`,
-  notebookProMessage: () => t`Create unlimited notebooks with Notesnook Pro`,
-  vaultProMessage: () => t`Create unlimited vaults with Notesnook Pro`,
+    t`Export notes as PDF, Markdown and HTML with Workstation Pro`,
+  tagsProMessage: () => t`Create unlimited tags with Workstation Pro`,
+  notebookProMessage: () => t`Create unlimited notebooks with Workstation Pro`,
+  vaultProMessage: () => t`Create unlimited vaults with Workstation Pro`,
   emailConfirmationLinkSent: () =>
     t`We have sent you an email confirmation link. Please check your email inbox. If you cannot find the email, check your spam folder.`,
   confirmEmailTroubleshoot: () =>
@@ -1603,7 +1603,7 @@ For example:
   exportedNotesLocked: () =>
     t`Some exported notes are locked, Unlock to export them`,
   selectFolderForBackupFilesDesc: () =>
-    t`Select folder where Notesnook backup files are stored to view and restore them from the app`,
+    t`Select folder where Workstation backup files are stored to view and restore them from the app`,
   selectBackupFolder: () => t`Select folder with backup files`,
   selectBackupFileDesc: () =>
     t`Select a backup file from your device to restore backup`,
@@ -1681,9 +1681,9 @@ For example:
     t`This error usually means the search index is corrupted.`,
   searchIndexCorruptFix: () =>
     t`This error can be fixed by rebuilding the search index. This action won't result in any kind of data loss.`,
-  installNotesnook: () => t`Install Notesnook`,
-  installNotesnookDesc: (platform: string) =>
-    t`For a more integrated user experience, try out Notesnook for ${platform}`,
+  installWorkstation: () => t`Install Workstation`,
+  installWorkstationDesc: (platform: string) =>
+    t`For a more integrated user experience, try out Workstation for ${platform}`,
   nativeFeatures: () => [
     t`Native high-performance encryption`,
     t`Automatic backups`,
@@ -1764,7 +1764,7 @@ For example:
   importerHelpText: () => [
     t`Please refer to the`,
     t`import guide`,
-    t`for help regarding how to use the Notesnook Importer.`
+    t`for help regarding how to use the Workstation Importer.`
   ],
   dropFilesHere: () => t`Drop the files here`,
   dragAndDropFiles: () => t`Drag & drop files here, or click to select files`,
@@ -1778,16 +1778,16 @@ For example:
   yourFullName: () => t`Your full name`,
   memberSince: (date: string) => t`Member since ${date}`,
   betaLoginNotice: () =>
-    t`You are logging into the beta version of Notesnook. Switching between beta &amp; stable versions can cause weird issues including data loss. It is recommended that you do not use both simultaneously.`,
+    t`You are logging into the beta version of Workstation. Switching between beta &amp; stable versions can cause weird issues including data loss. It is recommended that you do not use both simultaneously.`,
   loggingIn: () => t`Logging you in`,
   pleaseWaitLogin: () => t`Please wait while you are authenticated.`,
   emailConfirmed: () => t`Your email has been confirmed.`,
   confirmEmailThankyou: () =>
     t`Thank you for choosing end-to-end encrypted note taking. Now you can sync your notes to unlimited devices.`,
-  shareWithFriends: () => t`Share Notesnook with friends!`,
+  shareWithFriends: () => t`Share Workstation with friends!`,
   tagPromoWinText: () => [
     t`Use`,
-    t`#notesnook`,
+    t`#workstation`,
     t`and get a chance to win free promo codes.`
   ],
   shareWithFriendsDesc: () => t`Because where's the fun in nookin' alone?`,
@@ -1801,7 +1801,7 @@ For example:
     t`Your data recovery key is basically a hashed version of your password (plus some random salt). It can be used to decrypt your data for re-encryption.`,
   backupFileMethod: () => t`Use a backup file`,
   backupFileMethodDesc: () =>
-    t`If you don't have a recovery key, you can recover your data by restoring a Notesnook data backup file (.nnbackup).`,
+    t`If you don't have a recovery key, you can recover your data by restoring a Workstation data backup file (.nnbackup).`,
   clearDataAndResetMethod: () => t`Clear data & reset account`,
   clearDataAndResetMethodDesc: () =>
     t`EXTREMELY DANGEROUS! This action is irreversible. All your data including notes, notebooks, attachments & settings will be deleted. This is a full account reset. Proceed with caution.`,
@@ -1936,13 +1936,13 @@ All attachments will be downloaded & cached again on access.
   failedToCopyNote: () => t`Failed to copy note`,
   upgradeToProToUseFeature: (feature = "default") => {
     const features = {
-      color: t`Upgrade to Notesnook Pro to add colors.`,
-      tags: t`Upgrade to Notesnook Pro to create more tags.`,
-      notebook: t` Upgrade to Notesnook Pro to add more notebooks.`,
-      vault: t` Upgrade to Notesnook Pro to use the notes vault.`,
-      customPresets: t` Upgrade to Notesnook Pro to use custom toolbar presets.`,
-      customizeToolbar: t` Upgrade to Notesnook Pro to customize the toolbar.`,
-      default: t` Upgrade to Notesnook Pro to use this feature.`
+      color: t`Upgrade to Workstation Pro to add colors.`,
+      tags: t`Upgrade to Workstation Pro to create more tags.`,
+      notebook: t` Upgrade to Workstation Pro to add more notebooks.`,
+      vault: t` Upgrade to Workstation Pro to use the notes vault.`,
+      customPresets: t` Upgrade to Workstation Pro to use custom toolbar presets.`,
+      customizeToolbar: t` Upgrade to Workstation Pro to customize the toolbar.`,
+      default: t` Upgrade to Workstation Pro to use this feature.`
     };
     return features[feature as keyof typeof features];
   },
@@ -2064,13 +2064,13 @@ If your issue is critical (e.g. notes not syncing, crashes etc.), please [join o
     t`You can change the theme at any time from Settings or the side menu.`,
   crossPlatformEncrypted: () => t`Cross platform & 100% encrypted`,
   encryptsEverything: () =>
-    t`Notesnook encrypts everything offline before syncing to your other devices. This means that no one can read your notes except you. Not even us.`,
+    t`Workstation encrypts everything offline before syncing to your other devices. This means that no one can read your notes except you. Not even us.`,
   joinTheCause: () => t`Join the cause`,
   meetPrivacyMinded: () =>
     t`Meet other privacy-minded people & talk to us directly about your concerns, issues and suggestions.`,
   nextLevelPrivateNoteTaking: () =>
     t`Experience the next level of private note taking"`,
-  welcomeToNotesnookPro: () => t`Welcome to Notesnook Pro`,
+  welcomeToWorkstationPro: () => t`Welcome to Workstation Pro`,
   thankYouPrivacy: () =>
     t`Thank you. You are the proof that privacy always comes first.`,
   weAreAlwaysListening: () =>
@@ -2110,10 +2110,10 @@ If your issue is critical (e.g. notes not syncing, crashes etc.), please [join o
   desktopIntegration: () => t`Desktop integration`,
   autoStartOnSystemStartup: () => t`Auto start on system startup`,
   autoStartDescription: () =>
-    t`If true, Notesnook will automatically start up when you turn on & login to your system.`,
+    t`If true, Workstation will automatically start up when you turn on & login to your system.`,
   startMinimized: () => t`Start minimized`,
   startMinimizedDescription: () =>
-    t`If true, Notesnook will start minimized to either the system tray or your system taskbar/dock. This setting only works with Auto start on system startup is enabled.`,
+    t`If true, Workstation will start minimized to either the system tray or your system taskbar/dock. This setting only works with Auto start on system startup is enabled.`,
   minimizeToSystemTray: () => t`Minimize to system tray`,
   minimizeToSystemTrayDescription: () =>
     t`Pressing "—" will hide the app in your system tray.`,
@@ -2139,7 +2139,7 @@ If your issue is critical (e.g. notes not syncing, crashes etc.), please [join o
   serversConfiguration: () => t`Servers configuration`,
   importExport: () => t`Import & export`,
   backupExport: () => t`Backup & export`,
-  notesnookImporter: () => t`Notesnook Importer`,
+  workstationImporter: () => t`Workstation Importer`,
   securityPrivacy: () => t`Security & privacy`,
   privacy: () => t`Privacy`,
   other: () => t`Other`,
@@ -2148,15 +2148,15 @@ If your issue is critical (e.g. notes not syncing, crashes etc.), please [join o
   installUpdate: () => t`Install update`,
   sourceCode: () => t`Source code`,
   sourceCodeDescription: () =>
-    t`All the source code for Notesnook is available & open for everyone on GitHub.`,
+    t`All the source code for Workstation is available & open for everyone on GitHub.`,
   viewSourceCode: () => t`View source code`,
   checkRoadmap: () => t`Check roadmap`,
   availableOnIOS: () => t`Available on iOS`,
   availableOnIOSAndAndroid: () => t`Available on iOS & Android`,
   availableOnIOSDescription: () =>
-    t`Get Notesnook app on your iPhone and access all your notes on the go.`,
+    t`Get Workstation app on your iPhone and access all your notes on the go.`,
   availableOnIOSAndAndroidDescription: () =>
-    t`Get Notesnook app on your iPhone or Android device and access all your notes on the go.`,
+    t`Get Workstation app on your iPhone or Android device and access all your notes on the go.`,
   joinCommunity: () => t`Join community`,
   license: () => t`License`,
   licenseDescription: () => t`GNU GENERAL PUBLIC LICENSE Version 3`,
@@ -2171,12 +2171,12 @@ If your issue is critical (e.g. notes not syncing, crashes etc.), please [join o
   advanced: () => t`Advanced`,
   useCustomDns: () => t`Use custom DNS`,
   customDnsDescription: () =>
-    t`Notesnook uses the following DNS providers:
+    t`Workstation uses the following DNS providers:
 
 1. Cloudflare DNS
 2. Quad9
 
-This can sometimes bypass local ISP blockages on Notesnook traffic. Disable this if you want the app to use system's DNS settings.`,
+This can sometimes bypass local ISP blockages on Workstation traffic. Disable this if you want the app to use system's DNS settings.`,
   changeProxy: () => t`Change proxy`,
   proxy: () => t`Proxy`,
   proxyDescription: () =>
@@ -2249,7 +2249,7 @@ Use this if changes from other devices are not appearing on this device. This wi
   pasteAndMatchStyle: () => t`Paste and match style`,
   pasteWithoutFormatting: () => t`Paste without formatting`,
   configure: () => t`Configure`,
-  usingOfficialInstance: () => t`Using official Notesnook instance`,
+  usingOfficialInstance: () => t`Using official Workstation instance`,
   usingInstance: (instance: string, version: string) =>
     t`Using ${instance} (v${version})`,
 
@@ -2403,7 +2403,7 @@ Use this if changes from other devices are not appearing on this device. This wi
   failed: () => t`Failed`,
   cacheClearedDesc: () => t`All cached attachments have been cleared.`,
   restoreBackupConfirm: () => t`Restore backup?`,
-  serversConfigurationDesc: () => t`Configure server URLs for Notesnook`,
+  serversConfigurationDesc: () => t`Configure server URLs for Workstation`,
   prioritySupport: () => t`Get Priority support`,
   boostProductivityNotebook: () =>
     t`Boost your productivity with Notebooks and organize your notes.`,
@@ -2455,7 +2455,7 @@ Use this if changes from other devices are not appearing on this device. This wi
   recents: () => t`Recents`,
   removeFromRecents: () => t`Remove from recents`,
   releaseTrack: () => t`Release track`,
-  releaseTrackDesc: () => t`Select the release track for Notesnook.`,
+  releaseTrackDesc: () => t`Select the release track for Workstation.`,
   stable: () => t`Stable`,
   beta: () => t`Beta`,
   zoom: () => t`Zoom`,
@@ -2539,7 +2539,7 @@ Use this if changes from other devices are not appearing on this device. This wi
   exploreAllPlans: () => t`Explore all plans`,
   tryPlanForFree: (plan: string) => t`Try ${plan} for free`,
   plan: (plan: string) => t`${plan} plan`,
-  notesnookPlans: [() => t`Notesnook`, () => t`Plans`],
+  workstationPlans: [() => t`Workstation`, () => t`Plans`],
   readyToTakeNextStep: () =>
     t`Ready to take the next step on your private note taking journey?`,
   percentOff: (discount: string) => `${discount}% off`,
@@ -2580,7 +2580,7 @@ Use this if changes from other devices are not appearing on this device. This wi
   unlimited: () => t`Unlimited`,
   fiveYearPlan: () => t`5 year plan (One time purchase)`,
   educationPlan: () => t`Education plan`,
-  welcomeToPlan: (plan: string) => t`Welcome to Notesnook ${plan}`,
+  welcomeToPlan: (plan: string) => t`Welcome to Workstation ${plan}`,
   thankYouForPurchase: () => t`Thank you for the purchase`,
   changePlan: () => t`Change plan`,
   contactSupportToChangePlan: () =>
@@ -2594,13 +2594,13 @@ Use this if changes from other devices are not appearing on this device. This wi
     t`Your current subscription does not allow changing plans`,
   upgradeToRedeem: () => t`Upgrade to redeem`,
   redeemCode: () => t`Redeem code`,
-  notesnookCircle: () => t`Notesnook Circle`,
-  notesnookCircleDesc: () =>
-    t`Notesnook Circle brings together trusted partners who share our commitment to privacy, transparency, and user freedom.`,
+  workstationCircle: () => t`Workstation Circle`,
+  workstationCircleDesc: () =>
+    t`Workstation Circle brings together trusted partners who share our commitment to privacy, transparency, and user freedom.`,
   trialUserCircleNotice: () =>
-    `Notesnook Circle is reserved for members with an active subscription. You'll get full access after your trial period is over and your subscription is confirmed.`,
+    `Workstation Circle is reserved for members with an active subscription. You'll get full access after your trial period is over and your subscription is confirmed.`,
   freeUserCircleNotice: () =>
-    t`The Notesnook Circle is exclusive to subscribers. Please consider subscribing to gain access to Notesnook Circle and enjoy additional benefits.`,
+    t`The Workstation Circle is exclusive to subscribers. Please consider subscribing to gain access to Workstation Circle and enjoy additional benefits.`,
   finishPurchaseInBrowser: () => t`Finish your purchase in the browser.`,
   goBack: () => t`Go back`,
   clickToDirectlyClaimPromo: () =>

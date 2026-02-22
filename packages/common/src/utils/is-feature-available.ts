@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SubscriptionPlan } from "@notesnook/core";
+import { SubscriptionPlan } from "@workstation/core";
 import { database as db } from "../database.js";
 
 type CaptionValue = ("infinity" | (string & {})) | boolean | number;
@@ -459,9 +459,9 @@ const features = {
       legacyPro: createLimit(true)
     }
   }),
-  notesnookCircle: createFeature({
-    id: "notesnookCircle",
-    title: "Notesnook Circle",
+  workstationCircle: createFeature({
+    id: "workstationCircle",
+    title: "Workstation Circle",
     availability: {
       free: createLimit(false),
       essential: createLimit(true),

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,13 +20,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import createStore from "../common/store";
 import { db } from "../common/db";
 import BaseStore from "./index";
-import { EV, EVENTS } from "@notesnook/core";
+import { EV, EVENTS } from "@workstation/core";
 import Config from "../utils/config";
 import { hashNavigate } from "../navigation";
-import { AuthenticatorType, User } from "@notesnook/core";
+import { AuthenticatorType, User } from "@workstation/core";
 import { ConfirmDialog } from "../dialogs/confirm";
 import { OnboardingDialog } from "../dialogs/onboarding-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { isUserSubscribed } from "../hooks/use-is-user-premium";
 import { resetFeatures } from "../common";
 

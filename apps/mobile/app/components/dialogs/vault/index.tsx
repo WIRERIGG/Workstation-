@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { InteractionManager, View, TextInput } from "react-native";
 import Share from "react-native-share";
-import { notesnook } from "../../../../e2e/test.ids";
+import { workstation } from "../../../../e2e/test.ids";
 import { db } from "../../../common/database";
 import BiometricService from "../../../services/biometrics";
 import { DDS } from "../../../services/device-detection";
@@ -53,10 +53,10 @@ import { Button } from "../../ui/button";
 import Input from "../../ui/input";
 import Seperator from "../../ui/seperator";
 import Paragraph from "../../ui/typography/paragraph";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../../utils/styles";
-import { Note, NoteContent, VAULT_ERRORS } from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+import { Note, NoteContent, VAULT_ERRORS } from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 
 type VaultDialogData = {
   item: Note;
@@ -783,7 +783,7 @@ export const VaultDialog: React.FC = () => {
                 fwdRef={passInputRef}
                 editable={!loading}
                 autoCapitalize="none"
-                testID={notesnook.ids.dialogs.vault.pwd}
+                testID={workstation.ids.dialogs.vault.pwd}
                 onChangeText={(value) => {
                   passwordRef.current = value;
                 }}
@@ -860,7 +860,7 @@ export const VaultDialog: React.FC = () => {
               <Input
                 fwdRef={confirmPassRef}
                 editable={!loading}
-                testID={notesnook.ids.dialogs.vault.changePwd}
+                testID={workstation.ids.dialogs.vault.changePwd}
                 autoCapitalize="none"
                 onChangeText={(value) => {
                   newPasswordRef.current = value;
@@ -882,7 +882,7 @@ export const VaultDialog: React.FC = () => {
               <Input
                 fwdRef={passInputRef}
                 autoCapitalize="none"
-                testID={notesnook.ids.dialogs.vault.pwd}
+                testID={workstation.ids.dialogs.vault.pwd}
                 onChangeText={(value) => {
                   passwordRef.current = value;
                 }}
@@ -899,7 +899,7 @@ export const VaultDialog: React.FC = () => {
               <Input
                 fwdRef={confirmPassRef}
                 autoCapitalize="none"
-                testID={notesnook.ids.dialogs.vault.pwdAlt}
+                testID={workstation.ids.dialogs.vault.pwdAlt}
                 secureTextEntry
                 validationType="confirmPassword"
                 customValidator={() => passwordRef.current || ""}

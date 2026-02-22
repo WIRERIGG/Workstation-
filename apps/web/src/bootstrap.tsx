@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -164,7 +164,7 @@ function isSessionExpired(path: Routes): RouteWithPath<AuthProps> | null {
 
 function checkPrerequisites() {
   if (!window.isSecureContext)
-    throw new Error("Please run Notesnook in a secure (https) context.");
+    throw new Error("Please run Workstation in a secure (https) context.");
   if (!navigator.locks)
     throw new Error("Your browser does not support the Web Locks API.");
   if (!crypto.subtle)

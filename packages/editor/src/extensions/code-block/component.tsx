@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,14 +22,14 @@ import { useRef, useState } from "react";
 import { Button } from "../../components/button.js";
 import { ResponsivePresenter } from "../../components/responsive/index.js";
 import { useTimer } from "../../hooks/use-timer.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { Popup } from "../../toolbar/components/popup.js";
 import { Icons } from "../../toolbar/icons.js";
 import { ReactNodeViewProps } from "../react/types.js";
 import { CodeBlockAttributes } from "./code-block.js";
 import Languages from "./languages.json";
-import { useThemeEngineStore } from "@notesnook/theme";
-import { strings } from "@notesnook/intl";
+import { useThemeEngineStore } from "@workstation/theme";
+import { strings } from "@workstation/intl";
 
 export function CodeblockComponent(
   props: ReactNodeViewProps<CodeBlockAttributes>

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -37,9 +37,9 @@ import {
 } from "../dialogs/buy-dialog/helpers";
 import { isUserSubscribed } from "../hooks/use-is-user-premium";
 import { PLAN_METADATA } from "../dialogs/buy-dialog/plans";
-import { planToAvailability } from "@notesnook/common";
+import { planToAvailability } from "@workstation/common";
 import { FeatureCaption } from "../dialogs/buy-dialog/feature-caption";
-import { EV, EVENTS } from "@notesnook/core";
+import { EV, EVENTS } from "@workstation/core";
 
 export type Plan = z.infer<typeof PlanSchema>;
 
@@ -163,7 +163,7 @@ function Checkout() {
               <use href="#full-logo" />
             </svg>
             <Text variant="heading" sx={{ fontSize: 20 }}>
-              Notesnook
+              Workstation
             </Text>
           </Flex>
         </a>
@@ -277,7 +277,7 @@ function Checkout() {
                   }}
                 >
                   You are one step away from unlocking the full potential of
-                  Notesnook.
+                  Workstation.
                 </Text>
                 <CheckoutDetails
                   user={customer}

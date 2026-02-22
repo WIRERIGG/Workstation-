@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,9 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { resolveItems } from "@notesnook/common";
-import { Note, Notebook, VirtualizedGrouping } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { resolveItems } from "@workstation/common";
+import { Note, Notebook, VirtualizedGrouping } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import React, { useEffect, useRef, useState } from "react";
 import { db } from "../../common/database";
 import { FloatingButton } from "../../components/container/floating-button";

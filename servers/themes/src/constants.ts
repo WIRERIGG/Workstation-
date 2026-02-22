@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -33,9 +33,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const THEMES_REPO_URL =
   process.env.THEMES_REPO_URL ||
-  "https://github.com/streetwriters/notesnook-themes.git";
+  "https://github.com/streetwriters/workstation-themes.git";
 
-export const THEME_REPO_DIR_NAME = "notesnook-themes";
+export const THEME_REPO_DIR_NAME = "workstation-themes";
 export const THEME_METADATA_JSON = path.join(__dirname, "themes-metadata.json");
 export const THEME_REPO_DIR_PATH = path.resolve(
   path.join(__dirname, "..", THEME_REPO_DIR_NAME)

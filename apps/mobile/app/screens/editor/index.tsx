@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -30,7 +30,7 @@ import React, {
 import { Platform, ViewStyle } from "react-native";
 import WebView from "react-native-webview";
 import { ShouldStartLoadRequest } from "react-native-webview/lib/WebViewTypes";
-import { notesnook } from "../../../e2e/test.ids";
+import { workstation } from "../../../e2e/test.ids";
 import { db } from "../../common/database";
 import BiometricService from "../../services/biometrics";
 import {
@@ -59,7 +59,7 @@ import {
   randId
 } from "./tiptap/utils";
 import { fluidTabsRef } from "../../utils/global-refs";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { i18n } from "@lingui/core";
 import { useVaultStatus } from "../../hooks/use-vault-status";
 import { useSettingStore } from "../../stores/use-setting-store";
@@ -142,7 +142,7 @@ const Editor = React.memo(
       return editor.loading ? null : (
         <>
           <WebView
-            testID={notesnook.editor.id}
+            testID={workstation.editor.id}
             ref={editor.ref}
             key={renderKey.current}
             onRenderProcessGone={onError}

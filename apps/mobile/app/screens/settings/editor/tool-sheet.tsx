@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import type { ToolId } from "@notesnook/editor";
+import type { ToolId } from "@workstation/editor";
 import React, { RefObject } from "react";
 import { View } from "react-native";
 import { Pressable } from "../../../components/ui/pressable";
 import { SvgView } from "../../../components/ui/svg";
 import Paragraph from "../../../components/ui/typography/paragraph";
 import { presentSheet } from "../../../services/event-manager";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { defaultBorderRadius, AppFontSize } from "../../../utils/size";
 import { DraggableItem, useDragState } from "./state";
 import {
@@ -33,7 +33,7 @@ import {
   getUngroupedTools
 } from "./toolbar-definition";
 import { ActionSheetRef, ScrollView } from "react-native-actions-sheet";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../../utils/styles";
 
 export default function ToolSheet({

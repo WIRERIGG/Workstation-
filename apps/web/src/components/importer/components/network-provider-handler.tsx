@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import {
   ProviderSettings,
   transform
 } from "@notesnook-importer/core";
-import { ScrollContainer } from "@notesnook/ui";
+import { ScrollContainer } from "@workstation/ui";
 import { Button, Flex, Text } from "@theme-ui/components";
 import { xxhash64 } from "hash-wasm";
 import { useRef, useState } from "react";

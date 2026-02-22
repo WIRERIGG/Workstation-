@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { SettingsGroup } from "./types";
 import { useStore as useAppStore } from "../../stores/app-store";
 import { useStore as useSettingStore } from "../../stores/setting-store";
 import { ConfirmDialog } from "../confirm";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export const SyncSettings: SettingsGroup[] = [
   {

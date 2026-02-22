@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,8 +28,8 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import { useIsMobile } from "../../toolbar/stores/toolbar-store.js";
 import { Icons } from "../../toolbar/icons.js";
-import { Icon } from "@notesnook/ui";
-import { strings } from "@notesnook/intl";
+import { Icon } from "@workstation/ui";
+import { strings } from "@workstation/intl";
 
 export function TaskListComponent(
   props: ReactNodeViewProps<TaskListAttributes>

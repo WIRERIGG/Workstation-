@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,10 +28,10 @@ import { Flex } from "@theme-ui/components";
 import IconTag from "../icon-tag";
 import { db } from "../../common/db";
 import { useMenuTrigger } from "../../hooks/use-menu";
-import { MenuItem } from "@notesnook/ui";
+import { MenuItem } from "@workstation/ui";
 import { navigate } from "../../navigation";
-import { Tag } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { Tag } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { checkFeature } from "../../common";
 
 type HeaderProps = { readonly: boolean; id: string };

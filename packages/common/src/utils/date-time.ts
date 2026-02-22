@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,7 +25,7 @@ import {
   Reminder,
   FormatDateOptions,
   formatDate
-} from "@notesnook/core";
+} from "@workstation/core";
 
 export function getFormattedDate(
   date: string | number | Date,

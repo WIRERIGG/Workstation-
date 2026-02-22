@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import { updateStatus } from "../hooks/use-status";
 import {
   Gateway,
   WEB_EXTENSION_CHANNEL_EVENTS
-} from "@notesnook/web-clipper/common/bridge.js";
+} from "@workstation/web-clipper/common/bridge.js";
 import { Extension } from "../components/icons";
 
 export class WebExtensionRelay {

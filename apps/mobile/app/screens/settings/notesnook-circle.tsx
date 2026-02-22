@@ -1,6 +1,6 @@
-import { CirclePartner, SubscriptionStatus } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { CirclePartner, SubscriptionStatus } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { useState } from "react";
 import { useAsync } from "react-async-hook";
@@ -26,7 +26,7 @@ import { DefaultAppStyles } from "../../utils/styles";
 import { openLinkInBrowser } from "../../utils/functions";
 import { Pressable } from "../../components/ui/pressable";
 
-export const NotesnookCircle = () => {
+export const WorkstationCircle = () => {
   const user = useUserStore((state) => state.user);
   const isOnTrial =
     PremiumService.get() &&

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,9 +24,9 @@ import { ReactNodeViewProps } from "../react/index.js";
 import { DesktopOnly } from "../../components/responsive/index.js";
 import { ToolbarGroup } from "../../toolbar/components/toolbar-group.js";
 import { Icons } from "../../toolbar/index.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { Resizer } from "../../components/resizer/index.js";
-import { useThemeEngineStore } from "@notesnook/theme";
+import { useThemeEngineStore } from "@workstation/theme";
 import { useToolbarStore } from "../../toolbar/stores/toolbar-store.js";
 
 export function EmbedComponent(

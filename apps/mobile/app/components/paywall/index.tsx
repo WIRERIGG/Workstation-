@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { getFeaturesTable } from "@notesnook/common";
+import { getFeaturesTable } from "@workstation/common";
 import {
   EV,
   EVENTS,
@@ -25,9 +25,9 @@ import {
   SKUResponse,
   SubscriptionPlan,
   User
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -252,13 +252,13 @@ const PayWall = (props: NavigationProps<"PayWall">) => {
                 >
                   {pricingPlans.isSubscribed()
                     ? strings.changePlan()
-                    : strings.notesnookPlans[0]() + " "}
+                    : strings.workstationPlans[0]() + " "}
                   {pricingPlans.isSubscribed() ? null : (
                     <Heading
                       size={AppFontSize.xl}
                       color={colors.primary.accent}
                     >
-                      {strings.notesnookPlans[1]()}
+                      {strings.workstationPlans[1]()}
                     </Heading>
                   )}
                 </Heading>
@@ -363,7 +363,7 @@ const PayWall = (props: NavigationProps<"PayWall">) => {
                 <TouchableOpacity
                   onPress={() => {
                     openLinkInBrowser(
-                      "https://github.com/streetwriters/notesnook"
+                      "https://github.com/streetwriters/workstation"
                     );
                   }}
                   activeOpacity={0.9}
@@ -403,7 +403,7 @@ const PayWall = (props: NavigationProps<"PayWall">) => {
                 <TouchableOpacity
                   onPress={() => {
                     openLinkInBrowser(
-                      "https://github.com/streetwriters/notesnook/stargazers"
+                      "https://github.com/streetwriters/workstation/stargazers"
                     );
                   }}
                   activeOpacity={0.9}
@@ -440,7 +440,7 @@ const PayWall = (props: NavigationProps<"PayWall">) => {
                 <TouchableOpacity
                   onPress={() => {
                     openLinkInBrowser(
-                      "https://www.privacyguides.org/en/notebooks/#notesnook"
+                      "https://www.privacyguides.org/en/notebooks/#workstation"
                     );
                   }}
                   activeOpacity={0.9}
@@ -560,7 +560,7 @@ const PayWall = (props: NavigationProps<"PayWall">) => {
                   userImage="data:image/webp;base64,UklGRrAFAABXRUJQVlA4WAoAAAAQAAAATwAATwAAQUxQSAoAAAABB9D+iAhERP8DVlA4IIAFAAAQGACdASpQAFAAPm0skkYkIqGhL1K86IANiWdqN1k9SfbwDoK2qhJsXhBwv+m+3ujg5HTtBysrex6esj/qeU5883L4Rbay65pvw7npaa0yc/fmrdXlgwv8WNtJN9J5m8XMkAKD7lrd98bFKn2UcICVz6fIlJpW6gQDx3Y/lQzupEnm4fyWa/VI47NFSGLJjPe4K/NR5nIh1I+JaGqh5h6Zn/9771gyWEnxRaaHU7LdnMvNnAtVXhm3Ijxrv+9TKC7rtKa+oqC2ewAA/v17lyxCQMDU8AW7okR5UCCzmkNNZqVrX1NJ2Mu1LrM2qc+DCezUOb2Y8MzxK5xRgGrcR0/FAx88Y1KeuT5RUbhRcNNnTw1Un3MWtOlBIXpYjntwwdRskDymt47ZvkH+V5QANy6cAr+Lrol9EOVUxXc8G5bTJLcIHELmBulybx2w+O+btTXtlkgn0JSy0pAWMfZunaztVCHoyNnmWxhHAFMMUSycgx76ovzc8+Hwd/rRUY3/P+B4/y3dQZ9FB+vMiyYCEdci0l8arhH6f0IOVijOkAXiuS8KfnOh76NP5jbRF0qvz63DDZSUmpsXJGnI7phYFgJ5Em+3zIebcKqPcn4M5hznAH9mYIPsv8jeOCg7+DRYljkh4AbTxImyoRrPy9GUeUA1QC290cK+877ce6yyNzQK8jaLEAz53ccPZj/cHk17B2SCVknKQhV7bz6yg6fLGR5AT3qAPfdQsVeHrPLQdRZmw1ll62E7lCU7+WCuHk+xAg1JwiyZsdWlcSf1Oazs7qgdnon9lQNVKgzGSR+I811YKPAS5U3go9ANCZwqsmdQ07Y+ZzCuLukH46D0tWk/kBVgXBzMhOf8bAlayYfIGvIdEXjm6Z4j0SIz3juiY35mCjXXwez84ESBpc3z0c2gWgRFzWx/iyYBjPzJ5s3Mub6xzfsWtYqAmhAPzeoK5pJWgiB6tEyI2oZmLuj7sLVHARnaswrfzDlIUMPXRSZFoq+mmsIF1aKThJDQTNdgnkLjfz3rDkVaqVhk3sg8jZLIOMJUKsYvujEmGRbRlO3hwfL0JvoORLh8rOJ0prBA2Tnra+VA/RMfJtKC/AjVXRu/nH0tmGg2/Wkra7C/OWK9E2NqBVVjJvrgqvNN0V8gYZdScIl0jQSLRzA4emm2HfC+L8c4FCxheZFDMP+zGUH5JyXLkBX/hGWE+CWhcPjSJ8hAj8yBeXCyWpM07eiFPxxkqYF+Wka211fUU/HygHPX+Qj+CyoMjz9gstrjNPTX0zc3r55VrpiFUjxfgOoY32Eojwr9mWg/dcleov8wSmKuJZtzjxiXFzemVIP5kzrDIffxS6PR30mOq+d9k/ZgJfzhyuPr6W8kOmQXmLnMwbpcr1KSSgjOLmu6oBtjexL/ukI77ygGzDtdDfRPpj7klVHu34xcWAufMWOMlo70oenOeQGueYXGWPZW175I30dvCT/Ra2R+0MbxvxmdpmmoQmzC4d7l/MI2MhUHUW5N79x0vXB1PEGs+F3o+6dO+N1qqqXxJP/0N5BvADUF55dX2vpBSAXyN30UPO9IBqC0JkFPwXiOncsUir6r50C47HnS2WadAlu2QpHFL8YrTsSdhP19HAc6zWDM2/RaJZxFFQj/tqw0rYVYX//7iKKSiXWWQma12fG+HhJD2tBjEcp8+vU2nzjmd4tR6AurIEns1SsWg2cFcvrZzyzKFB0gdnvVpoCwouvl8UuSAyYc+rHMVGhWln+a+bhRgIERIb5XlrazMxJOqksed7mUs5ArKpOEuHWPYu+U+E2T1OkeusgAKL57F73Fm2xbIunW/IbW2wawYHv8u1AWGGSAB8XYJOW1XxpqIgq+V34pqd3WRpBGd1G4rGAA"
                   review={`I just want to say thank you so much.
 
-After trying all the privacy security oriented note taking apps, for the price and the features afforded to your users, Notesnook is hands down the best.`}
+After trying all the privacy security oriented note taking apps, for the price and the features afforded to your users, Workstation is hands down the best.`}
                 />
               </View>
             </View>
@@ -941,7 +941,7 @@ const PricingPlanCard = ({
   const product =
     plan.subscriptions?.[
       regionalDiscount?.sku ||
-        `notesnook.${plan.id}.${annualBilling ? "yearly" : "monthly"}`
+        `workstation.${plan.id}.${annualBilling ? "yearly" : "monthly"}`
     ];
 
   const WebPlan = pricingPlans?.getWebPlan(
@@ -964,7 +964,7 @@ const PricingPlanCard = ({
         plan.id,
         pricingPlans.isGithubRelease
           ? (WebPlan?.period as string)
-          : `notesnook.${plan.id}.${annualBilling ? "yearly" : "monthly"}`
+          : `workstation.${plan.id}.${annualBilling ? "yearly" : "monthly"}`
       )
       .then((value) => {
         setRegionaDiscount(value);
@@ -1000,7 +1000,7 @@ const PricingPlanCard = ({
         pricingPlans?.selectPlan(
           plan.id,
           currentPlanSubscribed
-            ? `notesnook.${plan.id}.${
+            ? `workstation.${plan.id}.${
                 !(product as RNIap.Subscription)?.productId.includes("yearly")
                   ? "yearly"
                   : "monthly"

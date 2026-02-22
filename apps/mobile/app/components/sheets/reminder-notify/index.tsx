@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import {
   PresentSheetOptions
 } from "../../../services/event-manager";
 import Notifications from "../../../services/notifications";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { AppFontSize } from "../../../utils/size";
 import List from "../../list";
 import { Button } from "../../ui/button";
@@ -38,8 +38,8 @@ import {
   ItemReference,
   VirtualizedGrouping,
   Note
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../../utils/styles";
 
 type ReminderSheetProps = {

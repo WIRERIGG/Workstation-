@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -67,7 +67,7 @@ export function sendMigrationProgressEvent(
   });
 }
 
-export const CLIENT_ID = "notesnook";
+export const CLIENT_ID = "workstation";
 
 export const EVENTS = {
   userSubscriptionUpdated: "user:subscriptionUpdated",

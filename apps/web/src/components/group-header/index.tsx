@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -37,13 +37,13 @@ import { Menu, useMenuTrigger } from "../../hooks/use-menu";
 import { useStore as useNoteStore } from "../../stores/note-store";
 import { useStore as useNotebookStore } from "../../stores/notebook-store";
 import useMobile from "../../hooks/use-mobile";
-import { MenuButtonItem, MenuItem } from "@notesnook/ui";
+import { MenuButtonItem, MenuItem } from "@workstation/ui";
 import {
   GroupHeader as GroupHeaderType,
   GroupOptions,
   GroupingKey
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { useStore as useSearchStore } from "../../stores/search-store";
 
 const groupByToTitleMap = {

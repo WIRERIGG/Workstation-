@@ -556,7 +556,9 @@ function WorkspacesPlaceholder() {
   );
 }
 
+import { isDesktopRuntime } from "../utils/platform";
+
 export default function WorkspacesView() {
-  if (IS_DESKTOP_APP) return <WorkspacesReal />;
+  if (isDesktopRuntime()) return <WorkspacesReal />;
   return <WorkspacesPlaceholder />;
 }

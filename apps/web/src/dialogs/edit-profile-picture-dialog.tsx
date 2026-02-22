@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import Dialog from "../components/dialog";
-import { Profile } from "@notesnook/core";
+import { Profile } from "@workstation/core";
 import AvatarEditor from "react-avatar-editor";
 import { Button, Flex, Slider } from "@theme-ui/components";
 import { User } from "../components/icons";
@@ -28,7 +28,7 @@ import { db } from "../common/db";
 import { showToast } from "../utils/toast";
 import { useStore as useSettingStore } from "../stores/setting-store";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export type EditProfilePictureDialogProps = BaseDialogProps<boolean> & {
   profile?: Profile;

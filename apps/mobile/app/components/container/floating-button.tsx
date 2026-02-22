@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { useRoute } from "@react-navigation/native";
 import React, { useCallback, useEffect } from "react";
 import { Keyboard, TouchableOpacity, View, ViewStyle } from "react-native";
@@ -28,7 +28,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { notesnook } from "../../../e2e/test.ids";
+import { workstation } from "../../../e2e/test.ids";
 import { editorState } from "../../screens/editor/tiptap/utils";
 import { useSelectionStore } from "../../stores/use-selection-store";
 import { useSettingStore } from "../../stores/use-setting-store";
@@ -131,7 +131,7 @@ const FloatingButton = ({
       pointerEvents="box-none"
     >
       <TouchableOpacity
-        testID={testID || notesnook.buttons.add}
+        testID={testID || workstation.buttons.add}
         activeOpacity={0.95}
         style={{
           ...getElevationStyle(5),

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useEffect, useRef, useState } from "react";
 import { MMKV } from "../common/database/mmkv";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 declare global {
   interface Array<T> {
@@ -153,10 +153,10 @@ const placeholderTips = [
   "Privacy is power. What people don't know they cant ruin",
   "If you read someone else's diary, you get what you deserve. - David Sedaris",
   "Take quick notes from notifications. Enable the option in Settings to try",
-  "Get Notesnook on all your devices. Or even open it in browser by going to https://app.notesnook.com to access all your notes",
+  "Get Workstation on all your devices. Or even open it in browser by going to https://app.notesnook.com to access all your notes",
   "With note history, you can restore back to an older version of the note if you accidentally deleted something.",
   "When your heart speaks, take good notes. - Judith Campbell",
-  "You can publish a note and share it with anyone. Even if they don't use Notesnook!",
+  "You can publish a note and share it with anyone. Even if they don't use Workstation!",
   "Published notes can be encrypted. Which means only you and the person you share the password with can read them.",
   "You can change default font size from editor settings at the end of toolbar",
   "The editor toolbar can be scrolled horizontally to add more formats and blocks",

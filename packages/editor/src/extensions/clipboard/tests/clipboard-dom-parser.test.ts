@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -44,7 +44,7 @@ and yet, we somehow manage to get by.<br>
   [
     `<html><body>
     <!--StartFragment--><p dir="auto">When I try to paste something (e.g. email content) to a note, the styling is kept, which is good, but the newlines are removed.<br>
-    Also when I share the selection to Notesnook via the share functionality from Android, I have the same issue.</p>
+    Also when I share the selection to Workstation via the share functionality from Android, I have the same issue.</p>
     <hr>
     <p dir="auto"><strong>Device information:</strong><br>
     App version: 2.3.0<br>
@@ -95,7 +95,7 @@ and yet, we somehow manage to get by.<br>
   ],
   [
     `<div>
-    <!--StartFragment--><meta charset="utf-8"><h1><span >Write notes</span></h1><br><p dir="ltr" ><span >Welcome of </span><a><span >Notesnook</span></a><span >, an syncing.</span></p><br><p dir="ltr" ><span >Enjoy the read!</span></p><br><p dir="ltr" ><span ><span ><img></span></span></p><br><p dir="ltr" ><span >vision?</span></p><br><p dir="ltr" ><span >everyone means</span></p><!--EndFragment-->
+    <!--StartFragment--><meta charset="utf-8"><h1><span >Write notes</span></h1><br><p dir="ltr" ><span >Welcome of </span><a><span >Workstation</span></a><span >, an syncing.</span></p><br><p dir="ltr" ><span >Enjoy the read!</span></p><br><p dir="ltr" ><span ><span ><img></span></span></p><br><p dir="ltr" ><span >vision?</span></p><br><p dir="ltr" ><span >everyone means</span></p><!--EndFragment-->
     
     </div>`
   ],

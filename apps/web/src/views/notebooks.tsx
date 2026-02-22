@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Notebook as NotebookType, VirtualizedGrouping } from "@notesnook/core";
+import { Notebook as NotebookType, VirtualizedGrouping } from "@workstation/core";
 import { Box, Input, Text } from "@theme-ui/components";
 import { useEffect, useRef, useState } from "react";
 import { db } from "../common/db";
@@ -30,8 +30,8 @@ import {
   VirtualizedTreeHandle
 } from "../components/virtualized-tree";
 import { ListLoader } from "../components/loaders/list-loader";
-import { debounce } from "@notesnook/common";
-import { strings } from "@notesnook/intl";
+import { debounce } from "@workstation/common";
+import { strings } from "@workstation/intl";
 import { SidebarScroller } from "../components/sidebar-scroller";
 
 export function Notebooks() {

@@ -7,7 +7,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "preLaunchTask": "Start Notesnook (web)",
+      "preLaunchTask": "Start Workstation (web)",
       "postDebugTask": "Terminate All Tasks",
       "name": "Debug Chrome",
       "url": "http://localhost:3000",
@@ -17,7 +17,7 @@
       "type": "firefox",
       "request": "launch",
       "reAttach": true,
-      "preLaunchTask": "Start Notesnook (web)",
+      "preLaunchTask": "Start Workstation (web)",
       "postDebugTask": "Terminate All Tasks",
       "name": "Debug Firefox",
       "url": "http://localhost:3000",

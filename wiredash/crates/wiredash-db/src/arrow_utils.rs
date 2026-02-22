@@ -149,9 +149,13 @@ pub fn maps_to_batch(
 // ---------------------------------------------------------------------------
 // SQL string escaping for DataFusion filter expressions
 // ---------------------------------------------------------------------------
-/// Escape a string for use in DataFusion SQL predicates.
+/// Escape a string for use in DataFusion SQL filter expressions.
 ///
 /// Wraps the value in single quotes, doubling any embedded single quotes.
+/// DataFusion filter expressions are single SQL predicates (not full statements),
+/// so semicolons and comment markers (`--`) are not statement separators and
+/// cannot cause injection. The only escape needed is single-quote doubling.
+///
 /// Example: `O'Brien` becomes `'O''Brien'`.
 pub fn escape_str(s: &str) -> String {
     format!("'{}'", s.replace('\'', "''"))
@@ -205,6 +209,35 @@ mod tests {
         assert_eq!(escape_str("hello"), "'hello'");
         assert_eq!(escape_str("O'Brien"), "'O''Brien'");
         assert_eq!(escape_str("it's a 'test'"), "'it''s a ''test'''");
+    }
+
+    #[test]
+    fn escape_str_handles_adversarial_input() {
+        // SQL injection attempts — all safely wrapped in single quotes
+        assert_eq!(
+            escape_str("'; DELETE FROM notes; --"),
+            "'''; DELETE FROM notes; --'"
+        );
+        assert_eq!(
+            escape_str("' OR 1=1 --"),
+            "''' OR 1=1 --'"
+        );
+        assert_eq!(
+            escape_str("\\'; DROP TABLE notes;"),
+            "'\\''; DROP TABLE notes;'"
+        );
+        // Empty and whitespace
+        assert_eq!(escape_str(""), "''");
+        assert_eq!(escape_str("   "), "'   '");
+        // Unicode
+        assert_eq!(escape_str("日本語ノート"), "'日本語ノート'");
+        // Newlines and tabs (DataFusion handles these as literal characters)
+        assert_eq!(escape_str("line1\nline2"), "'line1\nline2'");
+        assert_eq!(escape_str("col1\tcol2"), "'col1\tcol2'");
+        // Backslashes (DataFusion does not treat backslash as escape)
+        assert_eq!(escape_str("back\\slash"), "'back\\slash'");
+        // Multiple consecutive quotes
+        assert_eq!(escape_str("'''"), "'''''''");
     }
 
     #[test]

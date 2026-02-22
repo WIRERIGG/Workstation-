@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import { Storage } from "../common/database/storage";
 import { useSettingStore } from "../stores/use-setting-store";
 import { ToastOptions, ToastManager } from "./event-manager";
 import { useUserStore } from "../stores/use-user-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const KeychainConfig = Platform.select({
   ios: {
@@ -56,7 +56,7 @@ async function isFingerprintAuthEnabled() {
 async function storeCredentials(password: string) {
   await Keychain.setInternetCredentials(
     "nn_vault",
-    "notesnookvault",
+    "workstationvault",
     password,
     KeychainConfig
   );

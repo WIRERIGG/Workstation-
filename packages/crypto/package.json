@@ -1,5 +1,5 @@
 {
-  "name": "@notesnook/crypto",
+  "name": "@workstation/crypto",
   "private": false,
   "description": "An easy to use wrapper around libsodium exposing essential cryptographic methods. Currently only Web is supported.",
   "version": "2.1.3",
@@ -23,12 +23,12 @@
     "watch": "npm run build -- --watch"
   },
   "dependencies": {
-    "@notesnook/sodium": "file:../sodium"
+    "@workstation/sodium": "file:../sodium"
   },
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/streetwriters/notesnook.git",
+    "url": "git+https://github.com/streetwriters/workstation.git",
     "directory": "packages/crypto"
   }
 }

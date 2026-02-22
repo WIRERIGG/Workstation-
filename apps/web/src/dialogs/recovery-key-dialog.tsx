@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,17 +21,17 @@ import React, { useState } from "react";
 import { Text, Flex, Button } from "@theme-ui/components";
 import Dialog from "../components/dialog";
 import { db } from "../common/db";
-import Logo from "../assets/notesnook-logo.png";
+import Logo from "../assets/workstation-logo.png";
 import { writeText } from "clipboard-polyfill";
 import { Suspense } from "react";
 import Config from "../utils/config";
 import FileSaver from "file-saver";
 import { ErrorText } from "../components/error-text";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { usePromise } from "@notesnook/common";
+import { usePromise } from "@workstation/common";
 import { Loader } from "../components/loader";
 import { showToast } from "../utils/toast";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const QRCode = React.lazy(() => import("../re-exports/react-qrcode-logo"));
 type RecoveryKeyDialogProps = BaseDialogProps<false>;
@@ -132,7 +132,7 @@ export const RecoveryKeyDialog = DialogManager.register(
                         blob
                           ? FileSaver.saveAs(
                               blob,
-                              `${email}-notesnook-recoverykey.png`
+                              `${email}-workstation-recoverykey.png`
                             )
                           : null;
                       });
@@ -155,7 +155,7 @@ export const RecoveryKeyDialog = DialogManager.register(
                         .then((user) => user?.email || "user");
                       FileSaver.saveAs(
                         new Blob([Buffer.from(key.value)]),
-                        `${email}-notesnook-recoverykey.txt`
+                        `${email}-workstation-recoverykey.txt`
                       );
                     }}
                     sx={{ fontSize: "body" }}

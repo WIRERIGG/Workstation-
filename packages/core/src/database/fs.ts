@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import {
   FileEncryptionMetadataWithOutputType,
   IFileStorage
 } from "../interfaces.js";
-import { DataFormat, SerializedKey } from "@notesnook/crypto";
+import { DataFormat, SerializedKey } from "@workstation/crypto";
 import { EV, EVENTS } from "../common.js";
 import { logger } from "../logger.js";
 

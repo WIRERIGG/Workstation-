@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SubscriptionPlan } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { SubscriptionPlan } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import { Platform } from "react-native";
 import { getVersion } from "react-native-device-info";
 
-export const IOS_APPGROUPID = "group.org.streetwriters.notesnook";
+export const IOS_APPGROUPID = "group.org.streetwriters.workstation";
 export const FILE_SIZE_LIMIT = 500 * 1024 * 1024;
 export const IMAGE_SIZE_LIMIT = 50 * 1024 * 1024;
 
@@ -30,8 +30,8 @@ export const BETA = getVersion().includes("beta");
 
 export const STORE_LINK =
   Platform.OS === "ios"
-    ? "https://apps.apple.com/us/app/notesnook/id1544027013"
-    : "https://play.google.com/store/apps/details?id=com.streetwriters.notesnook";
+    ? "https://apps.apple.com/us/app/workstation/id1544027013"
+    : "https://play.google.com/store/apps/details?id=com.streetwriters.workstation";
 
 export const GROUP = {
   default: "default",
@@ -52,17 +52,17 @@ export const SORT = {
 };
 
 export const itemSkus = [
-  "notesnook.essential.monthly",
-  "notesnook.essential.yearly",
-  "notesnook.pro.monthly",
-  "notesnook.pro.yearly",
-  "notesnook.pro.monthly.tier2",
-  "notesnook.pro.yearly.tier2",
-  "notesnook.pro.monthly.tier3",
-  "notesnook.pro.yearly.tier3",
-  "notesnook.believer.monthly",
-  "notesnook.believer.yearly",
-  "notesnook.believer.5year"
+  "workstation.essential.monthly",
+  "workstation.essential.yearly",
+  "workstation.pro.monthly",
+  "workstation.pro.yearly",
+  "workstation.pro.monthly.tier2",
+  "workstation.pro.yearly.tier2",
+  "workstation.pro.monthly.tier3",
+  "workstation.pro.yearly.tier3",
+  "workstation.believer.monthly",
+  "workstation.believer.yearly",
+  "workstation.believer.5year"
 ];
 
 export function planToDisplayName(plan: SubscriptionPlan): string {
@@ -106,19 +106,19 @@ export const SUBSCRIPTION_PROVIDER = {
   1: {
     type: "iOS",
     title: "Subscribed on iOS",
-    desc: "You subscribed to Notesnook Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings.",
+    desc: "You subscribed to Workstation Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings.",
     icon: "ios"
   },
   2: {
     type: "Android",
     title: "Subscribed on Android",
-    desc: "You subscribed to Notesnook Pro on Android Phone/Tablet using Google In App Purchase.",
+    desc: "You subscribed to Workstation Pro on Android Phone/Tablet using Google In App Purchase.",
     icon: "android"
   },
   3: {
     type: "Web",
     title: "Subscribed on Web",
-    desc: "You subscribed to Notesnook Pro on the Web/Desktop App.",
+    desc: "You subscribed to Workstation Pro on the Web/Desktop App.",
     icon: "web"
   }
 };

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -35,7 +35,7 @@ import {
   validatePass,
   validateUsername
 } from "../../../services/validation";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { getElevationStyle } from "../../../utils/elevation";
 import { defaultBorderRadius, AppFontSize } from "../../../utils/size";
 import { IconButton } from "../icon-button";

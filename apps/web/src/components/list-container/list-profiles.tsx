@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,9 +23,9 @@ import TrashItem from "../trash-item";
 import { db } from "../../common/db";
 import Reminder from "../reminder";
 import { Context } from "./types";
-import { getSortValue } from "@notesnook/core";
-import { GroupingKey, Item } from "@notesnook/core";
-import { isNoteResolvedData } from "@notesnook/common";
+import { getSortValue } from "@workstation/core";
+import { GroupingKey, Item } from "@workstation/core";
+import { isNoteResolvedData } from "@workstation/common";
 import { Attachment } from "../attachment";
 import { Notebook } from "../notebook";
 import SearchResult from "../search-result";

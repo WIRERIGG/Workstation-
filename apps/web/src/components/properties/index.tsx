@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -52,7 +52,7 @@ import {
   usePromise,
   ResolvedItem,
   useUnresolvedItem
-} from "@notesnook/common";
+} from "@workstation/common";
 import { ScopedThemeProvider } from "../theme-provider";
 import { ListItemWrapper } from "../list-container/list-profiles";
 import { VirtualizedList } from "../virtualized-list";
@@ -63,10 +63,10 @@ import {
   VirtualizedGrouping,
   createInternalLink,
   highlightInternalLinks
-} from "@notesnook/core";
+} from "@workstation/core";
 import { VirtualizedTable } from "../virtualized-table";
-import { TextSlice } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { TextSlice } from "@workstation/core";
+import { strings } from "@workstation/intl";
 
 const tools = [
   { key: "pin", property: "pinned", icon: Pin, label: strings.pin() },

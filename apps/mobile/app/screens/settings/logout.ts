@@ -1,4 +1,4 @@
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { presentDialog } from "../../components/dialog/functions";
 import { DatabaseLogger, db } from "../../common/database";
 import { eSendEvent, ToastManager } from "../../services/event-manager";

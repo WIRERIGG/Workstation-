@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { getFormattedHistorySessionDate } from "@notesnook/common";
-import { HistorySession } from "@notesnook/core";
+import { getFormattedHistorySessionDate } from "@workstation/common";
+import { HistorySession } from "@workstation/core";
 import { Flex, Text } from "@theme-ui/components";
 import TimeAgo from "../time-ago";
 import { Lock } from "../icons";
 import { useEditorStore } from "../../stores/editor-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type SessionItemProps = {
   session: HistorySession;

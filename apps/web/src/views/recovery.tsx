@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,9 +28,9 @@ import { AuthField, SubmitButton } from "./auth";
 import { createBackup, restoreBackupFile, selectBackupFile } from "../common";
 import Config from "../utils/config";
 import { ErrorText } from "../components/error-text";
-import { EVENTS, User } from "@notesnook/core";
+import { EVENTS, User } from "@workstation/core";
 import { RecoveryKeyDialog } from "../dialogs/recovery-key-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { useKeyStore } from "../interfaces/key-store";
 
 type RecoveryMethodType = "key" | "backup" | "reset";

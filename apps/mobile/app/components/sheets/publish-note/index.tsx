@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { hosts, Monograph, Note } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { hosts, Monograph, Note } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import Clipboard from "@react-native-clipboard/clipboard";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -46,7 +46,7 @@ import Input from "../../ui/input";
 import Heading from "../../ui/typography/heading";
 import Paragraph from "../../ui/typography/paragraph";
 import { useAsync } from "react-async-hook";
-import { isFeatureAvailable, useIsFeatureAvailable } from "@notesnook/common";
+import { isFeatureAvailable, useIsFeatureAvailable } from "@workstation/common";
 
 async function fetchMonographData(noteId: string) {
   const monographId = db.monographs.monograph(noteId);

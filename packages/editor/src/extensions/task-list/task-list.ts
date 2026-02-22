@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -40,7 +40,7 @@ import {
 import { Node as ProsemirrorNode } from "@tiptap/pm/model";
 import { TaskItemNode } from "../task-item/index.js";
 import { ListItem } from "../list-item/list-item.js";
-import { tiptapKeys } from "@notesnook/common";
+import { tiptapKeys } from "@workstation/common";
 import { hasPermission } from "../../types.js";
 
 type TaskListStats = { checked: number; total: number };

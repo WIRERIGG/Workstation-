@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,12 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useEffect, useState } from "react";
 import Dialog from "../components/dialog";
-import { ScrollContainer } from "@notesnook/ui";
+import { ScrollContainer } from "@workstation/ui";
 import { Flex, Image, Label, Text } from "@theme-ui/components";
-import { formatBytes } from "@notesnook/common";
+import { formatBytes } from "@workstation/common";
 import { compressImage, FileWithURI } from "../utils/image-compressor";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { checkFeature } from "../common";
 
 export type ImagePickerDialogProps = BaseDialogProps<false | File[]> & {

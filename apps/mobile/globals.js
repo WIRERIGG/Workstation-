@@ -6,7 +6,7 @@ import "@formatjs/intl-pluralrules/locale-data/en";
 import "react-native-url-polyfill/auto";
 import "./polyfills/console-time.js";
 import "./app/common/logger/index";
-import { setI18nGlobal } from "@notesnook/intl";
+import { setI18nGlobal } from "@workstation/intl";
 import { i18n } from "@lingui/core";
 import Config from "react-native-config";
 
@@ -27,12 +27,12 @@ Object.defineProperty(global, "Buffer", {
 
 if (__DEV__ && Config.isTesting !== "true") {
   const messages =
-    require("@notesnook/intl/dist/locales/$pseudo-LOCALE.json").messages;
+    require("@workstation/intl/dist/locales/$pseudo-LOCALE.json").messages;
   i18n.load({
     en: messages
   });
 } else {
-  const messages = require("@notesnook/intl/dist/locales/$en.json").messages;
+  const messages = require("@workstation/intl/dist/locales/$en.json").messages;
   i18n.load({
     en: messages
   });

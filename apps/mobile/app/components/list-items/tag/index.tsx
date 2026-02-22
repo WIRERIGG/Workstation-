@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Tag } from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+import { Tag } from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { View } from "react-native";
-import { notesnook } from "../../../../e2e/test.ids";
+import { workstation } from "../../../../e2e/test.ids";
 import { TaggedNotes } from "../../../screens/notes/tagged";
 import { AppFontSize } from "../../../utils/size";
 import { Properties } from "../../properties";
@@ -29,7 +29,7 @@ import { IconButton } from "../../ui/icon-button";
 import Heading from "../../ui/typography/heading";
 import Paragraph from "../../ui/typography/paragraph";
 import SelectionWrapper, { selectItem } from "../selection-wrapper";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../../utils/styles";
 
 const TagItem = React.memo(
@@ -53,7 +53,7 @@ const TagItem = React.memo(
       <SelectionWrapper
         onPress={onPress}
         item={item}
-        testID={notesnook.ids.tag.get(index)}
+        testID={workstation.ids.tag.get(index)}
       >
         <View
           style={{
@@ -90,7 +90,7 @@ const TagItem = React.memo(
           onPress={() => {
             Properties.present(item);
           }}
-          testID={notesnook.ids.tag.menu}
+          testID={workstation.ids.tag.menu}
           style={{
             justifyContent: "center",
             height: 35,

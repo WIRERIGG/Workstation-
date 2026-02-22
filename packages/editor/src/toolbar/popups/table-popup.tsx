@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 import { Popup } from "../components/popup.js";
 import { useIsMobile } from "../stores/toolbar-store.js";
 import { InlineInput } from "../../components/inline-input/index.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const MAX_COLUMNS = 20;
 const MAX_ROWS = 20;

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,9 +23,9 @@ import { AppEventManager, AppEvents } from "./common/app-events";
 import { register } from "./service-worker-registration";
 import { getServiceWorkerVersion } from "./utils/version";
 import { register as registerStreamSaver } from "./utils/stream-saver/mitm";
-import { ThemeDark, ThemeLight, themeToCSS } from "@notesnook/theme";
+import { ThemeDark, ThemeLight, themeToCSS } from "@workstation/theme";
 import Config from "./utils/config";
-import { setI18nGlobal, Messages } from "@notesnook/intl";
+import { setI18nGlobal, Messages } from "@workstation/intl";
 import { i18n } from "@lingui/core";
 
 const colorScheme = JSON.parse(
@@ -44,7 +44,7 @@ if (theme) {
   if (stylesheet) stylesheet.innerHTML = css;
 } else stylesheet?.remove();
 
-const locale = import("@notesnook/intl/locales/$en.json");
+const locale = import("@workstation/intl/locales/$en.json");
 locale.then(({ default: locale }) => {
   i18n.load({
     en: locale.messages as unknown as Messages

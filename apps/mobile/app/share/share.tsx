@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,9 +26,9 @@ import {
   getFormattedDate,
   isFeatureAvailable,
   useIsFeatureAvailable
-} from "@notesnook/common";
-import { isImage } from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+} from "@workstation/common";
+import { isImage } from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -69,7 +69,7 @@ import { HtmlLoadingWebViewAgent, fetchHandle } from "./fetch-webview";
 import { Search } from "./search";
 import { initDatabase, useShareStore } from "./store";
 import { isTablet } from "react-native-device-info";
-import { NotesnookModule } from "../utils/notesnook-module";
+import { WorkstationModule } from "../utils/workstation-module";
 import { DefaultAppStyles } from "../utils/styles";
 
 const getLinkPreview = (url: string) => {
@@ -145,7 +145,7 @@ declare global {
 
 const ShareView = () => {
   const { colors } = useThemeColors();
-  const gesturesEnabled = NotesnookModule.isGestureNavigationEnabled();
+  const gesturesEnabled = WorkstationModule.isGestureNavigationEnabled();
   const appendNoteId = useShareStore((state) => state.appendNote);
   const [note, setNote] = useState({ ...defaultNote });
   const noteContent = useRef<string>(undefined);

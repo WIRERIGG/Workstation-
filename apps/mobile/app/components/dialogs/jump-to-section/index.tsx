@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { GroupHeader, Item, VirtualizedGrouping } from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+import { GroupHeader, Item, VirtualizedGrouping } from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 import React, {
   RefObject,
   useCallback,

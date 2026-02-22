@@ -1,5 +1,5 @@
 {
-  "name": "@notesnook/web-clipper",
+  "name": "@workstation/web-clipper",
   "version": "0.4.0",
   "private": true,
   "main": "./dist/cjs/index.js",
@@ -31,8 +31,8 @@
     "@emotion/react": "11.11.1",
     "@mdi/js": "7.4.47",
     "@mdi/react": "1.6.1",
-    "@notesnook/clipper": "file:../../packages/clipper",
-    "@notesnook/theme": "file:../../packages/theme",
+    "@workstation/clipper": "file:../../packages/clipper",
+    "@workstation/theme": "file:../../packages/theme",
     "@theme-ui/components": "0.16.1",
     "@theme-ui/core": "0.16.1",
     "comlink": "^4.3.1",
@@ -116,6 +116,6 @@
     "email": "support@streetwriters.co",
     "url": "https://streetwriters.co"
   },
-  "homepage": "https://notesnook.com/",
-  "repository": "https://github.com/streetwriters/notesnook"
+  "homepage": "https://workstation.com/",
+  "repository": "https://github.com/streetwriters/workstation"
 }

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -29,7 +29,7 @@ import {
   Text
 } from "@theme-ui/components";
 import { store, useStore } from "../stores/attachment-store";
-import { formatBytes, usePromise, useResolvedItem } from "@notesnook/common";
+import { formatBytes, usePromise, useResolvedItem } from "@workstation/common";
 import Dialog from "../components/dialog";
 import {
   ChevronDown,
@@ -55,7 +55,7 @@ import { ScopedThemeProvider } from "../components/theme-provider";
 import {
   Attachment as AttachmentType,
   VirtualizedGrouping
-} from "@notesnook/core";
+} from "@workstation/core";
 import { Multiselect } from "../common/multi-select";
 import {
   VirtualizedTable,
@@ -66,7 +66,7 @@ import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
 import { ConfirmDialog } from "./confirm";
 import { showToast } from "../utils/toast";
 import { Loader } from "../components/loader";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type ToolbarAction = {
   title: string;

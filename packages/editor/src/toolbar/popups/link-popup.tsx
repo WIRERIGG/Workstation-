@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import Link, { LinkAttributes } from "../../extensions/link/index.js";
 import { ImageNode } from "../../extensions/image/index.js";
 import { findMark, selectionToOffset } from "../../utils/prosemirror.js";
 import { Editor, getMarkAttributes } from "@tiptap/core";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export type LinkPopupProps = {
   link?: LinkDefinition;

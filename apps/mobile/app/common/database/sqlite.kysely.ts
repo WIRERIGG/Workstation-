@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import type {
 } from "@streetwriters/kysely";
 import { CompiledQuery } from "@streetwriters/kysely";
 import { QuickSQLiteConnection, open } from "react-native-quick-sqlite";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type Config = { dbName: string; async: boolean; location?: string };
 

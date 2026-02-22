@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,8 +23,8 @@ import {
   Note,
   Reminder,
   TrashItem
-} from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+} from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 import { EntityLevel, decode } from "entities";
 import React from "react";
 import { View } from "react-native";
@@ -40,9 +40,9 @@ import {
   getFormattedDate,
   NotebooksWithDateEdited,
   TagsWithDateEdited
-} from "@notesnook/common";
-import { strings } from "@notesnook/intl";
-import { notesnook } from "../../../../e2e/test.ids";
+} from "@workstation/common";
+import { strings } from "@workstation/intl";
+import { workstation } from "../../../../e2e/test.ids";
 import useIsSelected from "../../../hooks/use-selected";
 import { useTabStore } from "../../../screens/editor/tiptap/use-tab-store";
 import { useSelectionStore } from "../../../stores/use-selection-store";
@@ -429,7 +429,7 @@ const NoteItem = ({
           </>
         ) : (
           <IconButton
-            testID={notesnook.listitem.menu}
+            testID={workstation.listitem.menu}
             color={colors.secondary.icon}
             name="dots-horizontal"
             size={AppFontSize.lg}

@@ -489,7 +489,9 @@ function ConversationsPlaceholder() {
   );
 }
 
+import { isDesktopRuntime } from "../utils/platform";
+
 export default function ConversationsView() {
-  if (IS_DESKTOP_APP) return <ConversationsReal />;
+  if (isDesktopRuntime()) return <ConversationsReal />;
   return <ConversationsPlaceholder />;
 }

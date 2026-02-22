@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { createCanvas, GlobalFonts, loadImage } from "@napi-rs/canvas";
 import { LRUCache } from "lru-cache";
-import { ThemeDark } from "@notesnook/theme";
+import { ThemeDark } from "@workstation/theme";
 import path from "path";
 import { fileURLToPath } from "url";
 import { split } from "canvas-hypertxt";
@@ -116,7 +116,7 @@ export async function makeImage(metadata: OGMetadata, cacheKey: string) {
   // Draw bottom text
   ctx.fillStyle = theme.primary.heading;
   ctx.font = "600 32px OpenSansBold";
-  ctx.fillText("Notesnook Monograph", PADDING + 95, HEIGHT - PADDING - 55);
+  ctx.fillText("Workstation Monograph", PADDING + 95, HEIGHT - PADDING - 55);
 
   ctx.fillStyle = theme.secondary.paragraph;
   ctx.font = "25px OpenSans";

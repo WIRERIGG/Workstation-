@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { hosts, RequestOptions } from "@notesnook/core";
+import { hosts, RequestOptions } from "@workstation/core";
 import { Platform } from "react-native";
 import RNFetchBlob from "react-native-blob-util";
 import * as ScopedStorage from "react-native-scoped-storage";
@@ -176,7 +176,7 @@ export async function checkAndCreateDir(path: string) {
   const dir =
     Platform.OS === "ios"
       ? RNFetchBlob.fs.dirs.DocumentDir + path
-      : RNFetchBlob.fs.dirs.SDCardDir + "/Notesnook/" + path;
+      : RNFetchBlob.fs.dirs.SDCardDir + "/Workstation/" + path;
 
   try {
     const exists = await RNFetchBlob.fs.exists(dir);

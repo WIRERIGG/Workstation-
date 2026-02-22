@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ export const ImporterSettings: SettingsGroup[] = [
   {
     key: "importer",
     section: "importer",
-    header: "Notesnook Importer",
+    header: "Workstation Importer",
     settings: [
       {
         key: "import-notes",

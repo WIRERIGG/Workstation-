@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -38,7 +38,7 @@ import { useTabContext, useTabStore } from "../hooks/useTabStore";
 import { Settings } from "../utils";
 import { EditorEvents } from "../utils/editor-events";
 import styles from "./styles.module.css";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const menuClassName = ({ state }: any) =>
   state === "opening"

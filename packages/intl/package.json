@@ -1,5 +1,5 @@
 {
-  "name": "@notesnook/intl",
+  "name": "@workstation/intl",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/streetwriters/notesnook.git"
+    "url": "git://github.com/streetwriters/workstation.git"
   },
   "scripts": {
     "extract": "lingui extract --clean --overwrite",

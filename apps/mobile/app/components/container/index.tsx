@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { Dimensions, Platform, View, useWindowDimensions } from "react-native";
 import useGlobalSafeAreaInsets from "../../hooks/use-global-safe-area-insets";
 import useKeyboard from "../../hooks/use-keyboard";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 
 export const Container = ({ children }: PropsWithChildren) => {
   const { colors } = useThemeColors();

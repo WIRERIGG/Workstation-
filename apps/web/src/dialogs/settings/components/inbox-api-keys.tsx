@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useRef, useState, useEffect } from "react";
 import { Box, Button, Flex, Input, Text, Select } from "@theme-ui/components";
-import { formatDate, InboxApiKey } from "@notesnook/core";
+import { formatDate, InboxApiKey } from "@workstation/core";
 import { db } from "../../../common/db";
 import { showToast } from "../../../utils/toast";
 import {
@@ -32,11 +32,11 @@ import {
 import Field from "../../../components/field";
 import { BaseDialogProps, DialogManager } from "../../../common/dialog-manager";
 import Dialog from "../../../components/dialog";
-import { usePromise } from "@notesnook/common";
+import { usePromise } from "@workstation/common";
 import { ConfirmDialog } from "../../confirm";
 import { PromptDialog } from "../../prompt";
 import { showPasswordDialog } from "../../password-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export function InboxApiKeys() {
   const apiKeysPromise = usePromise(() => db.inboxApiKeys.get(), []);

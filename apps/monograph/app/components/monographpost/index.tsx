@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import "@notesnook/editor/styles/styles.css";
+import "@workstation/editor/styles/styles.css";
 import { Monograph } from "./types";
 import {
   Box,
@@ -29,12 +29,12 @@ import {
 } from "@theme-ui/components";
 import { ClientOnly } from "remix-utils/client-only";
 import { Editor } from "./editor.client";
-import { formatDate } from "@notesnook/core";
+import { formatDate } from "@workstation/core";
 import { slugify } from "../../utils/slugify";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NNCrypto } from "../../utils/nncrypto.client";
 import { hashNavigate } from "../../utils/use-hash-location";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import {
   mdiAlertCircleOutline,
   mdiArrowUp,
@@ -363,7 +363,7 @@ export const MonographPage = ({
           </Flex>
         ) : null}
       </Flex>
-      <Footer subtitle="Published via Notesnook" />
+      <Footer subtitle="Published via Workstation" />
       {reportDialogVisible ? (
         <ReportDialog
           monograph={monograph}

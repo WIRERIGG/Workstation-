@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -61,8 +61,8 @@ export function generateMetaDescriptors(
 
   descriptors.push({ name: "author", content: "Monograph" });
   descriptors.push({ name: "twitter:card", content: "summary_large_image" });
-  descriptors.push({ name: "twitter:site", content: "@notesnook" });
-  descriptors.push({ name: "twitter:creator", content: "@notesnook" });
+  descriptors.push({ name: "twitter:site", content: "@workstation" });
+  descriptors.push({ name: "twitter:creator", content: "@workstation" });
   descriptors.push({ name: "twitter:title", content: props.titleShort });
   descriptors.push({ name: "twitter:description", content: props.description });
   if (props.imageUrl)

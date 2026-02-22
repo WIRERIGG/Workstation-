@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -29,9 +29,9 @@ import {
 } from "./steps";
 import { Authenticator, OnNextFunction } from "./types";
 import { ErrorText } from "../../components/error-text";
-import { AuthenticatorType } from "@notesnook/core";
+import { AuthenticatorType } from "@workstation/core";
 import { BaseDialogProps, DialogManager } from "../../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type MultifactorDialogProps = BaseDialogProps<boolean> & {
   primaryMethod?: AuthenticatorType;

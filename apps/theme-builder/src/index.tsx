@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,11 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import "./index.css";
-import "@notesnook/web/src/polyfills";
-import "@notesnook/web/src/app.css";
-import { ThemeDark, ThemeLight, themeToCSS } from "@notesnook/theme";
-import Config from "@notesnook/web/src/utils/config";
-import { setI18nGlobal, Messages } from "@notesnook/intl";
+import "@workstation/web/src/polyfills";
+import "@workstation/web/src/app.css";
+import { ThemeDark, ThemeLight, themeToCSS } from "@workstation/theme";
+import Config from "@workstation/web/src/utils/config";
+import { setI18nGlobal, Messages } from "@workstation/intl";
 import { i18n } from "@lingui/core";
 import { App } from "./app";
 
@@ -43,8 +43,8 @@ if (theme) {
 } else stylesheet?.remove();
 
 const locale = import.meta.env.DEV
-  ? import("@notesnook/intl/locales/$pseudo-LOCALE.json")
-  : import("@notesnook/intl/locales/$en.json");
+  ? import("@workstation/intl/locales/$pseudo-LOCALE.json")
+  : import("@workstation/intl/locales/$en.json");
 locale.then(({ default: locale }) => {
   i18n.load({
     en: locale.messages as unknown as Messages
@@ -52,7 +52,7 @@ locale.then(({ default: locale }) => {
   i18n.activate("en");
 
   performance.mark("import:root");
-  import("@notesnook/web/src/root.js").then(({ startApp }) => {
+  import("@workstation/web/src/root.js").then(({ startApp }) => {
     performance.mark("start:app");
     startApp(<App />);
   });

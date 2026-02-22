@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import Navigation, { NavigationProps } from "../../services/navigation";
 import SettingsService from "../../services/settings";
 import useNavigationStore from "../../stores/use-navigation-store";
 import { db } from "../../common/database";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { useArchived } from "../../stores/use-archived-store";
 
 export const Archive = ({ navigation, route }: NavigationProps<"Archive">) => {

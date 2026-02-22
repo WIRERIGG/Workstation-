@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import { isMacStoreApp } from "../../utils/platform";
 import { clearLogs, downloadLogs } from "../../utils/logger";
 import { useAutoUpdateStore } from "../../hooks/use-auto-updater";
 import { IssueDialog } from "../issue-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { desktop } from "../../common/desktop-bridge";
 import { TaskManager } from "../../common/task-manager";
 import { useStore as useSettingStore } from "../../stores/setting-store";
@@ -155,7 +155,7 @@ export const AboutSettings: SettingsGroup[] = [
             type: "button",
             action: () => {
               window.open(
-                "https://github.com/streetwriters/notesnook",
+                "https://github.com/streetwriters/workstation",
                 "_blank"
               );
             },
@@ -172,7 +172,7 @@ export const AboutSettings: SettingsGroup[] = [
           {
             type: "button",
             action: () =>
-              void window.open("https://notesnook.com/roadmap", "_blank"),
+              void window.open("https://workstation.com/roadmap", "_blank"),
             title: strings.checkRoadmap(),
             variant: "secondary"
           }
@@ -192,8 +192,8 @@ export const AboutSettings: SettingsGroup[] = [
             action: () =>
               void window.open(
                 isMacStoreApp()
-                  ? "https://apps.apple.com/us/app/notesnook-take-private-notes/id1544027013"
-                  : "https://notesnook.com/downloads",
+                  ? "https://apps.apple.com/us/app/workstation-take-private-notes/id1544027013"
+                  : "https://workstation.com/downloads",
                 "_blank"
               ),
             title: strings.network.download(),
@@ -215,7 +215,7 @@ export const AboutSettings: SettingsGroup[] = [
         components: [
           {
             type: "button",
-            action: () => void window.open("https://t.me/notesnook", "_blank"),
+            action: () => void window.open("https://t.me/workstation", "_blank"),
             title: strings.joinTelegram(),
             variant: "secondary"
           }
@@ -229,7 +229,7 @@ export const AboutSettings: SettingsGroup[] = [
           {
             type: "button",
             action: () =>
-              void window.open("https://fosstodon.org/@notesnook", "_blank"),
+              void window.open("https://fosstodon.org/@workstation", "_blank"),
             title: strings.follow(),
             variant: "secondary"
           }
@@ -243,7 +243,7 @@ export const AboutSettings: SettingsGroup[] = [
           {
             type: "button",
             action: () =>
-              void window.open("https://twitter.com/notesnook", "_blank"),
+              void window.open("https://twitter.com/workstation", "_blank"),
             title: strings.follow(),
             variant: "secondary"
           }
@@ -284,7 +284,7 @@ export const LegalSettings: SettingsGroup[] = [
           {
             type: "button",
             action: () =>
-              void window.open("https://notesnook.com/privacy", "_blank"),
+              void window.open("https://workstation.com/privacy", "_blank"),
             title: strings.open(),
             variant: "secondary"
           }
@@ -298,7 +298,7 @@ export const LegalSettings: SettingsGroup[] = [
           {
             type: "button",
             action: () =>
-              void window.open("https://notesnook.com/terms", "_blank"),
+              void window.open("https://workstation.com/terms", "_blank"),
             title: strings.open(),
             variant: "secondary"
           }
@@ -313,7 +313,7 @@ export const LegalSettings: SettingsGroup[] = [
             type: "button",
             action: () =>
               void window.open(
-                "https://github.com/streetwriters/notesnook/blob/master/LICENSE",
+                "https://github.com/streetwriters/workstation/blob/master/LICENSE",
                 "_blank"
               ),
             title: strings.open(),

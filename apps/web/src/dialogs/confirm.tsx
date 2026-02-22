@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import { db } from "../common/db";
 import { getChangelog } from "../utils/version";
 import { downloadUpdate } from "../utils/updater";
 import { ErrorText } from "../components/error-text";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import Field from "../components/field";
 
 type Check = { text: string; default?: boolean };

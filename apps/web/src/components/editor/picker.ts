@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,15 +17,15 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SerializedKey } from "@notesnook/crypto";
+import { SerializedKey } from "@workstation/crypto";
 import { AppEventManager, AppEvents } from "../../common/app-events";
 import { db } from "../../common/db";
 import { TaskManager } from "../../common/task-manager";
 import { showToast } from "../../utils/toast";
 import { showFilePicker } from "../../utils/file-picker";
-import { Attachment } from "@notesnook/editor";
+import { Attachment } from "@workstation/editor";
 import { ImagePickerDialog } from "../../dialogs/image-picker-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import {
   getUploadedFileSize,
   hashStream,

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
-import { notesnook } from "../../../e2e/test.ids";
+import { workstation } from "../../../e2e/test.ids";
 import Navigation from "../../services/navigation";
 import { useSettingStore } from "../../stores/use-setting-store";
 import { fluidTabsRef } from "../../utils/global-refs";
@@ -52,7 +52,7 @@ export const LeftMenus = ({
 
   return isTablet && !canGoBack ? null : (
     <IconButton
-      testID={notesnook.ids.default.header.buttons.left}
+      testID={workstation.ids.default.header.buttons.left}
       left={40}
       top={40}
       onPress={_onLeftButtonPress}

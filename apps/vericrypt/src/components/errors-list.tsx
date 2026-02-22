@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -43,7 +43,7 @@ export function ErrorsList(props: ErrorsListProps) {
           sx={{ bg: "error", color: "static", alignSelf: "start", mt: 2 }}
           onClick={() =>
             window.open(
-              "https://github.com/streetwriters/notesnook/issues/new",
+              "https://github.com/streetwriters/workstation/issues/new",
               "_blank",
               "noopener"
             )

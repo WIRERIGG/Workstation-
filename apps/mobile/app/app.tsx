@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import {
   ScopedThemeProvider,
   THEME_COMPATIBILITY_VERSION,
   useThemeEngineStore
-} from "@notesnook/theme";
+} from "@workstation/theme";
 import React, { useEffect } from "react";
 import { Appearance, I18nManager, Linking, StatusBar } from "react-native";
 import "react-native-gesture-handler";

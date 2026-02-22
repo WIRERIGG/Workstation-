@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,8 +24,8 @@ import { db } from "../common/db";
 import { ListLoader } from "../components/loaders/list-loader";
 import { Flex, Input } from "@theme-ui/components";
 import { forwardRef, useEffect, useState } from "react";
-import { debounce } from "@notesnook/common";
-import { Tag, VirtualizedGrouping } from "@notesnook/core";
+import { debounce } from "@workstation/common";
+import { Tag, VirtualizedGrouping } from "@workstation/core";
 import ScrollContainer from "../components/scroll-container";
 import { ScrollerProps } from "react-virtuoso";
 import { SidebarScroller } from "../components/sidebar-scroller";

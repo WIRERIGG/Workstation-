@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,19 +21,19 @@ import { Flex, Image, Progress, Text } from "@theme-ui/components";
 import { Edit, User as UserIcon } from "../../../components/icons";
 import { useStore as useUserStore } from "../../../stores/user-store";
 import { useStore as useSettingStore } from "../../../stores/setting-store";
-import { getObjectIdTimestamp } from "@notesnook/core";
-import { formatBytes, getFormattedDate } from "@notesnook/common";
+import { getObjectIdTimestamp } from "@workstation/core";
+import { formatBytes, getFormattedDate } from "@workstation/common";
 import { db } from "../../../common/db";
 import { showToast } from "../../../utils/toast";
 import { EditProfilePictureDialog } from "../../edit-profile-picture-dialog";
 import { PromptDialog } from "../../prompt";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import {
   SubscriptionPlan,
   SubscriptionProvider,
   SubscriptionStatus,
   User
-} from "@notesnook/core";
+} from "@workstation/core";
 
 export function getSubscriptionInfo(user?: User): {
   title: string;

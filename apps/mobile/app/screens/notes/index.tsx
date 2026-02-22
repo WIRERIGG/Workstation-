@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { resolveItems } from "@notesnook/common";
-import { Tag, VirtualizedGrouping } from "@notesnook/core";
-import { Color, Note } from "@notesnook/core";
+import { resolveItems } from "@workstation/common";
+import { Tag, VirtualizedGrouping } from "@workstation/core";
+import { Color, Note } from "@workstation/core";
 import React, { useEffect, useRef, useState } from "react";
 import { db } from "../../common/database";
 import { FloatingButton } from "../../components/container/floating-button";
@@ -40,7 +40,7 @@ import useNavigationStore, {
   RouteName
 } from "../../stores/use-navigation-store";
 import { setOnFirstSave } from "./common";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { useSettingStore } from "../../stores/use-setting-store";
 import { rootNavigatorRef } from "../../utils/global-refs";
 

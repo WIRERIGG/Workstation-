@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -39,12 +39,12 @@ import { formatPrice, toPricingInfo } from "./helpers";
 import { isUserSubscribed } from "../../hooks/use-is-user-premium";
 import BaseDialog from "../../components/dialog";
 import { ScopedThemeProvider } from "../../components/theme-provider";
-import { Period, SubscriptionPlan, User } from "@notesnook/core";
+import { Period, SubscriptionPlan, User } from "@workstation/core";
 import { BaseDialogProps, DialogManager } from "../../common/dialog-manager";
 import dayjs from "dayjs";
 import { PromptDialog } from "../prompt";
 import IconTag from "../../components/icon-tag";
-import { usePromise } from "@notesnook/common";
+import { usePromise } from "@workstation/common";
 import { getCurrencySymbol } from "../../common/currencies";
 
 type BuyDialogProps = BaseDialogProps<false> & {
@@ -230,10 +230,10 @@ function AlreadyPremium() {
     <>
       <Image src={Rocket} style={{ flexShrink: 0, width: 200, height: 200 }} />
       <Text variant="heading" mt={4} sx={{ textAlign: "center" }}>
-        Notesnook
+        Workstation
       </Text>
       <Text variant="body" mt={1} sx={{ textAlign: "center" }}>
-        You already have a Notesnook subscription. You can change your plan from
+        You already have a Workstation subscription. You can change your plan from
         Settings {">"} Subscription details.
       </Text>
     </>

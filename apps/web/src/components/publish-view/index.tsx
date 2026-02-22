@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,17 +23,17 @@ import { Loading, Refresh } from "../icons";
 import { db } from "../../common/db";
 import { writeText } from "clipboard-polyfill";
 import { showToast } from "../../utils/toast";
-import { EV, EVENTS, hosts, MonographAnalytics } from "@notesnook/core";
+import { EV, EVENTS, hosts, MonographAnalytics } from "@workstation/core";
 import { useStore } from "../../stores/monograph-store";
-import { Note } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { Note } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import {
   getFormattedDate,
   useIsFeatureAvailable,
   usePromise
-} from "@notesnook/common";
+} from "@workstation/common";
 import { createRoot, Root } from "react-dom/client";
-import { PopupPresenter } from "@notesnook/ui";
+import { PopupPresenter } from "@workstation/ui";
 import { BaseDialogProps, DialogManager } from "../../common/dialog-manager";
 import Dialog from "../../components/dialog";
 import { UpgradeDialog } from "../../dialogs/buy-dialog/upgrade-dialog";

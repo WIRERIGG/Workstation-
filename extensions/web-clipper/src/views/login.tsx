@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -48,11 +48,11 @@ export function Login() {
     >
       <Image src={Logo} width={64} />
       <Text variant="heading" sx={{ textAlign: "center", mt: 2 }}>
-        Notesnook Web Clipper
+        Workstation Web Clipper
       </Text>
       {isLoggingIn ? (
         <Text variant="body" sx={{ mt: 4 }}>
-          Connecting with Notesnook...
+          Connecting with Workstation...
         </Text>
       ) : (
         <Button
@@ -64,7 +64,7 @@ export function Login() {
             })
           }
         >
-          Connect with Notesnook
+          Connect with Workstation
         </Button>
       )}
       {error && (

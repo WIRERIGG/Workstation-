@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { notesnook } from "../test.ids";
+import { workstation } from "../test.ids";
 import { TestBuilder } from "./utils";
 
 describe("Sort & filter", () => {
@@ -39,13 +39,13 @@ describe("Sort & filter", () => {
       .wait(500)
       .waitAndTapByText("Date created")
       .pressBack()
-      .waitAndTapById(notesnook.listitem.menu)
+      .waitAndTapById(workstation.listitem.menu)
       .pressBack()
       .waitAndTapById("icon-sort")
       .wait(500)
       .waitAndTapByText("Date edited")
       .pressBack()
-      .waitAndTapById(notesnook.listitem.menu)
+      .waitAndTapById(workstation.listitem.menu)
       .run();
   });
 

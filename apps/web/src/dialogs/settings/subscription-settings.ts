@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,12 +27,12 @@ import {
   isActiveSubscription,
   isUserSubscribed
 } from "../../hooks/use-is-user-premium";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import {
   SubscriptionPlan,
   SubscriptionProvider,
   SubscriptionStatus as SubscriptionStatusEnum
-} from "@notesnook/core";
+} from "@workstation/core";
 import { TaskManager } from "../../common/task-manager";
 import { ConfirmDialog } from "../confirm";
 import { ChangePlanDialog } from "../buy-dialog/change-plan-dialog";

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import Dialog from "../components/dialog";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
 import { useStore as useUserStore } from "../stores/user-store";
 import { getSubscriptionInfo } from "./settings/components/user-profile";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type OnboardingDialogProps = BaseDialogProps<boolean>;
 export const OnboardingDialog = DialogManager.register(

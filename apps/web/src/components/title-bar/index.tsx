@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { useWindowControls } from "../../hooks/use-window-controls";
 import { isMac } from "../../utils/platform";
 import { BaseThemeProvider } from "../theme-provider";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { desktop } from "../../common/desktop-bridge";
 import {
   WindowClose,

@@ -1,12 +1,12 @@
 {
-  "name": "@notesnook/clipper",
+  "name": "@workstation/clipper",
   "version": "2.1.3",
-  "description": "Web clipper core used by the Notesnook Web Clipper",
+  "description": "Web clipper core used by the Workstation Web Clipper",
   "keywords": [
     "web-clipper"
   ],
   "author": "Abdullah Atta <abdullahatta@streetwriters.co>",
-  "homepage": "https://notesnook.com/",
+  "homepage": "https://workstation.com/",
   "license": "GPL-3.0-or-later",
   "main": "dist/index.js",
   "devDependencies": {
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/streetwriters/notesnook.git"
+    "url": "git+https://github.com/streetwriters/workstation.git"
   },
   "scripts": {
     "build": "tsc && npx rsbuild build",
@@ -29,7 +29,7 @@
     "watch": "tsc --watch"
   },
   "bugs": {
-    "url": "https://github.com/streetwriters/notesnook/issues"
+    "url": "https://github.com/streetwriters/workstation/issues"
   },
   "dependencies": {
     "@mozilla/readability": "^0.4.2",

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { EVENTS } from "@notesnook/core";
+import { EVENTS } from "@workstation/core";
 import { Text } from "@theme-ui/components";
 import { useCallback, useEffect, useState } from "react";
 import { createBackup } from "../common";
@@ -26,7 +26,7 @@ import { TaskManager } from "../common/task-manager";
 import Dialog from "../components/dialog";
 import { ErrorText } from "../components/error-text";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type MigrationProgressEvent = {
   collection: string;

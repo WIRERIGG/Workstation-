@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,9 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Plan, SKUResponse } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { Plan, SKUResponse } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import {
@@ -104,16 +104,16 @@ export const BuyPlan = (props: {
         {[
           Config.GITHUB_RELEASE === "true"
             ? "yearly"
-            : `notesnook.${props.planId}.yearly`,
+            : `workstation.${props.planId}.yearly`,
           Config.GITHUB_RELEASE === "true"
             ? "monthly"
-            : `notesnook.${props.planId}.monthly`,
+            : `workstation.${props.planId}.monthly`,
           ...(props.planId === "essential" || pricingPlans.isSubscribed()
             ? []
             : [
                 Config.GITHUB_RELEASE === "true"
                   ? "5-year"
-                  : `notesnook.${props.planId}.5year`
+                  : `workstation.${props.planId}.5year`
               ])
         ].map((item) => (
           <ProductItem
@@ -294,7 +294,7 @@ export const BuyPlan = (props: {
               textDecorationLine: "underline"
             }}
             onPress={() => {
-              openLinkInBrowser("https://notesnook.com/privacy");
+              openLinkInBrowser("https://workstation.com/privacy");
             }}
           >
             {strings.subTerms[1]()}
@@ -305,7 +305,7 @@ export const BuyPlan = (props: {
               textDecorationLine: "underline"
             }}
             onPress={() => {
-              openLinkInBrowser("https://notesnook.com/tos");
+              openLinkInBrowser("https://workstation.com/tos");
             }}
           >
             {strings.subTerms[3]()}
@@ -444,8 +444,8 @@ const ProductItem = (props: {
                     ? (product as Plan).discount?.amount
                     : props.pricingPlans.compareProductPrice(
                         props.pricingPlans.currentPlan?.id as string,
-                        `notesnook.${props.pricingPlans.currentPlan?.id}.yearly`,
-                        `notesnook.${props.pricingPlans.currentPlan?.id}.monthly`
+                        `workstation.${props.pricingPlans.currentPlan?.id}.yearly`,
+                        `workstation.${props.pricingPlans.currentPlan?.id}.monthly`
                       )) as string
                 )}
               </Heading>

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { Flex, FlexProps } from "@theme-ui/components";
 import { Editor } from "../../types.js";
 import { MoreTools } from "./more-tools.js";
 import { getToolDefinition } from "../tool-definitions.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export type ToolbarGroupProps = FlexProps & {
   tools: ToolbarGroupDefinition;

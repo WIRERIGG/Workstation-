@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import React from "react";
 import { FloatingButton } from "../../components/container/floating-button";
 import DelayLayout from "../../components/delay-layout";
@@ -30,7 +30,7 @@ import SettingsService from "../../services/settings";
 import useNavigationStore from "../../stores/use-navigation-store";
 import { useReminders } from "../../stores/use-reminder-store";
 import AddReminder from "../add-reminder";
-import { isFeatureAvailable } from "@notesnook/common";
+import { isFeatureAvailable } from "@workstation/common";
 import { ToastManager } from "../../services/event-manager";
 import PaywallSheet from "../../components/sheets/paywall";
 

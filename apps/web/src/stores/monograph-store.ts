@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import createStore from "../common/store";
 import { db } from "../common/db";
 import BaseStore from "./index";
 import { store as noteStore } from "./note-store";
-import { Note, VirtualizedGrouping, PublishOptions } from "@notesnook/core";
+import { Note, VirtualizedGrouping, PublishOptions } from "@workstation/core";
 
 class MonographStore extends BaseStore<MonographStore> {
   monographs: VirtualizedGrouping<Note> | undefined = undefined;

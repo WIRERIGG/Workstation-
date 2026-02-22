@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,13 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { isFeatureAvailable, useAreFeaturesAvailable } from "@notesnook/common";
-import { ItemReference } from "@notesnook/core";
-import type { Attachment } from "@notesnook/editor";
-import { EditorEvents } from "@notesnook/editor-mobile/src/utils/editor-events";
-import { NativeEvents } from "@notesnook/editor-mobile/src/utils/native-events";
-import { getDefaultPresets } from "@notesnook/editor/dist/cjs/toolbar/tool-definitions";
-import { strings } from "@notesnook/intl";
+import { isFeatureAvailable, useAreFeaturesAvailable } from "@workstation/common";
+import { ItemReference } from "@workstation/core";
+import type { Attachment } from "@workstation/editor";
+import { EditorEvents } from "@workstation/editor-mobile/src/utils/editor-events";
+import { NativeEvents } from "@workstation/editor-mobile/src/utils/native-events";
+import { getDefaultPresets } from "@workstation/editor/dist/cjs/toolbar/tool-definitions";
+import { strings } from "@workstation/intl";
 import Clipboard from "@react-native-clipboard/clipboard";
 import React, { useCallback, useEffect, useRef } from "react";
 import * as ScopedStorage from "react-native-scoped-storage";

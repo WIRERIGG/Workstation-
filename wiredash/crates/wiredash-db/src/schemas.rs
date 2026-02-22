@@ -217,6 +217,47 @@ pub fn config_schema() -> Arc<Schema> {
     ])
 }
 
+// ===== 17. tasks =====
+pub fn tasks_schema() -> Arc<Schema> {
+    entity_schema(&[
+        ("title", DataType::Utf8, true),
+        ("description", DataType::Utf8, true),
+        ("status", DataType::Utf8, true),
+        ("priority", DataType::Utf8, true),
+        ("assignee", DataType::Utf8, true),
+        ("dueDate", DataType::Int64, true),
+        ("labels", DataType::Utf8, true),
+        ("parentId", DataType::Utf8, true),
+    ])
+}
+
+// ===== 18. calendar_events =====
+pub fn calendar_events_schema() -> Arc<Schema> {
+    entity_schema(&[
+        ("title", DataType::Utf8, true),
+        ("description", DataType::Utf8, true),
+        ("startDate", DataType::Int64, true),
+        ("endDate", DataType::Int64, true),
+        ("allDay", DataType::Int32, true),
+        ("color", DataType::Utf8, true),
+        ("recurrence", DataType::Utf8, true),
+        ("source", DataType::Utf8, true),
+    ])
+}
+
+// ===== 19. agents =====
+pub fn agents_schema() -> Arc<Schema> {
+    entity_schema(&[
+        ("name", DataType::Utf8, true),
+        ("role", DataType::Utf8, true),
+        ("status", DataType::Utf8, true),
+        ("model", DataType::Utf8, true),
+        ("systemPrompt", DataType::Utf8, true),
+        ("capabilities", DataType::Utf8, true),
+        ("lastActive", DataType::Int64, true),
+    ])
+}
+
 // ---------------------------------------------------------------------------
 // Aggregate: all schemas keyed by table name
 // ---------------------------------------------------------------------------
@@ -238,6 +279,9 @@ pub fn all_schemas() -> Vec<(&'static str, Arc<Schema>)> {
         ("sessioncontent", sessioncontent_schema()),
         ("kv", kv_schema()),
         ("config", config_schema()),
+        ("tasks", tasks_schema()),
+        ("calendar_events", calendar_events_schema()),
+        ("agents", agents_schema()),
     ]
 }
 
@@ -246,9 +290,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn all_schemas_returns_16_tables() {
+    fn all_schemas_returns_19_tables() {
         let schemas = all_schemas();
-        assert_eq!(schemas.len(), 16);
+        assert_eq!(schemas.len(), 19);
     }
 
     #[test]

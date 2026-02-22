@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -51,7 +51,7 @@ console.log("removed build folder");
 if (args.rebuild || !existsSync(path.join(webAppPath, "build"))) {
   console.log("rebuilding...");
   await exec(
-    "node scripts/execute.mjs @notesnook/web:build:desktop",
+    "node scripts/execute.mjs @workstation/web:build:desktop",
     path.join(__dirname, "..", "..", "..")
   );
 }
@@ -78,13 +78,13 @@ if (args.run) {
     `yarn electron-builder --dir --${process.arch} --config=electron-builder.config.js`
   );
   if (process.platform === "win32") {
-    await exec(`.\\output\\win-unpacked\\Notesnook.exe`);
+    await exec(`.\\output\\win-unpacked\\Workstation.exe`);
   } else if (process.platform === "darwin") {
     if (process.arch === "arm64")
-      await exec(`./output/mac-arm64/Notesnook.app/Contents/MacOS/Notesnook`);
-    else await exec(`./output/mac/Notesnook.app/Contents/MacOS/Notesnook`);
+      await exec(`./output/mac-arm64/Workstation.app/Contents/MacOS/Workstation`);
+    else await exec(`./output/mac/Workstation.app/Contents/MacOS/Workstation`);
   } else {
-    await exec(`./output/linux-unpacked/Notesnook`);
+    await exec(`./output/linux-unpacked/Workstation`);
   }
 }
 

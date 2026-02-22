@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { TextInput, View } from "react-native";
 import { db } from "../../../common/database";
 import { eSendEvent, ToastManager } from "../../../services/event-manager";
 import { eUserLoggedIn } from "../../../utils/events";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../../utils/styles";
 import Input from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";

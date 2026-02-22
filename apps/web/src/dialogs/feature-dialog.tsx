@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import { appVersion } from "../utils/version";
 import Config from "../utils/config";
 import { ArrowRight, Checkmark, Icon, Warn } from "../components/icons";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type CallToAction = {
   title: string;
@@ -57,7 +57,7 @@ const features: Record<FeatureKeys, Feature> = {
   },
   highlights: {
     title: appVersion.isBeta
-      ? "Welcome to Notesnook Beta!"
+      ? "Welcome to Workstation Beta!"
       : "✨ Highlights ✨",
     subtitle: appVersion.isBeta
       ? `v${appVersion.clean}-beta`

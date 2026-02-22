@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import Sodium from "@ammarahmed/react-native-sodium";
-import { isFeatureAvailable } from "@notesnook/common";
-import { isImage } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { isFeatureAvailable } from "@workstation/common";
+import { isImage } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import {
   DocumentPickerOptions,
   keepLocalCopy,

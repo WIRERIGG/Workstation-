@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -53,7 +53,7 @@ export type GithubVersionInfo = {
   current: string;
 };
 export const getGithubVersion = async (): Promise<GithubVersionInfo | null> => {
-  const url = `https://api.github.com/repos/streetwriters/notesnook/releases`;
+  const url = `https://api.github.com/repos/streetwriters/workstation/releases`;
   let res;
   try {
     res = await fetch(url, {

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { notesnook } from "../test.ids";
+import { workstation } from "../test.ids";
 import { TestBuilder } from "./utils";
 
 describe("Tags", () => {
@@ -39,7 +39,7 @@ describe("Tags", () => {
       .prepare()
       .createNote()
       .saveResult()
-      .waitAndTapById(notesnook.listitem.menu)
+      .waitAndTapById(workstation.listitem.menu)
       .wait(500)
       .waitAndTapByText("Add tag")
       .typeTextById("tag-input", "testtag")
@@ -59,7 +59,7 @@ describe("Tags", () => {
     await TestBuilder.create()
       .prepare()
       .createNote()
-      .waitAndTapById(notesnook.listitem.menu)
+      .waitAndTapById(workstation.listitem.menu)
       .wait(500)
       .waitAndTapByText("Add tag")
       .typeTextById("tag-input", "testtag")
@@ -75,7 +75,7 @@ describe("Tags", () => {
     await TestBuilder.create()
       .prepare()
       .createNote()
-      .waitAndTapById(notesnook.listitem.menu)
+      .waitAndTapById(workstation.listitem.menu)
       .wait(500)
       .waitAndTapByText("Add tag")
       .typeTextById("tag-input", "testtag")
@@ -96,7 +96,7 @@ describe("Tags", () => {
     await TestBuilder.create()
       .prepare()
       .createNote()
-      .waitAndTapById(notesnook.listitem.menu)
+      .waitAndTapById(workstation.listitem.menu)
       .wait(500)
       .waitAndTapByText("Add tag")
       .typeTextById("tag-input", "testtag")

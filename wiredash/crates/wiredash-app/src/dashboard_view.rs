@@ -2,9 +2,7 @@
 
 use iced::widget::{button, column, container, row, scrollable, text, rule, space};
 use iced::{Element, Fill, Theme, Center};
-use wiredash_core::collections::agents::Agents;
 use wiredash_core::collections::calendar_events::CalendarEvents;
-use wiredash_core::collections::notes::Notes;
 use wiredash_core::collections::tasks::Tasks;
 use wiredash_core::types::{CalendarEvent, TaskItem};
 use wiredash_db::Database;
@@ -40,24 +38,20 @@ impl DashboardViewState {
     }
 
     pub fn refresh(&mut self, db: &Database) {
-        // Note count
-        self.note_count = Notes::new(db)
-            .list(Some(10000))
-            .map(|v| v.len())
+        // Note count — use count_rows instead of loading all notes
+        self.note_count = db
+            .count_rows_sync("notes", Some("deleted = 0"))
             .unwrap_or(0);
 
-        // Open tasks
+        // Open tasks — load once, derive both count and priority list
         let all_tasks = Tasks::new(db).list(None).unwrap_or_default();
-        self.open_task_count = all_tasks
-            .iter()
-            .filter(|t| t.status != "done" && t.status != "cancelled")
-            .count();
-
-        // Priority tasks (top 5 open, by priority)
         let mut open_tasks: Vec<TaskItem> = all_tasks
             .into_iter()
             .filter(|t| t.status != "done" && t.status != "cancelled")
             .collect();
+        self.open_task_count = open_tasks.len();
+
+        // Priority tasks (top 5 open, by priority)
         open_tasks.sort_by(|a, b| {
             priority_rank(&a.priority).cmp(&priority_rank(&b.priority))
         });
@@ -77,10 +71,9 @@ impl DashboardViewState {
             .unwrap_or_default();
         self.today_event_count = self.today_events.len();
 
-        // Active agents
-        self.active_agent_count = Agents::new(db)
-            .list(None)
-            .map(|v| v.iter().filter(|a| a.status == "active").count())
+        // Active agents — use count_rows with status filter
+        self.active_agent_count = db
+            .count_rows_sync("agents", Some("status = 'active'"))
             .unwrap_or(0);
     }
 

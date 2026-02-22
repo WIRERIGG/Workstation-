@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -39,14 +39,14 @@ import {
   useEditorManager,
   useNoteStatistics
 } from "./manager";
-import { getFormattedDate } from "@notesnook/common";
+import { getFormattedDate } from "@workstation/common";
 import { MAX_AUTO_SAVEABLE_WORDS, NoteStatistics } from "./types";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { EDITOR_ZOOM } from "./common";
 import { useWindowControls } from "../../hooks/use-window-controls";
 import { exitFullscreen } from "../../utils/fullscreen";
 import { useRef, useState } from "react";
-import { PopupPresenter } from "@notesnook/ui";
+import { PopupPresenter } from "@workstation/ui";
 import { saveContent } from "./index";
 
 const SAVE_STATE_ICON_MAP = {

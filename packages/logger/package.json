@@ -1,5 +1,5 @@
 {
-  "name": "@notesnook/logger",
+  "name": "@workstation/logger",
   "version": "2.1.3",
   "description": "A really simple logger with a pluggable interface.",
   "main": "./dist/index.js",

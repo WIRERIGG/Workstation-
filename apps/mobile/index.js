@@ -17,7 +17,7 @@ Notifications.init();
 
 enableFreeze(true);
 NetInfo.configure({
-  reachabilityUrl: "https://notesnook.com",
+  reachabilityUrl: "https://workstation.com",
   reachabilityTest: (response) => {
     if (!response) return false;
     return response?.status >= 200 && response?.status < 300;
@@ -52,12 +52,12 @@ AppRegistry.registerComponent(
 );
 
 const ShareProvider = () => {
-  let NotesnookShare = require("./app/share/index").default;
+  let WorkstationShare = require("./app/share/index").default;
   return (
     <SafeAreaProvider>
-      <NotesnookShare />
+      <WorkstationShare />
     </SafeAreaProvider>
   );
 };
 
-AppRegistry.registerComponent("NotesnookShare", () => ShareProvider);
+AppRegistry.registerComponent("WorkstationShare", () => ShareProvider);

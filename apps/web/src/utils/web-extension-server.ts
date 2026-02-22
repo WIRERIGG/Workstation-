@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,13 +23,13 @@ import {
   NotebookReference,
   Server,
   Clip
-} from "@notesnook/web-clipper/common/bridge.js";
+} from "@workstation/web-clipper/common/bridge.js";
 import { store as appstore } from "../stores/app-store";
 import { h } from "./html";
-import { sanitizeFilename } from "@notesnook/common";
-import { getFormattedDate } from "@notesnook/common";
+import { sanitizeFilename } from "@workstation/common";
+import { getFormattedDate } from "@workstation/common";
 import { useStore as useThemeStore } from "../stores/theme-store";
-import { isCipher } from "@notesnook/core";
+import { isCipher } from "@workstation/core";
 import { attachFiles } from "../components/editor/picker";
 
 export class WebExtensionServer implements Server {
@@ -84,7 +84,7 @@ export class WebExtensionServer implements Server {
         [new TextEncoder().encode(clip.data).buffer],
         `${sanitizeFilename(clip.title)}.clip`,
         {
-          type: "application/vnd.notesnook.web-clip"
+          type: "application/vnd.workstation.web-clip"
         }
       );
 

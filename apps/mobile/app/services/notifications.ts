@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { getFormattedReminderTime } from "@notesnook/common";
-import { isReminderActive, Reminder } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { getFormattedReminderTime } from "@workstation/common";
+import { isReminderActive, Reminder } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import notifee, {
   AndroidStyle,
   AuthorizationStatus,
@@ -48,7 +48,7 @@ import { useUserStore } from "../stores/use-user-store";
 import { eOnLoadNote } from "../utils/events";
 import { fluidTabsRef } from "../utils/global-refs";
 import { convertNoteToText } from "../utils/note-to-text";
-import { NotesnookModule } from "../utils/notesnook-module";
+import { WorkstationModule } from "../utils/workstation-module";
 import { sleep } from "../utils/time";
 import { DDS } from "./device-detection";
 import { eSendEvent } from "./event-manager";
@@ -112,7 +112,7 @@ const onEvent = async ({ type, detail }: Event) => {
   if (
     type === EventType.DISMISSED &&
     Platform.OS === "android" &&
-    notification?.id === "notesnook_note_input" &&
+    notification?.id === "workstation_note_input" &&
     SettingsService.getProperty("notifNotes")
   ) {
     pinQuickNote();
@@ -138,7 +138,7 @@ const onEvent = async ({ type, detail }: Event) => {
   if (type === EventType.PRESS) {
     notifee.decrementBadgeCount();
     if (notification?.data?.type === "quickNote") return;
-    NotesnookModule.setAppState("");
+    WorkstationModule.setAppState("");
     if (notification?.data?.type === "reminder" && notification?.id) {
       const reminder = await db.reminders?.reminder(
         notification.id?.split("_")[0]
@@ -226,7 +226,7 @@ const onEvent = async ({ type, detail }: Event) => {
           message: strings.quickNoteContent(),
           ongoing: true,
           actions: ["ReplyInput", strings.hide()],
-          id: "notesnook_note_input",
+          id: "workstation_note_input",
           reply_button_text: strings.takeNote(),
           reply_placeholder_text: strings.quickNotePlaceholder()
         });
@@ -282,12 +282,12 @@ async function updateRemindersForWidget() {
       activeReminders.push(reminder);
     }
   }
-  NotesnookModule.setString(
+  WorkstationModule.setString(
     "appPreview",
     "remindersList",
     JSON.stringify(activeReminders)
   );
-  NotesnookModule.updateReminderWidget();
+  WorkstationModule.updateReminderWidget();
 }
 
 async function setupIOSCategories() {
@@ -411,7 +411,7 @@ async function scheduleNotification(
             smallIcon: "ic_stat_name",
             pressAction: {
               id: "default",
-              mainComponent: "notesnook"
+              mainComponent: "workstation"
             },
             badgeCount: 1,
             actions: androidActions,
@@ -446,14 +446,14 @@ async function scheduleNotification(
 }
 
 async function loadNote(id: string, jump: boolean) {
-  if (!id || id === "notesnook_note_input") return;
+  if (!id || id === "workstation_note_input") return;
   editorState().initialLoadCalled = true;
   const note = await db.notes.note(id);
   if (!note) return;
   if (!DDS.isTab && jump) {
     fluidTabsRef.current?.goToPage("editor");
   }
-  NotesnookModule.setAppState(
+  WorkstationModule.setAppState(
     JSON.stringify({
       editing: true,
       movedAway: false,
@@ -476,25 +476,25 @@ async function getChannelId(id: "silent" | "vibrate" | "urgent" | "default") {
   switch (id) {
     case "default":
       return await notifee.createChannel({
-        id: "com.streetwriters.notesnook",
+        id: "com.streetwriters.workstation",
         name: "Default",
         vibration: false
       });
     case "silent":
       return await notifee.createChannel({
-        id: "com.streetwriters.notesnook.silent",
+        id: "com.streetwriters.workstation.silent",
         name: "Silent",
         vibration: false
       });
     case "vibrate":
       return await notifee.createChannel({
-        id: "com.streetwriters.notesnook.silent",
+        id: "com.streetwriters.workstation.silent",
         name: "Vibrate",
         vibration: true
       });
     case "urgent":
       return await notifee.createChannel({
-        id: "com.streetwriters.notesnook.urgent",
+        id: "com.streetwriters.workstation.urgent",
         name: "Urgent",
         description:
           "This channel is used to show notifications with sound & vibration.",
@@ -555,7 +555,7 @@ async function displayNotification({
         autoCancel: false,
         pressAction: {
           id: "default",
-          mainComponent: "notesnook"
+          mainComponent: "workstation"
         },
         actions: actions?.map((action) => ({
           pressAction: {
@@ -842,7 +842,7 @@ async function getTriggers(
 }
 
 async function unpinQuickNote() {
-  remove("notesnook_note_input");
+  remove("workstation_note_input");
   SettingsService.set({ notifNotes: false });
 }
 
@@ -910,7 +910,7 @@ async function pinQuickNote() {
     return;
   }
   get().then((items) => {
-    const notification = items.find((n) => n.id === "notesnook_note_input");
+    const notification = items.find((n) => n.id === "workstation_note_input");
     if (notification) return;
     displayNotification({
       title: strings.quickNoteTitle(),
@@ -920,7 +920,7 @@ async function pinQuickNote() {
       actions: ["ReplyInput", strings.hide()],
       reply_button_text: strings.takeNote(),
       reply_placeholder_text: strings.quickNotePlaceholder(),
-      id: "notesnook_note_input"
+      id: "workstation_note_input"
     });
   });
 }

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { Button, Flex, Text } from "@theme-ui/components";
 import { TipContext, useTip } from "../../hooks/use-tip";
 import { Info, Sync } from "../icons";
 import { useStore as useAppStore } from "../../stores/app-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type PlaceholderProps = { context: TipContext; text?: string };
 function Placeholder(props: PlaceholderProps) {

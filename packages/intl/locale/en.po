@@ -22,24 +22,24 @@ msgid " Unlock with password once to enable biometric access."
 msgstr " Unlock with password once to enable biometric access."
 
 #: src/strings.ts:1941
-msgid " Upgrade to Notesnook Pro to add more notebooks."
-msgstr " Upgrade to Notesnook Pro to add more notebooks."
+msgid " Upgrade to Workstation Pro to add more notebooks."
+msgstr " Upgrade to Workstation Pro to add more notebooks."
 
 #: src/strings.ts:1944
-msgid " Upgrade to Notesnook Pro to customize the toolbar."
-msgstr " Upgrade to Notesnook Pro to customize the toolbar."
+msgid " Upgrade to Workstation Pro to customize the toolbar."
+msgstr " Upgrade to Workstation Pro to customize the toolbar."
 
 #: src/strings.ts:1943
-msgid " Upgrade to Notesnook Pro to use custom toolbar presets."
-msgstr " Upgrade to Notesnook Pro to use custom toolbar presets."
+msgid " Upgrade to Workstation Pro to use custom toolbar presets."
+msgstr " Upgrade to Workstation Pro to use custom toolbar presets."
 
 #: src/strings.ts:1942
-msgid " Upgrade to Notesnook Pro to use the notes vault."
-msgstr " Upgrade to Notesnook Pro to use the notes vault."
+msgid " Upgrade to Workstation Pro to use the notes vault."
+msgstr " Upgrade to Workstation Pro to use the notes vault."
 
 #: src/strings.ts:1945
-msgid " Upgrade to Notesnook Pro to use this feature."
-msgstr " Upgrade to Notesnook Pro to use this feature."
+msgid " Upgrade to Workstation Pro to use this feature."
+msgstr " Upgrade to Workstation Pro to use this feature."
 
 #: src/strings.ts:828
 msgid "— not just the"
@@ -568,12 +568,12 @@ msgid "{plan} plan"
 msgstr "{plan} plan"
 
 #: src/strings.ts:743
-msgid "{platform, select, android {{name} saved to selected path} other {{name} saved to File Manager/Notesnook/downloads}}"
-msgstr "{platform, select, android {{name} saved to selected path} other {{name} saved to File Manager/Notesnook/downloads}}"
+msgid "{platform, select, android {{name} saved to selected path} other {{name} saved to File Manager/Workstation/downloads}}"
+msgstr "{platform, select, android {{name} saved to selected path} other {{name} saved to File Manager/Workstation/downloads}}"
 
 #: src/strings.ts:1337
-msgid "{platform, select, android {Backup file saved in \"Notesnook backups\" folder on your phone.} other {Backup file is saved in File Manager/Notesnook folder}}"
-msgstr "{platform, select, android {Backup file saved in \"Notesnook backups\" folder on your phone.} other {Backup file is saved in File Manager/Notesnook folder}}"
+msgid "{platform, select, android {Backup file saved in \"Workstation backups\" folder on your phone.} other {Backup file is saved in File Manager/Workstation folder}}"
+msgstr "{platform, select, android {Backup file saved in \"Workstation backups\" folder on your phone.} other {Backup file is saved in File Manager/Workstation folder}}"
 
 #: src/strings.ts:2357
 msgid "{selected} selected"
@@ -604,8 +604,8 @@ msgid "{words, plural, other {# selected}}"
 msgstr "{words, plural, other {# selected}}"
 
 #: src/strings.ts:1790
-msgid "#notesnook"
-msgstr "#notesnook"
+msgid "#workstation"
+msgstr "#workstation"
 
 #: src/strings.ts:1583
 msgid "12-hour"
@@ -812,8 +812,8 @@ msgid "All the data in your account will be overwritten with the data in the bac
 msgstr "All the data in your account will be overwritten with the data in the backup file. There is no way to reverse this action."
 
 #: src/strings.ts:2151
-msgid "All the source code for Notesnook is available & open for everyone on GitHub."
-msgstr "All the source code for Notesnook is available & open for everyone on GitHub."
+msgid "All the source code for Workstation is available & open for everyone on GitHub."
+msgstr "All the source code for Workstation is available & open for everyone on GitHub."
 
 #: src/strings.ts:430
 msgid "All tools are grouped"
@@ -828,8 +828,8 @@ msgid "All tools in this group will be removed from the toolbar."
 msgstr "All tools in this group will be removed from the toolbar."
 
 #: src/strings.ts:1346
-msgid "All your backups are stored in 'Phone Storage/Notesnook/backups/' folder"
-msgstr "All your backups are stored in 'Phone Storage/Notesnook/backups/' folder"
+msgid "All your backups are stored in 'Phone Storage/Workstation/backups/' folder"
+msgstr "All your backups are stored in 'Phone Storage/Workstation/backups/' folder"
 
 #: src/strings.ts:1078
 msgid "All your data will be removed permanently. Make sure you have saved backup of your notes. This action is IRREVERSIBLE."
@@ -1418,13 +1418,13 @@ msgstr "Changing password is an irreversible process. You will be logged out fro
 msgid "Characters"
 msgstr "Characters"
 
-#: src/strings.ts:1296
-msgid "Check for new version of Notesnook"
-msgstr "Check for new version of Notesnook"
-
 #: src/strings.ts:1299
 msgid "Check for new version of the app available on app launch"
 msgstr "Check for new version of the app available on app launch"
+
+#: src/strings.ts:1296
+msgid "Check for new version of Workstation"
+msgstr "Check for new version of Workstation"
 
 #: src/strings.ts:1295
 msgid "Check for updates"
@@ -1742,8 +1742,8 @@ msgid "Configure"
 msgstr "Configure"
 
 #: src/strings.ts:2406
-msgid "Configure server URLs for Notesnook"
-msgstr "Configure server URLs for Notesnook"
+msgid "Configure server URLs for Workstation"
+msgstr "Configure server URLs for Workstation"
 
 #: src/strings.ts:682
 msgid "Confirm email"
@@ -1786,8 +1786,8 @@ msgid "Continue"
 msgstr "Continue"
 
 #: src/strings.ts:1164
-msgid "Contribute towards a better Notesnook. All tracking information is anonymous."
-msgstr "Contribute towards a better Notesnook. All tracking information is anonymous."
+msgid "Contribute towards a better Workstation. All tracking information is anonymous."
+msgstr "Contribute towards a better Workstation. All tracking information is anonymous."
 
 #: src/strings.ts:1248
 msgid "Controls whether this device should receive reminder notifications."
@@ -1895,16 +1895,16 @@ msgid "Create shortcut of this notebook in side menu"
 msgstr "Create shortcut of this notebook in side menu"
 
 #: src/strings.ts:1387
-msgid "Create unlimited notebooks with Notesnook Pro"
-msgstr "Create unlimited notebooks with Notesnook Pro"
+msgid "Create unlimited notebooks with Workstation Pro"
+msgstr "Create unlimited notebooks with Workstation Pro"
 
 #: src/strings.ts:1386
-msgid "Create unlimited tags with Notesnook Pro"
-msgstr "Create unlimited tags with Notesnook Pro"
+msgid "Create unlimited tags with Workstation Pro"
+msgstr "Create unlimited tags with Workstation Pro"
 
 #: src/strings.ts:1388
-msgid "Create unlimited vaults with Notesnook Pro"
-msgstr "Create unlimited vaults with Notesnook Pro"
+msgid "Create unlimited vaults with Workstation Pro"
+msgstr "Create unlimited vaults with Workstation Pro"
 
 #: src/strings.ts:447
 msgid "Create vault"
@@ -2226,8 +2226,8 @@ msgid "Disputed"
 msgstr "Disputed"
 
 #: src/strings.ts:273
-msgid "Do you enjoy using Notesnook?"
-msgstr "Do you enjoy using Notesnook?"
+msgid "Do you enjoy using Workstation?"
+msgstr "Do you enjoy using Workstation?"
 
 #: src/strings.ts:2228
 msgid "Do you want to clear the trash?"
@@ -2734,8 +2734,8 @@ msgid "Export CSV"
 msgstr "Export CSV"
 
 #: src/strings.ts:1385
-msgid "Export notes as PDF, Markdown and HTML with Notesnook Pro"
-msgstr "Export notes as PDF, Markdown and HTML with Notesnook Pro"
+msgid "Export notes as PDF, Markdown and HTML with Workstation Pro"
+msgstr "Export notes as PDF, Markdown and HTML with Workstation Pro"
 
 #: src/strings.ts:215
 msgid "Exporting \"{title}\""
@@ -2911,16 +2911,16 @@ msgid "Follow us on Mastodon"
 msgstr "Follow us on Mastodon"
 
 #: src/strings.ts:1277
-msgid "Follow us on Mastodon for updates and news about Notesnook"
-msgstr "Follow us on Mastodon for updates and news about Notesnook"
+msgid "Follow us on Mastodon for updates and news about Workstation"
+msgstr "Follow us on Mastodon for updates and news about Workstation"
 
 #: src/strings.ts:1278
 msgid "Follow us on X"
 msgstr "Follow us on X"
 
 #: src/strings.ts:1279
-msgid "Follow us on X for updates and news about Notesnook"
-msgstr "Follow us on X for updates and news about Notesnook"
+msgid "Follow us on X for updates and news about Workstation"
+msgstr "Follow us on X for updates and news about Workstation"
 
 #: src/strings.ts:2276
 msgid "Font family"
@@ -2939,12 +2939,12 @@ msgid "For a monthly subscription, you can get a refund within 7 days of purchas
 msgstr "For a monthly subscription, you can get a refund within 7 days of purchase. For a yearly subscription, we offer a full refund within 14 days of purchase. For a 5 year subscription, you can request a refund within 30 days of purchase."
 
 #: src/strings.ts:1686
-msgid "For a more integrated user experience, try out Notesnook for {platform}"
-msgstr "For a more integrated user experience, try out Notesnook for {platform}"
+msgid "For a more integrated user experience, try out Workstation for {platform}"
+msgstr "For a more integrated user experience, try out Workstation for {platform}"
 
 #: src/strings.ts:1767
-msgid "for help regarding how to use the Notesnook Importer."
-msgstr "for help regarding how to use the Notesnook Importer."
+msgid "for help regarding how to use the Workstation Importer."
+msgstr "for help regarding how to use the Workstation Importer."
 
 #: src/strings.ts:2530
 msgid "for locking your notes as soon as app enters background"
@@ -3028,26 +3028,6 @@ msgstr "General"
 msgid "Get helpful debug info about the app to help us find bugs."
 msgstr "Get helpful debug info about the app to help us find bugs."
 
-#: src/strings.ts:1292
-msgid "Get Notesnook app on your desktop and access all notes"
-msgstr "Get Notesnook app on your desktop and access all notes"
-
-#: src/strings.ts:2157
-msgid "Get Notesnook app on your iPhone and access all your notes on the go."
-msgstr "Get Notesnook app on your iPhone and access all your notes on the go."
-
-#: src/strings.ts:2159
-msgid "Get Notesnook app on your iPhone or Android device and access all your notes on the go."
-msgstr "Get Notesnook app on your iPhone or Android device and access all your notes on the go."
-
-#: src/strings.ts:1382
-msgid "Get Notesnook Pro"
-msgstr "Get Notesnook Pro"
-
-#: src/strings.ts:1367
-msgid "Get Notesnook Pro to enable automatic backups"
-msgstr "Get Notesnook Pro to enable automatic backups"
-
 #: src/strings.ts:2407
 msgid "Get Priority support"
 msgstr "Get Priority support"
@@ -3063,6 +3043,26 @@ msgstr "Get started"
 #: src/strings.ts:2527
 msgid "Get this and so much more:"
 msgstr "Get this and so much more:"
+
+#: src/strings.ts:1292
+msgid "Get Workstation app on your desktop and access all notes"
+msgstr "Get Workstation app on your desktop and access all notes"
+
+#: src/strings.ts:2157
+msgid "Get Workstation app on your iPhone and access all your notes on the go."
+msgstr "Get Workstation app on your iPhone and access all your notes on the go."
+
+#: src/strings.ts:2159
+msgid "Get Workstation app on your iPhone or Android device and access all your notes on the go."
+msgstr "Get Workstation app on your iPhone or Android device and access all your notes on the go."
+
+#: src/strings.ts:1382
+msgid "Get Workstation Pro"
+msgstr "Get Workstation Pro"
+
+#: src/strings.ts:1367
+msgid "Get Workstation Pro to enable automatic backups"
+msgstr "Get Workstation Pro to enable automatic backups"
 
 #: src/strings.ts:1885
 msgid "Getting encryption key..."
@@ -3173,8 +3173,8 @@ msgid "Help and support"
 msgstr "Help and support"
 
 #: src/strings.ts:161
-msgid "Help improve Notesnook by sending completely anonymized"
-msgstr "Help improve Notesnook by sending completely anonymized"
+msgid "Help improve Workstation by sending completely anonymized"
+msgstr "Help improve Workstation by sending completely anonymized"
 
 #: src/strings.ts:1375
 msgid "Hide"
@@ -3273,12 +3273,12 @@ msgid "If this continues to happen, please reach out to us via"
 msgstr "If this continues to happen, please reach out to us via"
 
 #: src/strings.ts:2113
-msgid "If true, Notesnook will automatically start up when you turn on & login to your system."
-msgstr "If true, Notesnook will automatically start up when you turn on & login to your system."
+msgid "If true, Workstation will automatically start up when you turn on & login to your system."
+msgstr "If true, Workstation will automatically start up when you turn on & login to your system."
 
 #: src/strings.ts:2116
-msgid "If true, Notesnook will start minimized to either the system tray or your system taskbar/dock. This setting only works with Auto start on system startup is enabled."
-msgstr "If true, Notesnook will start minimized to either the system tray or your system taskbar/dock. This setting only works with Auto start on system startup is enabled."
+msgid "If true, Workstation will start minimized to either the system tray or your system taskbar/dock. This setting only works with Auto start on system startup is enabled."
+msgstr "If true, Workstation will start minimized to either the system tray or your system taskbar/dock. This setting only works with Auto start on system startup is enabled."
 
 #: src/strings.ts:1724
 msgid "If you can't scan the QR code above, enter this text instead (spaces don't matter)"
@@ -3293,8 +3293,8 @@ msgstr ""
 "            working,"
 
 #: src/strings.ts:1804
-msgid "If you don't have a recovery key, you can recover your data by restoring a Notesnook data backup file (.nnbackup)."
-msgstr "If you don't have a recovery key, you can recover your data by restoring a Notesnook data backup file (.nnbackup)."
+msgid "If you don't have a recovery key, you can recover your data by restoring a Workstation data backup file (.nnbackup)."
+msgstr "If you don't have a recovery key, you can recover your data by restoring a Workstation data backup file (.nnbackup)."
 
 #: src/strings.ts:2077
 msgid "If you face any issue, you can reach out to us anytime."
@@ -3408,13 +3408,13 @@ msgstr "Insert row above"
 msgid "Insert row below"
 msgstr "Insert row below"
 
-#: src/strings.ts:1684
-msgid "Install Notesnook"
-msgstr "Install Notesnook"
-
 #: src/strings.ts:2148
 msgid "Install update"
 msgstr "Install update"
+
+#: src/strings.ts:1684
+msgid "Install Workstation"
+msgstr "Install Workstation"
 
 #: src/strings.ts:1719
 msgid "installs"
@@ -3446,8 +3446,8 @@ msgid "It seems that your changes could not be saved. What to do next:"
 msgstr "It seems that your changes could not be saved. What to do next:"
 
 #: src/strings.ts:275
-msgid "It took us a year to bring Notesnook to life. Share your experience and suggestions to help us improve it."
-msgstr "It took us a year to bring Notesnook to life. Share your experience and suggestions to help us improve it."
+msgid "It took us a year to bring Workstation to life. Share your experience and suggestions to help us improve it."
+msgstr "It took us a year to bring Workstation to life. Share your experience and suggestions to help us improve it."
 
 #: src/strings.ts:2257
 msgid "Italic"
@@ -3543,8 +3543,8 @@ msgid "Learn more about Monographs"
 msgstr "Learn more about Monographs"
 
 #: src/strings.ts:272
-msgid "Learn more about Notesnook Monograph"
-msgstr "Learn more about Notesnook Monograph"
+msgid "Learn more about Workstation Monograph"
+msgstr "Learn more about Workstation Monograph"
 
 #: src/strings.ts:646
 msgid "Least relevant first"
@@ -3555,8 +3555,8 @@ msgid "Legal"
 msgstr "Legal"
 
 #: src/strings.ts:476
-msgid "Let us know if you have faced any issue/bug while using Notesnook. We will try to fix it as soon as possible."
-msgstr "Let us know if you have faced any issue/bug while using Notesnook. We will try to fix it as soon as possible."
+msgid "Let us know if you have faced any issue/bug while using Workstation. We will try to fix it as soon as possible."
+msgstr "Let us know if you have faced any issue/bug while using Workstation. We will try to fix it as soon as possible."
 
 #: src/strings.ts:2161
 msgid "License"
@@ -4285,54 +4285,6 @@ msgstr "Notes exported as {path} successfully"
 msgid "notes imported"
 msgstr "notes imported"
 
-#: src/strings.ts:2542
-msgid "Notesnook"
-msgstr "Notesnook"
-
-#: src/strings.ts:2597
-msgid "Notesnook Circle"
-msgstr "Notesnook Circle"
-
-#: src/strings.ts:2599
-msgid "Notesnook Circle brings together trusted partners who share our commitment to privacy, transparency, and user freedom."
-msgstr "Notesnook Circle brings together trusted partners who share our commitment to privacy, transparency, and user freedom."
-
-#: src/strings.ts:2067
-msgid "Notesnook encrypts everything offline before syncing to your other devices. This means that no one can read your notes except you. Not even us."
-msgstr "Notesnook encrypts everything offline before syncing to your other devices. This means that no one can read your notes except you. Not even us."
-
-#: src/strings.ts:2142
-msgid "Notesnook Importer"
-msgstr "Notesnook Importer"
-
-#: src/strings.ts:1066
-msgid "Notesnook Pro"
-msgstr "Notesnook Pro"
-
-#: src/strings.ts:2174
-msgid ""
-"Notesnook uses the following DNS providers:\n"
-"\n"
-"1. Cloudflare DNS\n"
-"2. Quad9\n"
-"\n"
-"This can sometimes bypass local ISP blockages on Notesnook traffic. Disable this if you want the app to use system's DNS settings."
-msgstr ""
-"Notesnook uses the following DNS providers:\n"
-"\n"
-"1. Cloudflare DNS\n"
-"2. Quad9\n"
-"\n"
-"This can sometimes bypass local ISP blockages on Notesnook traffic. Disable this if you want the app to use system's DNS settings."
-
-#: src/strings.ts:987
-msgid "Notesnook will send you a 2FA code on your email when prompted"
-msgstr "Notesnook will send you a 2FA code on your email when prompted"
-
-#: src/strings.ts:994
-msgid "Notesnook will send you an SMS with a 2FA code when prompted"
-msgstr "Notesnook will send you an SMS with a 2FA code when prompted"
-
 #: src/strings.ts:2137
 msgid "Notifications"
 msgstr "Notifications"
@@ -4430,8 +4382,8 @@ msgid "Open source"
 msgstr "Open source"
 
 #: src/strings.ts:1288
-msgid "Open source libraries used in Notesnook"
-msgstr "Open source libraries used in Notesnook"
+msgid "Open source libraries used in Workstation"
+msgstr "Open source libraries used in Workstation"
 
 #: src/strings.ts:1287
 msgid "Open source licenses"
@@ -4978,17 +4930,17 @@ msgstr "Quickly create a note from the notification"
 msgid "Quote"
 msgstr "Quote"
 
-#: src/strings.ts:1357
-msgid "Rate Notesnook on App Store"
-msgstr "Rate Notesnook on App Store"
-
-#: src/strings.ts:1358
-msgid "Rate Notesnook on Play Store"
-msgstr "Rate Notesnook on Play Store"
-
 #: src/strings.ts:589
 msgid "Rate now (It takes only a second)"
 msgstr "Rate now (It takes only a second)"
+
+#: src/strings.ts:1357
+msgid "Rate Workstation on App Store"
+msgstr "Rate Workstation on App Store"
+
+#: src/strings.ts:1358
+msgid "Rate Workstation on Play Store"
+msgstr "Rate Workstation on Play Store"
 
 #: src/strings.ts:386
 msgid "Read full release notes on Github"
@@ -4999,8 +4951,8 @@ msgid "Read only"
 msgstr "Read only"
 
 #: src/strings.ts:1265
-msgid "Read the documentation to learn more about Notesnook"
-msgstr "Read the documentation to learn more about Notesnook"
+msgid "Read the documentation to learn more about Workstation"
+msgstr "Read the documentation to learn more about Workstation"
 
 #: src/strings.ts:1286
 msgid "Read the privacy policy"
@@ -5185,8 +5137,8 @@ msgid "Reminders"
 msgstr "Reminders"
 
 #: src/strings.ts:1379
-msgid "Reminders cannot be set because notifications have been disabled from app settings. If you want to keep receiving reminder notifications, enable notifications for Notesnook from app settings."
-msgstr "Reminders cannot be set because notifications have been disabled from app settings. If you want to keep receiving reminder notifications, enable notifications for Notesnook from app settings."
+msgid "Reminders cannot be set because notifications have been disabled from app settings. If you want to keep receiving reminder notifications, enable notifications for Workstation from app settings."
+msgstr "Reminders cannot be set because notifications have been disabled from app settings. If you want to keep receiving reminder notifications, enable notifications for Workstation from app settings."
 
 #: src/strings.ts:1953
 msgid "Reminders will not be active on this device as it does not support notifications."
@@ -5667,8 +5619,8 @@ msgid "Security key successfully registered."
 msgstr "Security key successfully registered."
 
 #: src/strings.ts:1294
-msgid "See what the future of Notesnook is going to be like."
-msgstr "See what the future of Notesnook is going to be like."
+msgid "See what the future of Workstation is going to be like."
+msgstr "See what the future of Workstation is going to be like."
 
 #: src/strings.ts:1334
 msgid "Select"
@@ -5711,8 +5663,8 @@ msgid "Select files to import"
 msgstr "Select files to import"
 
 #: src/strings.ts:1606
-msgid "Select folder where Notesnook backup files are stored to view and restore them from the app"
-msgstr "Select folder where Notesnook backup files are stored to view and restore them from the app"
+msgid "Select folder where Workstation backup files are stored to view and restore them from the app"
+msgstr "Select folder where Workstation backup files are stored to view and restore them from the app"
 
 #: src/strings.ts:1607
 msgid "Select folder with backup files"
@@ -5763,8 +5715,8 @@ msgid "Select the languages the spell checker should check in."
 msgstr "Select the languages the spell checker should check in."
 
 #: src/strings.ts:2458
-msgid "Select the release track for Notesnook."
-msgstr "Select the release track for Notesnook."
+msgid "Select the release track for Workstation."
+msgstr "Select the release track for Workstation."
 
 #: src/strings.ts:237
 msgid "SELECTED NOTE"
@@ -5972,13 +5924,13 @@ msgstr "Share backup"
 msgid "Share note"
 msgstr "Share note"
 
-#: src/strings.ts:1787
-msgid "Share Notesnook with friends!"
-msgstr "Share Notesnook with friends!"
-
 #: src/strings.ts:594
 msgid "Share to cloud"
 msgstr "Share to cloud"
+
+#: src/strings.ts:1787
+msgid "Share Workstation with friends!"
+msgstr "Share Workstation with friends!"
 
 #: src/strings.ts:292
 msgid "shortcut"
@@ -6444,8 +6396,8 @@ msgid "Thank you for the purchase"
 msgstr "Thank you for the purchase"
 
 #: src/strings.ts:479
-msgid "Thank you for updating Notesnook! We will be applying some minor changes for a better note taking experience."
-msgstr "Thank you for updating Notesnook! We will be applying some minor changes for a better note taking experience."
+msgid "Thank you for updating Workstation! We will be applying some minor changes for a better note taking experience."
+msgstr "Thank you for updating Workstation! We will be applying some minor changes for a better note taking experience."
 
 #: src/strings.ts:2075
 msgid "Thank you. You are the proof that privacy always comes first."
@@ -6462,10 +6414,6 @@ msgstr "The incoming note could not be unlocked with the provided password. Ente
 #: src/strings.ts:231
 msgid "The information above will be publically available at"
 msgstr "The information above will be publically available at"
-
-#: src/strings.ts:2603
-msgid "The Notesnook Circle is exclusive to subscribers. Please consider subscribing to gain access to Notesnook Circle and enjoy additional benefits."
-msgstr "The Notesnook Circle is exclusive to subscribers. Please consider subscribing to gain access to Notesnook Circle and enjoy additional benefits."
 
 #: src/strings.ts:2082
 msgid "The password/pin for unlocking the app."
@@ -6490,6 +6438,10 @@ msgstr "The security key for unlocking the app. This is the most secure method."
 #: src/strings.ts:1641
 msgid "The URL you have given ({url}) does not point to the {server}."
 msgstr "The URL you have given ({url}) does not point to the {server}."
+
+#: src/strings.ts:2603
+msgid "The Workstation Circle is exclusive to subscribers. Please consider subscribing to gain access to Workstation Circle and enjoy additional benefits."
+msgstr "The Workstation Circle is exclusive to subscribers. Please consider subscribing to gain access to Workstation Circle and enjoy additional benefits."
 
 #: src/strings.ts:1117
 msgid "Themes"
@@ -6581,8 +6533,8 @@ msgid "This username will be used to distinguish between different credentials i
 msgstr "This username will be used to distinguish between different credentials in your security key. Make sure it is unique."
 
 #: src/strings.ts:1303
-msgid "This version of Notesnook app does not support in-app purchases. Kindly login on the Notesnook web app to make the purchase."
-msgstr "This version of Notesnook app does not support in-app purchases. Kindly login on the Notesnook web app to make the purchase."
+msgid "This version of Workstation app does not support in-app purchases. Kindly login on the Workstation web app to make the purchase."
+msgstr "This version of Workstation app does not support in-app purchases. Kindly login on the Workstation web app to make the purchase."
 
 #: src/strings.ts:626
 msgid "Thu"
@@ -6767,8 +6719,8 @@ msgid "Unlock incoming note"
 msgstr "Unlock incoming note"
 
 #: src/strings.ts:1383
-msgid "Unlock more colors with Notesnook Pro"
-msgstr "Unlock more colors with Notesnook Pro"
+msgid "Unlock more colors with Workstation Pro"
+msgstr "Unlock more colors with Workstation Pro"
 
 #: src/strings.ts:455
 #: src/strings.ts:558
@@ -6864,14 +6816,6 @@ msgstr "Upgrade plan"
 msgid "Upgrade plan to {plan} to use this feature."
 msgstr "Upgrade plan to {plan} to use this feature."
 
-#: src/strings.ts:1939
-msgid "Upgrade to Notesnook Pro to add colors."
-msgstr "Upgrade to Notesnook Pro to add colors."
-
-#: src/strings.ts:1940
-msgid "Upgrade to Notesnook Pro to create more tags."
-msgstr "Upgrade to Notesnook Pro to create more tags."
-
 #: src/strings.ts:749
 msgid "Upgrade to Pro"
 msgstr "Upgrade to Pro"
@@ -6879,6 +6823,14 @@ msgstr "Upgrade to Pro"
 #: src/strings.ts:2595
 msgid "Upgrade to redeem"
 msgstr "Upgrade to redeem"
+
+#: src/strings.ts:1939
+msgid "Upgrade to Workstation Pro to add colors."
+msgstr "Upgrade to Workstation Pro to add colors."
+
+#: src/strings.ts:1940
+msgid "Upgrade to Workstation Pro to create more tags."
+msgstr "Upgrade to Workstation Pro to create more tags."
 
 #: src/strings.ts:510
 msgid "Upload"
@@ -7017,8 +6969,8 @@ msgid "Using {instance} (v{version})"
 msgstr "Using {instance} (v{version})"
 
 #: src/strings.ts:2252
-msgid "Using official Notesnook instance"
-msgstr "Using official Notesnook instance"
+msgid "Using official Workstation instance"
+msgstr "Using official Workstation instance"
 
 #: src/strings.ts:1709
 msgid "v{version} available"
@@ -7065,8 +7017,8 @@ msgid "Verify subscription"
 msgstr "Verify subscription"
 
 #: src/strings.ts:1072
-msgid "Verify your subscription to Notesnook Pro"
-msgstr "Verify your subscription to Notesnook Pro"
+msgid "Verify your subscription to Workstation Pro"
+msgstr "Verify your subscription to Workstation Pro"
 
 #: src/strings.ts:1903
 msgid "Verifying 2FA code"
@@ -7198,12 +7150,12 @@ msgid "Welcome back!"
 msgstr "Welcome back!"
 
 #: src/strings.ts:2583
-msgid "Welcome to Notesnook {plan}"
-msgstr "Welcome to Notesnook {plan}"
+msgid "Welcome to Workstation {plan}"
+msgstr "Welcome to Workstation {plan}"
 
 #: src/strings.ts:2073
-msgid "Welcome to Notesnook Pro"
-msgstr "Welcome to Notesnook Pro"
+msgid "Welcome to Workstation Pro"
+msgstr "Welcome to Workstation Pro"
 
 #: src/strings.ts:1392
 msgid "What do I do if I am not getting the email?"
@@ -7236,6 +7188,54 @@ msgstr "Words"
 #: src/strings.ts:2412
 msgid "Work & Office"
 msgstr "Work & Office"
+
+#: src/strings.ts:2542
+msgid "Workstation"
+msgstr "Workstation"
+
+#: src/strings.ts:2597
+msgid "Workstation Circle"
+msgstr "Workstation Circle"
+
+#: src/strings.ts:2599
+msgid "Workstation Circle brings together trusted partners who share our commitment to privacy, transparency, and user freedom."
+msgstr "Workstation Circle brings together trusted partners who share our commitment to privacy, transparency, and user freedom."
+
+#: src/strings.ts:2067
+msgid "Workstation encrypts everything offline before syncing to your other devices. This means that no one can read your notes except you. Not even us."
+msgstr "Workstation encrypts everything offline before syncing to your other devices. This means that no one can read your notes except you. Not even us."
+
+#: src/strings.ts:2142
+msgid "Workstation Importer"
+msgstr "Workstation Importer"
+
+#: src/strings.ts:1066
+msgid "Workstation Pro"
+msgstr "Workstation Pro"
+
+#: src/strings.ts:2174
+msgid ""
+"Workstation uses the following DNS providers:\n"
+"\n"
+"1. Cloudflare DNS\n"
+"2. Quad9\n"
+"\n"
+"This can sometimes bypass local ISP blockages on Workstation traffic. Disable this if you want the app to use system's DNS settings."
+msgstr ""
+"Workstation uses the following DNS providers:\n"
+"\n"
+"1. Cloudflare DNS\n"
+"2. Quad9\n"
+"\n"
+"This can sometimes bypass local ISP blockages on Workstation traffic. Disable this if you want the app to use system's DNS settings."
+
+#: src/strings.ts:987
+msgid "Workstation will send you a 2FA code on your email when prompted"
+msgstr "Workstation will send you a 2FA code on your email when prompted"
+
+#: src/strings.ts:994
+msgid "Workstation will send you an SMS with a 2FA code when prompted"
+msgstr "Workstation will send you an SMS with a 2FA code when prompted"
 
 #: src/strings.ts:823
 msgid "Write notes with freedom, no spying, no tracking."
@@ -7287,8 +7287,8 @@ msgid "You are editing #{tag}"
 msgstr "You are editing #{tag}"
 
 #: src/strings.ts:1781
-msgid "You are logging into the beta version of Notesnook. Switching between beta &amp; stable versions can cause weird issues including data loss. It is recommended that you do not use both simultaneously."
-msgstr "You are logging into the beta version of Notesnook. Switching between beta &amp; stable versions can cause weird issues including data loss. It is recommended that you do not use both simultaneously."
+msgid "You are logging into the beta version of Workstation. Switching between beta &amp; stable versions can cause weird issues including data loss. It is recommended that you do not use both simultaneously."
+msgstr "You are logging into the beta version of Workstation. Switching between beta &amp; stable versions can cause weird issues including data loss. It is recommended that you do not use both simultaneously."
 
 #: src/strings.ts:1361
 msgid "You are not logged in"
@@ -7417,32 +7417,32 @@ msgid "You must log out in order to change/reset server URLs."
 msgstr "You must log out in order to change/reset server URLs."
 
 #: src/strings.ts:836
-msgid "You simply cannot get any better of a note taking app than @notesnook. The UI is clean and slick, it is feature rich, encrypted, reasonably priced (esp. for students & educators) & open source"
-msgstr "You simply cannot get any better of a note taking app than @notesnook. The UI is clean and slick, it is feature rich, encrypted, reasonably priced (esp. for students & educators) & open source"
+msgid "You simply cannot get any better of a note taking app than @workstation. The UI is clean and slick, it is feature rich, encrypted, reasonably priced (esp. for students & educators) & open source"
+msgstr "You simply cannot get any better of a note taking app than @workstation. The UI is clean and slick, it is feature rich, encrypted, reasonably priced (esp. for students & educators) & open source"
 
 #: src/strings.ts:1068
-msgid "You subscribed to Notesnook Pro on {date}. Verify this subscription?"
-msgstr "You subscribed to Notesnook Pro on {date}. Verify this subscription?"
+msgid "You subscribed to Workstation Pro on {date}. Verify this subscription?"
+msgstr "You subscribed to Workstation Pro on {date}. Verify this subscription?"
 
 #: src/strings.ts:709
-msgid "You subscribed to Notesnook Pro on Android Phone/Tablet using Google In App Purchase."
-msgstr "You subscribed to Notesnook Pro on Android Phone/Tablet using Google In App Purchase."
+msgid "You subscribed to Workstation Pro on Android Phone/Tablet using Google In App Purchase."
+msgstr "You subscribed to Workstation Pro on Android Phone/Tablet using Google In App Purchase."
 
 #: src/strings.ts:702
-msgid "You subscribed to Notesnook Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings."
-msgstr "You subscribed to Notesnook Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings."
+msgid "You subscribed to Workstation Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings."
+msgstr "You subscribed to Workstation Pro on iOS using Apple In App Purchase. You can cancel anytime with your iTunes Account settings."
 
 #: src/strings.ts:715
-msgid "You subscribed to Notesnook Pro on the Web/Desktop App."
-msgstr "You subscribed to Notesnook Pro on the Web/Desktop App."
+msgid "You subscribed to Workstation Pro on the Web/Desktop App."
+msgstr "You subscribed to Workstation Pro on the Web/Desktop App."
 
 #: src/strings.ts:721
-msgid "You subscribed to Notesnook Pro using a gift card."
-msgstr "You subscribed to Notesnook Pro using a gift card."
+msgid "You subscribed to Workstation Pro using a gift card."
+msgstr "You subscribed to Workstation Pro using a gift card."
 
 #: src/strings.ts:696
-msgid "You were awarded a subscription to Notesnook Pro by Streetwriters."
-msgstr "You were awarded a subscription to Notesnook Pro by Streetwriters."
+msgid "You were awarded a subscription to Workstation Pro by Streetwriters."
+msgstr "You were awarded a subscription to Workstation Pro by Streetwriters."
 
 #: src/strings.ts:468
 msgid "You will be logged out from all your devices"
@@ -7578,8 +7578,8 @@ msgid "Your password is always hashed before leaving this device."
 msgstr "Your password is always hashed before leaving this device."
 
 #: src/strings.ts:832
-msgid "Your privacy matters to us, no matter who you are. In a world where everyone is trying to spy on you, Notesnook encrypts all your data before it leaves your device. With Notesnook no one can ever sell your data again."
-msgstr "Your privacy matters to us, no matter who you are. In a world where everyone is trying to spy on you, Notesnook encrypts all your data before it leaves your device. With Notesnook no one can ever sell your data again."
+msgid "Your privacy matters to us, no matter who you are. In a world where everyone is trying to spy on you, Workstation encrypts all your data before it leaves your device. With Workstation no one can ever sell your data again."
+msgstr "Your privacy matters to us, no matter who you are. In a world where everyone is trying to spy on you, Workstation encrypts all your data before it leaves your device. With Workstation no one can ever sell your data again."
 
 #: src/strings.ts:1309
 msgid "Your profile pictrure is stored 100% end-to-end encrypted and only visible to you."

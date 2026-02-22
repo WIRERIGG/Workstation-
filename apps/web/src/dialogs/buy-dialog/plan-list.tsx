@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,8 +23,8 @@ import { Plan } from "./types";
 import { PERIOD_METADATA, PLAN_METADATA, usePlans } from "./plans";
 import { useState } from "react";
 import { FEATURE_HIGHLIGHTS, isTrialAvailableForPlan } from "./helpers";
-import { strings } from "@notesnook/intl";
-import { Period, SubscriptionPlan } from "@notesnook/core";
+import { strings } from "@workstation/intl";
+import { Period, SubscriptionPlan } from "@workstation/core";
 import Cameron from "../../assets/testimonials/cameron.jpg";
 import AndroidPolice from "../../assets/featured/android-police.svg";
 import AppleInsider from "../../assets/featured/appleinsider.svg";
@@ -35,7 +35,7 @@ import PrivacyGuides from "../../assets/featured/privacy-guides.svg";
 import Techlore from "../../assets/featured/techlore.svg";
 import TheVerge from "../../assets/featured/theverge.svg";
 import FreedomPress from "../../assets/featured/freedom-press.svg";
-import { getFeaturesTable, planToAvailability } from "@notesnook/common";
+import { getFeaturesTable, planToAvailability } from "@workstation/common";
 import { FeatureCaption } from "./feature-caption";
 import Accordion from "../../components/accordion";
 import { useStore as useUserStore } from "../../stores/user-store";
@@ -54,7 +54,7 @@ const testimonial = {
   image: Cameron,
   name: "Cameron Flint",
   link: "https://twitter.com/camflint/status/1481061416434286592",
-  text: "I'm pretty impressed at the progress @notesnook are making on their app — particularly in respect to how performant the app runs and behaves, despite the overhead of end-to-end encrypting user data."
+  text: "I'm pretty impressed at the progress @workstation are making on their app — particularly in respect to how performant the app runs and behaves, despite the overhead of end-to-end encrypting user data."
 };
 
 const FEATURED_ON = [
@@ -75,7 +75,7 @@ const FEATURED_ON = [
   {
     id: "itsfoss",
     logo: ItsFoss,
-    link: "https://news.itsfoss.com/standard-notes-to-notesnook/"
+    link: "https://news.itsfoss.com/standard-notes-to-workstation/"
   },
   {
     id: "Hackernoon",
@@ -95,7 +95,7 @@ const RECOMMENDED_BY = [
     id: "privacy-guides",
     logo: PrivacyGuides,
     size: 45,
-    link: "https://www.privacyguides.org/en/notebooks/#notesnook"
+    link: "https://www.privacyguides.org/en/notebooks/#workstation"
   },
   {
     id: "techlore",
@@ -116,7 +116,7 @@ const RECOMMENDED_BY = [
       light: `grayscale(1) contrast(100) brightness(0)`,
       dark: "brightness(0) invert(1)"
     },
-    link: "https://freedom.press/digisec/blog/note-taking-security/#notesnook"
+    link: "https://freedom.press/digisec/blog/note-taking-security/#workstation"
   }
 ];
 

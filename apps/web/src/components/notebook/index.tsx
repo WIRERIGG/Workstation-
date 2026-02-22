@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import ListItem from "../list-item";
 import { Button, Flex, Text } from "@theme-ui/components";
 import { useStore as useNotesStore } from "../../stores/note-store";
-import { Notebook as NotebookType } from "@notesnook/core";
+import { Notebook as NotebookType } from "@workstation/core";
 import {
   ChevronDown,
   ChevronRight,
@@ -33,7 +33,7 @@ import {
   ArrowUp,
   Move
 } from "../icons";
-import { MenuItem } from "@notesnook/ui";
+import { MenuItem } from "@workstation/ui";
 import { hashNavigate, navigate } from "../../navigation";
 import { useRef } from "react";
 import { handleDrop } from "../../common/drop-handler";
@@ -42,7 +42,7 @@ import { AddNotebookDialog } from "../../dialogs/add-notebook-dialog";
 import { useStore as useSelectionStore } from "../../stores/selection-store";
 import { store as appStore } from "../../stores/app-store";
 import { Multiselect } from "../../common/multi-select";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { db } from "../../common/db";
 import {
   createSetDefaultHomepageMenuItem,
@@ -50,7 +50,7 @@ import {
 } from "../../common";
 import { useStore as useNotebookStore } from "../../stores/notebook-store";
 import { MoveNotebookDialog } from "../../dialogs/move-notebook-dialog";
-import { areFeaturesAvailable } from "@notesnook/common";
+import { areFeaturesAvailable } from "@workstation/common";
 
 type NotebookProps = {
   item: NotebookType;

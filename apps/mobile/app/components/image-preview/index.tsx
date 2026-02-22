@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import Sodium from "@ammarahmed/react-native-sodium";
-import { DataURL, getFileNameWithExtension } from "@notesnook/core";
-import type { ImageAttributes } from "@notesnook/editor";
-import { useThemeColors } from "@notesnook/theme";
+import { DataURL, getFileNameWithExtension } from "@workstation/core";
+import type { ImageAttributes } from "@workstation/editor";
+import { useThemeColors } from "@workstation/theme";
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, View } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";

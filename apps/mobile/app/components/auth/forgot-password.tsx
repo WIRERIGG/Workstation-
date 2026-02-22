@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import { db } from "../../common/database";
 import { DDS } from "../../services/device-detection";
 import { ToastManager } from "../../services/event-manager";
 import SettingsService from "../../services/settings";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import DialogHeader from "../dialog/dialog-header";
 import { Button } from "../ui/button";
 import { IconButton } from "../ui/icon-button";
@@ -32,7 +32,7 @@ import Input from "../ui/input";
 import Seperator from "../ui/seperator";
 import Heading from "../ui/typography/heading";
 import Paragraph from "../ui/typography/paragraph";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../utils/styles";
 
 export const ForgotPassword = () => {

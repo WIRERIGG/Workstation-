@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import dayjs from "dayjs";
 import { db } from "../common/db";
-import { getTimeFormat } from "@notesnook/core";
+import { getTimeFormat } from "@workstation/core";
 
 export function setTimeOnly(str: string, date: dayjs.Dayjs) {
   const value = dayjs(str, getTimeFormat(db.settings.getTimeFormat()), true);

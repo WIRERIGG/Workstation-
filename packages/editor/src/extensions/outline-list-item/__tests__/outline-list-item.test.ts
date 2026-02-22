@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -75,8 +75,8 @@ describe("outline list item", () => {
 
   /**
    * Two changes happened:
-   * 1. Images were converted from inline nodes to block nodes (https://github.com/streetwriters/notesnook/pull/8563)
-   * 2. Outline list item's `content` schema was changed from `paragraph + list?`  to `block+` to `paragraph block*` (https://github.com/streetwriters/notesnook/pull/8772 and https://github.com/streetwriters/notesnook/commit/0b943d8ecdf04fd7d996fd0a4b1d62ec9569f071)
+   * 1. Images were converted from inline nodes to block nodes (https://github.com/streetwriters/workstation/pull/8563)
+   * 2. Outline list item's `content` schema was changed from `paragraph + list?`  to `block+` to `paragraph block*` (https://github.com/streetwriters/workstation/pull/8772 and https://github.com/streetwriters/workstation/commit/0b943d8ecdf04fd7d996fd0a4b1d62ec9569f071)
    *
    * In the old editor, it was possible to have an inline image as the first item in the outline list item, but based on the new schema it is not possible anymore. So the editor should insert an empty paragraph before the image.
    */

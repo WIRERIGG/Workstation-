@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import BaseStore from "./index";
 import Config from "../utils/config";
 import { isUserSubscribed } from "../hooks/use-is-user-premium";
 import { appVersion } from "../utils/version";
-import { findItemAndDelete, SubscriptionStatus } from "@notesnook/core";
+import { findItemAndDelete, SubscriptionStatus } from "@workstation/core";
 
 /**
  * @extends {BaseStore<AnnouncementStore>}

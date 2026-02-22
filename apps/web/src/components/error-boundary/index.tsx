@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,7 +28,7 @@ import {
 } from "react-error-boundary";
 import { useKeyStore } from "../../interfaces/key-store";
 import { isFeatureSupported } from "../../utils/feature-check";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { db } from "../../common/db";
 import { createDialect } from "../../common/sqlite";
 import { getDeviceInfo } from "../../utils/platform";
@@ -250,7 +250,7 @@ async function resetDatabase() {
   const multiTab = !!globalThis.SharedWorker && isFeatureSupported("opfs");
   await useKeyStore.getState().clear();
   const dialect = createDialect({
-    name: "notesnook",
+    name: "workstation",
     encrypted: true,
     async: !isFeatureSupported("opfs"),
     multiTab

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,9 +22,9 @@ import Input from "../../components/ui/input";
 import React from "react";
 import { TextInput } from "react-native";
 import Paragraph from "../../components/ui/typography/paragraph";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { AppFontSize } from "../../utils/size";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../utils/styles";
 
 export const TitleFormat = () => {

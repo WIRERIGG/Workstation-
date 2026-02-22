@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import Navigation from "../services/navigation";
 import { NotePreviewWidget } from "../services/note-preview-widget";
 import Notifications from "../services/notifications";
 import { eAfterSync } from "../utils/events";
-import { NotesnookModule, ShortcutInfo } from "../utils/notesnook-module";
+import { WorkstationModule, ShortcutInfo } from "../utils/workstation-module";
 import { useFavoriteStore } from "./use-favorite-store";
 import { useMenuStore } from "./use-menu-store";
 import { useMonographStore } from "./use-monograph-store";
@@ -43,9 +43,9 @@ async function syncShortcuts(result: ShortcutInfo[]) {
           {
             const note = await db.notes.note(shortcut.id);
             if (!note) {
-              NotesnookModule.removeShortcut(shortcut.id);
+              WorkstationModule.removeShortcut(shortcut.id);
             } else if (note.title !== shortcut.title) {
-              NotesnookModule.updateShortcut(
+              WorkstationModule.updateShortcut(
                 shortcut.id,
                 "note",
                 note.title,
@@ -58,9 +58,9 @@ async function syncShortcuts(result: ShortcutInfo[]) {
           {
             const notebook = await db.notebooks.notebook(shortcut.id);
             if (!notebook) {
-              NotesnookModule.removeShortcut(shortcut.id);
+              WorkstationModule.removeShortcut(shortcut.id);
             } else if (notebook.title !== shortcut.title) {
-              NotesnookModule.updateShortcut(
+              WorkstationModule.updateShortcut(
                 shortcut.id,
                 "notebook",
                 notebook.title,
@@ -73,9 +73,9 @@ async function syncShortcuts(result: ShortcutInfo[]) {
           {
             const tag = await db.tags.tag(shortcut.id);
             if (!tag) {
-              NotesnookModule.removeShortcut(shortcut.id);
+              WorkstationModule.removeShortcut(shortcut.id);
             } else if (tag.title !== shortcut.title) {
-              NotesnookModule.updateShortcut(
+              WorkstationModule.updateShortcut(
                 shortcut.id,
                 "tag",
                 tag.title,
@@ -88,9 +88,9 @@ async function syncShortcuts(result: ShortcutInfo[]) {
           {
             const color = await db.colors.color(shortcut.id);
             if (!color) {
-              NotesnookModule.removeShortcut(shortcut.id);
+              WorkstationModule.removeShortcut(shortcut.id);
             } else if (color.title !== shortcut.title) {
-              NotesnookModule.updateShortcut(
+              WorkstationModule.updateShortcut(
                 shortcut.id,
                 "color",
                 color.title,
@@ -127,7 +127,7 @@ export function initAfterSync(type: "full" | "send" = "send") {
   NotePreviewWidget.updateNotes();
   eSendEvent(eAfterSync);
 
-  NotesnookModule.getAllShortcuts()
+  WorkstationModule.getAllShortcuts()
     .then(syncShortcuts)
     .catch((e) => {
       DatabaseLogger.log(e);

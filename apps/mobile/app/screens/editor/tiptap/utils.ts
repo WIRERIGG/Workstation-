@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { parseInternalLink } from "@notesnook/core";
+import { parseInternalLink } from "@workstation/core";
 import { createRef, MutableRefObject, RefObject } from "react";
 import { TextInput } from "react-native";
 import WebView from "react-native-webview";
@@ -28,10 +28,10 @@ import {
   eUnSubscribeEvent
 } from "../../../services/event-manager";
 import { eOnLoadNote } from "../../../utils/events";
-import { NotesnookModule } from "../../../utils/notesnook-module";
+import { WorkstationModule } from "../../../utils/workstation-module";
 import { AppState, EditorState, useEditorType } from "./types";
 import { useTabStore } from "./use-tab-store";
-import { NativeEvents } from "@notesnook/editor-mobile/src/utils/native-events";
+import { NativeEvents } from "@workstation/editor-mobile/src/utils/native-events";
 
 export const textInput = createRef<TextInput>();
 export const editorController =
@@ -151,7 +151,7 @@ export function setAppState(state: AppState) {
 }
 export function getAppState() {
   if (appState && canRestoreAppState(appState)) return appState as AppState;
-  const json = NotesnookModule.getAppState();
+  const json = WorkstationModule.getAppState();
   if (json) {
     appState = JSON.parse(json) as AppState;
     if (canRestoreAppState(appState)) {
@@ -166,7 +166,7 @@ export function getAppState() {
 
 export function clearAppState() {
   appState = undefined;
-  NotesnookModule.setAppState("");
+  WorkstationModule.setAppState("");
 }
 
 export async function openInternalLink(url: string) {

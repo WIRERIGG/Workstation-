@@ -24,7 +24,7 @@ import { useStore as useAnnouncementStore } from "../../stores/announcement-stor
 import Notice from "../notice";
 
 import { alpha } from "@theme-ui/color";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 function Announcements() {
   const announcements = useAnnouncementStore(

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import {
   TabHistory as TabHistoryType,
   TabSessionHistory
-} from "@notesnook/common";
-import { getId } from "@notesnook/core";
+} from "@workstation/common";
+import { getId } from "@workstation/core";
 import { MMKVLoader } from "react-native-mmkv-storage";
 import { create } from "zustand";
 import { persist, StateStorage } from "zustand/middleware";

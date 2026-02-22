@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React, { Fragment, useState } from "react";
 import {
   ActivityIndicator,
@@ -30,7 +30,7 @@ import {
 import FileViewer from "react-native-file-viewer";
 import Share from "react-native-share";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { notesnook } from "../../../../e2e/test.ids";
+import { workstation } from "../../../../e2e/test.ids";
 import { db } from "../../../common/database";
 import { requestInAppReview } from "../../../services/app-review";
 import {
@@ -118,7 +118,7 @@ const ExportNotesSheet = ({
         await exportNoteAs("pdf");
       },
       icon: "file-pdf-box",
-      id: notesnook.ids.dialogs.export.pdf
+      id: workstation.ids.dialogs.export.pdf
     },
     {
       title: "Markdown",
@@ -126,7 +126,7 @@ const ExportNotesSheet = ({
         await exportNoteAs("md");
       },
       icon: "language-markdown",
-      id: notesnook.ids.dialogs.export.md
+      id: workstation.ids.dialogs.export.md
     },
     {
       title: "Markdown + Frontmatter",
@@ -134,7 +134,7 @@ const ExportNotesSheet = ({
         await exportNoteAs("md-frontmatter");
       },
       icon: "language-markdown",
-      id: notesnook.ids.dialogs.export.md
+      id: workstation.ids.dialogs.export.md
     },
     {
       title: "Plain Text",
@@ -142,7 +142,7 @@ const ExportNotesSheet = ({
         await exportNoteAs("txt");
       },
       icon: "card-text",
-      id: notesnook.ids.dialogs.export.text
+      id: workstation.ids.dialogs.export.text
     },
     {
       title: "HTML",
@@ -150,7 +150,7 @@ const ExportNotesSheet = ({
         await exportNoteAs("html");
       },
       icon: "language-html5",
-      id: notesnook.ids.dialogs.export.html
+      id: workstation.ids.dialogs.export.html
     }
   ];
 

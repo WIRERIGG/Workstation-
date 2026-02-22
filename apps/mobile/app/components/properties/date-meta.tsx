@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,15 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useState } from "react";
 import { View } from "react-native";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { AppFontSize } from "../../utils/size";
 import Paragraph from "../ui/typography/paragraph";
-import { getFormattedDate } from "@notesnook/common";
-import { strings } from "@notesnook/intl";
+import { getFormattedDate } from "@workstation/common";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../utils/styles";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { db } from "../../common/database";
-import { Item, Note } from "@notesnook/core";
+import { Item, Note } from "@workstation/core";
 import AppIcon from "../ui/AppIcon";
 export const DateMeta = ({ item }: { item: Item }) => {
   const { colors, isDark } = useThemeColors();

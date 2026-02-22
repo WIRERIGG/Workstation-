@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,7 +25,7 @@ import {
   ToolbarDefinition,
   ToolbarGroupDefinition,
   ToolId
-} from "@notesnook/editor";
+} from "@workstation/editor";
 import {
   closestCenter,
   DndContext,
@@ -46,7 +46,7 @@ import {
 import { useEffect, useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { createPortal } from "react-dom";
-import { getId } from "@notesnook/core";
+import { getId } from "@workstation/core";
 import { Label } from "@theme-ui/components";
 import { useToolbarConfig } from "../../../components/editor/manager";
 import {
@@ -60,9 +60,9 @@ import {
 } from "../../../common/toolbar-config";
 import { showToast } from "../../../utils/toast";
 import { Pro } from "../../../components/icons";
-import { Icon } from "@notesnook/ui";
-import { useIsFeatureAvailable } from "@notesnook/common";
-import { strings } from "@notesnook/intl";
+import { Icon } from "@workstation/ui";
+import { useIsFeatureAvailable } from "@workstation/common";
+import { strings } from "@workstation/intl";
 import { checkFeature } from "../../../common";
 
 export function CustomizeToolbar() {

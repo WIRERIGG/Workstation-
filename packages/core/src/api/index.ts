@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -270,7 +270,7 @@ class Database {
     await initializeDatabase(
       this.sql().withTables(),
       new NNMigrationProvider(),
-      "notesnook"
+      "workstation"
     );
     await this.onInit(this.sql() as unknown as Kysely<RawDatabaseSchema>);
     await this.initCollections();
@@ -303,7 +303,7 @@ class Database {
       this.disconnectSSE();
     });
 
-    this._sql = (await createDatabase<RawDatabaseSchema>("notesnook", {
+    this._sql = (await createDatabase<RawDatabaseSchema>("workstation", {
       ...this.options.sqliteOptions,
       migrationProvider: new NNMigrationProvider(),
       onInit: (db) => this.onInit(db)

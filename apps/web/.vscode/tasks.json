@@ -24,7 +24,7 @@
           "endsPattern": "^You can now view (.*) in the browser.$"
         }
       },
-      "label": "Start Notesnook (web)"
+      "label": "Start Workstation (web)"
     },
     {
       "label": "Terminate All Tasks",

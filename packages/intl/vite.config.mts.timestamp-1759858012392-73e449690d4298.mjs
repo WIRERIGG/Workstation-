@@ -1,10 +1,10 @@
 // vite.config.mts
 import path, { resolve } from "path";
-import { defineConfig } from "file:///Users/thecodrr/Sources/Repos/notesnook/packages/intl/node_modules/vite/dist/node/index.js";
-import swc from "file:///Users/thecodrr/Sources/Repos/notesnook/packages/intl/node_modules/vite-plugin-swc-transform/dist/esm/index.js";
-import dts from "file:///Users/thecodrr/Sources/Repos/notesnook/packages/intl/node_modules/vite-plugin-dts/dist/index.mjs";
+import { defineConfig } from "file:///Users/thecodrr/Sources/Repos/workstation/packages/intl/node_modules/vite/dist/node/index.js";
+import swc from "file:///Users/thecodrr/Sources/Repos/workstation/packages/intl/node_modules/vite-plugin-swc-transform/dist/esm/index.js";
+import dts from "file:///Users/thecodrr/Sources/Repos/workstation/packages/intl/node_modules/vite-plugin-dts/dist/index.mjs";
 import { fileURLToPath } from "url";
-var __vite_injected_original_import_meta_url = "file:///Users/thecodrr/Sources/Repos/notesnook/packages/intl/vite.config.mts";
+var __vite_injected_original_import_meta_url = "file:///Users/thecodrr/Sources/Repos/workstation/packages/intl/vite.config.mts";
 var __filename = fileURLToPath(__vite_injected_original_import_meta_url);
 var __dirname = path.dirname(__filename);
 var vite_config_default = defineConfig({

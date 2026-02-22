@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { memo } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Box, Flex } from "@theme-ui/components";
 import "react-loading-skeleton/dist/skeleton.css";
-import { getRandomArbitrary } from "@notesnook/common";
+import { getRandomArbitrary } from "@workstation/common";
 
 const Lines = [1, 2].map(() => getRandomArbitrary(40, 90));
 export const ListLoader = memo(function ListLoader() {

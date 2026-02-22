@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -36,8 +36,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { scrollIntoViewById, TOCItem } from "@notesnook/editor";
-import { strings } from "@notesnook/intl";
+import { scrollIntoViewById, TOCItem } from "@workstation/editor";
+import { strings } from "@workstation/intl";
 import { Button, Flex, Text } from "@theme-ui/components";
 import React, { useLayoutEffect } from "react";
 import { ChevronDown, ChevronRight, Circle } from "../icons";

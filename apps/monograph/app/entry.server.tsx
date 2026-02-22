@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
 import { createEmotionCache } from "./styles/createEmotionCache";
 import { Head } from "./root";
-import { ThemeDark } from "@notesnook/theme";
+import { ThemeDark } from "@workstation/theme";
 
 globalThis.DEFAULT_THEME = ThemeDark;
 
@@ -90,7 +90,7 @@ function getContentSecurityPolicy(nonce?: string) {
   const connect_src =
     process.env.NODE_ENV === "development"
       ? "'self' ws://localhost:*"
-      : "'self' https://notesnook.com/api/v1/reports/submit";
+      : "'self' https://workstation.com/api/v1/reports/submit";
 
   return (
     `script-src ${script_src} 'strict-dynamic'; ` +

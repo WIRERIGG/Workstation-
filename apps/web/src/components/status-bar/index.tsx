@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -39,10 +39,10 @@ import { useAutoUpdater, UpdateStatus } from "../../hooks/use-auto-updater";
 import useStatus, { statusToString } from "../../hooks/use-status";
 import { ScopedThemeProvider } from "../theme-provider";
 import { checkForUpdate, installUpdate } from "../../utils/updater";
-import { getTimeAgo, toTitleCase } from "@notesnook/common";
-import { User } from "@notesnook/core";
+import { getTimeAgo, toTitleCase } from "@workstation/common";
+import { User } from "@workstation/core";
 import { showUpdateAvailableNotice } from "../../dialogs/confirm";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { useVault } from "../../hooks/use-vault";
 import { useKeyStore } from "../../interfaces/key-store";
 import { STATUS_BAR_HEIGHT } from "../../common/constants";

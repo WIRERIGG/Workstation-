@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,10 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { useEffect, useState } from "react";
 import { Copy, Loading } from "../../../components/icons";
 import { Box, Button, Link, Flex, Text } from "@theme-ui/components";
-import { getFormattedDate, usePromise } from "@notesnook/common";
-import { strings } from "@notesnook/intl";
+import { getFormattedDate, usePromise } from "@workstation/common";
+import { strings } from "@workstation/intl";
 import { db } from "../../../common/db";
-import { Transaction, TransactionV1 } from "@notesnook/core";
+import { Transaction, TransactionV1 } from "@workstation/core";
 import { writeToClipboard } from "../../../utils/clipboard";
 import { showToast } from "../../../utils/toast";
 import { TaskManager } from "../../../common/task-manager";

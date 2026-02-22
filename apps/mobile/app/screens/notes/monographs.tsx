@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { db } from "../../common/database";
 import Navigation, { NavigationProps } from "../../services/navigation";
 import { NotesScreenParams } from "../../stores/use-navigation-store";
 import { openMonographsWebpage } from "./common";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export const MONOGRAPH_PLACEHOLDER_DATA = {
   title: strings.yourMonographs(),

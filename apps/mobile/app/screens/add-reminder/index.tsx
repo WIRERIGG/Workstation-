@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,9 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Note, Reminder } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { Note, Reminder } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import dayjs from "dayjs";
 import React, { useRef, useState } from "react";
 import {
@@ -47,7 +47,7 @@ import { useRelationStore } from "../../stores/use-relation-store";
 import { useSettingStore } from "../../stores/use-setting-store";
 import { AppFontSize, defaultBorderRadius } from "../../utils/size";
 import { DefaultAppStyles } from "../../utils/styles";
-import { getFormattedDate, useIsFeatureAvailable } from "@notesnook/common";
+import { getFormattedDate, useIsFeatureAvailable } from "@workstation/common";
 import PaywallSheet from "../../components/sheets/paywall";
 import { useNavigationFocus } from "../../hooks/use-navigation-focus";
 

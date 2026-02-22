@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Notebook, Tag } from "@notesnook/core";
+import { Notebook, Tag } from "@workstation/core";
 import React, { useEffect, useMemo } from "react";
 import { View } from "react-native";
 import { db } from "../../common/database";
@@ -29,7 +29,7 @@ import { useSettingStore } from "../../stores/use-setting-store";
 import { SideMenuItem } from "../../utils/menu-items";
 import ReorderableList from "../list/reorderable-list";
 import { MenuItem } from "./menu-item";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { DefaultAppStyles } from "../../utils/styles";
 import { useSideBarDraggingStore } from "./dragging-store";
 import { Properties } from "../properties";

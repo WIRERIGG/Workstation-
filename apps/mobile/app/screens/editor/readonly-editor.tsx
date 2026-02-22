@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,11 +27,11 @@ import WebView from "react-native-webview";
 import { useRef } from "react";
 import { EDITOR_URI } from "./source";
 import { EditorMessage } from "./tiptap/types";
-import { EditorEvents } from "@notesnook/editor-mobile/src/utils/editor-events";
-import { Attachment } from "@notesnook/editor";
+import { EditorEvents } from "@workstation/editor-mobile/src/utils/editor-events";
+import { Attachment } from "@workstation/editor";
 import downloadAttachment from "../../common/filesystem/download-attachment";
-import { NativeEvents } from "@notesnook/editor-mobile/src/utils/native-events";
-import { useThemeColors } from "@notesnook/theme";
+import { NativeEvents } from "@workstation/editor-mobile/src/utils/native-events";
+import { useThemeColors } from "@workstation/theme";
 import useGlobalSafeAreaInsets from "../../hooks/use-global-safe-area-insets";
 import { db } from "../../common/database";
 import { i18n } from "@lingui/core";

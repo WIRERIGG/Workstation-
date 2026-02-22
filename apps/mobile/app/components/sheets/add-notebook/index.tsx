@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Notebook } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { Notebook } from "@workstation/core";
+import { strings } from "@workstation/intl";
 import React, { useRef, useState } from "react";
 import { TextInput, View } from "react-native";
-import { notesnook } from "../../../../e2e/test.ids";
+import { workstation } from "../../../../e2e/test.ids";
 import { db } from "../../../common/database";
 import { DDS } from "../../../services/device-detection";
 import { ToastManager, eSendEvent } from "../../../services/event-manager";
@@ -38,7 +38,7 @@ import DialogButtons from "../../dialog/dialog-buttons";
 import { presentDialog } from "../../dialog/functions";
 import { getElevationStyle } from "../../../utils/elevation";
 import { defaultBorderRadius } from "../../../utils/size";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { getContainerBorder } from "../../../utils/colors";
 
 export const AddNotebookSheet = ({
@@ -145,7 +145,7 @@ export const AddNotebookSheet = ({
 
         <Input
           fwdRef={titleInput}
-          testID={notesnook.ids.dialogs.notebook.inputs.title}
+          testID={workstation.ids.dialogs.notebook.inputs.title}
           onChangeText={(value) => {
             title.current = value;
           }}
@@ -165,7 +165,7 @@ export const AddNotebookSheet = ({
 
         <Input
           fwdRef={descriptionInput}
-          testID={notesnook.ids.dialogs.notebook.inputs.description}
+          testID={workstation.ids.dialogs.notebook.inputs.description}
           onChangeText={(value) => {
             description.current = value;
           }}

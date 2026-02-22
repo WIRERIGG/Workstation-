@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -86,6 +86,6 @@ export function setupTray() {
   ]);
   tray.on("double-click", bringToFront);
   if (process.platform !== "darwin") tray.on("click", bringToFront);
-  tray.setToolTip("Notesnook");
+  tray.setToolTip("Workstation");
   tray.setContextMenu(contextMenu);
 }

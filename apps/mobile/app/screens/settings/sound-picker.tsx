@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -30,9 +30,9 @@ import Paragraph from "../../components/ui/typography/paragraph";
 import Notifications from "../../services/notifications";
 import SettingsService from "../../services/settings";
 import { useSettingStore } from "../../stores/use-setting-store";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { AppFontSize } from "../../utils/size";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../utils/styles";
 
 const SoundItem = ({

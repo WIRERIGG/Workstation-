@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import { Box, Flex, Text } from "@theme-ui/components";
 import { useEffect, useRef, useState } from "react";
 import { ReactNodeViewProps } from "../react/index.js";
 import { Icons } from "../../toolbar/index.js";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { WebClipAttributes } from "./web-clip.js";
 import { DesktopOnly } from "../../components/responsive/index.js";
 import { ToolbarGroup } from "../../toolbar/components/toolbar-group.js";

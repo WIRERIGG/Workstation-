@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { Button, Flex, Text, Box, FlexProps } from "@theme-ui/components";
 import { db } from "../common/db";
 import { useState, useEffect, useRef } from "react";
-import { NoteStats, WrappedStats } from "@notesnook/core";
-import { formatBytes } from "@notesnook/common";
+import { NoteStats, WrappedStats } from "@workstation/core";
+import { formatBytes } from "@workstation/common";
 import { ArrowDown, ArrowLeft, Loading } from "../components/icons";
 import { hardNavigate } from "../navigation";
 import { MonthlyActivityHeatmap } from "../components/monthly-activity-heatmap";
@@ -175,7 +175,7 @@ function WelcomeSlide({ loading }: { loading: boolean }) {
               animation: "fadeIn 1s ease-out 0.4s both"
             }}
           >
-            Let&apos;s look back at your year in Notesnook
+            Let&apos;s look back at your year in Workstation
           </Text>
           <Text
             variant="body"

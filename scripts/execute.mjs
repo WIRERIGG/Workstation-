@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -122,7 +122,7 @@ function filterDeps(base, deps) {
   if (!deps) return [];
   let filteredDeps = [];
   for (const [key, value] of Object.entries(deps))
-    if (key.startsWith("@notesnook/") && value?.startsWith("file:"))
+    if (key.startsWith("@workstation/") && value?.startsWith("file:"))
       filteredDeps.push(path.resolve(base, value.slice(5)));
   return filteredDeps;
 }

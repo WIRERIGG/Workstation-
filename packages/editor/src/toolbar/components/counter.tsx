@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ import React from "react";
 import { Flex, Text } from "@theme-ui/components";
 import { ToolButton } from "./tool-button.js";
 import { useIsMobile } from "../stores/toolbar-store.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export type CounterProps = {
   title: string;

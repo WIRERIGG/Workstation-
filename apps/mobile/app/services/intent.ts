@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,12 +20,12 @@ import { Platform } from "react-native";
 import { db } from "../common/database";
 import { setAppState } from "../screens/editor/tiptap/utils";
 import { eOnLoadNote } from "../utils/events";
-import { NotesnookModule } from "../utils/notesnook-module";
+import { WorkstationModule } from "../utils/workstation-module";
 import { eSendEvent } from "./event-manager";
 import { fluidTabsRef } from "../utils/global-refs";
 import AddReminder from "../screens/add-reminder";
 
-const launchIntent = Platform.OS === "ios" ? {} : NotesnookModule.getIntent();
+const launchIntent = Platform.OS === "ios" ? {} : WorkstationModule.getIntent();
 let used = false;
 let launched = false;
 export const IntentService = {
@@ -37,23 +37,23 @@ export const IntentService = {
   onLaunch() {
     if (launched || Platform.OS === "ios") return;
     launched = true;
-    if (launchIntent["com.streetwriters.notesnook.OpenNoteId"]) {
+    if (launchIntent["com.streetwriters.workstation.OpenNoteId"]) {
       setAppState({
         movedAway: false,
         editing: true,
         timestamp: Date.now(),
-        noteId: launchIntent["com.streetwriters.notesnook.OpenNoteId"]
+        noteId: launchIntent["com.streetwriters.workstation.OpenNoteId"]
       });
     }
   },
   async onAppStateChanged() {
     if (Platform.OS === "ios") return;
     try {
-      const intent = NotesnookModule.getIntent();
+      const intent = WorkstationModule.getIntent();
 
-      if (intent["com.streetwriters.notesnook.OpenNoteId"]) {
+      if (intent["com.streetwriters.workstation.OpenNoteId"]) {
         const note = await db.notes.note(
-          intent["com.streetwriters.notesnook.OpenNoteId"]
+          intent["com.streetwriters.workstation.OpenNoteId"]
         );
         if (note) {
           eSendEvent(eOnLoadNote, {
@@ -61,12 +61,12 @@ export const IntentService = {
           });
           fluidTabsRef.current?.goToPage("editor", false);
         }
-      } else if (intent["com.streetwriters.notesnook.OpenReminderId"]) {
+      } else if (intent["com.streetwriters.workstation.OpenReminderId"]) {
         const reminder = await db.reminders.reminder(
-          intent["com.streetwriters.notesnook.OpenReminderId"]
+          intent["com.streetwriters.workstation.OpenReminderId"]
         );
         if (reminder) AddReminder.present(reminder);
-      } else if (intent["com.streetwriters.notesnook.NewReminder"]) {
+      } else if (intent["com.streetwriters.workstation.NewReminder"]) {
         AddReminder.present();
       }
     } catch (e) {

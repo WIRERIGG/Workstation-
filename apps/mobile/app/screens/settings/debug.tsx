@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { sanitizeFilename } from "@notesnook/common";
-import { format, LogLevel, logManager } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { LogMessage } from "@notesnook/logger";
-import { useThemeColors } from "@notesnook/theme";
+import { sanitizeFilename } from "@workstation/common";
+import { format, LogLevel, logManager } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { LogMessage } from "@workstation/logger";
+import { useThemeColors } from "@workstation/theme";
 import Clipboard from "@react-native-clipboard/clipboard";
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, Platform, TouchableOpacity, View } from "react-native";
@@ -131,7 +131,7 @@ export default function DebugLogs() {
   const downloadLogs = React.useCallback(async () => {
     try {
       let path = null;
-      const fileName = sanitizeFilename(`notesnook_logs_${Date.now()}`);
+      const fileName = sanitizeFilename(`workstation_logs_${Date.now()}`);
       const data = currentLog?.logs
         .map((log) => {
           return !log ? "" : format(log);

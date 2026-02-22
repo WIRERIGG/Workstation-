@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { INNCrypto } from "@notesnook/crypto";
+import { INNCrypto } from "@workstation/crypto";
 import CryptoWorker from "./nncrypto.worker?worker";
 import { wrap } from "comlink";
-import { NNCrypto as NNCryptoSync } from "@notesnook/crypto";
+import { NNCrypto as NNCryptoSync } from "@workstation/crypto";
 import { isTransferableStreamsSupported } from "../utils/feature-check";
 
 export const NNCrypto = isTransferableStreamsSupported()

@@ -28,7 +28,8 @@ import {
   stat,
   access,
   mkdir,
-  rm
+  rm,
+  rename
 } from "node:fs/promises";
 import path from "node:path";
 import chokidar from "chokidar";
@@ -44,13 +45,30 @@ export const filesystemRouter = t.router({
     .input(z.object({ path: z.string() }))
     .query(async ({ input }) => {
       const entries = await readdir(input.path, { withFileTypes: true });
-      return entries.map((entry) => ({
-        name: entry.name,
-        path: path.join(input.path, entry.name),
-        isDirectory: entry.isDirectory(),
-        isFile: entry.isFile(),
-        isSymlink: entry.isSymbolicLink()
-      }));
+      const results = await Promise.all(
+        entries.map(async (entry) => {
+          const fullPath = path.join(input.path, entry.name);
+          let size = 0;
+          let modified: string | null = null;
+          try {
+            const s = await stat(fullPath);
+            size = s.size;
+            modified = s.mtime.toISOString();
+          } catch {
+            // permission denied or broken symlink — leave defaults
+          }
+          return {
+            name: entry.name,
+            path: fullPath,
+            isDirectory: entry.isDirectory(),
+            isFile: entry.isFile(),
+            isSymlink: entry.isSymbolicLink(),
+            size,
+            modified
+          };
+        })
+      );
+      return results;
     }),
 
   readFile: t.procedure
@@ -123,6 +141,17 @@ export const filesystemRouter = t.router({
     )
     .mutation(async ({ input }) => {
       await rm(input.path, { recursive: input.recursive });
+    }),
+
+  rename: t.procedure
+    .input(
+      z.object({
+        oldPath: z.string(),
+        newPath: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      await rename(input.oldPath, input.newPath);
     }),
 
   watch: t.procedure

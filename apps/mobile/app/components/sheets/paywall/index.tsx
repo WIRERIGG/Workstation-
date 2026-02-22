@@ -1,7 +1,7 @@
-import { FeatureId, FeatureResult } from "@notesnook/common";
-import { SubscriptionPlan, SubscriptionProvider } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { FeatureId, FeatureResult } from "@workstation/common";
+import { SubscriptionPlan, SubscriptionProvider } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import { useEffect } from "react";
 import { Platform, View } from "react-native";
 import Config from "react-native-config";

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,18 +26,18 @@ import {
   Note as NoteType,
   VirtualizedGrouping,
   createInternalLink
-} from "@notesnook/core";
+} from "@workstation/core";
 import { Button, Flex, Text } from "@theme-ui/components";
-import { LinkAttributes } from "@notesnook/editor";
+import { LinkAttributes } from "@workstation/editor";
 import {
   NoteResolvedData,
   ResolvedItem,
   useIsFeatureAvailable
-} from "@notesnook/common";
+} from "@workstation/common";
 import { Lock } from "../components/icons";
-import { ellipsize } from "@notesnook/core";
+import { ellipsize } from "@workstation/core";
 import { BaseDialogProps, DialogManager } from "../common/dialog-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { Virtuoso } from "react-virtuoso";
 import { CustomScrollbarsVirtualList } from "../components/list-container";
 import { UpgradeDialog } from "./buy-dialog/upgrade-dialog";

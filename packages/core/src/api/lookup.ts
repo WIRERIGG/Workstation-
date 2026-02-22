@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -46,7 +46,7 @@ import { getSortSelectors, groupArray } from "../utils/grouping.js";
 import { fuzzy } from "../utils/fuzzy.js";
 import { extractMatchingBlocks } from "../utils/html-parser.js";
 import { Parser } from "htmlparser2";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type SearchResults<T> = {
   sorted: (sortOptions?: SortOptions) => Promise<VirtualizedGrouping<T>>;

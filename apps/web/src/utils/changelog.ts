@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -21,7 +21,7 @@ export async function getChangelog(tag: string) {
   try {
     if (!tag) return "No changelog found.";
 
-    const url = `https://api.github.com/repos/streetwriters/notesnook/releases/tags/v${tag}`;
+    const url = `https://api.github.com/repos/streetwriters/workstation/releases/tags/v${tag}`;
     const response = await fetch(url, {
       headers: { Accept: "application/json" }
     });

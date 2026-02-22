@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,11 +24,11 @@ import { HostId, HostIds, useStore } from "../../../stores/setting-store";
 import { useStore as useUserStore } from "../../../stores/user-store";
 import { ErrorText } from "../../../components/error-text";
 import { TaskManager } from "../../../common/task-manager";
-import { isServerCompatible } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+import { isServerCompatible } from "@workstation/core";
+import { strings } from "@workstation/intl";
 
 export const ServerIds = [
-  "notesnook-sync",
+  "workstation-sync",
   "auth",
   "sse",
   "monograph"
@@ -49,7 +49,7 @@ type VersionResponse = {
 };
 const SERVERS: Server[] = [
   {
-    id: "notesnook-sync",
+    id: "workstation-sync",
     host: "API_HOST",
     title: strings.syncServer(),
     example: "http://localhost:4326",

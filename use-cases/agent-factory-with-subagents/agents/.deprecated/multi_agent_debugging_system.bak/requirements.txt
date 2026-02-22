@@ -1,0 +1,31 @@
+# Multi-Agent Debugging System Dependencies
+
+# Core PydanticAI Framework
+pydantic-ai>=0.0.1
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# CLI Framework
+click>=8.1.0
+
+# Environment Management
+python-dotenv>=1.0.0
+
+# Async Support
+asyncio-compat>=0.1.0
+
+# JSON Processing
+ujson>=5.8.0
+
+# System Interaction
+psutil>=5.9.0
+
+# Development and Testing (optional)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.11.0
+
+# Code Quality (optional)
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.7.0

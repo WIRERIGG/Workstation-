@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -51,14 +51,14 @@ export const hosts = {
     ? "https://monogr.ph"
     : "http://localhost:6264",
   NOTESNOOK_HOST: isProduction()
-    ? "https://notesnook.com"
+    ? "https://workstation.com"
     : "http://localhost:8787"
 };
 
 export default hosts;
 
 const HOSTNAMES = {
-  [extractHostname(hosts.API_HOST)]: "Notesnook Sync Server",
+  [extractHostname(hosts.API_HOST)]: "Workstation Sync Server",
   [extractHostname(hosts.AUTH_HOST)]: "Authentication Server",
   [extractHostname(hosts.SSE_HOST)]: "Eventing Server",
   [extractHostname(hosts.SUBSCRIPTIONS_HOST)]:

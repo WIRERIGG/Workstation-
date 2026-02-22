@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { isServerCompatible } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { isServerCompatible } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { presentDialog } from "../../components/dialog/functions";
@@ -34,7 +34,7 @@ import { useUserStore } from "../../stores/use-user-store";
 import { DefaultAppStyles } from "../../utils/styles";
 
 export const ServerIds = [
-  "notesnook-sync",
+  "workstation-sync",
   "auth",
   "sse",
   "monograph"
@@ -55,7 +55,7 @@ type VersionResponse = {
 };
 const SERVERS: Server[] = [
   {
-    id: "notesnook-sync",
+    id: "workstation-sync",
     host: "API_HOST",
     title: strings.syncServer(),
     example: "http://localhost:4326",

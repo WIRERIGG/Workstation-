@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,15 +20,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { useState } from "react";
 import { Copy, Loading } from "../../../components/icons";
 import { Button, Link, Flex, Text, Grid } from "@theme-ui/components";
-import { usePromise } from "@notesnook/common";
+import { usePromise } from "@workstation/common";
 import { db } from "../../../common/db";
 import { writeToClipboard } from "../../../utils/clipboard";
 import { showToast } from "../../../utils/toast";
 import { ErrorText } from "../../../components/error-text";
 import { useStore as useUserStore } from "../../../stores/user-store";
-import { SubscriptionPlan, SubscriptionStatus } from "@notesnook/core";
+import { SubscriptionPlan, SubscriptionStatus } from "@workstation/core";
 import { BuyDialog } from "../../buy-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export function CirclePartners() {
   const partners = usePromise(() => db.circle.partners(), []);

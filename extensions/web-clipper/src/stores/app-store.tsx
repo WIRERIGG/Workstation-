@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -48,7 +48,7 @@ export const useAppStore = create<AppStore>((set) => ({
   async login(openNew = false) {
     set({ isLoggingIn: true });
 
-    const notesnook = await connectApi(openNew, () => {
+    const workstation = await connectApi(openNew, () => {
       set({
         user: undefined,
         isLoggedIn: false,
@@ -59,17 +59,17 @@ export const useAppStore = create<AppStore>((set) => ({
       });
     });
 
-    if (!notesnook) {
+    if (!workstation) {
       set({ isLoggingIn: false });
       throw new Error(
-        "Please refresh the Notesnook web app to connect with the Web Clipper."
+        "Please refresh the Workstation web app to connect with the Web Clipper."
       );
     }
 
-    const user = await notesnook.login();
-    const notes = await notesnook.getNotes();
-    const notebooks = await notesnook.getNotebooks();
-    const tags = await notesnook.getTags();
+    const user = await workstation.login();
+    const notes = await workstation.getNotes();
+    const notebooks = await workstation.getNotebooks();
+    const tags = await workstation.getTags();
 
     set({
       user: user || undefined,

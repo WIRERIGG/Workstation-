@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,9 +26,9 @@ import { checkAttachment } from "../common/attachments";
 import { showToast } from "../utils/toast";
 import { AttachmentStream } from "../utils/streams/attachment-stream";
 import { createWriteStream } from "../utils/stream-saver";
-import { Attachment } from "@notesnook/core";
+import { Attachment } from "@workstation/core";
 import { TaskManager } from "../common/task-manager";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 let abortController: AbortController | undefined = undefined;
 class AttachmentStore extends BaseStore<AttachmentStore> {

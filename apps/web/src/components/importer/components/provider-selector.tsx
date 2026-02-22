@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -47,7 +47,7 @@ export function ProviderSelector(props: ProviderSelectorProps) {
         >
           Can&apos;t find your notes app in the list?{" "}
           <a
-            href="https://github.com/streetwriters/notesnook-importer/issues/new"
+            href="https://github.com/streetwriters/workstation-importer/issues/new"
             target="_blank"
           >
             Send us a request.

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useRef } from "react";
 import { Text, TextProps } from "@theme-ui/components";
 import { type TDate } from "timeago.js";
-import { useTimeAgo } from "@notesnook/common";
+import { useTimeAgo } from "@workstation/common";
 
 type TimeAgoProps = {
   datetime: TDate;

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -32,7 +32,7 @@ import {
   ThemeDefinition,
   PreviewColors,
   getPreviewColors
-} from "@notesnook/theme";
+} from "@workstation/theme";
 
 export type CompiledThemeDefinition = ThemeDefinition & {
   sourceURL?: string;
@@ -93,7 +93,7 @@ async function generateThemesMetadata() {
 
       themeDefinitions.push({
         ...theme,
-        sourceURL: `https://github.com/streetwriters/notesnook-themes/tree/main/themes/${themeId}/v${version}/`,
+        sourceURL: `https://github.com/streetwriters/workstation-themes/tree/main/themes/${themeId}/v${version}/`,
         codeBlockCSS,
         totalInstalls: 0,
         previewColors: getPreviewColors(theme)

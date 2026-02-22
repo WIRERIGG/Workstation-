@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -41,7 +41,7 @@ async function main() {
     if (existsSync(themePath)) continue;
     console.log("Getting", themeId);
 
-    const BASE_URL = `https://raw.githubusercontent.com/streetwriters/notesnook-themes/main/themes/${themeId}/v${THEME_COMPATIBILITY_VERSION}`;
+    const BASE_URL = `https://raw.githubusercontent.com/streetwriters/workstation-themes/main/themes/${themeId}/v${THEME_COMPATIBILITY_VERSION}`;
     const theme = await fetch(`${BASE_URL}/theme.json`).then((r) => r.json());
     const codeBlockCSS = await fetch(`${BASE_URL}/code-block.css`).then((r) =>
       r.text()

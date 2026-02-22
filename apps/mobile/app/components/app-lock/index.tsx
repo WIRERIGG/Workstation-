@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import {
   View
 } from "react-native";
 //@ts-ignore
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { DatabaseLogger } from "../../common/database";
 import {
   decrypt,
@@ -43,7 +43,7 @@ import { ToastManager } from "../../services/event-manager";
 import SettingsService from "../../services/settings";
 import { useSettingStore } from "../../stores/use-setting-store";
 import { useUserStore } from "../../stores/use-user-store";
-import { NotesnookModule } from "../../utils/notesnook-module";
+import { WorkstationModule } from "../../utils/workstation-module";
 import { Toast } from "../toast";
 import { Button } from "../ui/button";
 import { IconButton } from "../ui/icon-button";
@@ -52,7 +52,7 @@ import Seperator from "../ui/seperator";
 import Heading from "../ui/typography/heading";
 import Paragraph from "../ui/typography/paragraph";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { AppFontSize } from "../../utils/size";
 import { editorController } from "../../screens/editor/tiptap/utils";
 import { useTabStore } from "../../screens/editor/tiptap/use-tab-store";
@@ -74,10 +74,10 @@ const verifyUserPassword = async (password: string) => {
         key: key,
         salt: user.salt
       },
-      "notesnook"
+      "workstation"
     );
     const plainText = await decrypt({ password }, cipher);
-    return plainText === "notesnook";
+    return plainText === "workstation";
   } catch (e) {
     DatabaseLogger.error(e as Error);
     return false;
@@ -124,7 +124,7 @@ const AppLocked = () => {
     biometricUnlockAwaitingUserInput.current = true;
 
     if (Platform.OS === "android") {
-      const activityName = await NotesnookModule.getActivityName();
+      const activityName = await WorkstationModule.getActivityName();
       if (
         activityName !== "MainActivity" &&
         activityName !== "NotePreviewConfigureActivity"

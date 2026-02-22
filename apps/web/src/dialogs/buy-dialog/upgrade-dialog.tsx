@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,10 +23,10 @@ import {
   getFeature,
   planToAvailability,
   usePromise
-} from "@notesnook/common";
+} from "@workstation/common";
 import { DialogManager } from "../../common/dialog-manager";
 import BaseDialog from "../../components/dialog";
-import { SubscriptionPlan, SubscriptionProvider } from "@notesnook/core";
+import { SubscriptionPlan, SubscriptionProvider } from "@workstation/core";
 import { Button, Flex, Text } from "@theme-ui/components";
 import { FeatureCaption } from "./feature-caption";
 import { getAllPlans, PERIOD_METADATA, PLAN_METADATA } from "./plans";

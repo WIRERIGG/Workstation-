@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import {
   FeatureResult,
   isFeatureAvailable,
   sanitizeFilename
-} from "@notesnook/common";
+} from "@workstation/common";
 import { useStore as useUserStore } from "../stores/user-store";
 import { useStore as useAppStore } from "../stores/app-store";
 import {
@@ -37,27 +37,27 @@ import {
 import { showToast } from "../utils/toast";
 import { readFile, showFilePicker } from "../utils/file-picker";
 import { logger } from "../utils/logger";
-import { PATHS } from "@notesnook/desktop";
+import { PATHS } from "@workstation/desktop";
 import { TaskManager } from "./task-manager";
-import { EVENTS } from "@notesnook/core";
+import { EVENTS } from "@workstation/core";
 import { createWritableStream } from "./desktop-bridge";
 import { FeatureDialog, FeatureKeys } from "../dialogs/feature-dialog";
-import { User } from "@notesnook/core";
-import { LegacyBackupFile } from "@notesnook/core";
+import { User } from "@workstation/core";
+import { LegacyBackupFile } from "@workstation/core";
 import { useEditorStore } from "../stores/editor-store";
-import { formatDate } from "@notesnook/core";
+import { formatDate } from "@workstation/core";
 import { showPasswordDialog } from "../dialogs/password-dialog";
 import { BackupPasswordDialog } from "../dialogs/backup-password-dialog";
-import { Cipher, SerializedKey } from "@notesnook/crypto";
+import { Cipher, SerializedKey } from "@workstation/crypto";
 import { ChunkedStream } from "../utils/streams/chunked-stream";
 import { isFeatureSupported } from "../utils/feature-check";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { ABYTES, streamablefs } from "../interfaces/fs";
 import { type ZipEntry } from "../utils/streams/unzip-stream";
 import { ZipFile } from "../utils/streams/zip-stream";
 import { ConfirmDialog, showLogoutConfirmation } from "../dialogs/confirm";
 import { Home } from "../components/icons";
-import { MenuItem } from "@notesnook/ui";
+import { MenuItem } from "@workstation/ui";
 import { showFeatureNotAllowedToast } from "./toasts";
 import { UpgradeDialog } from "../dialogs/buy-dialog/upgrade-dialog";
 import { setToolbarPreset } from "./toolbar-config";

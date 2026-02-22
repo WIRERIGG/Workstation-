@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import { DependencyList, useEffect, useState } from "react";
 import { useStore as useSearchStore } from "../stores/search-store";
-import { SortOptions, VirtualizedGrouping } from "@notesnook/core";
+import { SortOptions, VirtualizedGrouping } from "@workstation/core";
 import { db } from "../common/db";
 
 export function useSearch<T>(

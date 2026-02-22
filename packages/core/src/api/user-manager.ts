@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import TokenManager from "./token-manager.js";
 import { EV, EVENTS } from "../common.js";
 import { HealthCheck } from "./healthcheck.js";
 import Database from "./index.js";
-import { SerializedKeyPair, SerializedKey, Cipher } from "@notesnook/crypto";
+import { SerializedKeyPair, SerializedKey, Cipher } from "@workstation/crypto";
 import { logger } from "../logger.js";
 
 const ENDPOINTS = {
@@ -78,7 +78,7 @@ class UserManager {
     await http.post(`${constants.API_HOST}${ENDPOINTS.signup}`, {
       email,
       password: hashedPassword,
-      client_id: "notesnook"
+      client_id: "workstation"
     });
     EV.publish(EVENTS.userSignedUp);
     return await this._login({ email, password, hashedPassword });
@@ -92,7 +92,7 @@ class UserManager {
     const result = await http.post(`${constants.AUTH_HOST}${ENDPOINTS.token}`, {
       email,
       grant_type: "email",
-      client_id: "notesnook"
+      client_id: "workstation"
     });
 
     await this.tokenManager.saveToken(result);
@@ -111,7 +111,7 @@ class UserManager {
         `${constants.AUTH_HOST}${ENDPOINTS.token}`,
         {
           grant_type: "mfa",
-          client_id: "notesnook",
+          client_id: "workstation",
           "mfa:code": code,
           "mfa:method": method
         },
@@ -145,8 +145,8 @@ class UserManager {
             `${constants.AUTH_HOST}${ENDPOINTS.token}`,
             {
               grant_type: "mfa_password",
-              client_id: "notesnook",
-              scope: "notesnook.sync offline_access IdentityServerApi",
+              client_id: "workstation",
+              scope: "workstation.sync offline_access IdentityServerApi",
               password: hashedPassword
             },
             token.access_token
@@ -162,8 +162,8 @@ class UserManager {
                 `${constants.AUTH_HOST}${ENDPOINTS.token}`,
                 {
                   grant_type: "mfa_password",
-                  client_id: "notesnook",
-                  scope: "notesnook.sync offline_access IdentityServerApi",
+                  client_id: "workstation",
+                  scope: "workstation.sync offline_access IdentityServerApi",
                   password: hashedPassword
                 },
                 token.access_token
@@ -223,8 +223,8 @@ class UserManager {
         username: email,
         password: hashedPassword,
         grant_type: code ? "mfa" : "password",
-        scope: "notesnook.sync offline_access IdentityServerApi",
-        client_id: "notesnook",
+        scope: "workstation.sync offline_access IdentityServerApi",
+        client_id: "workstation",
         "mfa:code": code,
         "mfa:method": method
       })
@@ -620,7 +620,7 @@ class UserManager {
   recoverAccount(email: string) {
     return http.post(`${constants.AUTH_HOST}${ENDPOINTS.recoverAccount}`, {
       email,
-      client_id: "notesnook"
+      client_id: "workstation"
     });
   }
 
@@ -630,9 +630,9 @@ class UserManager {
       const key = await this.getEncryptionKey();
       if (!user || !key) return false;
 
-      const cipher = await this.db.storage().encrypt(key, "notesnook");
+      const cipher = await this.db.storage().encrypt(key, "workstation");
       const plainText = await this.db.storage().decrypt({ password }, cipher);
-      return plainText === "notesnook";
+      return plainText === "workstation";
     } catch (e) {
       return false;
     }

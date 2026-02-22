@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -32,7 +32,7 @@ export function Footer() {
         justifyContent: "center"
       }}
     >
-      <Text variant="body">Notesnook Vericrypt (v{appVersion})</Text>
+      <Text variant="body">Workstation Vericrypt (v{appVersion})</Text>
       <Text variant="subBody">
         © {new Date().getFullYear()} Streetwriters LLC
       </Text>

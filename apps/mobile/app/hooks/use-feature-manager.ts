@@ -1,5 +1,5 @@
-import { useAreFeaturesAvailable } from "@notesnook/common";
-import { strings } from "@notesnook/intl";
+import { useAreFeaturesAvailable } from "@workstation/common";
+import { strings } from "@workstation/intl";
 import { useEffect } from "react";
 import { db } from "../common/database";
 import { presentDialog } from "../components/dialog/functions";

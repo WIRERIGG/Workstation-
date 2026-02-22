@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { notesnook } from "../../../e2e/test.ids";
+import { workstation } from "../../../e2e/test.ids";
 import { getColorLinearShade } from "../../utils/colors";
 import { AppFontSize } from "../../utils/size";
 import { DefaultAppStyles } from "../../utils/styles";
@@ -92,7 +92,7 @@ const DialogButtons = ({
         <Button
           onPress={onPressNegative}
           fontSize={AppFontSize.sm}
-          testID={notesnook.ids.default.dialog.no}
+          testID={workstation.ids.default.dialog.no}
           type="plain"
           bold
           title={negativeTitle}
@@ -101,7 +101,7 @@ const DialogButtons = ({
           <Button
             onPress={onPressPositive}
             fontSize={AppFontSize.sm}
-            testID={notesnook.ids.default.dialog.yes}
+            testID={workstation.ids.default.dialog.yes}
             style={{
               marginLeft: 10
             }}

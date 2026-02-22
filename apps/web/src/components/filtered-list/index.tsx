@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import Field from "../field";
 import { Plus, Search } from "../icons";
 import { Button, Text } from "@theme-ui/components";
 import { VirtualizedList, VirtualizedListProps } from "../virtualized-list";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type FilteredListProps<T> = {
   placeholders: { filter: string; empty: string };

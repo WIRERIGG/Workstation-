@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -29,7 +29,7 @@ const ICONS = {
 const BACKGROUND_SCRIPT = "background.bundle.js";
 const ACTION = {
   default_icon: ICONS,
-  default_title: "Notesnook Web Clipper",
+  default_title: "Workstation Web Clipper",
   default_popup: "popup.html"
 };
 
@@ -40,10 +40,10 @@ const nnHost =
 const v3nnHost = "*://v3.notesnook.com/*";
 const corsHost = "https://cors.notesnook.com/*";
 const common = {
-  name: "Notesnook Web Clipper",
+  name: "Workstation Web Clipper",
   version,
   description:
-    "Clip web pages & save interesting things you find on the web directly into Notesnook in a private & secure way.",
+    "Clip web pages & save interesting things you find on the web directly into Workstation in a private & secure way.",
   permissions: ["activeTab", "tabs", "storage", "notifications"],
   icons: ICONS
 };
@@ -54,7 +54,7 @@ const v2 = {
   optional_permissions: ["http://*/*", "https://*/*"],
   browser_specific_settings: {
     gecko: {
-      id: "notesnook-web-clipper-unlisted@notesnook.com",
+      id: "workstation-web-clipper-unlisted@workstation.com",
       strict_min_version: "105.0"
     }
   },

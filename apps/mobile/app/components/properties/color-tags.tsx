@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,14 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { LegendList } from "@legendapp/list";
-import { useIsFeatureAvailable } from "@notesnook/common";
-import { Color, Note } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { useIsFeatureAvailable } from "@workstation/common";
+import { Color, Note } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { notesnook } from "../../../e2e/test.ids";
+import { workstation } from "../../../e2e/test.ids";
 import { db } from "../../common/database";
 import { eSendEvent, ToastManager } from "../../services/event-manager";
 import Navigation from "../../services/navigation";
@@ -71,7 +71,7 @@ const ColorItem = ({ item, note }: { item: Color; note: Note }) => {
       type="accent"
       accentColor={item.colorCode}
       accentText={colors.static.white}
-      testID={notesnook.ids.dialogs.actionsheet.color(item.colorCode)}
+      testID={workstation.ids.dialogs.actionsheet.color(item.colorCode)}
       key={item.id}
       onPress={toggleColor}
       style={{

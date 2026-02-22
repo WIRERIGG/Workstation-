@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,15 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { isReminderActive } from "@notesnook/core";
+import { isReminderActive } from "@workstation/core";
 import React from "react";
 import { ViewStyle } from "react-native";
 
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { defaultBorderRadius, AppFontSize } from "../../../utils/size";
 import { Button, ButtonProps } from "../button";
-import { getFormattedReminderTime } from "@notesnook/common";
-import { Reminder } from "@notesnook/core";
+import { getFormattedReminderTime } from "@workstation/common";
+import { Reminder } from "@workstation/core";
 import { DefaultAppStyles } from "../../../utils/styles";
 
 export const ReminderTime = ({

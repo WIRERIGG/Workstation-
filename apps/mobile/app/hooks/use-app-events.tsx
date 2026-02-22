@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { isFeatureAvailable } from "@notesnook/common";
+import { isFeatureAvailable } from "@workstation/common";
 import {
   EV,
   EVENTS,
@@ -26,8 +26,8 @@ import {
   SubscriptionPlan,
   SyncStatusEvent,
   User
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
 import notifee from "@notifee/react-native";
 import NetInfo, { NetInfoSubscription } from "@react-native-community/netinfo";
 import React, { useCallback, useEffect, useRef } from "react";
@@ -104,7 +104,7 @@ import {
 } from "../utils/events";
 import { getGithubVersion } from "../utils/github-version";
 import { fluidTabsRef } from "../utils/global-refs";
-import { NotesnookModule } from "../utils/notesnook-module";
+import { WorkstationModule } from "../utils/workstation-module";
 import { sleep } from "../utils/time";
 import useFeatureManager from "./use-feature-manager";
 import { deleteDCacheFiles } from "../common/filesystem/io";
@@ -370,9 +370,9 @@ async function saveEditorState() {
       movedAway: editorState().movedAway,
       timestamp: Date.now()
     });
-    NotesnookModule.setAppState(state);
+    WorkstationModule.setAppState(state);
   } else {
-    NotesnookModule.setAppState("");
+    WorkstationModule.setAppState("");
   }
 }
 
@@ -744,7 +744,7 @@ export const useAppEvents = () => {
       }),
       EV.subscribe(EVENTS.migrationStarted, (name) => {
         if (
-          name !== "notesnook" ||
+          name !== "workstation" ||
           !SettingsService.getProperty("introCompleted") ||
           Config.isTesting === "true"
         )
@@ -758,7 +758,7 @@ export const useAppEvents = () => {
       }),
       EV.subscribe(EVENTS.migrationFinished, (name) => {
         if (
-          name !== "notesnook" ||
+          name !== "workstation" ||
           !SettingsService.getProperty("introCompleted") ||
           Config.isTesting === "true"
         )
@@ -817,7 +817,7 @@ export const useAppEvents = () => {
         Sync.run("global", false, "full");
         reconnectSSE();
         await checkForShareExtensionLaunchedInBackground();
-        NotesnookModule.setAppState("");
+        WorkstationModule.setAppState("");
         let user = await db.user.getUser();
         if (user && !user?.isEmailConfirmed) {
           try {

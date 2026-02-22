@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Platform,
@@ -26,7 +26,7 @@ import {
   View
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { notesnook } from "../../../e2e/test.ids";
+import { workstation } from "../../../e2e/test.ids";
 import useGlobalSafeAreaInsets from "../../hooks/use-global-safe-area-insets";
 import useKeyboard from "../../hooks/use-keyboard";
 import { DDS } from "../../services/device-detection";
@@ -204,7 +204,7 @@ export const Toast = ({ context = "global" }) => {
 
         {toastOptions.func ? (
           <Button
-            testID={notesnook.toast.button}
+            testID={workstation.toast.button}
             fontSize={AppFontSize.xs}
             type={
               toastOptions.type === "error" ? "errorShade" : "secondaryAccented"

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { getFormattedDate } from "@notesnook/common";
-import { BaseTrashItem, Notebook, TrashItem } from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { getFormattedDate } from "@workstation/common";
+import { BaseTrashItem, Notebook, TrashItem } from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { notesnook } from "../../../../e2e/test.ids";
+import { workstation } from "../../../../e2e/test.ids";
 import { useIsCompactModeEnabled } from "../../../hooks/use-is-compact-mode-enabled";
 import useIsSelected from "../../../hooks/use-selected";
 import { useSelectionStore } from "../../../stores/use-selection-store";
@@ -212,7 +212,7 @@ export const NotebookItem = ({
           <IconButton
             color={colors.primary.heading}
             name="dots-horizontal"
-            testID={notesnook.ids.notebook.menu}
+            testID={workstation.ids.notebook.menu}
             size={AppFontSize.xl}
             onPress={() => Properties.present(item)}
             style={{

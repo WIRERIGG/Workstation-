@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,21 +19,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import axios from "axios";
 import { AppEventManager, AppEvents } from "../common/app-events";
-import { StreamableFS } from "@notesnook/streamable-fs";
+import { StreamableFS } from "@workstation/streamable-fs";
 import { NNCrypto } from "./nncrypto";
-import { hosts } from "@notesnook/core";
+import { hosts } from "@workstation/core";
 import { saveAs } from "file-saver";
 import { showToast } from "../utils/toast";
 import { db } from "../common/db";
-import { getFileNameWithExtension } from "@notesnook/core";
+import { getFileNameWithExtension } from "@workstation/core";
 import { ChunkedStream, IntoChunks } from "../utils/streams/chunked-stream";
 import { ProgressStream } from "../utils/streams/progress-stream";
 import { consumeReadableStream } from "../utils/stream";
 import { Base64DecoderStream } from "../utils/streams/base64-decoder-stream";
 import { toBlob } from "@notesnook-importer/core/dist/src/utils/stream";
-import { DataFormat, SerializedKey } from "@notesnook/crypto";
+import { DataFormat, SerializedKey } from "@workstation/crypto";
 import { IDataType } from "hash-wasm/dist/lib/util";
-import { FileHandle } from "@notesnook/streamable-fs";
+import { FileHandle } from "@workstation/streamable-fs";
 import {
   CacheStorageFileStore,
   IndexedDBFileStore,
@@ -46,7 +46,7 @@ import {
   IFileStorage,
   Output,
   RequestOptions
-} from "@notesnook/core";
+} from "@workstation/core";
 import { logger } from "../utils/logger";
 import { newQueue } from "@henrygd/queue";
 

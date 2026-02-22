@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -30,7 +30,7 @@ import {
 } from "./types.js";
 import { Editor, NodeViewRendererProps } from "@tiptap/core";
 import { __serializeForClipboard, EditorView } from "prosemirror-view";
-import { EmotionThemeProvider } from "@notesnook/theme";
+import { EmotionThemeProvider } from "@workstation/theme";
 import { isAndroid, isiOS } from "../../utils/platform.js";
 import { useToolbarStore } from "../../toolbar/stores/toolbar-store.js";
 

@@ -80,8 +80,8 @@ module.exports = (env) => {
         "react-native": reactNativePath,
         react: path.join(__dirname, "node_modules/react"),
         "react-dom": path.join(__dirname, "node_modules/react-dom"),
-        "@notesnook": path.join(__dirname, "../../packages"),
-        "@notesnook/core": path.join(__dirname, "../../packages/core"),
+        "@workstation": path.join(__dirname, "../../packages"),
+        "@workstation/core": path.join(__dirname, "../../packages/core"),
         "@streetwriters/showdown": path.join(
           __dirname,
           "node_modules/@streetwriters/showdown"

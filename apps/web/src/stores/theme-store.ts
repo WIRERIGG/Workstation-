@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -26,7 +26,7 @@ import {
   ThemeDark,
   ThemeDefinition,
   ThemeLight
-} from "@notesnook/theme";
+} from "@workstation/theme";
 import { ThemesRouter } from "../common/themes-router";
 
 type ColorScheme = "dark" | "light";

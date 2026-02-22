@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -31,14 +31,14 @@ import {
   TableProperties
 } from "../../toolbar/tools/table.js";
 import { getToolDefinition } from "../../toolbar/tool-definitions.js";
-import { getPosition, ScrollContainer } from "@notesnook/ui";
+import { getPosition, ScrollContainer } from "@workstation/ui";
 import {
   findSelectedDOMNode,
   hasSameAttributes
 } from "../../utils/prosemirror.js";
 import { DesktopOnly, MobileOnly } from "../../components/responsive/index.js";
 import { TextDirections } from "../text-direction/index.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { useIsMobile } from "../../toolbar/stores/toolbar-store.js";
 import { updateColumnsOnResize } from "./prosemirror-tables/tableview.js";
 

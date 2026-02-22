@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Debug } from "@notesnook/core";
+import { Debug } from "@workstation/core";
 import { getModel, getBrand, getSystemVersion } from "react-native-device-info";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import React, { useRef, useState } from "react";
 import { Linking, Platform, Text, TextInput, View } from "react-native";
 import { getVersion } from "react-native-device-info";
@@ -34,7 +34,7 @@ import { Button } from "../../ui/button";
 import Seperator from "../../ui/seperator";
 import Heading from "../../ui/typography/heading";
 import Paragraph from "../../ui/typography/paragraph";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../../utils/styles";
 import Config from "react-native-config";
 
@@ -230,7 +230,7 @@ Github Release: ${Config.GITHUB_RELEASE === "true" ? "Yes" : "No"}`,
             <Text
               onPress={() => {
                 Linking.openURL(
-                  "https://github.com/streetwriters/notesnook/issues"
+                  "https://github.com/streetwriters/workstation/issues"
                 );
               }}
               style={{
@@ -238,7 +238,7 @@ Github Release: ${Config.GITHUB_RELEASE === "true" ? "Yes" : "No"}`,
                 color: colors.primary.accent
               }}
             >
-              github.com/streetwriters/notesnook.
+              github.com/streetwriters/workstation.
             </Text>{" "}
             {strings.issueNotice[1]()}{" "}
             <Text

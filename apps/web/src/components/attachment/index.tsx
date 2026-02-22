@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { Box, Checkbox, Flex, Label, Text } from "@theme-ui/components";
-import { formatBytes } from "@notesnook/common";
+import { formatBytes } from "@workstation/common";
 import {
   AttachmentError,
   Checkmark,
@@ -53,17 +53,17 @@ import {
   DocumentMimeTypes,
   WebClipMimeType,
   PDFMimeType
-} from "@notesnook/core";
+} from "@workstation/core";
 import React, { useEffect, useState } from "react";
 import { AppEventManager, AppEvents } from "../../common/app-events";
-import { getFormattedDate } from "@notesnook/common";
-import { MenuItem } from "@notesnook/ui";
-import { Attachment as AttachmentType } from "@notesnook/core";
+import { getFormattedDate } from "@workstation/common";
+import { MenuItem } from "@workstation/ui";
+import { Attachment as AttachmentType } from "@workstation/core";
 import { useEditorStore } from "../../stores/editor-store";
 import { PromptDialog } from "../../dialogs/prompt";
 import { DialogManager } from "../../common/dialog-manager";
 import { useStore as useSelectionStore } from "../../stores/selection-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { showToast } from "../../utils/toast";
 import { PdfPreviewDialog } from "../../dialogs/pdf-preview-dialog";
 

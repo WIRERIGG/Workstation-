@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -67,7 +67,7 @@ export function Hero() {
           fontSize: 52
         }}
       >
-        <MdOutlineShield /> Notesnook Vericrypt
+        <MdOutlineShield /> Workstation Vericrypt
       </Text>
       <Text
         sx={{
@@ -76,7 +76,7 @@ export function Hero() {
           color: "fontTertiary"
         }}
       >
-        An open source utility to verify Notesnook data encryption claims in a
+        An open source utility to verify Workstation data encryption claims in a
         provable way.
       </Text>
       <Flex sx={{ mt: 2, zIndex: 10 }}>

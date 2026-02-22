@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import {
   NNCrypto,
   SerializedKey,
   SerializedKeyPair
-} from "@notesnook/crypto";
+} from "@workstation/crypto";
 import { IStorage } from "../src/interfaces.js";
 
 export class NodeStorageInterface implements IStorage {

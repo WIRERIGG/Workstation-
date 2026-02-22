@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -16,8 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { Color } from "@notesnook/core";
-import { useThemeColors } from "@notesnook/theme";
+import { Color } from "@workstation/core";
+import { useThemeColors } from "@workstation/theme";
 import React, { useRef, useState } from "react";
 import { TextInput, View } from "react-native";
 import ColorPickerWheel from "react-native-wheel-color-picker";
@@ -33,7 +33,7 @@ import { Toast } from "../../toast";
 import { Button } from "../../ui/button";
 import Input from "../../ui/input";
 import { Pressable } from "../../ui/pressable";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { DefaultAppStyles } from "../../../utils/styles";
 
 const HEX_COLOR_REGEX_ALPHA =

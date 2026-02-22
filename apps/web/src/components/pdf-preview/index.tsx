@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -38,7 +38,7 @@ import Field from "../field";
 import { LinkPlugin } from "./links-plugin";
 import Config from "../../utils/config";
 import { ErrorText } from "../error-text";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export type PdfPreviewProps = {
   fileUrl: string | Uint8Array;

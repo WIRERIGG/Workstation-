@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import { Toast } from "../toast";
 import { AuthMode, initialAuthMode } from "./common";
 import { Login } from "./login";
 import { Signup } from "./signup";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import { NavigationProps } from "../../services/navigation";
 
 const Auth = ({ navigation, route }: NavigationProps<"Auth">) => {

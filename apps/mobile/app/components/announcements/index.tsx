@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,7 +25,7 @@ import {
   eUnSubscribeEvent
 } from "../../services/event-manager";
 import { Announcement, useMessageStore } from "../../stores/use-message-store";
-import { useThemeColors } from "@notesnook/theme";
+import { useThemeColors } from "@workstation/theme";
 import {
   eCloseAnnouncementDialog,
   eOpenAnnouncementDialog
@@ -48,7 +48,7 @@ import { DefaultAppStyles } from "../../utils/styles";
       },
       {
         type: "description",
-        text: "Most of you are too busy to keep up to date with what's happening in Notesnook. That is unfortunate because Notesnook has come a looooong way.",
+        text: "Most of you are too busy to keep up to date with what's happening in Workstation. That is unfortunate because Workstation has come a looooong way.",
         style: {
           marginBottom: 1
         },
@@ -56,7 +56,7 @@ import { DefaultAppStyles } from "../../utils/styles";
       },
       {
         type: "description",
-        text: "To solve this, we are launching the Notesnook Digest — a newsletter to help you stay updated about Notesnook development. And to keep things interesting I'll also sprinkle this newsletter with other interesting stuff like privacy tips & news, interesting books, things I am looking forward to etc.",
+        text: "To solve this, we are launching the Workstation Digest — a newsletter to help you stay updated about Workstation development. And to keep things interesting I'll also sprinkle this newsletter with other interesting stuff like privacy tips & news, interesting books, things I am looking forward to etc.",
         style: {
           marginBottom: 1
         },
@@ -85,7 +85,7 @@ import { DefaultAppStyles } from "../../utils/styles";
             type: "promo",
             title: "15% Off",
             platforms: ["android"],
-            data: "com.streetwriters.notesnook.sub.yr.15"
+            data: "com.streetwriters.workstation.sub.yr.15"
           }
         ],
         platforms: ["all"]

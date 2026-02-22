@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,12 +24,12 @@ import {
   useEditorManager
 } from "../../components/editor/manager";
 import { useStore as useSettingStore } from "../../stores/setting-store";
-import { getFonts } from "@notesnook/editor";
+import { getFonts } from "@workstation/editor";
 import { useSpellChecker } from "../../hooks/use-spell-checker";
 import { SpellCheckerLanguages } from "./components/spell-checker-languages";
 import { CustomizeToolbar } from "./components/customize-toolbar";
 import { DictionaryWords } from "./components/dictionary-words";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { isMac } from "../../utils/platform";
 import { EDITOR_LINE_HEIGHT } from "../../components/editor/common";
 

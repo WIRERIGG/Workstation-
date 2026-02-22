@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import {
   FeatureResult,
   isFeatureAvailable
 } from "../utils/index.js";
-import { EV, EVENTS } from "@notesnook/core";
+import { EV, EVENTS } from "@workstation/core";
 
 export function useIsFeatureAvailable<TId extends FeatureId>(
   id: TId | undefined,

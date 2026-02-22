@@ -784,7 +784,9 @@ function GitPanelPlaceholder() {
   );
 }
 
+import { isDesktopRuntime } from "../utils/platform";
+
 export default function GitPanel() {
-  if (IS_DESKTOP_APP) return <GitPanelReal />;
+  if (isDesktopRuntime()) return <GitPanelReal />;
   return <GitPanelPlaceholder />;
 }

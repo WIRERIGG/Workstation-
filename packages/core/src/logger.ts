@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -27,7 +27,7 @@ import {
   consoleReporter,
   format,
   ILogger
-} from "@notesnook/logger";
+} from "@workstation/logger";
 import { Kysely, Migration, MigrationProvider } from "@streetwriters/kysely";
 import { SQLiteOptions, createDatabase } from "./database/index.js";
 import { toChunks } from "./utils/array.js";
@@ -178,7 +178,7 @@ async function initialize(
   options: SQLiteOptions,
   disableConsoleLogs?: boolean
 ) {
-  const db = await createDatabase<LogDatabaseSchema>("notesnook-logs", {
+  const db = await createDatabase<LogDatabaseSchema>("workstation-logs", {
     ...options,
     migrationProvider: new NNLogsMigrationProvider()
   });

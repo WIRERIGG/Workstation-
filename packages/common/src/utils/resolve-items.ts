@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ import {
   Notebook,
   Tag,
   getUpcomingReminder
-} from "@notesnook/core";
+} from "@workstation/core";
 import { database as db } from "../database.js";
 
 type WithDateEdited<T> = { items: T[]; dateEdited: number };

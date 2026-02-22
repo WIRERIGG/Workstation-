@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { store as appStore } from "./app-store";
 import { store as noteStore } from "./note-store";
 import BaseStore from "./index";
 import Config from "../utils/config";
-import { Notebook, VirtualizedGrouping } from "@notesnook/core";
+import { Notebook, VirtualizedGrouping } from "@workstation/core";
 
 type ViewMode = "detailed" | "compact";
 class NotebookStore extends BaseStore<NotebookStore> {

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { tmpdir } from "os";
 
 export default async function () {
   return async () => {
-    rmSync(path.join(tmpdir(), "notesnook-tests-tmp"), {
+    rmSync(path.join(tmpdir(), "workstation-tests-tmp"), {
       force: true,
       recursive: true
     });

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -31,7 +31,7 @@ import {
 } from "../icons";
 import { getPlatform } from "../../utils/platform";
 import { TITLE_BAR_HEIGHT } from "../title-bar";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const DEFAULT_ZOOM_STEP = 0.3;
 const DEFAULT_LARGE_ZOOM = 4;

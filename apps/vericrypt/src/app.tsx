@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,23 +22,23 @@ import { ThemeProvider } from "@emotion/react";
 import "./app.css";
 import { MdVpnKey, MdCheck } from "react-icons/md";
 import { BiPlus } from "react-icons/bi";
-import { getDefaultAccentColor, useTheme } from "@notesnook/theme";
+import { getDefaultAccentColor, useTheme } from "@workstation/theme";
 import { Hero } from "./components/hero";
-import { LoginToNotesnook } from "./components/step-1";
+import { LoginToWorkstation } from "./components/step-1";
 import { GetAccountSalt } from "./components/step-2";
 import { EnterAccountPassword } from "./components/step-3";
 import { PasteEncryptedData, SyncRequestBody } from "./components/step-4";
 import { StepSeperator } from "./components/step-seperator";
 import { Footer } from "./components/footer";
 import { useState } from "react";
-import { NNCrypto } from "@notesnook/crypto";
+import { NNCrypto } from "@workstation/crypto";
 import { Code } from "./components/code";
 import { Accordion } from "./components/accordion";
 import { DecryptedResult } from "./components/decrypted-result";
 import Map from "./assets/images/map.svg";
 
 const instructions = [
-  "Go to Notesnook",
+  "Go to Workstation",
   "Open Settings",
   <>
     Click on <Code text="Backup data recovery key" />
@@ -65,7 +65,7 @@ function App() {
             alignItems: "center"
           }}
         >
-          <LoginToNotesnook />
+          <LoginToWorkstation />
           <StepSeperator />
           <GetAccountSalt onSaltSubmitted={setSalt} />
 

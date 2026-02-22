@@ -19,14 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useMemo } from "react";
 import { Box, Button, Flex, Image, Link, Text } from "@theme-ui/components";
-import { getRandom, usePromise } from "@notesnook/common";
+import { getRandom, usePromise } from "@workstation/common";
 import Grberk from "../../assets/testimonials/grberk.jpeg";
 import Holenstein from "../../assets/testimonials/holenstein.jpg";
 import Jason from "../../assets/testimonials/jason.jpg";
 import Cameron from "../../assets/testimonials/cameron.jpg";
-import { hosts } from "@notesnook/core";
+import { hosts } from "@workstation/core";
 import { SettingsDialog } from "../../dialogs/settings";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const testimonials = [
   {

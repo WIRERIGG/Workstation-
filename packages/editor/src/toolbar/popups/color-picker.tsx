@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { ButtonProps, Flex } from "@theme-ui/components";
 import { Input } from "@theme-ui/components";
-import { Icon } from "@notesnook/ui";
+import { Icon } from "@workstation/ui";
 import { Icons } from "../icons.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { colord } from "colord";
@@ -27,9 +27,9 @@ import { HexColorPicker } from "react-colorful";
 import { Button } from "../../components/button.js";
 import { debounce } from "../../utils/debounce.js";
 import { Popup } from "../components/popup.js";
-import { SchemeColors } from "@notesnook/theme";
+import { SchemeColors } from "@workstation/theme";
 import { Editor } from "../../types.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { useToolbarStore } from "../stores/toolbar-store.js";
 
 type ColorPickerProps = {

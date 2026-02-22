@@ -88,7 +88,7 @@
       "expires_in": 3600,
       "token_type": "Bearer",
       "refresh_token": "4489400BF30C61DCA8B84960620F5B01B165A8FE5C537AE4709E5492758F49ED",
-      "scope": "IdentityServerApi notesnook.sync offline_access openid",
+      "scope": "IdentityServerApi workstation.sync offline_access openid",
       "t": 1640684404249
     }
   },

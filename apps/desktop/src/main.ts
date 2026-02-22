@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -37,13 +37,13 @@ import { bringToFront } from "./utils/bring-to-front";
 import { bridge } from "./api/bridge";
 import { setupDesktopIntegration } from "./utils/desktop-integration";
 import { disableCustomDns, enableCustomDns } from "./utils/custom-dns";
-import { Messages, setI18nGlobal } from "@notesnook/intl";
+import { Messages, setI18nGlobal } from "@workstation/intl";
 import { i18n } from "@lingui/core";
 
 const locale =
   process.env.NODE_ENV === "development"
-    ? import("@notesnook/intl/locales/$pseudo-LOCALE.json")
-    : import("@notesnook/intl/locales/$en.json");
+    ? import("@workstation/intl/locales/$pseudo-LOCALE.json")
+    : import("@workstation/intl/locales/$en.json");
 locale.then(({ default: locale }) => {
   i18n.load({
     en: locale.messages as unknown as Messages
@@ -60,7 +60,7 @@ if (!MAC_APP_STORE && !app.requestSingleInstanceLock()) {
 
 if (process.platform == "win32" && process.env.PORTABLE_EXECUTABLE_DIR) {
   console.log("Portable app: true");
-  const root = path.join(process.env.PORTABLE_EXECUTABLE_DIR, "Notesnook");
+  const root = path.join(process.env.PORTABLE_EXECUTABLE_DIR, "Workstation");
   app.setPath("appData", path.join(root, "AppData"));
   app.setPath("documents", path.join(root, "Documents"));
   app.setPath("userData", path.join(root, "UserData"));
@@ -186,7 +186,7 @@ app.once("ready", async () => {
     console.log("App is running under ARM64 translation");
     dialog.showMessageBoxSync({
       message:
-        "Notesnook detected that it is running under ARM64 translation. For the best performance, please download the ARM64 build of Notesnook from our website.",
+        "Workstation detected that it is running under ARM64 translation. For the best performance, please download the ARM64 build of Workstation from our website.",
       type: "warning",
       buttons: ["Okay"],
       title: "Degraded Performance Warning"

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -114,12 +114,12 @@ export const WEB_MANIFEST: Partial<ManifestOptions> = {
   related_applications: [
     {
       platform: "play",
-      url: "https://play.google.com/store/apps/details?id=com.streetwriters.notesnook",
-      id: "com.streetwriters.notesnook"
+      url: "https://play.google.com/store/apps/details?id=com.streetwriters.workstation",
+      id: "com.streetwriters.workstation"
     },
     {
       platform: "itunes",
-      url: "https://apps.apple.com/us/app/notesnook-private-notes-app/id1544027013"
+      url: "https://apps.apple.com/us/app/workstation-private-notes-app/id1544027013"
     }
   ],
   prefer_related_applications: true,

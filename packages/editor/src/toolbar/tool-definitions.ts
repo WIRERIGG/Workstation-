@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { ToolbarDefinition, ToolDefinition } from "./types.js";
 import { ToolId } from "./tools/index.js";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const tools: Record<ToolId, ToolDefinition> = {
   none: {

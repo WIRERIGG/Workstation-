@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /* eslint-disable no-inner-declarations */
-import { isFeatureAvailable, useAreFeaturesAvailable } from "@notesnook/common";
+import { isFeatureAvailable, useAreFeaturesAvailable } from "@workstation/common";
 import {
   Color,
   createInternalLink,
@@ -26,9 +26,9 @@ import {
   Note,
   Notebook,
   VAULT_ERRORS
-} from "@notesnook/core";
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+} from "@workstation/core";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import { DisplayedNotification } from "@notifee/react-native";
 import Clipboard from "@react-native-clipboard/clipboard";
 import React, { useEffect, useRef, useState } from "react";
@@ -71,7 +71,7 @@ import { eCloseSheet, eUpdateNoteInEditor } from "../utils/events";
 import { deleteItems } from "../utils/functions";
 import { convertNoteToText } from "../utils/note-to-text";
 import { sleep } from "../utils/time";
-import { NotesnookModule } from "../utils/notesnook-module";
+import { WorkstationModule } from "../utils/workstation-module";
 
 import DatePickerComponent from "../components/date-picker";
 
@@ -1260,7 +1260,7 @@ export const useActions = ({
         }
 
         try {
-          await NotesnookModule.addShortcut(
+          await WorkstationModule.addShortcut(
             item.id,
             item.type,
             item.title,

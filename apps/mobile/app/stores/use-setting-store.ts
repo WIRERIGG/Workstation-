@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,8 +23,8 @@ import { Sound } from "react-native-notification-sounds";
 import { initialWindowMetrics } from "react-native-safe-area-context";
 import { FileType } from "react-native-scoped-storage";
 import { create } from "zustand";
-import { ThemeDark, ThemeLight, ThemeDefinition } from "@notesnook/theme";
-import { DayFormat, WeekFormat, Reminder } from "@notesnook/core";
+import { ThemeDark, ThemeLight, ThemeDefinition } from "@workstation/theme";
+import { DayFormat, WeekFormat, Reminder } from "@workstation/core";
 import { db } from "../common/database";
 import { EDITOR_LINE_HEIGHT } from "../utils/constants";
 export const HostIds = [

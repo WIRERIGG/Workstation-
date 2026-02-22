@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -31,7 +31,7 @@ import {
   ValueOf,
   isDeleted
 } from "../types.js";
-import { Cipher, SerializedKey } from "@notesnook/crypto";
+import { Cipher, SerializedKey } from "@workstation/crypto";
 import { isCipher } from "../utils/crypto.js";
 import { migrateItem } from "../migrations.js";
 import { DatabaseCollection } from "./index.js";
@@ -524,7 +524,7 @@ export default class Backup {
     const { version = 0 } = backup;
     if (version > CURRENT_DATABASE_VERSION)
       throw new Error(
-        "This backup was made from a newer version of Notesnook. Cannot migrate."
+        "This backup was made from a newer version of Workstation. Cannot migrate."
       );
 
     switch (version) {

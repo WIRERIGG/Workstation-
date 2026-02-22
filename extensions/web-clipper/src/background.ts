@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -24,7 +24,7 @@ browser.runtime.onMessage.addListener((message) => {
     storeClip(message.data).then(() => {
       return browser.notifications?.create({
         title: "Clip successful!",
-        message: "Open Notesnook Web Clipper to save the clip!",
+        message: "Open Workstation Web Clipper to save the clip!",
         type: "basic",
         iconUrl: browser.runtime.getURL("256x256.png"),
         isClickable: false

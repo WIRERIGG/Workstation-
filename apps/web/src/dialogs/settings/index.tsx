@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -71,17 +71,17 @@ import {
   SupportSettings
 } from "./other-settings";
 import { AppearanceSettings } from "./appearance-settings";
-import { debounce, useIsFeatureAvailable, usePromise } from "@notesnook/common";
+import { debounce, useIsFeatureAvailable, usePromise } from "@workstation/common";
 import { SubscriptionSettings } from "./subscription-settings";
 import { ScopedThemeProvider } from "../../components/theme-provider";
 import { AppLockSettings } from "./app-lock-settings";
 import { BaseDialogProps, DialogManager } from "../../common/dialog-manager";
 import { ServersSettings } from "./servers-settings";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { mdToHtml } from "../../utils/md";
 import { InboxSettings } from "./inbox-settings";
 import { withFeatureCheck } from "../../common";
-import { NotesnookCircleSettings } from "./notesnook-circle-settings";
+import { WorkstationCircleSettings } from "./workstation-circle-settings";
 import { hashNavigate } from "../../navigation";
 
 type SettingsDialogProps = BaseDialogProps<false> & {
@@ -114,7 +114,7 @@ const sectionGroups: SectionGroup[] = [
       },
       {
         key: "circle",
-        title: "Notesnook Circle",
+        title: "Workstation Circle",
         icon: CircleEmpty,
         isHidden: () => !useUserStore.getState().isLoggedIn
       },
@@ -152,7 +152,7 @@ const sectionGroups: SectionGroup[] = [
     title: strings.importExport(),
     sections: [
       { key: "backup-export", title: strings.backupExport(), icon: Backup },
-      { key: "importer", title: strings.notesnookImporter(), icon: Import }
+      { key: "importer", title: strings.workstationImporter(), icon: Import }
     ]
   },
   {
@@ -195,7 +195,7 @@ const SettingsGroups = [
   ...SubscriptionSettings,
   ...ServersSettings,
   ...InboxSettings,
-  ...NotesnookCircleSettings
+  ...WorkstationCircleSettings
 ];
 
 // Thoughts:

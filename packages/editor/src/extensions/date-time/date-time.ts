@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import {
   InputRuleFinder,
   ExtendedRegExpMatchArray
 } from "@tiptap/core";
-import { formatDate, tiptapKeys } from "@notesnook/common";
+import { formatDate, tiptapKeys } from "@workstation/common";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {

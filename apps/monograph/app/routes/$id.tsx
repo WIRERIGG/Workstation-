@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Cipher } from "@notesnook/crypto";
+import { Cipher } from "@workstation/crypto";
 import { Flex, Text } from "@theme-ui/components";
 import { useLoaderData } from "@remix-run/react";
 import { MonographPage } from "../components/monographpost";

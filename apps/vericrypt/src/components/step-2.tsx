@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -36,7 +36,7 @@ type GetAccountSaltProps = {
 
 const steps = {
   chromium: [
-    "Focus the Notesnook tab in your browser.",
+    "Focus the Workstation tab in your browser.",
     <>
       Press <KeyCombo combo={getCombo("chromium", "developerTools")} /> to open
       Developer Tools.
@@ -59,7 +59,7 @@ const steps = {
     </Flex>
   ],
   firefox: [
-    "Focus the Notesnook tab in your browser.",
+    "Focus the Workstation tab in your browser.",
     <>
       Press <KeyCombo combo={getCombo("firefox", "developerTools")} /> to open
       Developer Tools.
@@ -130,7 +130,7 @@ export function GetAccountSalt(props: GetAccountSaltProps) {
       >
         <Text variant="body" sx={{ mx: 2 }}>
           We&apos;ll be extracting your account&apos;s salt right from
-          Notesnook&apos;s local database that lives in your web browser. So put
+          Workstation&apos;s local database that lives in your web browser. So put
           on your seat belt and let&apos;s get some salt!
         </Text>
         <Text as="ol" variant="body" sx={{ mb: 2 }}>

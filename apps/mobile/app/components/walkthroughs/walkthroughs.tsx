@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { strings } from "@notesnook/intl";
-import { useThemeColors } from "@notesnook/theme";
+import { strings } from "@workstation/intl";
+import { useThemeColors } from "@workstation/theme";
 import React from "react";
 import { Linking, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -41,7 +41,7 @@ import Heading from "../ui/typography/heading";
 import Paragraph from "../ui/typography/paragraph";
 import { DefaultAppStyles } from "../../utils/styles";
 import { useUserStore } from "../../stores/use-user-store";
-import { planToId, SubscriptionPlan } from "@notesnook/core";
+import { planToId, SubscriptionPlan } from "@workstation/core";
 import { planToDisplayName } from "../../utils/constants";
 import AppIcon from "../ui/AppIcon";
 

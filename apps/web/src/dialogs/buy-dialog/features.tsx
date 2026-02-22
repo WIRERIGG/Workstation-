@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -68,7 +68,7 @@ import {
   CustomToolbar,
   SyncOff
 } from "../../components/icons";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 type Feature = {
   id: string;
@@ -91,7 +91,7 @@ const sections: Section[] = [
   {
     title: "Focused on privacy",
     detail:
-      "Everything you do in Notesnook stays private. We use XChaCha20-Poly1305-IETF and Argon2 to encrypt your notes.",
+      "Everything you do in Workstation stays private. We use XChaCha20-Poly1305-IETF and Argon2 to encrypt your notes.",
     features: [
       {
         id: "zero-ads",
@@ -146,7 +146,7 @@ const sections: Section[] = [
   },
   {
     title: "100% cross platform",
-    detail: "Notesnook is available on all major platforms — for everyone.",
+    detail: "Workstation is available on all major platforms — for everyone.",
     columns: 8,
     isVisible: () => !isMacStoreApp(),
     features: [
@@ -405,7 +405,7 @@ const sections: Section[] = [
     ]
   },
   {
-    title: "Personalize & make Notesnook your own",
+    title: "Personalize & make Workstation your own",
     detail:
       "Change app themes to match your style. Custom themes are coming soon.",
     features: [

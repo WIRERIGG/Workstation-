@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,7 +20,7 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import arraybuffer from "vite-plugin-arraybuffer";
-import ThemeDark from "@notesnook/theme/theme-engine/themes/default-dark.json" with { type:"json" };
+import ThemeDark from "@workstation/theme/theme-engine/themes/default-dark.json" with { type:"json" };
 import type { Plugin, ResolvedConfig } from "vite";
 import { writeFile } from "fs/promises";
 import path from "path";

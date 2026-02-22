@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import {
   DataFormat,
   SerializedKey,
   SerializedKeyPair
-} from "@notesnook/crypto";
+} from "@workstation/crypto";
 import { KVStorage } from "./database/kv.js";
 import { ConfigStorage } from "./database/config.js";
 

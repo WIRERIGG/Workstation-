@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -39,11 +39,11 @@ import { showToast } from "../utils/toast";
 import AuthContainer from "../components/auth-container";
 import { useTimer } from "../hooks/use-timer";
 import { ErrorText } from "../components/error-text";
-import { AuthenticatorType, User } from "@notesnook/core";
+import { AuthenticatorType, User } from "@workstation/core";
 import { ConfirmDialog, showLogoutConfirmation } from "../dialogs/confirm";
 import { TaskManager } from "../common/task-manager";
-import { strings } from "@notesnook/intl";
-import { ScrollContainer } from "@notesnook/ui";
+import { strings } from "@workstation/intl";
+import { ScrollContainer } from "@workstation/ui";
 
 type EmailFormData = {
   email: string;
@@ -425,7 +425,7 @@ function Signup(props: BaseAuthComponentProps<"signup">) {
             <Link
               target="_blank"
               rel="noreferrer"
-              href="https://notesnook.com/tos"
+              href="https://workstation.com/tos"
               sx={{ color: "accent" }}
             >
               {strings.signupAgreement[1]()}
@@ -433,7 +433,7 @@ function Signup(props: BaseAuthComponentProps<"signup">) {
             {strings.signupAgreement[2]()}{" "}
             <Link
               rel="noreferrer"
-              href="https://notesnook.com/privacy"
+              href="https://workstation.com/privacy"
               sx={{ color: "accent" }}
             >
               {strings.signupAgreement[3]()}

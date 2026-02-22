@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -32,18 +32,18 @@ import {
   Trash
 } from "../icons";
 import IconTag from "../icon-tag";
-import { isReminderToday } from "@notesnook/core";
+import { isReminderToday } from "@workstation/core";
 import { hashNavigate } from "../../navigation";
 import { Multiselect } from "../../common/multi-select";
 import { store } from "../../stores/reminder-store";
 import { db } from "../../common/db";
-import { getFormattedReminderTime } from "@notesnook/common";
-import { MenuItem } from "@notesnook/ui";
-import { Reminder as ReminderType } from "@notesnook/core";
+import { getFormattedReminderTime } from "@workstation/common";
+import { MenuItem } from "@workstation/ui";
+import { Reminder as ReminderType } from "@workstation/core";
 import { ConfirmDialog } from "../../dialogs/confirm";
 import { EditReminderDialog } from "../../dialogs/add-reminder-dialog";
 import { useStore as useSelectionStore } from "../../stores/selection-store";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 const RECURRING_MODE_MAP = {
   week: "Weekly",

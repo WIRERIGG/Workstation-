@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { ScopedThemeProvider } from "@notesnook/theme";
+import { ScopedThemeProvider } from "@workstation/theme";
 import React, { useEffect, useState } from "react";
 import ShareView from "./share";
 import "./store";
 
-const NotesnookShare = () => {
+const WorkstationShare = () => {
   const [render, setRender] = useState(false);
   useEffect(() => {
     setTimeout(() => {
@@ -36,4 +36,4 @@ const NotesnookShare = () => {
   );
 };
 
-export default NotesnookShare;
+export default WorkstationShare;

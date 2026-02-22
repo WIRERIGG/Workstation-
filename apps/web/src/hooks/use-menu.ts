@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
-import { MenuItem, PositionOptions } from "@notesnook/ui";
+import { MenuItem, PositionOptions } from "@workstation/ui";
 import { desktop } from "../common/desktop-bridge";
 import { isMac } from "../utils/platform";
 

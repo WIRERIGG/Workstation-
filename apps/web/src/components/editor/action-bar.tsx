@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -42,7 +42,7 @@ import {
   Undo,
   Unlock
 } from "../icons";
-import { ScrollContainer } from "@notesnook/ui";
+import { ScrollContainer } from "@workstation/ui";
 import {
   SaveState,
   SessionType,
@@ -77,7 +77,7 @@ import { db } from "../../common/db";
 import { showPublishView } from "../publish-view";
 import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import useMobile from "../../hooks/use-mobile";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import { getWindowControls } from "../title-bar";
 import useTablet from "../../hooks/use-tablet";
 import { isMac } from "../../utils/platform";

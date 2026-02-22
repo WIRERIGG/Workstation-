@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,15 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { TaskManager } from "./task-manager";
 import { createWriteStream } from "../utils/stream-saver";
-import { FilteredSelector } from "@notesnook/core";
-import { Note } from "@notesnook/core";
+import { FilteredSelector } from "@workstation/core";
+import { Note } from "@workstation/core";
 import { fromAsyncIterator } from "../utils/stream";
 import {
   sanitizeFilename,
   exportNotes as _exportNotes,
   exportNote as _exportNote,
   exportContent
-} from "@notesnook/common";
+} from "@workstation/common";
 import Vault from "./vault";
 import { ExportStream } from "../utils/streams/export-stream";
 import { showToast } from "../utils/toast";
@@ -35,7 +35,7 @@ import { ConfirmDialog } from "../dialogs/confirm";
 import { db } from "./db";
 import { toAsyncIterator } from "@notesnook-importer/core/dist/src/utils/stream";
 import { saveAs } from "file-saver";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 
 export async function exportToPDF(
   title: string,

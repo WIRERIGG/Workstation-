@@ -1237,3 +1237,233 @@ fn test_app_lock_hash_verify() {
     let hash3 = engine.encode(&key3);
     assert_ne!(hash, hash3);
 }
+
+// ===========================================================================
+// task_tests
+// ===========================================================================
+
+mod task_tests {
+    use wiredash_core::collections::tasks::Tasks;
+    use wiredash_core::types::TaskItem;
+    use wiredash_db::Database;
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn task_add_get_roundtrip() {
+        let db = Database::open_memory().await.unwrap();
+        let tasks = Tasks::new(&db);
+        let task = TaskItem::new("My Task");
+        let id = task.base.id.clone();
+        tasks.add(&task).unwrap();
+        let fetched = tasks.get(&id).unwrap().unwrap();
+        assert_eq!(fetched.title, "My Task");
+        assert_eq!(fetched.status, "open");
+        assert_eq!(fetched.priority, "medium");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn task_list_excludes_deleted() {
+        let db = Database::open_memory().await.unwrap();
+        let tasks = Tasks::new(&db);
+        let t1 = TaskItem::new("Visible");
+        tasks.add(&t1).unwrap();
+        let mut t2 = TaskItem::new("Hidden");
+        t2.base.deleted = true;
+        tasks.add(&t2).unwrap();
+        let list = tasks.list(None).unwrap();
+        assert_eq!(list.len(), 1);
+        assert_eq!(list[0].title, "Visible");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn task_update_status() {
+        let db = Database::open_memory().await.unwrap();
+        let tasks = Tasks::new(&db);
+        let task = TaskItem::new("Do thing");
+        let id = task.base.id.clone();
+        tasks.add(&task).unwrap();
+        tasks.update_status(&id, "done").unwrap();
+        let fetched = tasks.get(&id).unwrap().unwrap();
+        assert_eq!(fetched.status, "done");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn task_remove() {
+        let db = Database::open_memory().await.unwrap();
+        let tasks = Tasks::new(&db);
+        let task = TaskItem::new("Remove me");
+        let id = task.base.id.clone();
+        tasks.add(&task).unwrap();
+        tasks.remove(&id).unwrap();
+        assert!(tasks.get(&id).unwrap().is_none());
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn task_list_by_status() {
+        let db = Database::open_memory().await.unwrap();
+        let tasks = Tasks::new(&db);
+        let mut t1 = TaskItem::new("Open task");
+        t1.status = "open".to_string();
+        tasks.add(&t1).unwrap();
+        let mut t2 = TaskItem::new("Done task");
+        t2.status = "done".to_string();
+        tasks.add(&t2).unwrap();
+        let open = tasks.list_by_status("open").unwrap();
+        assert_eq!(open.len(), 1);
+        assert_eq!(open[0].title, "Open task");
+    }
+}
+
+// ===========================================================================
+// calendar_event_tests
+// ===========================================================================
+
+mod calendar_event_tests {
+    use wiredash_core::collections::calendar_events::CalendarEvents;
+    use wiredash_core::types::CalendarEvent;
+    use wiredash_db::Database;
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn event_add_get_roundtrip() {
+        let db = Database::open_memory().await.unwrap();
+        let events = CalendarEvents::new(&db);
+        let event = CalendarEvent::new("Team Standup", 1000, 2000);
+        let id = event.base.id.clone();
+        events.add(&event).unwrap();
+        let fetched = events.get(&id).unwrap().unwrap();
+        assert_eq!(fetched.title, "Team Standup");
+        assert_eq!(fetched.start_date, 1000);
+        assert_eq!(fetched.end_date, 2000);
+        assert!(!fetched.all_day);
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn event_list_excludes_deleted() {
+        let db = Database::open_memory().await.unwrap();
+        let events = CalendarEvents::new(&db);
+        let e1 = CalendarEvent::new("Visible", 1000, 2000);
+        events.add(&e1).unwrap();
+        let mut e2 = CalendarEvent::new("Hidden", 3000, 4000);
+        e2.base.deleted = true;
+        events.add(&e2).unwrap();
+        let list = events.list(None).unwrap();
+        assert_eq!(list.len(), 1);
+        assert_eq!(list[0].title, "Visible");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn event_list_in_range() {
+        let db = Database::open_memory().await.unwrap();
+        let events = CalendarEvents::new(&db);
+        // Event from 1000..2000
+        let e1 = CalendarEvent::new("Morning", 1000, 2000);
+        events.add(&e1).unwrap();
+        // Event from 3000..4000
+        let e2 = CalendarEvent::new("Afternoon", 3000, 4000);
+        events.add(&e2).unwrap();
+        // Event from 5000..6000
+        let e3 = CalendarEvent::new("Evening", 5000, 6000);
+        events.add(&e3).unwrap();
+
+        // Range 1500..3500 should match Morning (ends after 1500) and Afternoon (starts before 3500)
+        let in_range = events.list_in_range(1500, 3500).unwrap();
+        assert_eq!(in_range.len(), 2);
+        let titles: Vec<&str> = in_range.iter().map(|e| e.title.as_str()).collect();
+        assert!(titles.contains(&"Morning"));
+        assert!(titles.contains(&"Afternoon"));
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn event_remove() {
+        let db = Database::open_memory().await.unwrap();
+        let events = CalendarEvents::new(&db);
+        let event = CalendarEvent::new("Remove me", 1000, 2000);
+        let id = event.base.id.clone();
+        events.add(&event).unwrap();
+        events.remove(&id).unwrap();
+        assert!(events.get(&id).unwrap().is_none());
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn event_list_sorted_by_start_date() {
+        let db = Database::open_memory().await.unwrap();
+        let events = CalendarEvents::new(&db);
+        let e1 = CalendarEvent::new("Later", 5000, 6000);
+        events.add(&e1).unwrap();
+        let e2 = CalendarEvent::new("Earlier", 1000, 2000);
+        events.add(&e2).unwrap();
+        let list = events.list(None).unwrap();
+        assert_eq!(list[0].title, "Earlier");
+        assert_eq!(list[1].title, "Later");
+    }
+}
+
+// ===========================================================================
+// agent_tests
+// ===========================================================================
+
+mod agent_tests {
+    use wiredash_core::collections::agents::Agents;
+    use wiredash_core::types::Agent;
+    use wiredash_db::Database;
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn agent_add_get_roundtrip() {
+        let db = Database::open_memory().await.unwrap();
+        let agents = Agents::new(&db);
+        let agent = Agent::new("Orchestrator", "coordinator");
+        let id = agent.base.id.clone();
+        agents.add(&agent).unwrap();
+        let fetched = agents.get(&id).unwrap().unwrap();
+        assert_eq!(fetched.name, "Orchestrator");
+        assert_eq!(fetched.role, "coordinator");
+        assert_eq!(fetched.status, "idle");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn agent_list_excludes_deleted() {
+        let db = Database::open_memory().await.unwrap();
+        let agents = Agents::new(&db);
+        let a1 = Agent::new("Active", "worker");
+        agents.add(&a1).unwrap();
+        let mut a2 = Agent::new("Removed", "worker");
+        a2.base.deleted = true;
+        agents.add(&a2).unwrap();
+        let list = agents.list(None).unwrap();
+        assert_eq!(list.len(), 1);
+        assert_eq!(list[0].name, "Active");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn agent_update_status() {
+        let db = Database::open_memory().await.unwrap();
+        let agents = Agents::new(&db);
+        let agent = Agent::new("Worker", "task_runner");
+        let id = agent.base.id.clone();
+        agents.add(&agent).unwrap();
+        agents.update_status(&id, "busy").unwrap();
+        let fetched = agents.get(&id).unwrap().unwrap();
+        assert_eq!(fetched.status, "busy");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn agent_remove() {
+        let db = Database::open_memory().await.unwrap();
+        let agents = Agents::new(&db);
+        let agent = Agent::new("Temp", "temp_role");
+        let id = agent.base.id.clone();
+        agents.add(&agent).unwrap();
+        agents.remove(&id).unwrap();
+        assert!(agents.get(&id).unwrap().is_none());
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn agent_list_with_limit() {
+        let db = Database::open_memory().await.unwrap();
+        let agents = Agents::new(&db);
+        agents.add(&Agent::new("Alpha", "role_a")).unwrap();
+        agents.add(&Agent::new("Beta", "role_b")).unwrap();
+        agents.add(&Agent::new("Gamma", "role_c")).unwrap();
+        let list = agents.list(Some(2)).unwrap();
+        assert_eq!(list.len(), 2);
+    }
+}

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -28,7 +28,7 @@ import {
   MenuPresenterProps,
   PopupPresenter,
   PopupPresenterProps
-} from "@notesnook/ui";
+} from "@workstation/ui";
 import { getPopupContainer } from "../../toolbar/utils/dom.js";
 
 type ResponsiveContainerProps = {

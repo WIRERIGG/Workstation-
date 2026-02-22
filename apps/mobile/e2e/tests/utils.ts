@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -23,7 +23,7 @@ import { readFileSync } from "fs";
 //@ts-ignore
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 import type { RouteName } from "../../app/stores/use-navigation-store";
-import { notesnook } from "../test.ids";
+import { workstation } from "../test.ids";
 jestExpect.extend({ toMatchImageSnapshot });
 
 const testvars = {
@@ -77,7 +77,7 @@ class Element {
 const Tests = {
   awaitLaunch: async () => {
     await device.disableSynchronization();
-    await waitFor(element(by.id(notesnook.ids.default.root)))
+    await waitFor(element(by.id(workstation.ids.default.root)))
       .toBeVisible()
       //@ts-ignore
       .withTimeout(globalThis["DEBUG_MODE"] ? 4000 : 500);
@@ -99,7 +99,7 @@ const Tests = {
     let body =
       _body ||
       "Test note description that is very long and should not fit in text.";
-    await Tests.fromId(notesnook.buttons.add).tap();
+    await Tests.fromId(workstation.buttons.add).tap();
     if (title) {
       await web().element(by.web.id("editor-title")).focus();
       await web().element(by.web.id("editor-title")).typeText(title, false);
@@ -112,12 +112,12 @@ const Tests = {
     return { title, body };
   },
   async navigate(screen: RouteName | ({} & string)) {
-    let menu = Tests.fromId(notesnook.ids.default.header.buttons.left);
+    let menu = Tests.fromId(workstation.ids.default.header.buttons.left);
     await menu.waitAndTap();
     await Tests.fromText(screen as string).waitAndTap();
   },
   async openSideMenu() {
-    await Tests.fromId(notesnook.ids.default.header.buttons.left).waitAndTap();
+    await Tests.fromId(workstation.ids.default.header.buttons.left).waitAndTap();
   },
   async prepare() {
     await device.disableSynchronization();
@@ -134,14 +134,14 @@ const Tests = {
   async createNotebook(title = "Notebook 1", description = true) {
     await Tests.sleep(1000);
     const titleInput = Tests.fromId(
-      notesnook.ids.dialogs.notebook.inputs.title
+      workstation.ids.dialogs.notebook.inputs.title
     );
     await titleInput.isVisible();
     await titleInput.element.typeText(title);
     await Tests.sleep(1000);
     if (description) {
       await Tests.fromId(
-        notesnook.ids.dialogs.notebook.inputs.description
+        workstation.ids.dialogs.notebook.inputs.description
       ).element.typeText(`Description of ${title}`);
     }
     await Tests.fromText("Add").waitAndTap();

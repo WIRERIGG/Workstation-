@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -33,8 +33,8 @@ export function isThemeColor(
 export type ThemeCompatibilityVersion = 1;
 
 /**
- * @title Notesnook Theme schema
- * @description This is a schema for validation of Notesnook themes.
+ * @title Workstation Theme schema
+ * @description This is a schema for validation of Workstation themes.
  */
 export type ThemeDefinition = {
   /**

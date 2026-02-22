@@ -7,12 +7,12 @@ import "./globals";
 import "./app/common/logger/index";
 
 const ShareProvider = () => {
-  NotesnookShare = require("./app/share/index").default;
+  WorkstationShare = require("./app/share/index").default;
   return (
     <SafeAreaProvider>
-      <NotesnookShare />
+      <WorkstationShare />
     </SafeAreaProvider>
   );
 };
 
-AppRegistry.registerComponent("NotesnookShare", () => ShareProvider);
+AppRegistry.registerComponent("WorkstationShare", () => ShareProvider);

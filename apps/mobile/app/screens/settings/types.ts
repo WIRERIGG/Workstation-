@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { TextInput } from "react-native";
 import { Settings } from "../../stores/use-setting-store";
-import { FeatureId } from "@notesnook/common";
+import { FeatureId } from "@workstation/common";
 
 export type SettingSection = {
   id: string;

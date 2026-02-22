@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { alpha } from "@theme-ui/color";
 import { Flex, Text } from "@theme-ui/components";
 import { Circle, Notes, Notebook, StarOutline, Tag, Plus } from "../icons";
-import { ThemeMetadata } from "@notesnook/themes-server";
-import { strings } from "@notesnook/intl";
+import { ThemeMetadata } from "@workstation/themes-server";
+import { strings } from "@workstation/intl";
 
 export type ThemePreviewProps = {
   theme: ThemeMetadata;

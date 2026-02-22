@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -22,7 +22,7 @@ import { Icons } from "../components/icons";
 import { Icon } from "../components/icons/icon";
 import { usePersistentState } from "../hooks/use-persistent-state";
 import { useAppStore } from "../stores/app-store";
-import type { Config } from "@notesnook/clipper/dist/types";
+import type { Config } from "@workstation/clipper/dist/types";
 
 export const SETTINGS_KEY = "settings";
 export const DEFAULT_SETTINGS: Config = {
