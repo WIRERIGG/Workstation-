@@ -13,6 +13,9 @@ chrono.workspace = true
 tracing.workspace = true
 wiredash-crypto = { path = "../wiredash-crypto" }
 wiredash-db = { path = "../wiredash-db" }
+arrow-array = "57"
+lancedb = "0.26"
+futures = "0.3"
 
 [dev-dependencies]
 tempfile = "3"

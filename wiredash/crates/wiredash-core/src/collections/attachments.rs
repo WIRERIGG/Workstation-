@@ -1,35 +1,90 @@
+use std::collections::HashMap;
+
+use arrow_array::RecordBatchIterator;
+use futures::TryStreamExt;
+use lancedb::query::{ExecutableQuery, QueryBase};
+use wiredash_db::{Database, batches_to_maps, maps_to_batch, escape_str, sync_run};
+
 use crate::types::*;
-use rusqlite::params;
-use wiredash_db::Database;
+
+// ---------------------------------------------------------------------------
+// Conversion helpers
+// ---------------------------------------------------------------------------
+
+fn base_from_map(map: &HashMap<String, serde_json::Value>) -> BaseItem {
+    BaseItem {
+        id: map.get("id").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        item_type: map.get("type").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        date_created: map.get("dateCreated").and_then(|v| v.as_i64()).unwrap_or(0),
+        date_modified: map.get("dateModified").and_then(|v| v.as_i64()).unwrap_or(0),
+        synced: map.get("synced").and_then(|v| v.as_i64()).unwrap_or(0) != 0,
+        deleted: map.get("deleted").and_then(|v| v.as_i64()).unwrap_or(0) != 0,
+    }
+}
+
+fn base_to_map(base: &BaseItem) -> HashMap<String, serde_json::Value> {
+    HashMap::from([
+        ("id".to_string(), serde_json::json!(&base.id)),
+        ("type".to_string(), serde_json::json!(&base.item_type)),
+        ("dateModified".to_string(), serde_json::json!(base.date_modified)),
+        ("dateCreated".to_string(), serde_json::json!(base.date_created)),
+        ("synced".to_string(), serde_json::json!(base.synced)),
+        ("deleted".to_string(), serde_json::json!(base.deleted)),
+    ])
+}
+
+fn attachment_from_map(map: &HashMap<String, serde_json::Value>) -> Attachment {
+    Attachment {
+        base: base_from_map(map),
+        iv: map.get("iv").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        salt: map.get("salt").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        size: map.get("size").and_then(|v| v.as_i64()).unwrap_or(0),
+        alg: map.get("alg").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        key: map.get("key").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        chunk_size: map.get("chunkSize").and_then(|v| v.as_i64()).unwrap_or(0),
+        hash: map.get("hash").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        hash_type: map.get("hashType").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        mime_type: map.get("mimeType").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        filename: map.get("filename").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        date_deleted: map.get("dateDeleted").and_then(|v| v.as_i64()),
+        date_uploaded: map.get("dateUploaded").and_then(|v| v.as_i64()),
+        failed: map.get("failed").and_then(|v| v.as_str()).map(|s| s.to_string()),
+    }
+}
+
+fn attachment_to_map(att: &Attachment) -> HashMap<String, serde_json::Value> {
+    let mut map = base_to_map(&att.base);
+    map.insert("iv".to_string(), serde_json::json!(&att.iv));
+    map.insert("salt".to_string(), serde_json::json!(&att.salt));
+    map.insert("size".to_string(), serde_json::json!(att.size));
+    map.insert("alg".to_string(), serde_json::json!(&att.alg));
+    map.insert("key".to_string(), serde_json::json!(&att.key));
+    map.insert("chunkSize".to_string(), serde_json::json!(att.chunk_size));
+    map.insert("hash".to_string(), serde_json::json!(&att.hash));
+    map.insert("hashType".to_string(), serde_json::json!(&att.hash_type));
+    map.insert("mimeType".to_string(), serde_json::json!(&att.mime_type));
+    map.insert("filename".to_string(), serde_json::json!(&att.filename));
+    match att.date_deleted {
+        Some(v) => { map.insert("dateDeleted".to_string(), serde_json::json!(v)); }
+        None => { map.insert("dateDeleted".to_string(), serde_json::Value::Null); }
+    }
+    match att.date_uploaded {
+        Some(v) => { map.insert("dateUploaded".to_string(), serde_json::json!(v)); }
+        None => { map.insert("dateUploaded".to_string(), serde_json::Value::Null); }
+    }
+    match &att.failed {
+        Some(s) => { map.insert("failed".to_string(), serde_json::json!(s)); }
+        None => { map.insert("failed".to_string(), serde_json::Value::Null); }
+    }
+    map
+}
+
+// ---------------------------------------------------------------------------
+// Attachments collection
+// ---------------------------------------------------------------------------
 
 pub struct Attachments<'a> {
     db: &'a Database,
-}
-
-fn attachment_from_row(row: &rusqlite::Row) -> rusqlite::Result<Attachment> {
-    Ok(Attachment {
-        base: BaseItem {
-            id: row.get(0)?,
-            item_type: row.get::<_, Option<String>>(1)?.unwrap_or_default(),
-            date_created: row.get(3)?,
-            date_modified: row.get(2)?,
-            synced: row.get(4)?,
-            deleted: row.get(5)?,
-        },
-        iv: row.get::<_, Option<String>>(6)?.unwrap_or_default(),
-        salt: row.get::<_, Option<String>>(7)?.unwrap_or_default(),
-        size: row.get(8)?,
-        alg: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
-        key: row.get::<_, Option<String>>(10)?.unwrap_or_default(),
-        chunk_size: row.get(11)?,
-        hash: row.get::<_, Option<String>>(12)?.unwrap_or_default(),
-        hash_type: row.get::<_, Option<String>>(13)?.unwrap_or_default(),
-        mime_type: row.get::<_, Option<String>>(14)?.unwrap_or_default(),
-        filename: row.get::<_, Option<String>>(15)?.unwrap_or_default(),
-        date_deleted: row.get(16)?,
-        date_uploaded: row.get(17)?,
-        failed: row.get(18)?,
-    })
 }
 
 impl<'a> Attachments<'a> {
@@ -37,96 +92,69 @@ impl<'a> Attachments<'a> {
         Self { db }
     }
 
-    pub fn add(&self, att: &Attachment) -> Result<(), anyhow::Error> {
-        self.db.execute(
-            "INSERT OR REPLACE INTO attachments (
-                id, type, dateModified, dateCreated, synced, deleted,
-                iv, salt, size, alg, key, chunkSize,
-                hash, hashType, mimeType, filename,
-                dateDeleted, dateUploaded, failed
-            ) VALUES (
-                ?1, ?2, ?3, ?4, ?5, ?6,
-                ?7, ?8, ?9, ?10, ?11, ?12,
-                ?13, ?14, ?15, ?16,
-                ?17, ?18, ?19
-            )",
-            params![
-                att.base.id,
-                att.base.item_type,
-                att.base.date_modified,
-                att.base.date_created,
-                att.base.synced,
-                att.base.deleted,
-                att.iv,
-                att.salt,
-                att.size,
-                att.alg,
-                att.key,
-                att.chunk_size,
-                att.hash,
-                att.hash_type,
-                att.mime_type,
-                att.filename,
-                att.date_deleted,
-                att.date_uploaded,
-                att.failed,
-            ],
-        )?;
+    async fn add_async(&self, att: &Attachment) -> Result<(), anyhow::Error> {
+        let table = self.db.table_or_err("attachments")?;
+        let row = attachment_to_map(att);
+        let schema = wiredash_db::schemas::attachments_schema();
+        let batch = maps_to_batch(&schema, &[row])?;
+        let reader = RecordBatchIterator::new(vec![Ok(batch)], schema.clone());
+        let mut op = table.merge_insert(&["id"]);
+        op.when_matched_update_all(None).when_not_matched_insert_all();
+        op.execute(Box::new(reader)).await?;
         Ok(())
     }
 
-    pub fn get(&self, id: &str) -> Result<Option<Attachment>, anyhow::Error> {
-        let conn = self.db.conn();
-        let mut stmt = conn.prepare(
-            "SELECT id, type, dateModified, dateCreated, synced, deleted,
-                    iv, salt, size, alg, key, chunkSize,
-                    hash, hashType, mimeType, filename,
-                    dateDeleted, dateUploaded, failed
-             FROM attachments WHERE id = ?1",
-        )?;
-        let mut rows = stmt.query_map(params![id], attachment_from_row)?;
-        match rows.next() {
-            Some(row) => Ok(Some(row?)),
-            None => Ok(None),
-        }
+    async fn get_async(&self, id: &str) -> Result<Option<Attachment>, anyhow::Error> {
+        let table = self.db.table_or_err("attachments")?;
+        let filter = format!("id = {}", escape_str(id));
+        let batches: Vec<arrow_array::RecordBatch> = table.query().only_if(&filter).execute().await?.try_collect().await?;
+        let rows = batches_to_maps(&batches);
+        Ok(rows.first().map(attachment_from_map))
     }
 
-    pub fn list(&self) -> Result<Vec<Attachment>, anyhow::Error> {
-        let conn = self.db.conn();
-        let mut stmt = conn.prepare(
-            "SELECT id, type, dateModified, dateCreated, synced, deleted,
-                    iv, salt, size, alg, key, chunkSize,
-                    hash, hashType, mimeType, filename,
-                    dateDeleted, dateUploaded, failed
-             FROM attachments WHERE deleted = 0
-             ORDER BY dateModified DESC",
-        )?;
-        let rows = stmt.query_map([], attachment_from_row)?;
-        let mut items = Vec::new();
-        for row in rows {
-            items.push(row?);
-        }
+    async fn list_async(&self) -> Result<Vec<Attachment>, anyhow::Error> {
+        let table = self.db.table_or_err("attachments")?;
+        let batches: Vec<arrow_array::RecordBatch> = table.query().only_if("deleted = 0").execute().await?.try_collect().await?;
+        let rows = batches_to_maps(&batches);
+        let mut items: Vec<Attachment> = rows.iter().map(attachment_from_map).collect();
+        items.sort_by(|a, b| b.base.date_modified.cmp(&a.base.date_modified));
         Ok(items)
     }
 
+    async fn find_by_hash_async(&self, hash: &str) -> Result<Option<Attachment>, anyhow::Error> {
+        let table = self.db.table_or_err("attachments")?;
+        let filter = format!("hash = {} AND deleted = 0", escape_str(hash));
+        let batches: Vec<arrow_array::RecordBatch> = table.query().only_if(&filter).execute().await?.try_collect().await?;
+        let rows = batches_to_maps(&batches);
+        Ok(rows.first().map(attachment_from_map))
+    }
+
+    async fn remove_async(&self, id: &str) -> Result<(), anyhow::Error> {
+        let table = self.db.table_or_err("attachments")?;
+        let filter = format!("id = {}", escape_str(id));
+        table.delete(&filter).await?;
+        Ok(())
+    }
+
+    // -- sync wrappers --------------------------------------------------------
+
+    pub fn add(&self, att: &Attachment) -> Result<(), anyhow::Error> {
+        sync_run(self.add_async(att))
+    }
+
+    pub fn get(&self, id: &str) -> Result<Option<Attachment>, anyhow::Error> {
+        sync_run(self.get_async(id))
+    }
+
+    pub fn list(&self) -> Result<Vec<Attachment>, anyhow::Error> {
+        sync_run(self.list_async())
+    }
+
     pub fn find_by_hash(&self, hash: &str) -> Result<Option<Attachment>, anyhow::Error> {
-        let conn = self.db.conn();
-        let mut stmt = conn.prepare(
-            "SELECT id, type, dateModified, dateCreated, synced, deleted,
-                    iv, salt, size, alg, key, chunkSize,
-                    hash, hashType, mimeType, filename,
-                    dateDeleted, dateUploaded, failed
-             FROM attachments WHERE hash = ?1 AND deleted = 0",
-        )?;
-        let mut rows = stmt.query_map(params![hash], attachment_from_row)?;
-        match rows.next() {
-            Some(row) => Ok(Some(row?)),
-            None => Ok(None),
-        }
+        sync_run(self.find_by_hash_async(hash))
     }
 
     pub fn remove(&self, id: &str) -> Result<(), anyhow::Error> {
-        self.db.execute("DELETE FROM attachments WHERE id = ?1", params![id])?;
-        Ok(())
+        sync_run(self.remove_async(id))
     }
 }
