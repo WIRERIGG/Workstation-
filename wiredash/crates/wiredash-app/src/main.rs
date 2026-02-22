@@ -124,6 +124,20 @@ impl Wiredash {
         let mut state_changed = false;
         match message {
             Message::Navigate(view) => {
+                // Save any dirty editor before switching away
+                self.save_all_dirty();
+
+                // Refresh the target view's data
+                match view {
+                    View::Notes => self.notes_state.refresh_list(&self.db),
+                    View::Notebooks => self.notebooks_state.refresh_notebooks(&self.db),
+                    View::Tags => self.tags_state.refresh_tags(&self.db),
+                    View::Favorites => self.favorites_state.refresh(&self.db, organize_views::NoteFilter::Favorites),
+                    View::Archive => self.archive_state.refresh(&self.db, organize_views::NoteFilter::Archived),
+                    View::Trash => self.trash_state.refresh(&self.db, organize_views::NoteFilter::Trashed),
+                    _ => {} // Search, Dashboard, Settings etc. don't need refresh
+                }
+
                 self.current_view = view;
                 state_changed = true;
             }
@@ -178,33 +192,8 @@ impl Wiredash {
                 }
             }
             Message::AutoSaveTick => {
-                if self.save_pending && self.notes_state.editor.dirty {
-                    self.notes_state.save_current(&self.db);
-                    self.save_pending = false;
-                }
-                if self.save_pending && self.notebooks_state.editor.dirty {
-                    self.notebooks_state.save_current(&self.db);
-                    self.save_pending = false;
-                }
-                if self.save_pending && self.tags_state.editor.dirty {
-                    self.tags_state.save_current(&self.db);
-                    self.save_pending = false;
-                }
-                if self.save_pending && self.search_state.editor.dirty {
-                    self.search_state.save_current(&self.db);
-                    self.save_pending = false;
-                }
-                if self.save_pending && self.favorites_state.editor.dirty {
-                    self.favorites_state.save_current(&self.db);
-                    self.save_pending = false;
-                }
-                if self.save_pending && self.archive_state.editor.dirty {
-                    self.archive_state.save_current(&self.db);
-                    self.save_pending = false;
-                }
-                if self.save_pending && self.trash_state.editor.dirty {
-                    self.trash_state.save_current(&self.db);
-                    self.save_pending = false;
+                if self.save_pending {
+                    self.save_all_dirty();
                 }
             }
             Message::KeyboardEvent(event) => {
@@ -212,44 +201,15 @@ impl Wiredash {
                     if modifiers.command() {
                         match key.as_ref() {
                             keyboard::Key::Character("s") => {
-                                if self.notes_state.editor.dirty {
-                                    self.notes_state.save_current(&self.db);
-                                    self.save_pending = false;
-                                    state_changed = true;
-                                }
-                                if self.notebooks_state.editor.dirty {
-                                    self.notebooks_state.save_current(&self.db);
-                                    self.save_pending = false;
-                                    state_changed = true;
-                                }
-                                if self.tags_state.editor.dirty {
-                                    self.tags_state.save_current(&self.db);
-                                    self.save_pending = false;
-                                    state_changed = true;
-                                }
-                                if self.search_state.editor.dirty {
-                                    self.search_state.save_current(&self.db);
-                                    self.save_pending = false;
-                                    state_changed = true;
-                                }
-                                if self.favorites_state.editor.dirty {
-                                    self.favorites_state.save_current(&self.db);
-                                    self.save_pending = false;
-                                    state_changed = true;
-                                }
-                                if self.archive_state.editor.dirty {
-                                    self.archive_state.save_current(&self.db);
-                                    self.save_pending = false;
-                                    state_changed = true;
-                                }
-                                if self.trash_state.editor.dirty {
-                                    self.trash_state.save_current(&self.db);
-                                    self.save_pending = false;
-                                    state_changed = true;
-                                }
+                                self.save_all_dirty();
                             }
                             keyboard::Key::Character("b") => {
                                 self.sidebar_collapsed = !self.sidebar_collapsed;
+                                state_changed = true;
+                            }
+                            keyboard::Key::Character("f") => {
+                                self.save_all_dirty();
+                                self.current_view = View::Search;
                                 state_changed = true;
                             }
                             keyboard::Key::Character(c) => {
@@ -288,6 +248,32 @@ impl Wiredash {
             follow_system_theme: self.theme_engine.follow_system,
         };
         cfg.save();
+    }
+
+    /// Save all dirty editors across every view.
+    fn save_all_dirty(&mut self) {
+        if self.notes_state.editor.dirty {
+            self.notes_state.save_current(&self.db);
+        }
+        if self.notebooks_state.editor.dirty {
+            self.notebooks_state.save_current(&self.db);
+        }
+        if self.tags_state.editor.dirty {
+            self.tags_state.save_current(&self.db);
+        }
+        if self.search_state.editor.dirty {
+            self.search_state.save_current(&self.db);
+        }
+        if self.favorites_state.editor.dirty {
+            self.favorites_state.save_current(&self.db);
+        }
+        if self.archive_state.editor.dirty {
+            self.archive_state.save_current(&self.db);
+        }
+        if self.trash_state.editor.dirty {
+            self.trash_state.save_current(&self.db);
+        }
+        self.save_pending = false;
     }
 
     fn view(&self) -> Element<'_, Message> {
