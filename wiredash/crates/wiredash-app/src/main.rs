@@ -12,6 +12,10 @@ mod settings_view;
 mod app_lock;
 mod vault;
 mod reminders_view;
+mod dashboard_view;
+mod tasks_view;
+mod calendar_view;
+mod agents_view;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -46,6 +50,10 @@ struct Wiredash {
     settings_state: settings_view::SettingsViewState,
     app_lock_state: app_lock::AppLockState,
     reminders_state: reminders_view::RemindersViewState,
+    dashboard_state: dashboard_view::DashboardViewState,
+    tasks_state: tasks_view::TasksViewState,
+    calendar_state: calendar_view::CalendarViewState,
+    agents_state: agents_view::AgentsViewState,
     save_pending: bool,
 }
 
@@ -67,6 +75,10 @@ enum Message {
     AppLock(app_lock::AppLockMessage),
     InactivityCheck,
     RemindersView(reminders_view::RemindersMessage),
+    DashboardView(dashboard_view::DashboardMessage),
+    TasksView(tasks_view::TasksMessage),
+    CalendarView(calendar_view::CalendarMessage),
+    AgentsView(agents_view::AgentsMessage),
 }
 
 impl Wiredash {
@@ -122,6 +134,15 @@ impl Wiredash {
         let mut reminders_state = reminders_view::RemindersViewState::new();
         reminders_state.refresh(&db);
 
+        let mut dashboard_state = dashboard_view::DashboardViewState::new();
+        dashboard_state.refresh(&db);
+        let mut tasks_state = tasks_view::TasksViewState::new();
+        tasks_state.refresh(&db);
+        let mut calendar_state = calendar_view::CalendarViewState::new();
+        calendar_state.refresh(&db);
+        let mut agents_state = agents_view::AgentsViewState::new();
+        agents_state.refresh(&db);
+
         (
             Self {
                 current_view: cfg.resolve_view(),
@@ -138,6 +159,10 @@ impl Wiredash {
                 settings_state,
                 app_lock_state,
                 reminders_state,
+                dashboard_state,
+                tasks_state,
+                calendar_state,
+                agents_state,
                 save_pending: false,
             },
             Task::none(),
@@ -170,7 +195,11 @@ impl Wiredash {
                     View::Trash => self.trash_state.refresh(&self.db, organize_views::NoteFilter::Trashed),
                     View::Settings => self.settings_state.load_all(&self.db),
                     View::Reminders => self.reminders_state.refresh(&self.db),
-                    _ => {} // Search, Dashboard etc. don't need refresh
+                    View::Dashboard => self.dashboard_state.refresh(&self.db),
+                    View::Tasks => self.tasks_state.refresh(&self.db),
+                    View::Calendar => self.calendar_state.refresh(&self.db),
+                    View::Agents => self.agents_state.refresh(&self.db),
+                    _ => {} // Search etc. don't need refresh
                 }
 
                 self.current_view = view;
@@ -284,6 +313,21 @@ impl Wiredash {
             }
             Message::RemindersView(msg) => {
                 self.reminders_state.update(msg, &self.db);
+            }
+            Message::DashboardView(msg) => {
+                if let Some(nav) = self.dashboard_state.update(msg, &self.db) {
+                    self.current_view = nav;
+                    state_changed = true;
+                }
+            }
+            Message::TasksView(msg) => {
+                self.tasks_state.update(msg, &self.db);
+            }
+            Message::CalendarView(msg) => {
+                self.calendar_state.update(msg, &self.db);
+            }
+            Message::AgentsView(msg) => {
+                self.agents_state.update(msg, &self.db);
             }
             Message::AutoSaveTick => {
                 if self.save_pending {
@@ -565,6 +609,22 @@ impl Wiredash {
             View::Reminders => {
                 reminders_view::reminders_view(&self.reminders_state, &self.theme_engine.active_iced_theme())
                     .map(Message::RemindersView)
+            }
+            View::Dashboard => {
+                dashboard_view::dashboard_view(&self.dashboard_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::DashboardView)
+            }
+            View::Tasks => {
+                tasks_view::tasks_view(&self.tasks_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::TasksView)
+            }
+            View::Calendar => {
+                calendar_view::calendar_view(&self.calendar_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::CalendarView)
+            }
+            View::Agents => {
+                agents_view::agents_view(&self.agents_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::AgentsView)
             }
             view => {
                 container(

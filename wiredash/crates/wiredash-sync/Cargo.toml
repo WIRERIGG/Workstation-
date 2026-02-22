@@ -31,4 +31,6 @@ futures = "0.3"
 [dev-dependencies]
 tokio = { version = "1", features = ["full", "test-util"] }
 wiredash-db = { path = "../wiredash-db" }
+wiredash-core = { path = "../wiredash-core" }
+wiredash-crypto = { path = "../wiredash-crypto" }
 chrono = { workspace = true }
