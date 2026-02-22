@@ -91,4 +91,14 @@ impl<'a> Vaults<'a> {
         self.db.execute("DELETE FROM vaults WHERE id = ?1", params![id])?;
         Ok(())
     }
+
+    /// Update the encryption key on an existing vault.
+    pub fn update_key(&self, id: &str, key: &str) -> Result<(), anyhow::Error> {
+        let now = chrono::Utc::now().timestamp_millis();
+        self.db.execute(
+            "UPDATE vaults SET key = ?1, dateModified = ?2, synced = 0 WHERE id = ?3",
+            rusqlite::params![key, now, id],
+        )?;
+        Ok(())
+    }
 }

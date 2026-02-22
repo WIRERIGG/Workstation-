@@ -119,4 +119,31 @@ impl<'a> Content<'a> {
         self.db.execute("DELETE FROM content WHERE id = ?1", params![id])?;
         Ok(())
     }
+
+    /// Set the locked flag on a content item.
+    pub fn set_locked(&self, id: &str, locked: bool) -> Result<(), anyhow::Error> {
+        let now = chrono::Utc::now().timestamp_millis();
+        self.db.execute(
+            "UPDATE content SET locked = ?1, dateModified = ?2, synced = 0 WHERE id = ?3",
+            params![locked as i32, now, id],
+        )?;
+        Ok(())
+    }
+
+    /// List all locked content items (for vault re-encryption).
+    pub fn list_locked(&self) -> Result<Vec<ContentItem>, anyhow::Error> {
+        let conn = self.db.conn();
+        let mut stmt = conn.prepare(
+            "SELECT id, type, dateModified, dateCreated, synced, deleted, \
+             noteId, data, locked, localOnly, conflicted, sessionId, \
+             dateEdited, dateResolved \
+             FROM content WHERE locked = 1 AND deleted = 0"
+        )?;
+        let rows = stmt.query_map([], content_from_row)?;
+        let mut items = Vec::new();
+        for row in rows {
+            items.push(row?);
+        }
+        Ok(items)
+    }
 }

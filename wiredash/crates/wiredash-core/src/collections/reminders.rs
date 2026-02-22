@@ -113,4 +113,32 @@ impl<'a> Reminders<'a> {
         self.db.execute("DELETE FROM reminders WHERE id = ?1", params![id])?;
         Ok(())
     }
+
+    /// Update an existing reminder's fields.
+    pub fn update(&self, rem: &Reminder) -> Result<(), anyhow::Error> {
+        let now = chrono::Utc::now().timestamp_millis();
+        let selected_days_json = rem.selected_days.as_ref()
+            .map(|d| serde_json::to_string(d).unwrap_or_default());
+        self.db.execute(
+            "UPDATE reminders SET title = ?1, description = ?2, priority = ?3, \
+             date = ?4, mode = ?5, recurringMode = ?6, selectedDays = ?7, \
+             localOnly = ?8, disabled = ?9, snoozeUntil = ?10, \
+             dateModified = ?11, synced = 0 WHERE id = ?12",
+            rusqlite::params![
+                rem.title,
+                rem.description,
+                rem.priority,
+                rem.date,
+                rem.mode,
+                rem.recurring_mode,
+                selected_days_json,
+                rem.local_only,
+                rem.disabled,
+                rem.snooze_until,
+                now,
+                rem.base.id,
+            ],
+        )?;
+        Ok(())
+    }
 }
