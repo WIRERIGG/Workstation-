@@ -208,4 +208,88 @@ impl<'a> Notes<'a> {
         self.db.execute("DELETE FROM notes WHERE id = ?1", params![id])?;
         Ok(())
     }
+
+    /// List notes matching filter criteria with sorting.
+    /// Pinned notes always sort first.
+    pub fn list_filtered(
+        &self,
+        favorites_only: bool,
+        archived_only: bool,
+        sort_by: SortBy,
+        sort_dir: SortDirection,
+        limit: Option<u32>,
+    ) -> Result<Vec<Note>, anyhow::Error> {
+        let mut conditions = vec!["deleted = 0", "(type = 'note' OR type IS NULL)"];
+        if favorites_only {
+            conditions.push("favorite = 1");
+        }
+        if archived_only {
+            conditions.push("archived = 1");
+        }
+        let where_clause = conditions.join(" AND ");
+        let limit_clause = limit.map(|n| format!("LIMIT {}", n)).unwrap_or_default();
+
+        let sql = format!(
+            "SELECT id, type, dateModified, dateCreated, synced, deleted,
+                    dateDeleted, itemType, deletedBy,
+                    title, headline, contentId, pinned, favorite, localOnly, conflicted, readonly,
+                    dateEdited, isGeneratedTitle, archived, expiryDate
+             FROM notes
+             WHERE {}
+             ORDER BY pinned DESC, {} {}
+             {}",
+            where_clause,
+            sort_by.column(),
+            sort_dir.sql(),
+            limit_clause,
+        );
+
+        let conn = self.db.conn();
+        let mut stmt = conn.prepare(&sql)?;
+        let rows = stmt.query_map([], note_from_row)?;
+        let mut notes = Vec::new();
+        for row in rows {
+            notes.push(row?);
+        }
+        Ok(notes)
+    }
+
+    /// Load notes by a set of IDs. Order is by dateModified DESC.
+    pub fn list_by_ids(&self, ids: &[String]) -> Result<Vec<Note>, anyhow::Error> {
+        if ids.is_empty() {
+            return Ok(Vec::new());
+        }
+        let placeholders: Vec<String> = (1..=ids.len()).map(|i| format!("?{}", i)).collect();
+        let sql = format!(
+            "SELECT id, type, dateModified, dateCreated, synced, deleted,
+                    dateDeleted, itemType, deletedBy,
+                    title, headline, contentId, pinned, favorite, localOnly, conflicted, readonly,
+                    dateEdited, isGeneratedTitle, archived, expiryDate
+             FROM notes
+             WHERE id IN ({})
+             ORDER BY dateModified DESC",
+            placeholders.join(", ")
+        );
+
+        let conn = self.db.conn();
+        let mut stmt = conn.prepare(&sql)?;
+        let params: Vec<&dyn rusqlite::types::ToSql> =
+            ids.iter().map(|s| s as &dyn rusqlite::types::ToSql).collect();
+        let rows = stmt.query_map(params.as_slice(), note_from_row)?;
+        let mut notes = Vec::new();
+        for row in rows {
+            notes.push(row?);
+        }
+        Ok(notes)
+    }
+
+    /// Restore a note from trash back to active.
+    pub fn restore_from_trash(&self, id: &str) -> Result<(), anyhow::Error> {
+        let now = chrono::Utc::now().timestamp_millis();
+        self.db.execute(
+            "UPDATE notes SET deleted = 0, type = 'note', dateDeleted = NULL, itemType = NULL, deletedBy = NULL, synced = 0, dateModified = ?1 WHERE id = ?2",
+            params![now, id],
+        )?;
+        Ok(())
+    }
 }

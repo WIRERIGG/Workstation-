@@ -494,3 +494,41 @@ impl SessionContentItem {
         }
     }
 }
+
+// ---------------------------------------------------------------------------
+// SortBy / SortDirection — for filtered queries
+// ---------------------------------------------------------------------------
+
+/// Sort field for note/notebook queries.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum SortBy {
+    DateModified,
+    DateCreated,
+    Title,
+}
+
+/// Sort direction.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum SortDirection {
+    Asc,
+    Desc,
+}
+
+impl SortBy {
+    pub fn column(&self) -> &'static str {
+        match self {
+            Self::DateModified => "dateModified",
+            Self::DateCreated => "dateCreated",
+            Self::Title => "title",
+        }
+    }
+}
+
+impl SortDirection {
+    pub fn sql(&self) -> &'static str {
+        match self {
+            Self::Asc => "ASC",
+            Self::Desc => "DESC",
+        }
+    }
+}

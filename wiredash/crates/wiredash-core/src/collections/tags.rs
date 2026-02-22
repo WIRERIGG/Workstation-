@@ -88,4 +88,13 @@ impl<'a> Tags<'a> {
         self.db.execute("DELETE FROM tags WHERE id = ?1", params![id])?;
         Ok(())
     }
+
+    pub fn update_title(&self, id: &str, title: &str) -> Result<(), anyhow::Error> {
+        let now = chrono::Utc::now().timestamp_millis();
+        self.db.execute(
+            "UPDATE tags SET title = ?1, dateModified = ?2, synced = 0 WHERE id = ?3",
+            params![title, now, id],
+        )?;
+        Ok(())
+    }
 }
