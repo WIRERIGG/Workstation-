@@ -81,7 +81,7 @@ pub struct MfaConfig {
 // Sync Items
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SyncItem {
     pub id: String,
     pub v: f64,
@@ -89,7 +89,7 @@ pub struct SyncItem {
     pub cipher: Cipher,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct SyncTransferItem {
     pub items: Vec<SyncItem>,
     pub r#type: String,
