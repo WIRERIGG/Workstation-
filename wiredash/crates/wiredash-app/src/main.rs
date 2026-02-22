@@ -6,6 +6,8 @@ mod notebooks_view;
 mod tags_view;
 mod search_view;
 mod organize_views;
+mod modal;
+mod toast;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
