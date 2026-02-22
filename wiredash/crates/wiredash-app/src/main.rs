@@ -201,6 +201,33 @@ impl Wiredash {
                 }
             }
             Message::SettingsView(msg) => {
+                // Apply theme setting immediately
+                if let settings_view::SettingsMessage::SetValue(ref key, ref value) = msg {
+                    if key == "theme_scheme" {
+                        if let Some(scheme_str) = value.as_str() {
+                            match scheme_str {
+                                "Light" => {
+                                    self.theme_engine.follow_system = false;
+                                    self.theme_engine.set_scheme(wiredash_theme::ColorScheme::Light);
+                                }
+                                "Dark" => {
+                                    self.theme_engine.follow_system = false;
+                                    self.theme_engine.set_scheme(wiredash_theme::ColorScheme::Dark);
+                                }
+                                "Auto" => {
+                                    self.theme_engine.follow_system = true;
+                                    let system = match dark_light::detect() {
+                                        dark_light::Mode::Dark => wiredash_theme::ColorScheme::Dark,
+                                        _ => wiredash_theme::ColorScheme::Light,
+                                    };
+                                    self.theme_engine.set_scheme(system);
+                                }
+                                _ => {}
+                            }
+                            self.save_config();
+                        }
+                    }
+                }
                 self.settings_state.update(msg, &self.db);
             }
             Message::AutoSaveTick => {
