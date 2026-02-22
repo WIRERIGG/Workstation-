@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -45,6 +45,15 @@ const isDesktop = process.env.PLATFORM === "desktop";
 const isThemeBuilder = process.env.THEME_BUILDER === "true";
 const isAnalyzing = process.env.ANALYZING === "true";
 
+// Native NAPI-RS modules that must never be bundled by Vite/esbuild.
+// They are loaded at runtime via require() in Electron's Node.js context.
+const NATIVE_MODULES = [
+  "@lancedb/lancedb",
+  "apache-arrow",
+  "better-sqlite3-multiple-ciphers"
+];
+const NATIVE_MODULE_PATTERN = /^(@lancedb\/lancedb|apache-arrow|better-sqlite3-multiple-ciphers)/;
+
 export default defineConfig({
   envPrefix: "NN_",
   root: "src/",
@@ -57,6 +66,8 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: !isDesktop,
     rollupOptions: {
+      // Mark native modules as external so rollup doesn't bundle them
+      external: isDesktop ? NATIVE_MODULE_PATTERN : undefined,
       output: {
         plugins: [emitEditorStyles()],
         assetFileNames: "assets/[name]-[hash:12][extname]",
@@ -75,7 +86,7 @@ export default defineConfig({
     }
   },
   define: {
-    APP_TITLE: `"${isThemeBuilder ? "Notesnook Theme Builder" : "Notesnook"}"`,
+    APP_TITLE: `"${isThemeBuilder ? "Workstation Theme Builder" : "Workstation"}"`,
     GIT_HASH: `"${gitHash}"`,
     APP_VERSION: `"${version}"`,
     PUBLIC_URL: `"${process.env.PUBLIC_URL || ""}"`,
@@ -108,16 +119,82 @@ export default defineConfig({
       },
       {
         find: /\/sqlite$/gm,
-        replacement: isDesktop ? "/sqlite/index.desktop" : "/sqlite/index"
+        replacement: isDesktop
+          ? "/sqlite/index.desktop"
+          : "/sqlite/index"
       }
     ]
   },
+  optimizeDeps: {
+    // Force pre-bundle heavy deps upfront instead of discovering on first request.
+    // This eliminates the waterfall delay when Vite processes these on-demand.
+    include: [
+      "react",
+      "react-dom",
+      "@emotion/react",
+      "@theme-ui/components",
+      "@theme-ui/core",
+      "@mdi/js",
+      "@mdi/react",
+      "zustand",
+      "dayjs",
+      "react-hot-toast",
+      "react-modal",
+      "@tanstack/react-virtual",
+      "wouter",
+      "hotkeys-js",
+      "react-freeze",
+      "mutative",
+      "zustand-mutative"
+    ],
+    // Native NAPI-RS modules must not be pre-bundled by Vite's esbuild.
+    // Always exclude — even in web mode, Vite scans @workstation/desktop's
+    // dependency tree and hits LanceDB's .node binary files.
+    exclude: [...NATIVE_MODULES],
+    esbuildOptions: {
+      plugins: [
+        {
+          name: "externalize-native-modules",
+          setup(build) {
+            build.onResolve(
+              { filter: NATIVE_MODULE_PATTERN },
+              (args) => ({ path: args.path, external: true })
+            );
+            // Also catch platform-specific LanceDB packages
+            build.onResolve(
+              { filter: /^@lancedb\/lancedb-/ },
+              (args) => ({ path: args.path, external: true })
+            );
+          }
+        }
+      ]
+    }
+  },
   server: {
-    port: 3000
+    port: 3000,
+    fs: {
+      // Allow serving files from the entire monorepo root so that
+      // fonts in packages/editor/styles/fonts/ don't get 403'd.
+      allow: [path.resolve(__dirname, "../..")]
+    },
+    // Pre-transform critical paths on startup for faster first load
+    warmup: {
+      clientFiles: [
+        "./src/app.tsx",
+        "./src/bootstrap.tsx",
+        "./src/views/dashboard.tsx",
+        "./src/components/navigation-menu/index.tsx",
+        "./src/stores/*.ts"
+      ]
+    }
   },
   worker: {
     format: "es",
     rollupOptions: {
+      // Native NAPI-RS modules — loaded at runtime by Node.js/Electron
+      external: isDesktop
+        ? [NATIVE_MODULE_PATTERN, /^@lancedb\/lancedb-/]
+        : [],
       output: {
         assetFileNames: "assets/[name]-[hash:12][extname]",
         chunkFileNames: "assets/[name]-[hash:12].js",
@@ -127,10 +204,14 @@ export default defineConfig({
   },
   css: {
     postcss: {
-      plugins: [autoprefixer()]
+      // Skip autoprefixer in dev for desktop — Electron uses Chromium only
+      plugins: isDesktop && process.env.NODE_ENV !== "production"
+        ? []
+        : [autoprefixer()]
     }
   },
   plugins: [
+    ...(isDesktop ? [externalizeNativeModulesPlugin()] : []),
     ...(isAnalyzing
       ? [
           visualizer({
@@ -140,7 +221,7 @@ export default defineConfig({
           }) as PluginOption
         ]
       : []),
-    ...((isThemeBuilder || isDesktop) && process.env.NODE_ENV === "production"
+    ...(isThemeBuilder || isDesktop
       ? []
       : [
           VitePWA({
@@ -276,3 +357,25 @@ function prefetchPlugin(options?: {
     }
   };
 }
+
+/**
+ * Vite plugin that externalizes native NAPI-RS modules during dev serving.
+ * Works with the esbuild plugin in optimizeDeps to prevent all bundler
+ * stages from following require() chains into .node binary files.
+ */
+function externalizeNativeModulesPlugin(): Plugin {
+  return {
+    name: "vite-plugin-externalize-native-modules",
+    enforce: "pre",
+    resolveId(source) {
+      if (
+        NATIVE_MODULE_PATTERN.test(source) ||
+        /^@lancedb\/lancedb-/.test(source)
+      ) {
+        return { id: source, external: true };
+      }
+      return null;
+    }
+  };
+}
+

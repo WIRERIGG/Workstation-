@@ -22,7 +22,7 @@ import { useStore as useUserStore } from "../stores/user-store";
 
 export function isActiveSubscription(user?: User) {
   user = user || useUserStore.getState().user;
-  if (!user) return false;
+  if (!user) return localStorage.getItem("selfHostedMode") === "true";
 
   const { status } = user?.subscription || {};
 
@@ -32,7 +32,7 @@ export function isActiveSubscription(user?: User) {
 }
 export function isUserSubscribed(user?: User) {
   user = user || useUserStore.getState().user;
-  if (!user) return false;
+  if (!user) return localStorage.getItem("selfHostedMode") === "true";
 
   const { expiry, plan, status } = user?.subscription || {};
   if (!expiry) return false;

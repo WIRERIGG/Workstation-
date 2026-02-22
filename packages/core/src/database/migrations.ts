@@ -488,14 +488,31 @@ function createFTS5Table(
   return sql`CREATE VIRTUAL TABLE ${sql.raw(name)} USING fts5(${args})`;
 }
 
+async function hasBetterTrigram(db: Kysely<any>): Promise<boolean> {
+  try {
+    await sql`CREATE VIRTUAL TABLE _bt_test USING fts5(x, tokenize='better_trigram')`.execute(
+      db
+    );
+    await sql`DROP TABLE _bt_test`.execute(db);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function runFTSTablesMigrations(db: Kysely<any>) {
+  const useBetterTrigram = await hasBetterTrigram(db);
+  const trigram = useBetterTrigram ? "better_trigram" : "trigram";
+
   await db.transaction().execute(async (tx) => {
     await tx.schema.dropTable("content_fts").execute();
     await tx.schema.dropTable("notes_fts").execute();
 
     await createFTS5Table("notes_fts", [{ name: "id" }, { name: "title" }], {
       contentTable: "notes",
-      tokenizer: ["better_trigram", "remove_diacritics 1"]
+      tokenizer: useBetterTrigram
+        ? [trigram, "remove_diacritics 1"]
+        : [trigram]
     }).execute(tx);
 
     await createFTS5Table(
@@ -503,7 +520,9 @@ async function runFTSTablesMigrations(db: Kysely<any>) {
       [{ name: "id" }, { name: "noteId" }, { name: "data" }],
       {
         contentTable: "content",
-        tokenizer: ["html", "better_trigram", "remove_diacritics 1"]
+        tokenizer: useBetterTrigram
+          ? ["html", "better_trigram", "remove_diacritics 1"]
+          : [trigram]
       }
     ).execute(tx);
   });

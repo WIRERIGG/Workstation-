@@ -52,6 +52,8 @@ export function useWindowControls() {
       !IS_DESKTOP_APP ||
       hasNativeTitlebar ||
       getPlatform() === "darwin" ||
-      getPlatform() === "win32"
+      getPlatform() === "macOS" ||
+      getPlatform() === "win32" ||
+      getPlatform() === "Windows"
   };
 }

@@ -243,6 +243,7 @@ function CrumbText(props: { text: string; onClick: () => void }) {
   );
 }
 
-function navigateCrumb(notebookId: string) {
+function navigateCrumb(notebookId: string | undefined) {
+  if (!notebookId) return;
   navigate(`/notebooks/${notebookId}`);
 }

@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -25,7 +25,7 @@ import {
   getFeature,
   getFeatureLimit,
   isFeatureAvailable
-} from "@notesnook/common";
+} from "@workstation/common";
 import { createDialect } from "./sqlite";
 import { isFeatureSupported } from "../utils/feature-check";
 import { generatePassword } from "../utils/password-generator";
@@ -34,7 +34,7 @@ import {
   logManager,
   SubscriptionPlan,
   SubscriptionStatus
-} from "@notesnook/core";
+} from "@workstation/core";
 import Config from "../utils/config";
 import { FileStorage } from "../interfaces/fs";
 
@@ -49,18 +49,18 @@ async function initializeDatabase(persistence: DatabasePersistence) {
   }
 
   db.host({
-    API_HOST: "https://api.notesnook.com",
+    API_HOST: "https://api.workstation.com",
     AUTH_HOST: "https://auth.streetwriters.co",
     SSE_HOST: "https://events.streetwriters.co",
     ISSUES_HOST: "https://issues.streetwriters.co",
     SUBSCRIPTIONS_HOST: "https://subscriptions.streetwriters.co",
     MONOGRAPH_HOST: "https://monogr.ph",
-    NOTESNOOK_HOST: "https://notesnook.com",
+    NOTESNOOK_HOST: "https://workstation.com",
     ...Config.get("serverUrls", {})
   });
 
   const storage = new NNStorage(
-    "Notesnook",
+    "Workstation",
     () => useKeyStore.getState(),
     persistence
   );

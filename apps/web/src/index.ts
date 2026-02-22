@@ -44,9 +44,7 @@ if (theme) {
   if (stylesheet) stylesheet.innerHTML = css;
 } else stylesheet?.remove();
 
-const locale = import.meta.env.DEV
-  ? import("@notesnook/intl/locales/$pseudo-LOCALE.json")
-  : import("@notesnook/intl/locales/$en.json");
+const locale = import("@notesnook/intl/locales/$en.json");
 locale.then(({ default: locale }) => {
   i18n.load({
     en: locale.messages as unknown as Messages

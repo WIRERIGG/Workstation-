@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
 import { MenuItem, PositionOptions } from "@notesnook/ui";
 import { desktop } from "../common/desktop-bridge";
@@ -38,7 +38,7 @@ type MenuStore = {
   close: () => void;
 };
 
-const useMenuStore = create<MenuStore>((set) => ({
+const useMenuStore = createWithEqualityFn<MenuStore>((set) => ({
   isOpen: false,
   items: [],
   title: undefined,

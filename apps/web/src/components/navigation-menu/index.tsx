@@ -1,5 +1,5 @@
 /*
-This file is part of the Notesnook project (https://notesnook.com/)
+This file is part of the Workstation project
 
 Copyright (C) 2023 Streetwriters (Private) Limited
 
@@ -47,7 +47,24 @@ import {
   Notebook as NotebookIcon,
   Plus,
   SortBy,
-  Tag as TagIcon
+  Tag as TagIcon,
+  Dashboard,
+  Tasks,
+  Calendar,
+  Robot,
+  Table,
+  MessageText,
+  Support,
+  ConsoleLine,
+  File,
+  Newspaper,
+  PhoneInTalk,
+  Radar,
+  GitBranch,
+  Forum,
+  CardMultiple,
+  Search,
+  Issue
 } from "../icons";
 import { SortableNavigationItem } from "./navigation-item";
 import {
@@ -59,6 +76,7 @@ import {
 } from "../../navigation";
 import { db } from "../../common/db";
 import { isMobile } from "../../hooks/use-mobile";
+import { isDesktopRuntime } from "../../utils/platform";
 import { useStore as useAppStore } from "../../stores/app-store";
 import { useStore as useUserStore } from "../../stores/user-store";
 import { useStore as useThemeStore } from "../../stores/theme-store";
@@ -67,7 +85,11 @@ import { useStore as useNoteStore } from "../../stores/note-store";
 import { useStore as useReminderStore } from "../../stores/reminder-store";
 import { useStore as useMonographStore } from "../../stores/monograph-store";
 import { useStore as useTrashStore } from "../../stores/trash-store";
+import { useStore as useAgentStore } from "../../stores/agent-store";
+import { useStore as useTaskStore } from "../../stores/task-store";
+import { useStore as useCommsStore } from "../../stores/comms-store";
 import { useStore as useSearchStore } from "../../stores/search-store";
+import { useStore as useBrandingStore } from "../../stores/branding-store";
 import useLocation from "../../hooks/use-location";
 import { FlexScrollContainer } from "../scroll-container";
 import { ScopedThemeProvider } from "../theme-provider";
@@ -88,12 +110,12 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { usePersistentState } from "../../hooks/use-persistent-state";
-import { MenuItem } from "@notesnook/ui";
-import { Color, Notebook, Tag } from "@notesnook/core";
+import { MenuItem } from "@workstation/ui";
+import { Color, Notebook, Tag } from "@workstation/core";
 import { handleDrop } from "../../common/drop-handler";
 import { Menu } from "../../hooks/use-menu";
 import { RenameColorDialog } from "../../dialogs/item-dialog";
-import { strings } from "@notesnook/intl";
+import { strings } from "@workstation/intl";
 import Tags from "../../views/tags";
 import { Notebooks } from "../../views/notebooks";
 import { UserProfile } from "../../dialogs/settings/components/user-profile";
@@ -114,46 +136,174 @@ import {
   FeatureResult,
   isFeatureAvailable,
   useIsFeatureAvailable
-} from "@notesnook/common";
+} from "@workstation/common";
 import { isUserSubscribed } from "../../hooks/use-is-user-premium";
 import { shouldShowWrapped } from "../../utils/should-show-wrapped";
 
 type Route = {
-  id: "notes" | "favorites" | "reminders" | "monographs" | "trash" | "archive";
+  id: string;
   title: string;
   path: string;
   icon: Icon;
   tag?: string;
   loginRequired?: boolean;
+  section?: "workspace" | "tools" | "developer" | "organize";
 };
 
 const routes: Route[] = [
-  { id: "notes", title: strings.routes.Notes(), path: "/notes", icon: Note },
+  // ── WORKSPACE ──
+  {
+    id: "dashboard",
+    title: "Dashboard",
+    path: "/dashboard",
+    icon: Dashboard,
+    section: "workspace"
+  },
+  {
+    id: "control",
+    title: "Control",
+    path: "/control",
+    icon: Radar,
+    section: "workspace"
+  },
+  {
+    id: "notes",
+    title: strings.routes.Notes(),
+    path: "/notes",
+    icon: Note,
+    section: "workspace"
+  },
+  {
+    id: "tasks",
+    title: "Tasks",
+    path: "/tasks",
+    icon: Tasks,
+    section: "workspace"
+  },
+  {
+    id: "calendar",
+    title: "Calendar",
+    path: "/calendar",
+    icon: Calendar,
+    section: "workspace"
+  },
+  {
+    id: "agent-chat",
+    title: "Agent Chat",
+    path: "/agent-chat",
+    icon: Support,
+    section: "workspace"
+  },
+  {
+    id: "terminal",
+    title: "Terminal",
+    path: "/terminal",
+    icon: ConsoleLine,
+    section: "workspace"
+  },
+  {
+    id: "files",
+    title: "Files",
+    path: "/files",
+    icon: File,
+    section: "workspace"
+  },
+
+  // ── TOOLS ──
+  {
+    id: "agents",
+    title: "Agents",
+    path: "/agents",
+    icon: Robot,
+    section: "tools"
+  },
+  {
+    id: "spreadsheets",
+    title: "Spreadsheets",
+    path: "/spreadsheets",
+    icon: Table,
+    section: "tools"
+  },
+  {
+    id: "communications",
+    title: "Communications",
+    path: "/communications",
+    icon: MessageText,
+    section: "tools"
+  },
+  {
+    id: "newsletters",
+    title: "Newsletters",
+    path: "/newsletters",
+    icon: Newspaper,
+    section: "tools"
+  },
+  {
+    id: "call-queue",
+    title: "Call Queue",
+    path: "/call-queue",
+    icon: PhoneInTalk,
+    section: "tools"
+  },
+
+  // ── DEVELOPER ──
+  {
+    id: "git",
+    title: "Git",
+    path: "/git",
+    icon: GitBranch,
+    section: "developer"
+  },
+  {
+    id: "conversations",
+    title: "Conversations",
+    path: "/conversations",
+    icon: Forum,
+    section: "developer"
+  },
+  {
+    id: "workspaces",
+    title: "Workspaces",
+    path: "/workspaces",
+    icon: CardMultiple,
+    section: "developer"
+  },
+  {
+    id: "code-search",
+    title: "Code Search",
+    path: "/code-search",
+    icon: Search,
+    section: "developer"
+  },
+  {
+    id: "diagnostics",
+    title: "Diagnostics",
+    path: "/diagnostics",
+    icon: Issue,
+    section: "developer"
+  },
+
+  // ── ORGANIZE ──
   {
     id: "favorites",
     title: strings.routes.Favorites(),
     path: "/favorites",
-    icon: StarOutline
+    icon: StarOutline,
+    section: "organize"
   },
-  {
-    id: "reminders",
-    title: strings.routes.Reminders(),
-    path: "/reminders",
-    icon: Reminders
-  },
-  {
-    id: "monographs",
-    title: strings.routes.Monographs(),
-    path: "/monographs",
-    icon: Monographs,
-    loginRequired: true
-  },
-  { id: "trash", title: strings.routes.Trash(), path: "/trash", icon: Trash },
   {
     id: "archive",
     title: strings.archive(),
     path: "/archive",
-    icon: Archive
+    icon: Archive,
+    section: "organize"
+  },
+  {
+    id: "trash",
+    title: strings.routes.Trash(),
+    path: "/trash",
+    icon: Trash,
+    section: "organize"
   }
 ];
 
@@ -230,10 +380,14 @@ function NavigationMenu({ onExpand }: { onExpand?: () => void }) {
   const navigationTab = useAppStore((store) => store.navigationTab);
   const setNavigationTab = useAppStore((store) => store.setNavigationTab);
   const isNavPaneCollapsed = useAppStore((store) => store.isNavPaneCollapsed);
+  const branding = useBrandingStore((s) => s.branding);
   const [expanded, setExpanded] = useState(false);
   const isCollapsed = isNavPaneCollapsed && !expanded;
   const mouseHoverTimeout = useRef(0);
   const currentTab = tabs.find((tab) => tab.id === navigationTab) || tabs[0];
+  const displayName = branding.isOnboarded && branding.businessName
+    ? `${branding.businessName} Desk`
+    : "Workstation";
 
   useEffect(() => {
     if (isNavPaneCollapsed) setExpanded(false);
@@ -309,22 +463,27 @@ function NavigationMenu({ onExpand }: { onExpand?: () => void }) {
           >
             <svg
               style={{
-                width: 20,
-                height: 20
+                width: 22,
+                height: 22
               }}
+              viewBox="-15 -5 230 224"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <use href="#full-logo" />
+              <polygon points="0,0.9 0,35.9 12.8,54.1 81.4,83.2 99.7,107.9 118.3,83.4 186.5,54.7 200,36.1 200,0 186.1,24.2 100.8,49.6 13.9,24.2" fill={branding.primaryColor}/>
+              <polygon points="31.7,65.9 31.7,112.4 58.3,129.7 58.3,159.9 85.5,214 85.7,111.5 43.6,86.6 41.2,73.1" fill={branding.primaryColor}/>
+              <polygon points="168.5,66.2 158.8,73.4 156.1,86.8 114.5,111.3 114.5,214 141.7,160.2 141.7,129.7 168.5,112.4" fill={branding.primaryColor}/>
             </svg>
 
             <Text
               variant="heading"
               sx={{
                 fontSize: 15,
-                fontWeight: "medium",
-                display: "block"
+                fontWeight: "bold",
+                display: "block",
+                letterSpacing: "0.5px"
               }}
             >
-              Notesnook
+              {displayName}
             </Text>
           </Flex>
           <Flex sx={{ gap: "small", alignItems: "center" }}>
@@ -464,6 +623,35 @@ function NavigationMenu({ onExpand }: { onExpand?: () => void }) {
 }
 export default React.memo(NavigationMenu);
 
+function SectionHeader({ title, isCollapsed }: { title: string; isCollapsed: boolean }) {
+  if (isCollapsed) return null;
+  return (
+    <Text
+      sx={{
+        fontSize: "10px",
+        fontWeight: "bold",
+        color: "paragraph-secondary",
+        textTransform: "uppercase",
+        letterSpacing: "1.2px",
+        px: 1,
+        pt: 2,
+        pb: "2px",
+        userSelect: "none"
+      }}
+    >
+      {title}
+    </Text>
+  );
+}
+
+const SECTIONS = ["workspace", "tools", "developer", "organize"] as const;
+const SECTION_LABELS: Record<string, string> = {
+  workspace: "Workspace",
+  tools: "Tools",
+  developer: "Developer",
+  organize: "Organize"
+};
+
 function Routes({
   isCollapsed,
   collapse
@@ -474,21 +662,43 @@ function Routes({
   const customizableSidebar = useIsFeatureAvailable("customizableSidebar");
   const hiddenRoutes = useAppStore((store) => store.hiddenRoutes);
   const isLoggedIn = useUserStore((store) => store.isLoggedIn);
+
+  const filteredRoutes = routes
+    .filter(
+      customizableSidebar?.isAllowed
+        ? (r) => !hiddenRoutes.includes(r.id)
+        : () => true
+    )
+    .filter((r) => (r.loginRequired ? isLoggedIn : true))
+    .filter((r) => (r.section === "developer" ? isDesktopRuntime() : true));
+
   return (
-    <ReorderableList
-      items={routes
-        .filter(
-          customizableSidebar?.isAllowed
-            ? (r) => !hiddenRoutes.includes(r.id)
-            : () => true
-        )
-        .filter((r) => (r.loginRequired ? isLoggedIn : true))}
-      orderKey={`sidebarOrder:routes`}
-      order={() => db.settings.getSideBarOrder("routes")}
-      onOrderChanged={(order) => db.settings.setSideBarOrder("routes", order)}
-      context={{ isCollapsed, collapse }}
-      renderItem={RouteItem}
-    />
+    <>
+      {SECTIONS.map((section) => {
+        const sectionRoutes = filteredRoutes.filter(
+          (r) => r.section === section
+        );
+        if (sectionRoutes.length === 0) return null;
+        return (
+          <React.Fragment key={section}>
+            <SectionHeader
+              title={SECTION_LABELS[section]}
+              isCollapsed={isCollapsed}
+            />
+            <ReorderableList
+              items={sectionRoutes}
+              orderKey={`sidebarOrder:routes:${section}`}
+              order={() => db.settings.getSideBarOrder("routes")}
+              onOrderChanged={(order) =>
+                db.settings.setSideBarOrder("routes", order)
+              }
+              context={{ isCollapsed, collapse }}
+              renderItem={RouteItem}
+            />
+          </React.Fragment>
+        );
+      })}
+    </>
   );
 }
 
@@ -750,6 +960,9 @@ function ItemCount({ item }: { item: Route | Color | Notebook | Tag }) {
   const reminders = useReminderStore((store) => store.reminders);
   const trash = useTrashStore((store) => store.trash);
   const monographs = useMonographStore((store) => store.monographs);
+  const agents = useAgentStore((store) => store.agents);
+  const tasks = useTaskStore((store) => store.tasks);
+  const messages = useCommsStore((store) => store.messages);
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -772,12 +985,43 @@ function ItemCount({ item }: { item: Route | Color | Notebook | Tag }) {
             return monographs?.length || 0;
           case "archive":
             return db.notes.archived.count();
+          case "agents":
+            return agents.filter((a) => a.status === "running").length;
+          case "tasks":
+            return tasks.filter((t) => t.status === "todo" || t.status === "in_progress").length;
+          case "communications":
+            return messages.filter((m) => !m.isRead).length;
           default:
             return 0;
         }
       }
     })().then((c) => setCount(c || 0));
-  }, [item, notes, trash, monographs, reminders]);
+  }, [item, notes, trash, monographs, reminders, agents, tasks, messages]);
+
+  // Show badge-style count for unread comms
+  if ("id" in item && item.id === "communications") {
+    const unread = messages.filter((m) => !m.isRead).length;
+    if (unread > 0) {
+      return (
+        <Text
+          sx={{
+            fontSize: 10,
+            fontWeight: "bold",
+            bg: "#ef4444",
+            color: "white",
+            borderRadius: 10,
+            px: "5px",
+            py: "1px",
+            minWidth: 18,
+            textAlign: "center"
+          }}
+        >
+          {unread}
+        </Text>
+      );
+    }
+  }
+
   return <Text variant="subBody">{count}</Text>;
 }
 

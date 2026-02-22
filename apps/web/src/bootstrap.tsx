@@ -176,6 +176,10 @@ function checkPrerequisites() {
 }
 
 export async function init() {
+  // Auto-enable self-hosted mode to bypass auth & unlock all features
+  // (ZeroClaw/Workstation is self-hosted by design)
+  localStorage.setItem("selfHostedMode", "true");
+
   await initializeFeatureChecks();
 
   checkPrerequisites();
@@ -191,5 +195,6 @@ export async function init() {
 }
 
 function shouldSkipInitiation() {
-  return IS_THEME_BUILDER || localStorage.getItem("skipInitiation") || false;
+  // Auth disabled — Workstation is self-hosted by design
+  return true;
 }

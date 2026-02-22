@@ -165,7 +165,7 @@ async function createWindow() {
   setupMenu();
   setupJumplist();
 
-  if (isDevelopment())
+  if (isDevelopment() && process.env.OPEN_DEVTOOLS !== "0")
     mainWindow.webContents.openDevTools({ mode: "bottom", activate: true });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

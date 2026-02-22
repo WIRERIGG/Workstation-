@@ -1,0 +1,30 @@
+[package]
+name = "wiredash-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "wiredash"
+path = "src/main.rs"
+
+[dependencies]
+wiredash-core = { path = "../wiredash-core" }
+wiredash-db = { path = "../wiredash-db" }
+wiredash-crypto = { path = "../wiredash-crypto" }
+wiredash-sync = { path = "../wiredash-sync" }
+wiredash-theme = { path = "../wiredash-theme" }
+wiredash-editor = { path = "../wiredash-editor" }
+
+iced = { version = "0.14", features = ["svg", "tokio", "markdown", "highlighter"] }
+tokio = { version = "1", features = ["full"] }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+directories = "6"
+tracing = { workspace = true }
+tracing-subscriber = "0.3"
+dark-light = "1"
+open = "5"
+base64 = "0.22"
+chrono = "0.4"

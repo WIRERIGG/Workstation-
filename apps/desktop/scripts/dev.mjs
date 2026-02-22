@@ -34,7 +34,9 @@ const ENV = {
   ...process.env,
   NO_COLOR: "true",
   FORCE_COLOR: "false",
-  COLOR: "0"
+  COLOR: "0",
+  ELECTRON_IS_DEV: process.env.ELECTRON_IS_DEV ?? "1",
+  OPEN_DEVTOOLS: process.env.OPEN_DEVTOOLS ?? "0"
 };
 process.chdir(path.join(__dirname, ".."));
 
@@ -57,11 +59,11 @@ async function onChange(first) {
 
     await exec("npm rebuild electron --verbose --foreground-scripts");
 
-    await exec("yarn electron-builder install-app-deps");
+    await exec("npx electron-builder install-app-deps");
   }
 
-  await exec(`yarn run bundle`);
-  await exec(`yarn run build`);
+  await exec(`npm run bundle`);
+  await exec(`npm run build`);
 
   if (await isBundleSame()) {
     console.log("Bundle is same. Doing nothing.");
@@ -82,7 +84,7 @@ async function onChange(first) {
   }
 
   execAsync(
-    "yarn",
+    "npx",
     ["electron", path.join("build", "electron.js")],
     true,
     cleanup
@@ -96,7 +98,7 @@ function spawnAndWaitUntil(cmd, cwd, predicate) {
     const s = spawn(cmd[0], cmd.slice(1), {
       cwd,
       env: ENV,
-      shell: false
+      shell: process.platform === "win32"
     });
 
     RUNNING_PROCESSES.push(s);
@@ -116,7 +118,7 @@ async function exec(cmd, cwd) {
     return execSync(cmd, {
       env: ENV,
       stdio: "inherit",
-      shell: false,
+      shell: process.platform === "win32",
       cwd: cwd || process.cwd()
     });
   } catch {
@@ -131,7 +133,7 @@ function execAsync(cmd, args, restartable, onExit) {
     const proc = spawn(cmd, args, {
       stdio: "inherit",
       env: ENV,
-      shell: false
+      shell: process.platform === "win32"
     });
 
     const array = restartable ? RESTARTABLE_PROCESSES : RUNNING_PROCESSES;

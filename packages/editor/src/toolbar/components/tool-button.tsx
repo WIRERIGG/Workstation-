@@ -34,6 +34,17 @@ export type ToolButtonProps = ButtonProps & {
   toggled?: boolean;
   buttonRef?: React.RefObject<HTMLButtonElement>;
   variant?: ToolButtonVariant;
+  // These are accepted from ToolProps/MoreToolsProps spreads but not rendered.
+  // Destructured here to prevent leaking to the DOM.
+  editor?: unknown;
+  force?: boolean;
+  parentGroup?: string;
+  conditional?: boolean;
+  description?: string;
+  popupId?: string;
+  tools?: unknown;
+  autoCloseOnUnmount?: boolean;
+  autoOpen?: boolean;
 };
 export const ToolButton = React.memo(
   function ToolButton(props: ToolButtonProps) {
@@ -46,6 +57,16 @@ export const ToolButton = React.memo(
       sx,
       buttonRef,
       variant = "normal",
+      // Strip non-DOM props passed via ToolProps/MoreToolsProps spreads
+      editor: _editor,
+      force: _force,
+      parentGroup: _parentGroup,
+      conditional: _conditional,
+      description: _description,
+      popupId: _popupId,
+      tools: _tools,
+      autoCloseOnUnmount: _autoCloseOnUnmount,
+      autoOpen: _autoOpen,
       ...buttonProps
     } = props;
     const isMobile = useIsMobile();

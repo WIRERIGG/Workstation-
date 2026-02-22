@@ -571,6 +571,12 @@ export async function areFeaturesAvailable<TIds extends FeatureId[]>(
 }
 
 async function getUserPlan() {
+  if (
+    typeof window !== "undefined" &&
+    window.localStorage?.getItem("selfHostedMode") === "true"
+  ) {
+    return SubscriptionPlan.PRO;
+  }
   const user = await db.user.getUser();
   const plan = user?.subscription?.plan || SubscriptionPlan.FREE;
   return plan;

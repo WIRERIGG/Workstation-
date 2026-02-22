@@ -43,12 +43,12 @@ export type RouteContainerButtons = {
   };
 };
 
-export type RouteContainerProps = RouteResult;
+export type RouteContainerProps = Omit<RouteResult, "key">;
 function RouteContainer(props: PropsWithChildren<RouteContainerProps>) {
-  const { children } = props;
+  const { children, type } = props;
   return (
     <>
-      <Header {...props} />
+      {type !== "placeholder" && <Header {...props} />}
       {children}
     </>
   );

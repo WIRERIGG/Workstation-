@@ -369,10 +369,19 @@ class KeyStore extends BaseStore<KeyStore> {
     if (isLocked) throw new Error("Please unlock the key store to get values.");
     const blob = secrets[name];
     if (!blob) return;
-    const decryptedBlob = await decrypt(blob, await this.getKey());
-    if (defaultSecrets[name] instanceof ArrayBuffer)
-      return decryptedBlob as Secrets[T];
-    else return JSON.parse(decoder.decode(decryptedBlob)).value as Secrets[T];
+    try {
+      const decryptedBlob = await decrypt(blob, await this.getKey());
+      if (defaultSecrets[name] instanceof ArrayBuffer)
+        return decryptedBlob as Secrets[T];
+      else return JSON.parse(decoder.decode(decryptedBlob)).value as Secrets[T];
+    } catch (e) {
+      console.warn(
+        `Key store: decrypt failed for "${String(name)}" — resetting key store (platform change?).`,
+        e
+      );
+      await this.clear();
+      return undefined;
+    }
   };
 
   clear = async () => {
@@ -417,23 +426,37 @@ class KeyStore extends BaseStore<KeyStore> {
       !wrappingKey &&
       (await desktop.safeStorage.isEncryptionAvailable.query())
     ) {
-      const decrypted = Buffer.from(
-        await desktop.safeStorage.decryptString.query(
-          Buffer.from(wrappedKey).toString("base64")
-        ),
-        "base64"
-      );
+      try {
+        const decrypted = Buffer.from(
+          await desktop.safeStorage.decryptString.query(
+            Buffer.from(wrappedKey).toString("base64")
+          ),
+          "base64"
+        );
 
-      return window.crypto.subtle.importKey(
-        "raw",
-        decrypted,
-        { name: "AES-GCM", length: 256 },
-        true,
-        ["encrypt", "decrypt"]
-      );
+        return window.crypto.subtle.importKey(
+          "raw",
+          decrypted,
+          { name: "AES-GCM", length: 256 },
+          true,
+          ["encrypt", "decrypt"]
+        );
+      } catch {
+        // Keyring has no entry (fresh Tauri install or switched platforms).
+        // Re-generate and store a new key via safeStorage.
+        return this.storeKey();
+      }
     } else if (wrappingKey) {
-      return unwrapKey(wrappedKey, [wrappingKey]);
-    } else throw new Error("Could not decrypt key.");
+      try {
+        return await unwrapKey(wrappedKey, [wrappingKey]);
+      } catch {
+        // Wrapping key mismatch (platform change) — regenerate.
+        return this.storeKey();
+      }
+    } else {
+      // No wrapping key and no safeStorage — regenerate.
+      return this.storeKey();
+    }
   };
 
   private storeKey = async (key?: CryptoKey) => {
