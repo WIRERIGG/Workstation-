@@ -28,10 +28,10 @@ impl Section {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum View {
-    Dashboard, Control, Notes, Notebooks, Tags, Search, Tasks, Calendar, AgentChat, Terminal, Files,
+    Dashboard, Control, Notes, Notebooks, Tags, Search, Reminders, Tasks, Calendar, AgentChat, Terminal, Files,
     Agents, Spreadsheets, Communications, Newsletters, CallQueue,
     Git, Conversations, Workspaces, CodeSearch, Diagnostics,
-    Favorites, Archive, Trash,
+    Favorites, Archive, Trash, Settings,
 }
 
 impl View {
@@ -43,6 +43,7 @@ impl View {
             Self::Notebooks => "Notebooks",
             Self::Tags => "Tags",
             Self::Search => "Search",
+            Self::Reminders => "Reminders",
             Self::Tasks => "Tasks",
             Self::Calendar => "Calendar",
             Self::AgentChat => "Agent Chat",
@@ -61,6 +62,7 @@ impl View {
             Self::Favorites => "Favorites",
             Self::Archive => "Archive",
             Self::Trash => "Trash",
+            Self::Settings => "Settings",
         }
     }
 
@@ -72,6 +74,7 @@ impl View {
             Self::Notebooks => icons::NOTEBOOK,
             Self::Tags => icons::TAG,
             Self::Search => icons::SEARCH,
+            Self::Reminders => icons::BELL,
             Self::Tasks => icons::TASKS,
             Self::Calendar => icons::CALENDAR,
             Self::AgentChat => icons::CHAT,
@@ -90,6 +93,7 @@ impl View {
             Self::Favorites => icons::STAR,
             Self::Archive => icons::ARCHIVE,
             Self::Trash => icons::TRASH,
+            Self::Settings => icons::GEAR,
         }
     }
 
@@ -101,6 +105,7 @@ impl View {
             Self::Notebooks => "Organize notes into notebooks.",
             Self::Tags => "Manage tags and filter notes by tag.",
             Self::Search => "Full-text search across all notes and content.",
+            Self::Reminders => "Manage reminders and scheduled notifications.",
             Self::Tasks => "Task tracking with status, priority, and assignees.",
             Self::Calendar => "Week view calendar with agent-managed events.",
             Self::AgentChat => "Chat with AI agents for assistance and automation.",
@@ -119,13 +124,14 @@ impl View {
             Self::Favorites => "Starred notes and notebooks.",
             Self::Archive => "Archived notes.",
             Self::Trash => "Deleted items — restore or permanently delete.",
+            Self::Settings => "Configure appearance, editor, security, and more.",
         }
     }
 
     pub fn section(&self) -> Section {
         match self {
-            Self::Dashboard | Self::Control | Self::Notes | Self::Notebooks | Self::Tags | Self::Search | Self::Tasks |
-            Self::Calendar | Self::AgentChat | Self::Terminal | Self::Files => Section::Workspace,
+            Self::Dashboard | Self::Control | Self::Notes | Self::Notebooks | Self::Tags | Self::Search | Self::Reminders | Self::Tasks |
+            Self::Calendar | Self::AgentChat | Self::Terminal | Self::Files | Self::Settings => Section::Workspace,
             Self::Agents | Self::Spreadsheets | Self::Communications |
             Self::Newsletters | Self::CallQueue => Section::Tools,
             Self::Git | Self::Conversations | Self::Workspaces |
@@ -136,12 +142,12 @@ impl View {
 
     pub const ALL: &'static [View] = &[
         View::Dashboard, View::Control, View::Notes, View::Notebooks, View::Tags, View::Search,
-        View::Tasks, View::Calendar, View::AgentChat, View::Terminal, View::Files,
+        View::Reminders, View::Tasks, View::Calendar, View::AgentChat, View::Terminal, View::Files,
         View::Agents, View::Spreadsheets, View::Communications,
         View::Newsletters, View::CallQueue,
         View::Git, View::Conversations, View::Workspaces,
         View::CodeSearch, View::Diagnostics,
-        View::Favorites, View::Archive, View::Trash,
+        View::Favorites, View::Archive, View::Trash, View::Settings,
     ];
 
     pub fn for_section(section: Section) -> Vec<View> {

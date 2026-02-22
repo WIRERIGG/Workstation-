@@ -21,3 +21,5 @@ pub const ARCHIVE: &str = "\u{25A4}";    // ▤
 pub const TRASH: &str = "\u{1F5D1}";     // 🗑
 pub const NOTEBOOK: &str = "\u{1F4D3}";  // 📓
 pub const TAG: &str = "\u{1F3F7}";       // 🏷
+pub const GEAR: &str = "\u{2699}";       // ⚙
+pub const BELL: &str = "\u{1F514}";      // 🔔
