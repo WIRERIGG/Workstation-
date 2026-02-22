@@ -25,3 +25,4 @@ tracing = { workspace = true }
 tracing-subscriber = "0.3"
 dark-light = "1"
 open = "5"
+base64 = "0.22"

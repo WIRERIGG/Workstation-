@@ -9,6 +9,7 @@ mod organize_views;
 mod modal;
 mod toast;
 mod settings_view;
+mod app_lock;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -41,6 +42,7 @@ struct Wiredash {
     archive_state: organize_views::FilteredNotesState,
     trash_state: organize_views::FilteredNotesState,
     settings_state: settings_view::SettingsViewState,
+    app_lock_state: app_lock::AppLockState,
     save_pending: bool,
 }
 
@@ -59,6 +61,8 @@ enum Message {
     TrashView(organize_views::FilteredNotesMessage),
     SettingsView(settings_view::SettingsMessage),
     AutoSaveTick,
+    AppLock(app_lock::AppLockMessage),
+    InactivityCheck,
 }
 
 impl Wiredash {
@@ -104,6 +108,14 @@ impl Wiredash {
         let mut settings_state = settings_view::SettingsViewState::new();
         settings_state.load_all(&db);
 
+        let app_lock_enabled = {
+            let settings = wiredash_core::collections::settings::Settings::new(&db);
+            settings.get_setting("app_lock_enabled").ok().flatten()
+                .and_then(|v| v.as_bool())
+                .unwrap_or(false)
+        };
+        let app_lock_state = app_lock::AppLockState::new(app_lock_enabled);
+
         (
             Self {
                 current_view: cfg.resolve_view(),
@@ -118,6 +130,7 @@ impl Wiredash {
                 archive_state,
                 trash_state,
                 settings_state,
+                app_lock_state,
                 save_pending: false,
             },
             Task::none(),
@@ -129,6 +142,11 @@ impl Wiredash {
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
+        // Record user activity for inactivity timer
+        if !matches!(message, Message::AutoSaveTick | Message::InactivityCheck) {
+            self.app_lock_state.record_activity();
+        }
+
         let mut state_changed = false;
         match message {
             Message::Navigate(view) => {
@@ -230,6 +248,32 @@ impl Wiredash {
                 }
                 self.settings_state.update(msg, &self.db);
             }
+            Message::AppLock(msg) => {
+                match msg {
+                    app_lock::AppLockMessage::PasswordInput(s) => {
+                        self.app_lock_state.password_input = s;
+                    }
+                    app_lock::AppLockMessage::TryUnlock => {
+                        if app_lock::try_unlock(&self.db, &self.app_lock_state.password_input) {
+                            self.app_lock_state.locked = false;
+                            self.app_lock_state.password_input.clear();
+                            self.app_lock_state.error = None;
+                            self.app_lock_state.record_activity();
+                        } else {
+                            self.app_lock_state.error = Some("Incorrect password.".into());
+                        }
+                    }
+                }
+            }
+            Message::InactivityCheck => {
+                if !self.app_lock_state.locked {
+                    let timeout = self.settings_state.get_string("app_lock_timeout", "Immediately");
+                    let enabled = self.settings_state.get_bool("app_lock_enabled", false);
+                    if enabled && self.app_lock_state.should_lock(&timeout) {
+                        self.app_lock_state.locked = true;
+                    }
+                }
+            }
             Message::AutoSaveTick => {
                 if self.save_pending {
                     self.save_all_dirty();
@@ -316,6 +360,10 @@ impl Wiredash {
     }
 
     fn view(&self) -> Element<'_, Message> {
+        if self.app_lock_state.locked {
+            return app_lock::gate_view(&self.app_lock_state).map(Message::AppLock);
+        }
+
         let sidebar_width: f32 = if self.sidebar_collapsed { 50.0 } else { 240.0 };
 
         let sidebar = self.sidebar_view();
@@ -343,13 +391,20 @@ impl Wiredash {
 
     fn subscription(&self) -> Subscription<Message> {
         let keyboard_sub = keyboard::listen().map(Message::KeyboardEvent);
+        let mut subs = vec![keyboard_sub];
         if self.save_pending {
-            let save_sub = iced::time::every(std::time::Duration::from_secs(2))
-                .map(|_| Message::AutoSaveTick);
-            Subscription::batch([keyboard_sub, save_sub])
-        } else {
-            keyboard_sub
+            subs.push(
+                iced::time::every(std::time::Duration::from_secs(2))
+                    .map(|_| Message::AutoSaveTick)
+            );
         }
+        if self.settings_state.get_bool("app_lock_enabled", false) && !self.app_lock_state.locked {
+            subs.push(
+                iced::time::every(std::time::Duration::from_secs(10))
+                    .map(|_| Message::InactivityCheck)
+            );
+        }
+        Subscription::batch(subs)
     }
 
     fn sidebar_view(&self) -> Element<'_, Message> {
