@@ -77,6 +77,9 @@ impl ColorVariant {
     pub fn hover_color(&self) -> Color {
         parse_hex(&self.hover).unwrap_or(Color::from_rgba8(0, 0, 0, 0.05))
     }
+    pub fn placeholder_color(&self) -> Color {
+        parse_hex(&self.placeholder).unwrap_or(Color::from_rgb8(0xa9, 0xa9, 0xa9))
+    }
 }
 
 /// All 6 variants in a scope.

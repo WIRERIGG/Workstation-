@@ -77,6 +77,12 @@ pub struct ThemeEngine {
     pub follow_system: bool,
 }
 
+impl Default for ThemeEngine {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ThemeEngine {
     pub fn new() -> Self {
         Self {

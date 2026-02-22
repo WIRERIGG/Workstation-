@@ -42,6 +42,7 @@ impl AppConfig {
             .map(|dirs| dirs.config_dir().to_path_buf())
     }
 
+    #[allow(dead_code)] // used in Phase 4 for database path
     pub fn data_dir() -> Option<PathBuf> {
         directories::ProjectDirs::from("com", "wiredash", "Wiredash")
             .map(|dirs| dirs.data_dir().to_path_buf())

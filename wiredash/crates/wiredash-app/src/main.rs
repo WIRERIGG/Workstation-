@@ -65,6 +65,7 @@ impl Wiredash {
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
+        let mut state_changed = true;
         match message {
             Message::Navigate(view) => {
                 self.current_view = view;
@@ -76,21 +77,25 @@ impl Wiredash {
                 self.theme_engine.toggle_scheme();
             }
             Message::KeyboardEvent(event) => {
+                state_changed = false;
                 if let keyboard::Event::KeyPressed { key, modifiers, .. } = event {
                     if modifiers.command() {
                         match key.as_ref() {
                             keyboard::Key::Character("b") => {
                                 self.sidebar_collapsed = !self.sidebar_collapsed;
+                                state_changed = true;
                             }
                             keyboard::Key::Character(c) => {
                                 if modifiers.shift() && c == "T" {
                                     self.theme_engine.toggle_scheme();
+                                    state_changed = true;
                                 } else if c.len() == 1 {
                                     if let Some(digit) = c.chars().next().and_then(|ch| ch.to_digit(10)) {
-                                        if digit >= 1 && digit <= 9 {
+                                        if (1..=9).contains(&digit) {
                                             let idx = (digit - 1) as usize;
                                             if let Some(view) = View::ALL.get(idx) {
                                                 self.current_view = *view;
+                                                state_changed = true;
                                             }
                                         }
                                     }
@@ -102,7 +107,9 @@ impl Wiredash {
                 }
             }
         }
-        self.save_config();
+        if state_changed {
+            self.save_config();
+        }
         Task::none()
     }
 
@@ -148,18 +155,30 @@ impl Wiredash {
 
     fn sidebar_view(&self) -> Element<'_, Message> {
         let mut sidebar_items: Vec<Element<'_, Message>> = Vec::new();
+        let theme_def = self.theme_engine.active_definition();
+        let nav = theme_def.nav_colors();
 
-        // Logo header
+        // Logo header (click to toggle sidebar)
         if self.sidebar_collapsed {
             sidebar_items.push(
-                container(text("W").size(20))
+                container(
+                    button(text("W").size(20))
+                        .on_press(Message::ToggleSidebar)
+                        .style(button::text)
+                        .width(Fill),
+                )
                     .padding(10)
                     .center_x(Fill)
                     .into(),
             );
         } else {
             sidebar_items.push(
-                container(text("Wiredash").size(18))
+                container(
+                    button(text("Wiredash").size(18))
+                        .on_press(Message::ToggleSidebar)
+                        .style(button::text)
+                        .width(Fill),
+                )
                     .padding([12, 16])
                     .into(),
             );
@@ -172,7 +191,7 @@ impl Wiredash {
                     container(
                         text(section.label())
                             .size(10)
-                            .color(iced::Color::from_rgb8(0xa9, 0xa9, 0xa9))
+                            .color(nav.placeholder_color())
                     )
                     .padding(iced::Padding::ZERO.top(12).right(16).bottom(4).left(16))
                     .into(),
