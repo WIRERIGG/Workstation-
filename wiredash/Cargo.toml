@@ -5,6 +5,8 @@ members = [
     "crates/wiredash-db",
     "crates/wiredash-core",
     "crates/wiredash-sync",
+    "crates/wiredash-theme",
+    "crates/wiredash-app",
 ]
 
 [workspace.package]
