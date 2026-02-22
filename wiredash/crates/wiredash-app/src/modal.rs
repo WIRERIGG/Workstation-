@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 //! Reusable modal dialog overlay using iced Stack + opaque + mouse_area.
 
 use iced::widget::{center, column, container, mouse_area, opaque, row, stack, text, Space};

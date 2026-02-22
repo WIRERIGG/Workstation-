@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 //! App Lock — password gate screen and inactivity timer.
 
 use iced::widget::{button, center, column, container, text, text_input, Space};

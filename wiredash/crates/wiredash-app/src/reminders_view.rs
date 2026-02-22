@@ -11,6 +11,7 @@ pub struct ReminderSummary {
     pub title: String,
     pub date: i64,
     pub mode: String,
+    #[allow(dead_code)]
     pub priority: String,
     pub disabled: bool,
 }
@@ -83,7 +84,7 @@ impl RemindersViewState {
 
         // Format date/time from timestamp
         let dt = chrono::DateTime::from_timestamp_millis(rem.date)
-            .unwrap_or_else(|| chrono::Utc::now());
+            .unwrap_or_else(chrono::Utc::now);
         self.form_date = dt.format("%Y-%m-%d").to_string();
         self.form_time = dt.format("%H:%M").to_string();
     }

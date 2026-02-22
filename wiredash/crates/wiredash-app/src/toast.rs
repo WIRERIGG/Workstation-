@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 //! Toast notification system adapted from iced official toast example.
 
 use iced::widget::{button, column, container, row, text};

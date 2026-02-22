@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 //! Vault — encrypt/decrypt note content using wiredash-crypto.
 
 use wiredash_core::collections::content::Content;
