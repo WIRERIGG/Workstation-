@@ -4,6 +4,7 @@ mod config;
 mod notes_view;
 mod notebooks_view;
 mod tags_view;
+mod search_view;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -31,6 +32,7 @@ struct Wiredash {
     notes_state: notes_view::NotesViewState,
     notebooks_state: notebooks_view::NotebooksViewState,
     tags_state: tags_view::TagsViewState,
+    search_state: search_view::SearchViewState,
     save_pending: bool,
 }
 
@@ -43,6 +45,7 @@ enum Message {
     Notes(notes_view::NotesMessage),
     Notebooks(notebooks_view::NotebooksMessage),
     Tags(tags_view::TagsMessage),
+    SearchView(search_view::SearchMessage),
     AutoSaveTick,
 }
 
@@ -78,6 +81,7 @@ impl Wiredash {
         let mut notebooks_state = notebooks_view::NotebooksViewState::new();
         notebooks_state.refresh_notebooks(&db);
         let mut tags_state = tags_view::TagsViewState::new();
+        let search_state = search_view::SearchViewState::new();
         tags_state.refresh_tags(&db);
 
         (
@@ -89,6 +93,7 @@ impl Wiredash {
                 notes_state,
                 notebooks_state,
                 tags_state,
+                search_state,
                 save_pending: false,
             },
             Task::none(),
@@ -132,6 +137,12 @@ impl Wiredash {
                     self.save_pending = true;
                 }
             }
+            Message::SearchView(msg) => {
+                let changed = self.search_state.update(msg, &self.db);
+                if changed && self.search_state.editor.dirty {
+                    self.save_pending = true;
+                }
+            }
             Message::AutoSaveTick => {
                 if self.save_pending && self.notes_state.editor.dirty {
                     self.notes_state.save_current(&self.db);
@@ -143,6 +154,10 @@ impl Wiredash {
                 }
                 if self.save_pending && self.tags_state.editor.dirty {
                     self.tags_state.save_current(&self.db);
+                    self.save_pending = false;
+                }
+                if self.save_pending && self.search_state.editor.dirty {
+                    self.search_state.save_current(&self.db);
                     self.save_pending = false;
                 }
             }
@@ -163,6 +178,11 @@ impl Wiredash {
                                 }
                                 if self.tags_state.editor.dirty {
                                     self.tags_state.save_current(&self.db);
+                                    self.save_pending = false;
+                                    state_changed = true;
+                                }
+                                if self.search_state.editor.dirty {
+                                    self.search_state.save_current(&self.db);
                                     self.save_pending = false;
                                     state_changed = true;
                                 }
@@ -369,6 +389,10 @@ impl Wiredash {
             View::Tags => {
                 tags_view::tags_view(&self.tags_state, &self.theme_engine.active_iced_theme())
                     .map(Message::Tags)
+            }
+            View::Search => {
+                search_view::search_view(&self.search_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::SearchView)
             }
             view => {
                 container(
