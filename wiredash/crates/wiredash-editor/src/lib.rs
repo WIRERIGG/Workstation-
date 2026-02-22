@@ -7,6 +7,8 @@
 
 mod editor;
 mod toolbar;
+mod view;
 
 pub use editor::{EditorMessage, EditorMode, EditorState};
 pub use toolbar::{toolbar_actions, toolbar_view, ToolbarAction, TOOLBAR_ACTIONS};
+pub use view::editor_view;
