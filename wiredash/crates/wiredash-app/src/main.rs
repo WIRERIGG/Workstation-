@@ -61,10 +61,11 @@ impl Wiredash {
             .unwrap_or_else(|| std::path::PathBuf::from("."));
         let _ = std::fs::create_dir_all(&db_dir);
         let db_path = db_dir.join("wiredash.db");
+        let db_path_str = db_path.to_string_lossy();
         let db = wiredash_db::Database::open(
-            db_path.to_str().unwrap_or("wiredash.db"),
+            &db_path_str,
             None,
-        ).expect("Failed to open database");
+        ).expect("Failed to open database — check disk permissions and free space");
 
         let mut notes_state = notes_view::NotesViewState::new();
         notes_state.refresh_list(&db);
@@ -87,16 +88,19 @@ impl Wiredash {
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
-        let mut state_changed = true;
+        let mut state_changed = false;
         match message {
             Message::Navigate(view) => {
                 self.current_view = view;
+                state_changed = true;
             }
             Message::ToggleSidebar => {
                 self.sidebar_collapsed = !self.sidebar_collapsed;
+                state_changed = true;
             }
             Message::ToggleTheme => {
                 self.theme_engine.toggle_scheme();
+                state_changed = true;
             }
             Message::Notes(msg) => {
                 let changed = self.notes_state.update(msg, &self.db);
@@ -111,7 +115,6 @@ impl Wiredash {
                 }
             }
             Message::KeyboardEvent(event) => {
-                state_changed = false;
                 if let keyboard::Event::KeyPressed { key, modifiers, .. } = event {
                     if modifiers.command() {
                         match key.as_ref() {

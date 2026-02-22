@@ -12,6 +12,7 @@ use wiredash_editor::{editor_view, EditorMessage, EditorState};
 pub struct NoteSummary {
     pub id: String,
     pub title: String,
+    #[allow(dead_code)] // TODO: use for "modified X ago" display in note list
     pub date_modified: i64,
     pub pinned: bool,
     pub favorite: bool,
