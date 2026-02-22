@@ -222,6 +222,8 @@ impl<'a> Notes<'a> {
         let mut conditions = vec!["deleted = 0", "(type = 'note' OR type IS NULL)"];
         if favorites_only {
             conditions.push("favorite = 1");
+            // Exclude archived notes from favorites (matching Notesnook behavior)
+            conditions.push("(archived IS NULL OR archived = 0)");
         }
         if archived_only {
             conditions.push("archived = 1");

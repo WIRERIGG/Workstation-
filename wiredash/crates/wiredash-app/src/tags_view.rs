@@ -192,6 +192,15 @@ impl TagsViewState {
             return;
         }
 
+        // Index for FTS search
+        let search = wiredash_core::collections::search::Search::new(db);
+        if let Err(e) = search.index_note(&note_id, &title) {
+            tracing::warn!("FTS index note failed: {e}");
+        }
+        if let Err(e) = search.index_content(&content_id, &note_id, &editor_text) {
+            tracing::warn!("FTS index content failed: {e}");
+        }
+
         self.editor.mark_saved();
 
         if let Some(idx) = self.selected_note {

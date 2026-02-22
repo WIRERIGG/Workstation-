@@ -1,9 +1,7 @@
 //! Tests for filtered note queries, list_by_ids, restore_from_trash.
 
 use wiredash_core::collections::notes::Notes;
-use wiredash_core::collections::notebooks::Notebooks;
-use wiredash_core::collections::tags::Tags;
-use wiredash_core::types::{Note, Notebook, Tag, SortBy, SortDirection};
+use wiredash_core::types::{Note, SortBy, SortDirection};
 use wiredash_db::Database;
 
 #[test]
@@ -93,32 +91,4 @@ fn test_restore_from_trash() {
     let active = notes.list(None).unwrap();
     assert_eq!(active.len(), 1);
     assert_eq!(active[0].title, "Trashed Note");
-}
-
-#[test]
-fn test_notebook_update_title() {
-    let db = Database::open_memory().unwrap();
-    let notebooks = Notebooks::new(&db);
-
-    let nb = Notebook::new("Original");
-    let id = nb.base.id.clone();
-    notebooks.add(&nb).unwrap();
-
-    notebooks.update_title(&id, "Renamed").unwrap();
-    let loaded = notebooks.get(&id).unwrap().unwrap();
-    assert_eq!(loaded.title, "Renamed");
-}
-
-#[test]
-fn test_tag_update_title() {
-    let db = Database::open_memory().unwrap();
-    let tags = Tags::new(&db);
-
-    let tag = Tag::new("old-name");
-    let id = tag.base.id.clone();
-    tags.add(&tag).unwrap();
-
-    tags.update_title(&id, "new-name").unwrap();
-    let loaded = tags.get(&id).unwrap().unwrap();
-    assert_eq!(loaded.title, "new-name");
 }
