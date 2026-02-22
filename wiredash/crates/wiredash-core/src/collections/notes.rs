@@ -49,7 +49,7 @@ impl<'a> Notes<'a> {
         let expiry_json: Option<String> = note
             .expiry_date
             .as_ref()
-            .map(|v| serde_json::to_string(v))
+            .map(serde_json::to_string)
             .transpose()?;
 
         self.db.execute(

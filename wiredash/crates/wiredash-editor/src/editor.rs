@@ -7,9 +7,10 @@ use iced::widget::{markdown, text_editor};
 use std::sync::Arc;
 
 /// Controls which pane(s) the editor displays.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum EditorMode {
     /// Show only the text editor.
+    #[default]
     Edit,
     /// Show the editor and markdown preview side by side.
     Preview,
@@ -34,12 +35,6 @@ impl EditorMode {
             Self::Split => "Split",
             Self::Preview => "Preview",
         }
-    }
-}
-
-impl Default for EditorMode {
-    fn default() -> Self {
-        Self::Edit
     }
 }
 

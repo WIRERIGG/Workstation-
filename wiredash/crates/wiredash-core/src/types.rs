@@ -155,6 +155,12 @@ pub struct ContentItem {
     pub date_resolved: Option<Timestamp>,
 }
 
+impl Default for ContentItem {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ContentItem {
     pub fn new() -> Self {
         Self {
@@ -479,6 +485,12 @@ pub struct SessionContentItem {
     #[serde(rename = "localOnly")]
     pub local_only: bool,
     pub title: Option<String>,
+}
+
+impl Default for SessionContentItem {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl SessionContentItem {

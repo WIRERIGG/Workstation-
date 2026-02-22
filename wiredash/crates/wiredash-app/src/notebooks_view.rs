@@ -14,6 +14,7 @@ use wiredash_editor::{editor_view, EditorMessage, EditorState};
 pub struct NotebookSummary {
     pub id: String,
     pub title: String,
+    #[allow(dead_code)] // TODO: use for pinned indicator in notebook list
     pub pinned: bool,
     pub note_count: usize,
 }

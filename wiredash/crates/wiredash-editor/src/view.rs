@@ -93,7 +93,7 @@ fn preview_pane<'a, Msg: Clone + 'a>(
     let settings = markdown::Settings::from(theme);
 
     let md: Element<'a, markdown::Uri> =
-        markdown::view(&state.preview_items, settings).into();
+        markdown::view(&state.preview_items, settings);
 
     let mapped: Element<'a, Msg> =
         md.map(move |url| map_msg(EditorMessage::LinkClicked(url)));
