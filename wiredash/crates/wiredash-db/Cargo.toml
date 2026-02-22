@@ -9,9 +9,16 @@ serde_json.workspace = true
 chrono.workspace = true
 thiserror.workspace = true
 anyhow.workspace = true
-rusqlite = { version = "0.32", features = ["bundled-sqlcipher", "column_decltype"] }
+uuid.workspace = true
 tracing.workspace = true
-base64 = "0.22"
+lancedb = "0.26"
+lance-index = "0.26"
+arrow = "57"
+arrow-array = "57"
+arrow-schema = "57"
+tokio = { version = "1", features = ["rt-multi-thread"] }
+futures = "0.3"
 
 [dev-dependencies]
 tempfile = "3"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }

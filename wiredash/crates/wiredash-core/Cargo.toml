@@ -13,8 +13,8 @@ chrono.workspace = true
 tracing.workspace = true
 wiredash-crypto = { path = "../wiredash-crypto" }
 wiredash-db = { path = "../wiredash-db" }
-rusqlite = { version = "0.32", features = ["bundled-sqlcipher"] }
 
 [dev-dependencies]
 tempfile = "3"
 base64 = "0.22"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
