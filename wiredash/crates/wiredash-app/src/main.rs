@@ -8,6 +8,7 @@ mod search_view;
 mod organize_views;
 mod modal;
 mod toast;
+mod settings_view;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -39,6 +40,7 @@ struct Wiredash {
     favorites_state: organize_views::FilteredNotesState,
     archive_state: organize_views::FilteredNotesState,
     trash_state: organize_views::FilteredNotesState,
+    settings_state: settings_view::SettingsViewState,
     save_pending: bool,
 }
 
@@ -55,6 +57,7 @@ enum Message {
     Favorites(organize_views::FilteredNotesMessage),
     ArchiveView(organize_views::FilteredNotesMessage),
     TrashView(organize_views::FilteredNotesMessage),
+    SettingsView(settings_view::SettingsMessage),
     AutoSaveTick,
 }
 
@@ -98,6 +101,8 @@ impl Wiredash {
         archive_state.refresh(&db, organize_views::NoteFilter::Archived);
         let mut trash_state = organize_views::FilteredNotesState::new();
         trash_state.refresh(&db, organize_views::NoteFilter::Trashed);
+        let mut settings_state = settings_view::SettingsViewState::new();
+        settings_state.load_all(&db);
 
         (
             Self {
@@ -112,6 +117,7 @@ impl Wiredash {
                 favorites_state,
                 archive_state,
                 trash_state,
+                settings_state,
                 save_pending: false,
             },
             Task::none(),
@@ -137,7 +143,8 @@ impl Wiredash {
                     View::Favorites => self.favorites_state.refresh(&self.db, organize_views::NoteFilter::Favorites),
                     View::Archive => self.archive_state.refresh(&self.db, organize_views::NoteFilter::Archived),
                     View::Trash => self.trash_state.refresh(&self.db, organize_views::NoteFilter::Trashed),
-                    _ => {} // Search, Dashboard, Settings etc. don't need refresh
+                    View::Settings => self.settings_state.load_all(&self.db),
+                    _ => {} // Search, Dashboard etc. don't need refresh
                 }
 
                 self.current_view = view;
@@ -192,6 +199,9 @@ impl Wiredash {
                 if changed && self.trash_state.editor.dirty {
                     self.save_pending = true;
                 }
+            }
+            Message::SettingsView(msg) => {
+                self.settings_state.update(msg, &self.db);
             }
             Message::AutoSaveTick => {
                 if self.save_pending {
@@ -454,6 +464,10 @@ impl Wiredash {
             View::Trash => {
                 organize_views::filtered_notes_view(&self.trash_state, &self.theme_engine.active_iced_theme(), organize_views::NoteFilter::Trashed)
                     .map(Message::TrashView)
+            }
+            View::Settings => {
+                settings_view::settings_view(&self.settings_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::SettingsView)
             }
             view => {
                 container(
