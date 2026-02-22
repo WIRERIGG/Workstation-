@@ -1,5 +1,6 @@
 mod navigation;
 mod icons;
+mod config;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -35,11 +36,25 @@ enum Message {
 
 impl Wiredash {
     fn new() -> (Self, Task<Message>) {
+        let cfg = config::AppConfig::load();
+        let mut theme_engine = ThemeEngine::new();
+
+        if cfg.follow_system_theme {
+            let system_scheme = match dark_light::detect() {
+                dark_light::Mode::Dark => wiredash_theme::ColorScheme::Dark,
+                dark_light::Mode::Light | dark_light::Mode::Default => wiredash_theme::ColorScheme::Light,
+            };
+            theme_engine.set_scheme(system_scheme);
+            theme_engine.follow_system = true;
+        } else {
+            theme_engine.set_scheme(cfg.color_scheme);
+        }
+
         (
             Self {
-                current_view: View::Dashboard,
-                sidebar_collapsed: false,
-                theme_engine: ThemeEngine::new(),
+                current_view: cfg.resolve_view(),
+                sidebar_collapsed: cfg.sidebar_collapsed,
+                theme_engine,
             },
             Task::none(),
         )
@@ -87,7 +102,18 @@ impl Wiredash {
                 }
             }
         }
+        self.save_config();
         Task::none()
+    }
+
+    fn save_config(&self) {
+        let cfg = config::AppConfig {
+            last_view: self.current_view.title().into(),
+            sidebar_collapsed: self.sidebar_collapsed,
+            color_scheme: self.theme_engine.active_definition().color_scheme,
+            follow_system_theme: self.theme_engine.follow_system,
+        };
+        cfg.save();
     }
 
     fn view(&self) -> Element<'_, Message> {
