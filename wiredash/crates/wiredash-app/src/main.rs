@@ -10,6 +10,7 @@ mod modal;
 mod toast;
 mod settings_view;
 mod app_lock;
+mod vault;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
