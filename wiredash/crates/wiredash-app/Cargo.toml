@@ -14,8 +14,9 @@ wiredash-db = { path = "../wiredash-db" }
 wiredash-crypto = { path = "../wiredash-crypto" }
 wiredash-sync = { path = "../wiredash-sync" }
 wiredash-theme = { path = "../wiredash-theme" }
+wiredash-editor = { path = "../wiredash-editor" }
 
-iced = { version = "0.14", features = ["svg", "tokio"] }
+iced = { version = "0.14", features = ["svg", "tokio", "markdown", "highlighter"] }
 tokio = { version = "1", features = ["full"] }
 serde = { workspace = true }
 serde_json = { workspace = true }

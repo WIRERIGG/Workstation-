@@ -1,0 +1,13 @@
+[package]
+name = "wiredash-editor"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+iced = { version = "0.14", features = ["markdown", "highlighter"] }
+open = "5"
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]

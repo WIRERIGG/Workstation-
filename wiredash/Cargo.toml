@@ -6,6 +6,7 @@ members = [
     "crates/wiredash-core",
     "crates/wiredash-sync",
     "crates/wiredash-theme",
+    "crates/wiredash-editor",
     "crates/wiredash-app",
 ]
 
