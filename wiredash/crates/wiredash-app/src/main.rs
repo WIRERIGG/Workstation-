@@ -5,6 +5,7 @@ mod notes_view;
 mod notebooks_view;
 mod tags_view;
 mod search_view;
+mod organize_views;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -33,6 +34,9 @@ struct Wiredash {
     notebooks_state: notebooks_view::NotebooksViewState,
     tags_state: tags_view::TagsViewState,
     search_state: search_view::SearchViewState,
+    favorites_state: organize_views::FilteredNotesState,
+    archive_state: organize_views::FilteredNotesState,
+    trash_state: organize_views::FilteredNotesState,
     save_pending: bool,
 }
 
@@ -46,6 +50,9 @@ enum Message {
     Notebooks(notebooks_view::NotebooksMessage),
     Tags(tags_view::TagsMessage),
     SearchView(search_view::SearchMessage),
+    Favorites(organize_views::FilteredNotesMessage),
+    ArchiveView(organize_views::FilteredNotesMessage),
+    TrashView(organize_views::FilteredNotesMessage),
     AutoSaveTick,
 }
 
@@ -83,6 +90,12 @@ impl Wiredash {
         let mut tags_state = tags_view::TagsViewState::new();
         let search_state = search_view::SearchViewState::new();
         tags_state.refresh_tags(&db);
+        let mut favorites_state = organize_views::FilteredNotesState::new();
+        favorites_state.refresh(&db, organize_views::NoteFilter::Favorites);
+        let mut archive_state = organize_views::FilteredNotesState::new();
+        archive_state.refresh(&db, organize_views::NoteFilter::Archived);
+        let mut trash_state = organize_views::FilteredNotesState::new();
+        trash_state.refresh(&db, organize_views::NoteFilter::Trashed);
 
         (
             Self {
@@ -94,6 +107,9 @@ impl Wiredash {
                 notebooks_state,
                 tags_state,
                 search_state,
+                favorites_state,
+                archive_state,
+                trash_state,
                 save_pending: false,
             },
             Task::none(),
@@ -143,6 +159,24 @@ impl Wiredash {
                     self.save_pending = true;
                 }
             }
+            Message::Favorites(msg) => {
+                let changed = self.favorites_state.update(msg, &self.db, organize_views::NoteFilter::Favorites);
+                if changed && self.favorites_state.editor.dirty {
+                    self.save_pending = true;
+                }
+            }
+            Message::ArchiveView(msg) => {
+                let changed = self.archive_state.update(msg, &self.db, organize_views::NoteFilter::Archived);
+                if changed && self.archive_state.editor.dirty {
+                    self.save_pending = true;
+                }
+            }
+            Message::TrashView(msg) => {
+                let changed = self.trash_state.update(msg, &self.db, organize_views::NoteFilter::Trashed);
+                if changed && self.trash_state.editor.dirty {
+                    self.save_pending = true;
+                }
+            }
             Message::AutoSaveTick => {
                 if self.save_pending && self.notes_state.editor.dirty {
                     self.notes_state.save_current(&self.db);
@@ -158,6 +192,18 @@ impl Wiredash {
                 }
                 if self.save_pending && self.search_state.editor.dirty {
                     self.search_state.save_current(&self.db);
+                    self.save_pending = false;
+                }
+                if self.save_pending && self.favorites_state.editor.dirty {
+                    self.favorites_state.save_current(&self.db);
+                    self.save_pending = false;
+                }
+                if self.save_pending && self.archive_state.editor.dirty {
+                    self.archive_state.save_current(&self.db);
+                    self.save_pending = false;
+                }
+                if self.save_pending && self.trash_state.editor.dirty {
+                    self.trash_state.save_current(&self.db);
                     self.save_pending = false;
                 }
             }
@@ -183,6 +229,21 @@ impl Wiredash {
                                 }
                                 if self.search_state.editor.dirty {
                                     self.search_state.save_current(&self.db);
+                                    self.save_pending = false;
+                                    state_changed = true;
+                                }
+                                if self.favorites_state.editor.dirty {
+                                    self.favorites_state.save_current(&self.db);
+                                    self.save_pending = false;
+                                    state_changed = true;
+                                }
+                                if self.archive_state.editor.dirty {
+                                    self.archive_state.save_current(&self.db);
+                                    self.save_pending = false;
+                                    state_changed = true;
+                                }
+                                if self.trash_state.editor.dirty {
+                                    self.trash_state.save_current(&self.db);
                                     self.save_pending = false;
                                     state_changed = true;
                                 }
@@ -393,6 +454,18 @@ impl Wiredash {
             View::Search => {
                 search_view::search_view(&self.search_state, &self.theme_engine.active_iced_theme())
                     .map(Message::SearchView)
+            }
+            View::Favorites => {
+                organize_views::filtered_notes_view(&self.favorites_state, &self.theme_engine.active_iced_theme(), organize_views::NoteFilter::Favorites)
+                    .map(Message::Favorites)
+            }
+            View::Archive => {
+                organize_views::filtered_notes_view(&self.archive_state, &self.theme_engine.active_iced_theme(), organize_views::NoteFilter::Archived)
+                    .map(Message::ArchiveView)
+            }
+            View::Trash => {
+                organize_views::filtered_notes_view(&self.trash_state, &self.theme_engine.active_iced_theme(), organize_views::NoteFilter::Trashed)
+                    .map(Message::TrashView)
             }
             view => {
                 container(
