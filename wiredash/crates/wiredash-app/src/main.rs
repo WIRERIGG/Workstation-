@@ -27,6 +27,7 @@ struct Wiredash {
     theme_engine: ThemeEngine,
     db: wiredash_db::Database,
     notes_state: notes_view::NotesViewState,
+    save_pending: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -36,6 +37,7 @@ enum Message {
     ToggleTheme,
     KeyboardEvent(keyboard::Event),
     Notes(notes_view::NotesMessage),
+    AutoSaveTick,
 }
 
 impl Wiredash {
@@ -74,6 +76,7 @@ impl Wiredash {
                 theme_engine,
                 db,
                 notes_state,
+                save_pending: false,
             },
             Task::none(),
         )
@@ -96,13 +99,29 @@ impl Wiredash {
                 self.theme_engine.toggle_scheme();
             }
             Message::Notes(msg) => {
-                self.notes_state.update(msg, &self.db);
+                let changed = self.notes_state.update(msg, &self.db);
+                if changed && self.notes_state.editor.dirty {
+                    self.save_pending = true;
+                }
+            }
+            Message::AutoSaveTick => {
+                if self.save_pending && self.notes_state.editor.dirty {
+                    self.notes_state.save_current(&self.db);
+                    self.save_pending = false;
+                }
             }
             Message::KeyboardEvent(event) => {
                 state_changed = false;
                 if let keyboard::Event::KeyPressed { key, modifiers, .. } = event {
                     if modifiers.command() {
                         match key.as_ref() {
+                            keyboard::Key::Character("s") => {
+                                if self.notes_state.editor.dirty {
+                                    self.notes_state.save_current(&self.db);
+                                    self.save_pending = false;
+                                    state_changed = true;
+                                }
+                            }
                             keyboard::Key::Character("b") => {
                                 self.sidebar_collapsed = !self.sidebar_collapsed;
                                 state_changed = true;
@@ -172,7 +191,14 @@ impl Wiredash {
     }
 
     fn subscription(&self) -> Subscription<Message> {
-        keyboard::listen().map(Message::KeyboardEvent)
+        let keyboard_sub = keyboard::listen().map(Message::KeyboardEvent);
+        if self.save_pending {
+            let save_sub = iced::time::every(std::time::Duration::from_secs(2))
+                .map(|_| Message::AutoSaveTick);
+            Subscription::batch([keyboard_sub, save_sub])
+        } else {
+            keyboard_sub
+        }
     }
 
     fn sidebar_view(&self) -> Element<'_, Message> {
