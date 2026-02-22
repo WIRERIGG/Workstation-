@@ -2,6 +2,7 @@ mod navigation;
 mod icons;
 mod config;
 mod notes_view;
+mod notebooks_view;
 
 use iced::{Element, Task, Theme, Size, Subscription, Fill, Center};
 use iced::widget::{container, text, column, row, scrollable, button, rule, space};
@@ -27,6 +28,7 @@ struct Wiredash {
     theme_engine: ThemeEngine,
     db: wiredash_db::Database,
     notes_state: notes_view::NotesViewState,
+    notebooks_state: notebooks_view::NotebooksViewState,
     save_pending: bool,
 }
 
@@ -37,6 +39,7 @@ enum Message {
     ToggleTheme,
     KeyboardEvent(keyboard::Event),
     Notes(notes_view::NotesMessage),
+    Notebooks(notebooks_view::NotebooksMessage),
     AutoSaveTick,
 }
 
@@ -69,6 +72,8 @@ impl Wiredash {
 
         let mut notes_state = notes_view::NotesViewState::new();
         notes_state.refresh_list(&db);
+        let mut notebooks_state = notebooks_view::NotebooksViewState::new();
+        notebooks_state.refresh_notebooks(&db);
 
         (
             Self {
@@ -77,6 +82,7 @@ impl Wiredash {
                 theme_engine,
                 db,
                 notes_state,
+                notebooks_state,
                 save_pending: false,
             },
             Task::none(),
@@ -108,9 +114,19 @@ impl Wiredash {
                     self.save_pending = true;
                 }
             }
+            Message::Notebooks(msg) => {
+                let changed = self.notebooks_state.update(msg, &self.db);
+                if changed && self.notebooks_state.editor.dirty {
+                    self.save_pending = true;
+                }
+            }
             Message::AutoSaveTick => {
                 if self.save_pending && self.notes_state.editor.dirty {
                     self.notes_state.save_current(&self.db);
+                    self.save_pending = false;
+                }
+                if self.save_pending && self.notebooks_state.editor.dirty {
+                    self.notebooks_state.save_current(&self.db);
                     self.save_pending = false;
                 }
             }
@@ -121,6 +137,11 @@ impl Wiredash {
                             keyboard::Key::Character("s") => {
                                 if self.notes_state.editor.dirty {
                                     self.notes_state.save_current(&self.db);
+                                    self.save_pending = false;
+                                    state_changed = true;
+                                }
+                                if self.notebooks_state.editor.dirty {
+                                    self.notebooks_state.save_current(&self.db);
                                     self.save_pending = false;
                                     state_changed = true;
                                 }
@@ -319,6 +340,10 @@ impl Wiredash {
             View::Notes => {
                 notes_view::notes_view(&self.notes_state, &self.theme_engine.active_iced_theme())
                     .map(Message::Notes)
+            }
+            View::Notebooks => {
+                notebooks_view::notebooks_view(&self.notebooks_state, &self.theme_engine.active_iced_theme())
+                    .map(Message::Notebooks)
             }
             view => {
                 container(
